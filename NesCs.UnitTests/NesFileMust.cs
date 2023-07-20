@@ -9,7 +9,7 @@ public class NesFileMust
     [InlineData("  ")]
     public void ThrowException_WhenFileNameIsEmpty(string invalidName)
     {
-        var exception = Assert.Throws<ArgumentException>("filename", () => new NesFile(invalidName, FileSystemWrapper.Create()));
+        var exception = Assert.Throws<ArgumentException>("filename", () => new NesFile(invalidName, new FileSystemProxy.Builder().Build()));
         Assert.Contains("Invalid filename", exception.Message);
     }
 }

@@ -2,7 +2,7 @@
 
 public class NesFile
 {
-    public NesFile(string filename, FileSystemWrapper fileSystem)
+    public NesFile(string filename, FileSystemProxy fileSystem)
     {
         if (string.IsNullOrWhiteSpace(filename)) throw new ArgumentException("Invalid filename", nameof(filename));
     }
