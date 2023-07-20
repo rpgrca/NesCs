@@ -1,9 +1,12 @@
 ﻿namespace NesCs.Logic;
 
-public class NesFile
+public class NesFile : INesFile
 {
-    public NesFile(string filename, FileSystemProxy fileSystem)
+    public string Filename { get; }
+
+    internal NesFile(string filename)
     {
         if (string.IsNullOrWhiteSpace(filename)) throw new ArgumentException("Invalid filename", nameof(filename));
+        Filename = filename;
     }
 }

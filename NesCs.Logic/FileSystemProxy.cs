@@ -13,7 +13,7 @@ public class FileSystemProxy
     private FileSystemProxy(IFileSystem fileSystem) =>
         _fileSystem = fileSystem ?? throw new ArgumentException("Invalid file system", nameof(fileSystem));
 
-    public void Load(string filename)
+    public INesFile Load(string filename)
     {
         if (string.IsNullOrWhiteSpace(filename)) throw new ArgumentException("Invalid filename", nameof(filename));
 
@@ -21,5 +21,7 @@ public class FileSystemProxy
         {
             throw new FileNotFoundException("Invalid filename", filename);
         }
+
+        return new NesFile(filename);
     }
 }

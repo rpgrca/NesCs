@@ -1,15 +1,20 @@
+using System.IO.Abstractions.TestingHelpers;
 using NesCs.Logic;
 
 namespace NesCs.UnitTests;
 
 public class NesFileMust
 {
-    [Theory]
-    [InlineData("")]
-    [InlineData("  ")]
-    public void ThrowException_WhenFileNameIsEmpty(string invalidName)
+    private const string NES_FILENAME = "test.nes";
+
+    [Fact]
+    public void CreateNesFile_WhenFilenameExists()
     {
-        var exception = Assert.Throws<ArgumentException>("filename", () => new NesFile(invalidName, FileSystemProxy.Create()));
-        Assert.Contains("Invalid filename", exception.Message);
+        var fileStub = new MockFileData(Array.Empty<byte>());
+        var proxy = FileSystemProxy.CreateWith(new MockFileSystem(new Dictionary<string, MockFileData>() { { NES_FILENAME, fileStub } }));
+        var sut = proxy.Load(NES_FILENAME);
+
+        Assert.NotNull(sut);
+        Assert.Equal(NES_FILENAME, sut.Filename);
     }
 }

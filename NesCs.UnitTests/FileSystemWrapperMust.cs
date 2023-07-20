@@ -1,4 +1,3 @@
-using System.IO.Abstractions;
 using System.IO.Abstractions.TestingHelpers;
 using NesCs.Logic;
 
@@ -31,23 +30,4 @@ public class FileSystemWrapperMust
         var exception = Assert.Throws<FileNotFoundException>(() => sut.Load("subject.nes"));
         Assert.Contains("Invalid filename", exception.Message);
     }
-}
-
-public class FileDoesNotExistFileSystem : IFileSystem
-{
-    public IDirectory Directory => throw new NotImplementedException();
-
-    public IDirectoryInfoFactory DirectoryInfo => throw new NotImplementedException();
-
-    public IDriveInfoFactory DriveInfo => throw new NotImplementedException();
-
-    public IFile File => throw new NotImplementedException();
-
-    public IFileInfoFactory FileInfo => throw new NotImplementedException();
-
-    public IFileStreamFactory FileStream => throw new NotImplementedException();
-
-    public IFileSystemWatcherFactory FileSystemWatcher => throw new NotImplementedException();
-
-    public IPath Path => throw new NotImplementedException();
 }
