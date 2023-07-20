@@ -7,7 +7,7 @@ public class FileSystemWrapperMust
     [Fact]
     public void ThrowException_WhenCreatingFileSystemWrapperWithNullFileSystem()
     {
-        var exception = Assert.Throws<ArgumentException>("fileSystem", () => new FileSystemProxy.Builder().UsingAsFileSystem(null).Build());
+        var exception = Assert.Throws<ArgumentException>("fileSystem", () => FileSystemProxy.CreateWith(null));
         Assert.Contains("Invalid file system", exception.Message);
     }
 }
