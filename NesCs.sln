@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NesCs.Logic", "NesCs.Logic\NesCs.Logic.csproj", "{DAC480CA-4D28-472F-812F-C182E65C6B94}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NesCs.UnitTests", "NesCs.UnitTests\NesCs.UnitTests.csproj", "{8F5A99F2-DFB0-4632-B24C-E53DD9920646}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DAC480CA-4D28-472F-812F-C182E65C6B94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAC480CA-4D28-472F-812F-C182E65C6B94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAC480CA-4D28-472F-812F-C182E65C6B94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAC480CA-4D28-472F-812F-C182E65C6B94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F5A99F2-DFB0-4632-B24C-E53DD9920646}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F5A99F2-DFB0-4632-B24C-E53DD9920646}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F5A99F2-DFB0-4632-B24C-E53DD9920646}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F5A99F2-DFB0-4632-B24C-E53DD9920646}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
