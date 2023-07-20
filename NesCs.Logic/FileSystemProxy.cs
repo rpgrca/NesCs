@@ -10,8 +10,11 @@ public class FileSystemProxy
 
     private readonly IFileSystem _fileSystem;
 
-    private FileSystemProxy(IFileSystem fileSystem)
-    {
+    private FileSystemProxy(IFileSystem fileSystem) =>
         _fileSystem = fileSystem ?? throw new ArgumentException("Invalid file system", nameof(fileSystem));
+
+    public void Load(string filename)
+    {
+        if (string.IsNullOrWhiteSpace(filename)) throw new ArgumentException("Invalid filename", nameof(filename));
     }
 }
