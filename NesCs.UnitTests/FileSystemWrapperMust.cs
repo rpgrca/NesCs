@@ -23,6 +23,14 @@ public class FileSystemWrapperMust
         Assert.Contains("Invalid filename", exception.Message);
     }
 
+    [Fact]
+    public void ThrowException_WhenLoadingFileThatDoesNotExist()
+    {
+        var fileSystemStub = new MockFileSystem(new Dictionary<string, MockFileData>() {});
+        var sut = FileSystemProxy.CreateWith(fileSystemStub);
+        var exception = Assert.Throws<FileNotFoundException>(() => sut.Load("subject.nes"));
+        Assert.Contains("Invalid filename", exception.Message);
+    }
 }
 
 public class FileDoesNotExistFileSystem : IFileSystem

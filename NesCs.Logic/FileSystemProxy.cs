@@ -16,5 +16,10 @@ public class FileSystemProxy
     public void Load(string filename)
     {
         if (string.IsNullOrWhiteSpace(filename)) throw new ArgumentException("Invalid filename", nameof(filename));
+
+        if (! _fileSystem.File.Exists(filename))
+        {
+            throw new FileNotFoundException("Invalid filename", filename);
+        }
     }
 }
