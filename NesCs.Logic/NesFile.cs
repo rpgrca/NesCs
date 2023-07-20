@@ -4,6 +4,6 @@ public class NesFile
 {
     public NesFile(string filename)
     {
-        if (string.IsNullOrEmpty(filename)) throw new ArgumentException("Invalid filename", nameof(filename));
+        if (string.IsNullOrWhiteSpace(filename)) throw new ArgumentException("Invalid filename", nameof(filename));
     }
 }

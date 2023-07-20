@@ -4,10 +4,12 @@ namespace NesCs.UnitTests;
 
 public class NesFileMust
 {
-    [Fact]
-    public void ThrowException_WhenFileNameIsEmpty()
+    [Theory]
+    [InlineData("")]
+    [InlineData("  ")]
+    public void ThrowException_WhenFileNameIsEmpty(string invalidName)
     {
-        var exception = Assert.Throws<ArgumentException>("filename", () => new NesFile(""));
+        var exception = Assert.Throws<ArgumentException>("filename", () => new NesFile(invalidName));
         Assert.Contains("Invalid filename", exception.Message);
     }
 }
