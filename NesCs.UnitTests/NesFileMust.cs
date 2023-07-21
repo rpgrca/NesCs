@@ -28,7 +28,7 @@ public class NesFileMust
     [Theory]
     [MemberData(nameof(NesFileHeaderFeeder))]
     public void CreateNesFile_WhenFileHasValidHeader(byte[] fileContents, int expectedProgramRomSize, int expectedCharacterRomSize, Mirroring expectedMirroring,
-        bool expectedBatteryBackup, bool expectedTrainer, bool expectedIgnoreMirroring, bool expectedVsUnisystem)
+        bool expectedBatteryBackup, bool expectedTrainer, bool expectedIgnoreMirroring, bool expectedVsUnisystem, bool expectedPlayChoice10)
     {
         var fileStub = new MockFileData(fileContents);
         var proxy = FileSystemProxy.CreateWith(new MockFileSystem(new Dictionary<string, MockFileData>() { { NES_FILENAME, fileStub } }));
@@ -43,16 +43,17 @@ public class NesFileMust
         Assert.Equal(expectedTrainer, sut.Flags6.HasTrainer);
         Assert.Equal(expectedIgnoreMirroring, sut.Flags6.IgnoreMirroring);
         Assert.Equal(expectedVsUnisystem, sut.Flags7.HasVsUnisystem);
+        Assert.Equal(expectedPlayChoice10, sut.Flags7.HasPlayChoice10);
     }
 
     public static IEnumerable<object[]> NesFileHeaderFeeder()
     {
         yield return new object[] { new byte[] { 0x4e, 0x45, 0x53, 0x1A, 0x20, 0x10, 0b10000011, 0b00000000, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }, 32, 16,
             Mirroring.Vertical, true, false, false,
-            false };
+            false, false };
         yield return new object[] { new byte[] { 0x4e, 0x45, 0x53, 0x1A, 0x20, 0x10, 0b01111100, 0b11111111, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }, 32, 16,
             Mirroring.Horizontal, false, true, true,
-            true };
+            true, true };
     }
 }
 
