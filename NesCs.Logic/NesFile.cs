@@ -1,17 +1,38 @@
 ﻿namespace NesCs.Logic;
 
+[Flags]
+public enum Mirroring
+{
+    Horizontal = 0,
+    Vertical = 1
+}
+
+public struct Flags6
+{
+    private const int MirroringIndex = 0x1;
+
+    public Mirroring Mirroring { get; }
+
+    public Flags6(int flags)
+    {
+        Mirroring = (Mirroring)(flags & MirroringIndex);
+    }
+}
+
 public class NesFile : INesFile
 {
     private static readonly byte[] HeaderSignature = new byte[] { 0x4e, 0x45, 0x53, 0x1A };
     private const int HeaderSignatureIndex = 0;
     private const int HeaderProgramSizeIndex = 4;
     private const int HeaderCharacterSizeIndex = 5;
+    private const int HeaderFlags6Index = 6;
 
     private readonly byte[] _contents;
 
     public string Filename { get; }
     public int ProgramRomSize { get; private set; }
     public int CharacterRomSize { get; private set; }
+    public Flags6 Flags6 { get; private set; }
 
     internal NesFile(string filename, byte[] contents)
     {
@@ -28,6 +49,7 @@ public class NesFile : INesFile
         LoadSignature();
         LoadProgramSize();
         LoadCharacterSize();
+        LoadFlags6();
     }
 
     private void LoadSignature()
@@ -43,4 +65,9 @@ public class NesFile : INesFile
 
     private void LoadCharacterSize() =>
         CharacterRomSize = _contents[HeaderCharacterSizeIndex];
+
+    private void LoadFlags6()
+    {
+        Flags6 = new Flags6(_contents[HeaderFlags6Index]);
+    }
 }
