@@ -35,6 +35,7 @@ public class NesFile : INesFile
         LoadCharacterSize();
         LoadFlags6();
         LoadFlags7();
+        LoadMapperNumber();
     }
 
     private void LoadSignature()
@@ -56,4 +57,7 @@ public class NesFile : INesFile
 
     private void LoadFlags7() =>
         Flags7 = new Flags7(_contents[HeaderFlags7Index]);
+
+    private void LoadMapperNumber() =>
+        MapperNumber = (Flags7.UpperMapperNybble << 4) | Flags6.LowerMapperNybble;
 }

@@ -2,15 +2,17 @@ namespace NesCs.Logic;
 
 public struct Flags6
 {
-    private const int MirroringFlag = 0x1;
-    private const int BatteryBackedProgramRamFlag = 0x2;
-    private const int TrainerFlag = 0x4;
-    private const int IgnoreMirroringFlag = 0x8;
+    private const int MirroringFlag = 0b1;
+    private const int BatteryBackedProgramRamFlag = 0b10;
+    private const int TrainerFlag = 0b100;
+    private const int IgnoreMirroringFlag = 0b1000;
+    private const int LowerMapperNybbleFlag = 0b11110000;
 
     public Mirroring Mirroring { get; }
     public bool HasBatteryBackedProgramRam { get; }
     public bool HasTrainer { get; }
     public bool IgnoreMirroring { get; }
+    internal int LowerMapperNybble { get; }
 
     public Flags6(int flags)
     {
@@ -18,5 +20,6 @@ public struct Flags6
         HasBatteryBackedProgramRam = (flags & BatteryBackedProgramRamFlag) == BatteryBackedProgramRamFlag;
         HasTrainer = (flags & TrainerFlag) == TrainerFlag;
         IgnoreMirroring = (flags & IgnoreMirroringFlag) == IgnoreMirroringFlag;
+        LowerMapperNybble = (flags & LowerMapperNybbleFlag) >> 4;
     }
 }
