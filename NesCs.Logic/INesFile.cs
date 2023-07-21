@@ -10,4 +10,5 @@ public interface INesFile
     Flags7 Flags7 { get; }
     Flags8 Flags8 { get; }
     Flags9 Flags9 { get; }
+    Flags10 Flags10 { get; }
 }

@@ -10,6 +10,7 @@ public class NesFile : INesFile
     private const int HeaderFlags7Index = 7;
     private const int HeaderFlags8Index = 8;
     private const int HeaderFlags9Index = 9;
+    private const int HeaderFlags10Index = 10;
 
     private readonly byte[] _contents;
 
@@ -21,6 +22,7 @@ public class NesFile : INesFile
     public Flags7 Flags7 { get; private set; }
     public Flags8 Flags8 { get; private set; }
     public Flags9 Flags9 { get; private set; }
+    public Flags10 Flags10 { get; private set; }
 
     internal NesFile(string filename, byte[] contents)
     {
@@ -42,6 +44,7 @@ public class NesFile : INesFile
         LoadMapperNumber();
         LoadFlags8();
         LoadFlags9();
+        LoadFlags10();
     }
 
     private void LoadSignature()
@@ -72,4 +75,7 @@ public class NesFile : INesFile
 
     private void LoadFlags9() =>
         Flags9 = new Flags9(_contents[HeaderFlags9Index]);
+
+    private void LoadFlags10() =>
+        Flags10 = new Flags10(_contents[HeaderFlags10Index]);
 }
