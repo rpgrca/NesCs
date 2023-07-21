@@ -35,6 +35,7 @@ public class NesFileMust
         Assert.NotNull(sut);
         Assert.Equal(NES_FILENAME, sut.Filename);
         Assert.Equal(32, sut.ProgramRomSize);
+        Assert.Equal(16, sut.CharacterRomSize);
     }
 }
 
