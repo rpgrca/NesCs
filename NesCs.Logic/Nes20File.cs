@@ -9,6 +9,9 @@ internal class Nes20File : OriginalINesFile
     {
     }
 
+    protected override void LoadFlags7() =>
+        Flags7 = new Flags7ForNes20(_contents[HeaderFlags7Index]);
+
     protected override void LoadFlags10() =>
         Flags10 = new Flags10(_contents[HeaderFlags10Index]);
 }

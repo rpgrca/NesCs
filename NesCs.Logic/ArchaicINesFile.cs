@@ -62,7 +62,7 @@ internal class ArchaicINesFile : INesFile
 
     private void LoadFlags6() => Flags6 = new Flags6(_contents[HeaderFlags6Index]);
 
-    protected virtual void LoadFlags7() => Flags7 = new Flags7();
+    protected virtual void LoadFlags7() => Flags7 = new Flags7(0);
 
     protected virtual void LoadMapperNumber()
     {

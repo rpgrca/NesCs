@@ -2,7 +2,7 @@ namespace NesCs.Logic;
 
 internal class OriginalINesFile : ArchaicINesFile
 {
-    private const int HeaderFlags7Index = 7;
+    protected const int HeaderFlags7Index = 7;
     private const int HeaderFlags8Index = 8;
     private const int HeaderFlags9Index = 9;
 
