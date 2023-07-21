@@ -26,7 +26,7 @@ public class NesFileMust
     }
 
     [Fact]
-    public void CreateNesFile_WhenFilenameExists()
+    public void CreateNesFile_WhenFileHasValidHeader()
     {
         var fileStub = new MockFileData(Constants.GetValidNesHeaderFile());
         var proxy = FileSystemProxy.CreateWith(new MockFileSystem(new Dictionary<string, MockFileData>() { { NES_FILENAME, fileStub } }));
@@ -34,6 +34,7 @@ public class NesFileMust
 
         Assert.NotNull(sut);
         Assert.Equal(NES_FILENAME, sut.Filename);
+        Assert.Equal(32, sut.ProgramRomSize);
     }
 }
 
@@ -43,5 +44,5 @@ public static class Constants
         new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
 
     public static byte[] GetValidNesHeaderFile() =>
-        new byte[] { 0x4e, 0x45, 0x53, 0x1A, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+        new byte[] { 0x4e, 0x45, 0x53, 0x1A, 0x20, 0x10, 0x43, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
 }
