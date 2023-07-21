@@ -3,7 +3,8 @@
 public class NesFile : INesFile
 {
     private static readonly byte[] HeaderSignature = new byte[] { 0x4e, 0x45, 0x53, 0x1A };
-    private const int ProgramRomSizeIndex = 4;
+    private const int HeaderSignatureIndex = 0;
+    private const int HeaderProgramSizeIndex = 4;
 
     private readonly byte[] _contents;
 
@@ -27,17 +28,14 @@ public class NesFile : INesFile
 
     private void LoadSignature()
     {
-        for (var index = 0; index < HeaderSignature.Length; index++)
+        if (! _contents[HeaderSignatureIndex..HeaderProgramSizeIndex].SequenceEqual(HeaderSignature))
         {
-            if (_contents[index] != HeaderSignature[index])
-            {
-                throw new ArgumentException("Signature not found", nameof(_contents));
-            }
+            throw new ArgumentException("Signature not found", nameof(_contents));
         }
     }
 
     private void LoadProgramSize()
     {
-        ProgramRomSize = _contents[ProgramRomSizeIndex];
+        ProgramRomSize = _contents[HeaderProgramSizeIndex];
     }
 }
