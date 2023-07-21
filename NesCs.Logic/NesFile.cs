@@ -28,7 +28,7 @@ public class NesFile : INesFile
         {
             if (_contents[index] != HeaderSignature[index])
             {
-                throw new ArgumentException("Signature not found");
+                throw new ArgumentException("Signature not found", nameof(_contents));
             }
         }
     }
