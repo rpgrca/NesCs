@@ -1,27 +1,5 @@
 ﻿namespace NesCs.Logic;
 
-[Flags]
-public enum Mirroring
-{
-    Horizontal = 0,
-    Vertical = 1
-}
-
-public struct Flags6
-{
-    private const int MirroringFlag = 0x1;
-    private const int BatteryBackedProgramRamFlag = 0x2;
-
-    public Mirroring Mirroring { get; }
-    public bool HasBatteryBackedProgramRam { get; }
-
-    public Flags6(int flags)
-    {
-        Mirroring = (Mirroring)(flags & MirroringFlag);
-        HasBatteryBackedProgramRam = (flags & BatteryBackedProgramRamFlag) == BatteryBackedProgramRamFlag;
-    }
-}
-
 public class NesFile : INesFile
 {
     private static readonly byte[] HeaderSignature = new byte[] { 0x4e, 0x45, 0x53, 0x1A };
