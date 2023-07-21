@@ -37,6 +37,7 @@ public class NesFileMust
         Assert.Equal(32, sut.ProgramRomSize);
         Assert.Equal(16, sut.CharacterRomSize);
         Assert.Equal(Mirroring.Vertical, sut.Flags6.Mirroring);
+        Assert.True(sut.Flags6.HasBatteryBackedProgramRam);
     }
 }
 

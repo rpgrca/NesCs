@@ -9,13 +9,16 @@ public enum Mirroring
 
 public struct Flags6
 {
-    private const int MirroringIndex = 0x1;
+    private const int MirroringFlag = 0x1;
+    private const int BatteryBackedProgramRamFlag = 0x2;
 
     public Mirroring Mirroring { get; }
+    public bool HasBatteryBackedProgramRam { get; }
 
     public Flags6(int flags)
     {
-        Mirroring = (Mirroring)(flags & MirroringIndex);
+        Mirroring = (Mirroring)(flags & MirroringFlag);
+        HasBatteryBackedProgramRam = (flags & BatteryBackedProgramRamFlag) == BatteryBackedProgramRamFlag;
     }
 }
 
@@ -66,8 +69,6 @@ public class NesFile : INesFile
     private void LoadCharacterSize() =>
         CharacterRomSize = _contents[HeaderCharacterSizeIndex];
 
-    private void LoadFlags6()
-    {
+    private void LoadFlags6() =>
         Flags6 = new Flags6(_contents[HeaderFlags6Index]);
-    }
 }
