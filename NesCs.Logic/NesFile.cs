@@ -7,13 +7,16 @@ public class NesFile : INesFile
     private const int HeaderProgramSizeIndex = 4;
     private const int HeaderCharacterSizeIndex = 5;
     private const int HeaderFlags6Index = 6;
+    private const int HeaderFlags7Index = 7;
 
     private readonly byte[] _contents;
 
     public string Filename { get; }
     public int ProgramRomSize { get; private set; }
     public int CharacterRomSize { get; private set; }
+    public int MapperNumber { get; private set; }
     public Flags6 Flags6 { get; private set; }
+    public Flags7 Flags7 { get; private set; }
 
     internal NesFile(string filename, byte[] contents)
     {
@@ -31,6 +34,7 @@ public class NesFile : INesFile
         LoadProgramSize();
         LoadCharacterSize();
         LoadFlags6();
+        LoadFlags7();
     }
 
     private void LoadSignature()
@@ -49,4 +53,7 @@ public class NesFile : INesFile
 
     private void LoadFlags6() =>
         Flags6 = new Flags6(_contents[HeaderFlags6Index]);
+
+    private void LoadFlags7() =>
+        Flags7 = new Flags7(_contents[HeaderFlags7Index]);
 }
