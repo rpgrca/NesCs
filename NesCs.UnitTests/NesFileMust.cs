@@ -12,7 +12,7 @@ public class NesFileMust
     {
         var fileStub = new MockFileData(Array.Empty<byte>());
         var proxy = FileSystemProxy.CreateWith(new MockFileSystem(new Dictionary<string, MockFileData>() { { NES_FILENAME, fileStub } }));
-        var exception = Assert.Throws<ArgumentException>("_contents", () => proxy.Load(NES_FILENAME));
+        var exception = Assert.Throws<ArgumentException>("contents", () => proxy.Load(NES_FILENAME));
         Assert.Contains("Could not find header", exception.Message);
     }
 

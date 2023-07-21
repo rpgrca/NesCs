@@ -1,8 +1,7 @@
 ﻿namespace NesCs.Logic;
 
-public class NesFile : INesFile
+internal class NesFile : INesFile
 {
-    private static readonly byte[] HeaderSignature = new byte[] { 0x4e, 0x45, 0x53, 0x1A };
     private const int HeaderSignatureIndex = 0;
     private const int HeaderProgramSizeIndex = 4;
     private const int HeaderCharacterSizeIndex = 5;
@@ -49,7 +48,8 @@ public class NesFile : INesFile
 
     private void LoadSignature()
     {
-        if (! _contents[HeaderSignatureIndex..HeaderProgramSizeIndex].SequenceEqual(HeaderSignature))
+        byte[] headerSignature = { 0x4e, 0x45, 0x53, 0x1A };
+        if (! _contents[HeaderSignatureIndex..HeaderProgramSizeIndex].SequenceEqual(headerSignature))
         {
             throw new ArgumentException("Signature not found", nameof(_contents));
         }

@@ -23,6 +23,6 @@ public class FileSystemProxy
         }
 
         var contents = _fileSystem.File.ReadAllBytes(filename);
-        return new NesFile(filename, contents);
+        return NesFileLoader.CreateFrom(filename, contents);
     }
 }
