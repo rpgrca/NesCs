@@ -22,6 +22,7 @@ public class FileSystemProxy
             throw new FileNotFoundException("Invalid filename", filename);
         }
 
-        return new NesFile(filename);
+        var contents = _fileSystem.File.ReadAllBytes(filename);
+        return new NesFile(filename, contents);
     }
 }
