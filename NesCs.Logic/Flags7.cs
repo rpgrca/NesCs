@@ -1,6 +1,6 @@
 namespace NesCs.Logic;
 
-public struct Flags7
+public readonly struct Flags7
 {
     private const int VsUnisystemFlag = 0b1;
     private const int PlayChoice10Flag = 0b10;

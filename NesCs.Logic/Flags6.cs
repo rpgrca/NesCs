@@ -1,6 +1,6 @@
 namespace NesCs.Logic;
 
-public struct Flags6
+public readonly struct Flags6
 {
     private const int MirroringFlag = 0b1;
     private const int BatteryBackedProgramRamFlag = 0b10;
