@@ -63,9 +63,9 @@ public class NesFileMust
             /* Flags8  */ 0,
             /* Flags9  */ 0,
             /* Flags10 */ 0, false, false };
-        yield return new object[] { new byte[] { 0x4e, 0x45, 0x53, 0x1A, 0x20, 0x10, 0b01111100, 0b11111111, 0x10, 0b1, 0b110001, 0x00, 0x00, 0x00, 0x00, 0x00 }, 32, 16,
+        yield return new object[] { new byte[] { 0x4e, 0x45, 0x53, 0x1A, 0x20, 0x10, 0b01111100, 0b11111011, 0x10, 0b1, 0b110001, 0x00, 0x00, 0x00, 0x00, 0x00 }, 32, 16,
             /* Flags6  */ Mirroring.Horizontal, false, true, true,
-            /* Flags7  */ true, true, false, 0b11110111,
+            /* Flags7  */ true, true, true, 0b11110111,
             /* Flags8  */ 16,
             /* Flags9  */ 1,
             /* Flags10 */ 1, true, true };
