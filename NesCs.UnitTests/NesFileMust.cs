@@ -59,7 +59,7 @@ public class NesFileMust
         /* Original iNES */
         yield return new object[] { new byte[] { 0x4e, 0x45, 0x53, 0x1A, 0x20, 0x10, 0b10000011, 0b00000000, 0x00, 0b0, 0b0, 0x00, 0x00, 0x00, 0x00, 0x00 }, 32, 16,
              /* Flags6  */ Mirroring.Vertical, true, false, false,
-             /* Flags7  */ ConsoleType.NesOrFamilyComputer, false, 0b1000,
+             /* Flags7  */ ConsoleType.NesOrFamicom, false, 0b1000,
              /* Flags8  */ 0,
              /* Flags9  */ 0,
              /* Flags10 */ 0, false, false };
@@ -67,7 +67,7 @@ public class NesFileMust
         /* Archaic iNES */
         yield return new object[] { new byte[] { 0x4e, 0x45, 0x53, 0x1A, 0x20, 0x10, 0b10000011, 0b00000000, 0x00, 0b0, 0b0, 0x00, 0x01, 0x02, 0x04, 0x05 }, 32, 16,
              /* Flags6  */ Mirroring.Vertical, true, false, false,
-             /* Flags7  */ ConsoleType.NesOrFamilyComputer, false, 0,
+             /* Flags7  */ ConsoleType.NesOrFamicom, false, 0,
              /* Flags8  */ 0,
              /* Flags9  */ 0,
              /* Flags10 */ 0, false, false };
@@ -75,7 +75,7 @@ public class NesFileMust
         /* Nes20 */
         yield return new object[] { new byte[] { 0x4e, 0x45, 0x53, 0x1A, 0x20, 0x10, 0b01111100, 0b11111000, 0x10, 0b1, 0b110001, 0x00, 0x00, 0x00, 0x00, 0x00 }, 32, 16,
             /* Flags6  */ Mirroring.Horizontal, false, true, true,
-            /* Flags7  */ ConsoleType.NesOrFamilyComputer, true, 0b11110111,
+            /* Flags7  */ ConsoleType.NesOrFamicom, true, 0b11110111,
             /* Flags8  */ 16,
             /* Flags9  */ 1,
             /* Flags10 */ 1, true, true };
@@ -99,7 +99,7 @@ public class NesFileMust
         /* Nes20 */
         yield return new object[] { new byte[] { 0x4e, 0x45, 0x53, 0x1A, 0x20, 0x10, 0b01111100, 0b11111011, 0x10, 0b1, 0b110001, 0x00, 0x00, 0x00, 0x00, 0x00 }, 32, 16,
             /* Flags6  */ Mirroring.Horizontal, false, true, true,
-            /* Flags7  */ ConsoleType.ExtendedConsoleType, true, 0b11110111,
+            /* Flags7  */ ConsoleType.RegularFamicloneWithDecimalMode, true, 0b11110111,
             /* Flags8  */ 16,
             /* Flags9  */ 1,
             /* Flags10 */ 1, true, true };
@@ -107,7 +107,7 @@ public class NesFileMust
         /* Archaic iNES */
         yield return new object[] { new byte[] { 0x4e, 0x45, 0x53, 0x1A, 0x20, 0x10, 0b01111100, 0b00010111, 0x20, 0b1, 0b110010, 0x00, 0x00, 0x00, 0x00, 0x00 }, 32, 16,
             /* Flags6  */ Mirroring.Horizontal, false, true, true,
-            /* Flags7  */ ConsoleType.NesOrFamilyComputer, false, 0,
+            /* Flags7  */ ConsoleType.NesOrFamicom, false, 0,
             /* Flags8  */ 0,
             /* Flags9  */ 0,
             /* Flags10 */ 0, false, false };
