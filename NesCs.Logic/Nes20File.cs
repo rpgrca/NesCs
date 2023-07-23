@@ -4,6 +4,7 @@ internal class Nes20File : OriginalINesFile
 {
     private const int HeaderFlags10Index = 10;
     private const int Byte13Index = 13;
+    private const int Byte15Index = 15;
 
     internal Nes20File(string filename, byte[] contents)
         : base(filename, contents)
@@ -18,4 +19,7 @@ internal class Nes20File : OriginalINesFile
 
     protected override void LoadByte13() =>
         Byte13 = new Byte13(_contents[Byte13Index], Flags7);
+
+    protected override void LoadByte15() =>
+        Byte15 = new Byte15(_contents[Byte15Index]);
 }

@@ -79,7 +79,7 @@ public class NesFileMust
     public void CreateNesFile_WhenFileHasValidNes20Head(byte[] fileContents, int expectedProgramRomSize, int expectedCharacterRomSize, Mirroring expectedMirroring,
         bool expectedBatteryBackup, bool expectedTrainer, bool expectedIgnoreMirroring, ConsoleType expectedConsoleType,
         bool expectedVersionFormat, int expectedMapperNumber, int expectedProgramRamSize, int expectedTvSystem, int expectedTvSystemExtended,
-        bool expectedProgramRam, bool expectedBusConflicts, ConsoleType expectedExtendedConsoleType)
+        bool expectedProgramRam, bool expectedBusConflicts, ConsoleType expectedExtendedConsoleType, ExpansionDevice expectedExpansionDevice)
     {
         var fileStub = new MockFileData(fileContents);
         var proxy = FileSystemProxy.CreateWith(new MockFileSystem(new Dictionary<string, MockFileData>() { { NES_FILENAME, fileStub } }));
@@ -102,53 +102,59 @@ public class NesFileMust
         Assert.Equal(expectedProgramRam, sut.Flags10.HasProgramRam);
         Assert.Equal(expectedBusConflicts, sut.Flags10.HasBusConflicts);
         Assert.Equal(expectedExtendedConsoleType, sut.Byte13.ExtendedConsoleType);
+        Assert.Equal(expectedExpansionDevice, sut.Byte15.ExpansionDevice);
     }
 
     public static IEnumerable<object[]> Nes20FileHeaderFeeder()
     {
         /* Nes20 */
-        yield return new object[] { new byte[] { 0x4e, 0x45, 0x53, 0x1A, 0x20, 0x10, 0b01111100, 0b11111000, 0x10, 0b1, 0b110001, 0x00, 0x00, 0x00, 0x00, 0x00 }, 32, 16,
+        yield return new object[] { new byte[] { 0x4e, 0x45, 0x53, 0x1A, 0x20, 0x10, 0b01111100, 0b11111000, 0x10, 0b1, 0b110001, 0x00, 0x00, 0x00, 0x00, 0xA }, 32, 16,
             /* Flags6  */ Mirroring.Horizontal, false, true, true,
             /* Flags7  */ ConsoleType.NesOrFamicom, true, 0b11110111,
             /* Flags8  */ 16,
             /* Flags9  */ 1,
             /* Flags10 */ 1, true, true,
-            /* Byte13  */ ConsoleType.NesOrFamicom };
+            /* Byte13  */ ConsoleType.NesOrFamicom,
+            /* Byte15  */ ExpansionDevice.BandaiHyperShotLightgun };
 
         /* Nes20 */
-        yield return new object[] { new byte[] { 0x4e, 0x45, 0x53, 0x1A, 0x20, 0x10, 0b01111100, 0b11111001, 0x10, 0b1, 0b110001, 0x00, 0x00, 0b01, 0x00, 0x00 }, 32, 16,
+        yield return new object[] { new byte[] { 0x4e, 0x45, 0x53, 0x1A, 0x20, 0x10, 0b01111100, 0b11111001, 0x10, 0b1, 0b110001, 0x00, 0x00, 0b01, 0x00, 0x1C }, 32, 16,
             /* Flags6  */ Mirroring.Horizontal, false, true, true,
             /* Flags7  */ ConsoleType.NintendoVersusSystem, true, 0b11110111,
             /* Flags8  */ 16,
             /* Flags9  */ 1,
             /* Flags10 */ 1, true, true,
-            /* Byte13  */ ConsoleType.NintendoVersusSystem };
+            /* Byte13  */ ConsoleType.NintendoVersusSystem,
+            /* Byte15  */ ExpansionDevice.DoubleFisted };
 
         /* Nes20 */
-        yield return new object[] { new byte[] { 0x4e, 0x45, 0x53, 0x1A, 0x20, 0x10, 0b01111100, 0b11111010, 0x10, 0b1, 0b110001, 0x00, 0x00, 0b10, 0x00, 0x00 }, 32, 16,
+        yield return new object[] { new byte[] { 0x4e, 0x45, 0x53, 0x1A, 0x20, 0x10, 0b01111100, 0b11111010, 0x10, 0b1, 0b110001, 0x00, 0x00, 0b10, 0x00, 0x22 }, 32, 16,
             /* Flags6  */ Mirroring.Horizontal, false, true, true,
             /* Flags7  */ ConsoleType.NintendoPlaychoice10, true, 0b11110111,
             /* Flags8  */ 16,
             /* Flags9  */ 1,
             /* Flags10 */ 1, true, true,
-            /* Byte13  */ ConsoleType.NintendoPlaychoice10 };
+            /* Byte13  */ ConsoleType.NintendoPlaychoice10,
+            /* Byte15  */ ExpansionDevice.IgsStorageBattleBox };
 
         /* Nes20 */
-        yield return new object[] { new byte[] { 0x4e, 0x45, 0x53, 0x1A, 0x20, 0x10, 0b01111100, 0b11111011, 0x10, 0b1, 0b110001, 0x00, 0x00, 0b11, 0x00, 0x00 }, 32, 16,
+        yield return new object[] { new byte[] { 0x4e, 0x45, 0x53, 0x1A, 0x20, 0x10, 0b01111100, 0b11111011, 0x10, 0b1, 0b110001, 0x00, 0x00, 0b11, 0x00, 0x27 }, 32, 16,
             /* Flags6  */ Mirroring.Horizontal, false, true, true,
             /* Flags7  */ ConsoleType.RegularFamicloneWithDecimalMode, true, 0b11110111,
             /* Flags8  */ 16,
             /* Flags9  */ 1,
             /* Flags10 */ 1, true, true,
-            /* Byte13  */ ConsoleType.RegularFamicloneWithDecimalMode };
+            /* Byte13  */ ConsoleType.RegularFamicloneWithDecimalMode,
+            /* Byte15  */ ExpansionDevice.SuborKeyboard3x8Protocol };
 
         /* Nes20 */
-        yield return new object[] { new byte[] { 0x4e, 0x45, 0x53, 0x1A, 0x20, 0x10, 0b01111100, 0b11111011, 0x10, 0b1, 0b110001, 0x00, 0x00, 0b1001, 0x00, 0x00 }, 32, 16,
+        yield return new object[] { new byte[] { 0x4e, 0x45, 0x53, 0x1A, 0x20, 0x10, 0b01111100, 0b11111011, 0x10, 0b1, 0b110001, 0x00, 0x00, 0b1001, 0x00, 0x39 }, 32, 16,
             /* Flags6  */ Mirroring.Horizontal, false, true, true,
             /* Flags7  */ ConsoleType.RegularFamicloneWithDecimalMode, true, 0b11110111,
             /* Flags8  */ 16,
             /* Flags9  */ 1,
             /* Flags10 */ 1, true, true,
-            /* Byte13  */ ConsoleType.VT32 };
+            /* Byte13  */ ConsoleType.VT32,
+            /* Byte15  */ ExpansionDevice.VenomTvDanceMat };
     }
 }

@@ -19,6 +19,7 @@ internal class ArchaicINesFile : INesFile
     public Flags9 Flags9 { get; protected set; }
     public Flags10 Flags10 { get; protected set; }
     public Byte13 Byte13 { get; protected set; }
+    public Byte15 Byte15 { get; protected set; }
 
     internal ArchaicINesFile(string filename, byte[] contents)
     {
