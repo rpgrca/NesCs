@@ -18,6 +18,7 @@ internal class ArchaicINesFile : INesFile
     public Flags8 Flags8 { get; protected set; }
     public Flags9 Flags9 { get; protected set; }
     public Flags10 Flags10 { get; protected set; }
+    public Byte13 Byte13 { get; protected set; }
 
     internal ArchaicINesFile(string filename, byte[] contents)
     {
@@ -82,9 +83,7 @@ internal class ArchaicINesFile : INesFile
     {
     }
 
-    protected virtual void LoadByte13()
-    {
-    }
+    protected virtual void LoadByte13() => Byte13 = new Byte13();
 
     protected virtual void LoadByte14()
     {

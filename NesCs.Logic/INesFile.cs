@@ -11,4 +11,5 @@ public interface INesFile
     Flags8 Flags8 { get; }
     Flags9 Flags9 { get; }
     Flags10 Flags10 { get; }
+    Byte13 Byte13 { get; }
 }
