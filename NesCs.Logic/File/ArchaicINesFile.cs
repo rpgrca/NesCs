@@ -1,6 +1,4 @@
-using NesCs.Logic.File;
-
-namespace NesCs.Logic;
+namespace NesCs.Logic.File;
 
 internal class ArchaicINesFile : INesFile
 {
