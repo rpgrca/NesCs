@@ -1,4 +1,4 @@
-namespace NesCs.Logic;
+namespace NesCs.Logic.File;
 
 public class NesFileLoader
 {

@@ -1,5 +1,6 @@
 using System.IO.Abstractions.TestingHelpers;
 using NesCs.Logic;
+using NesCs.Logic.File;
 
 namespace NesCs.UnitTests;
 

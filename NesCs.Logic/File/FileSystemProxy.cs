@@ -1,6 +1,6 @@
 using System.IO.Abstractions;
 
-namespace NesCs.Logic;
+namespace NesCs.Logic.File;
 
 public class FileSystemProxy
 {

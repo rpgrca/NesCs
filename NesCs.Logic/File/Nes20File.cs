@@ -1,4 +1,4 @@
-namespace NesCs.Logic;
+namespace NesCs.Logic.File;
 
 internal class Nes20File : OriginalINesFile
 {
