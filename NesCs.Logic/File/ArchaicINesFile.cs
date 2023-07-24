@@ -7,9 +7,13 @@ internal class ArchaicINesFile : INesFile
     private const int HeaderCharacterSizeIndex = 5;
     private const int HeaderFlags6Index = 6;
     private const int TrainerSize = 512;
+    private const int ProgramRomBlockSize = 16384;
+    private const int CharacterRomBlockSize = 8192;
 
     protected readonly byte[] _contents;
     protected byte[] _trainer;
+    protected byte[] _programRom;
+    protected byte[] _characterRom;
     protected int _index;
     protected NesFileOptions _options;
 
@@ -31,10 +35,14 @@ internal class ArchaicINesFile : INesFile
         _contents = contents.ToArray();
         _options = options;
         _trainer = Array.Empty<byte>();
+        _programRom = Array.Empty<byte>();
+        _characterRom = Array.Empty<byte>();
         _index = 0;
 
         ParseHeader();
         LoadTrainer();
+        LoadProgramRom();
+        LoadCharacterRom();
     }
 
     private void ParseHeader()
@@ -149,12 +157,30 @@ internal class ArchaicINesFile : INesFile
         }
     }
 
+    protected virtual void LoadProgramRom()
+    {
+        if (!_options.LoadProgramRom) return;
+
+        var bytes = ProgramRomSize * ProgramRomBlockSize;
+        _programRom = _contents[_index..(_index + bytes)].ToArray();
+        _index += bytes;
+    }
+
+    protected virtual void LoadCharacterRom()
+    {
+        if (!_options.LoadCharacterRom) return;
+
+        var bytes = CharacterRomSize * CharacterRomBlockSize;
+        _characterRom = _contents[_index..(_index + bytes)].ToArray();
+        _index += bytes;
+    }
+
     public override string ToString() =>
         $"""
             Filename          : {Path.GetFileName(Filename)}
             File format       : {GetType().Name}
-            Program ROM size  : {ProgramRomSize}
-            Character ROM size: {CharacterRomSize}
+            Program ROM size  : {ProgramRomSize} blocks ({ProgramRomSize * ProgramRomBlockSize} bytes)
+            Character ROM size: {CharacterRomSize} blocks ({CharacterRomSize * CharacterRomBlockSize} bytes)
             Mapper number     : {MapperNumber}
             Flags 6           : {Flags6}
         """;

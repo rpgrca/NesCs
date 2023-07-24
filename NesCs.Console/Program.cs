@@ -6,7 +6,7 @@
 
 Console.WriteLine($"Loading {args[0]}...");
 
-var fsp = FileSystemProxy.Create();
+var fsp = new FileSystemProxy.Builder().Loading(new NesFileOptions { LoadHeader = true, LoadTrainer = true }).Build();
 var nesFile = fsp.Load(args[0]);
 
 Console.WriteLine($"Loaded!");
