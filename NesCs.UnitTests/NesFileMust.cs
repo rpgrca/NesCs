@@ -12,16 +12,22 @@ public class NesFileMust
     public void ThrowException_WhenFileIsSmallerThanHeader()
     {
         var fileStub = new MockFileData(Array.Empty<byte>());
-        var proxy = FileSystemProxy.CreateWith(new MockFileSystem(new Dictionary<string, MockFileData>() { { NES_FILENAME, fileStub } }));
+        var proxy = CreateProxy(fileStub);
         var exception = Assert.Throws<ArgumentException>("contents", () => proxy.Load(NES_FILENAME));
         Assert.Contains("Could not find header", exception.Message);
     }
+
+    private static FileSystemProxy CreateProxy(MockFileData fileStub) =>
+        new FileSystemProxy.Builder()
+            .AccessingWith(new MockFileSystem(new Dictionary<string, MockFileData>() { { NES_FILENAME, fileStub } }))
+            .Loading(new NesFileOptions { LoadHeader = true })
+            .Build();
 
     [Fact]
     public void ThrowException_WhenFileDoesNotHaveCorrectSignature()
     {
         var fileStub = new MockFileData(Constants.GetEmptyNesHeaderFile());
-        var proxy = FileSystemProxy.CreateWith(new MockFileSystem(new Dictionary<string, MockFileData>() { { NES_FILENAME, fileStub } }));
+        var proxy = CreateProxy(fileStub);
         var exception = Assert.Throws<ArgumentException>("_contents", () => proxy.Load(NES_FILENAME));
         Assert.Contains("Signature not found", exception.Message);
     }
@@ -33,7 +39,7 @@ public class NesFileMust
         bool expectedVersionFormat, int expectedMapperNumber, int expectedProgramRamSize, int expectedTvSystem)
     {
         var fileStub = new MockFileData(fileContents);
-        var proxy = FileSystemProxy.CreateWith(new MockFileSystem(new Dictionary<string, MockFileData>() { { NES_FILENAME, fileStub } }));
+        var proxy = CreateProxy(fileStub);
         var sut = proxy.Load(NES_FILENAME);
 
         Assert.NotNull(sut);
@@ -83,7 +89,7 @@ public class NesFileMust
         bool expectedProgramRam, bool expectedBusConflicts, ConsoleType expectedExtendedConsoleType, ExpansionDevice expectedExpansionDevice)
     {
         var fileStub = new MockFileData(fileContents);
-        var proxy = FileSystemProxy.CreateWith(new MockFileSystem(new Dictionary<string, MockFileData>() { { NES_FILENAME, fileStub } }));
+        var proxy = CreateProxy(fileStub);
         var sut = proxy.Load(NES_FILENAME);
 
         Assert.NotNull(sut);
