@@ -22,4 +22,12 @@ internal class OriginalINesFile : ArchaicINesFile
 
     protected override void LoadFlags9() =>
         Flags9 = new Flags9(_contents[HeaderFlags9Index]);
+
+    public override string ToString() =>
+        base.ToString() + "\n" +
+            $"""
+                Flags 7           : {Flags7}
+                Flags 8           : {Flags8}
+                Flags 9           : {Flags9}
+            """;
 }

@@ -26,13 +26,11 @@ public record Flags7
         UpperMapperNybble = (flags & UpperMapperNybbleFlag) >> 4;
     }
 
-}
+    public override string ToString() =>
+        $"""
 
-public record Flags7ForNes20 : Flags7
-{
-    private const int ConsoleTypeMask = 0b11;
-
-    public Flags7ForNes20(int flags)
-        : base(flags) =>
-        ConsoleType = (ConsoleType)(flags & ConsoleTypeMask);
+                Console Type              : {ConsoleType}
+                Has 2.0 Format            : {HasVersion2Format}
+                Upper Mapper Nybble       : {UpperMapperNybble}
+        """;
 }

@@ -15,4 +15,11 @@ public readonly struct Byte13
             HardwareType = flags >> 4 & 0b1111;
         }
     }
+
+    public override string ToString() =>
+        $"""
+
+                PPU Type                  : {PpuType}
+                Hardware Type             : {HardwareType}
+        """;
 }

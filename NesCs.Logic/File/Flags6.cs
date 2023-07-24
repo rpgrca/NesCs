@@ -22,4 +22,14 @@ public readonly struct Flags6
         IgnoreMirroring = (flags & IgnoreMirroringFlag) == IgnoreMirroringFlag;
         LowerMapperNybble = (flags & LowerMapperNybbleFlag) >> 4;
     }
+
+    public override string ToString() =>
+        $"""
+
+                Mirroring                 : {Mirroring}
+                Battery Backed Program RAM: {HasBatteryBackedProgramRam}
+                Has Trainer               : {HasTrainer}
+                Ignore Mirroring          : {IgnoreMirroring}
+                Lower Mapper Nybble       : {LowerMapperNybble}
+        """;
 }

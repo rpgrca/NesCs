@@ -7,4 +7,10 @@ public readonly struct Flags9
     public int TvSystem { get; }
 
     public Flags9(int flags) => TvSystem = flags & TvSystemFlag;
+
+    public override string ToString() =>
+        $"""
+
+                Tv System                 : {TvSystem}
+        """;
 }

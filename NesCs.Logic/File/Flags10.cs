@@ -16,4 +16,12 @@ public readonly struct Flags10
         HasProgramRam = (flags & ProgramRamPresentFlag) == ProgramRamPresentFlag;
         HasBusConflicts = (flags & BoardHasBusConflictsFlag) == BoardHasBusConflictsFlag;
     }
+
+    public override string ToString() =>
+        $"""
+
+                Tv System                 : {TvSystem}
+                Program RAM               : {HasProgramRam}
+                Board with Bus Conflicts  : {HasBusConflicts}
+        """;
 }

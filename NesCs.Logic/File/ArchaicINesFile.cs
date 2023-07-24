@@ -1,3 +1,5 @@
+using System.Text;
+
 namespace NesCs.Logic.File;
 
 internal class ArchaicINesFile : INesFile
@@ -93,4 +95,14 @@ internal class ArchaicINesFile : INesFile
     protected virtual void LoadByte15()
     {
     }
+
+    public override string ToString() =>
+        $"""
+            Filename          : {Path.GetFileName(Filename)}
+            File format       : {GetType().Name}
+            Program ROM size  : {ProgramRomSize}
+            Character ROM size: {CharacterRomSize}
+            Mapper number     : {MapperNumber}
+            Flags 6           : {Flags6}
+        """;
 }
