@@ -1,5 +1,3 @@
-using System.Text;
-
 namespace NesCs.Logic.File;
 
 internal class ArchaicINesFile : INesFile
@@ -8,8 +6,12 @@ internal class ArchaicINesFile : INesFile
     private const int HeaderProgramSizeIndex = 4;
     private const int HeaderCharacterSizeIndex = 5;
     private const int HeaderFlags6Index = 6;
+    private const int TrainerSize = 512;
 
     protected readonly byte[] _contents;
+    protected byte[] _trainer;
+    protected int _index;
+    protected NesFileOptions _options;
 
     public string Filename { get; }
     public int ProgramRomSize { get; private set; }
@@ -23,16 +25,21 @@ internal class ArchaicINesFile : INesFile
     public Byte13 Byte13 { get; protected set; }
     public Byte15 Byte15 { get; protected set; }
 
-    internal ArchaicINesFile(string filename, byte[] contents)
+    internal ArchaicINesFile(string filename, byte[] contents, NesFileOptions options)
     {
         Filename = filename;
         _contents = contents.ToArray();
+        _options = options;
+        _trainer = Array.Empty<byte>();
+        _index = 0;
 
         ParseHeader();
+        LoadTrainer();
     }
 
     private void ParseHeader()
     {
+        if (! _options.LoadHeader) return;
         if (_contents.Length < 16) throw new ArgumentException("Could not find header", nameof(_contents));
 
         LoadSignature();
@@ -58,42 +65,88 @@ internal class ArchaicINesFile : INesFile
         {
             throw new ArgumentException("Signature not found", nameof(_contents));
         }
+
+        _index += 4;
     }
 
-    private void LoadProgramSize() => ProgramRomSize = _contents[HeaderProgramSizeIndex];
+    private void LoadProgramSize()
+    {
+        ProgramRomSize = _contents[_index++];
+    }
 
-    private void LoadCharacterSize() => CharacterRomSize = _contents[HeaderCharacterSizeIndex];
+    private void LoadCharacterSize()
+    {
+        CharacterRomSize = _contents[_index++];
+    }
 
-    private void LoadFlags6() => Flags6 = new Flags6(_contents[HeaderFlags6Index]);
+    private void LoadFlags6()
+    {
+        Flags6 = new Flags6(_contents[_index++]);
+    }
 
-    protected virtual void LoadFlags7() => Flags7 = new Flags7(0);
+    protected virtual void LoadFlags7()
+    {
+        Flags7 = new Flags7(0);
+        _index++;
+    }
 
     protected virtual void LoadMapperNumber()
     {
+        _index++;
     }
 
-    protected virtual void LoadFlags8() => Flags8 = new Flags8();
+    protected virtual void LoadFlags8()
+    {
+        Flags8 = new Flags8();
+        _index++;
+    }
 
-    protected virtual void LoadFlags9() => Flags9 = new Flags9();
+    protected virtual void LoadFlags9()
+    {
+        Flags9 = new Flags9();
+        _index++;
+    }
 
-    protected virtual void LoadFlags10() => Flags10 = new Flags10();
+    protected virtual void LoadFlags10()
+    {
+         Flags10 = new Flags10();
+         _index++;
+    }
 
     protected virtual void LoadByte11()
     {
+        _index++;
     }
 
     protected virtual void LoadByte12()
     {
+        _index++;
     }
 
-    protected virtual void LoadByte13() => Byte13 = new Byte13();
+    protected virtual void LoadByte13()
+    {
+         Byte13 = new Byte13();
+         _index++;
+    }
 
     protected virtual void LoadByte14()
     {
+        _index++;
     }
 
     protected virtual void LoadByte15()
     {
+        _index++;
+    }
+
+    protected virtual void LoadTrainer()
+    {
+        if (!_options.LoadTrainer) return;
+        if (Flags6.HasTrainer)
+        {
+            _trainer = _contents[_index..(_index + TrainerSize)].ToArray();
+            _index += TrainerSize;
+        }
     }
 
     public override string ToString() =>

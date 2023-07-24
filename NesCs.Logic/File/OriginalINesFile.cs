@@ -2,26 +2,22 @@ namespace NesCs.Logic.File;
 
 internal class OriginalINesFile : ArchaicINesFile
 {
-    protected const int HeaderFlags7Index = 7;
-    private const int HeaderFlags8Index = 8;
-    private const int HeaderFlags9Index = 9;
-
-    internal OriginalINesFile(string filename, byte[] contents)
-        : base(filename, contents)
+    internal OriginalINesFile(string filename, byte[] contents, NesFileOptions options)
+        : base(filename, contents, options)
     {
     }
 
     protected override void LoadFlags7() =>
-        Flags7 = new Flags7(_contents[HeaderFlags7Index]);
+        Flags7 = new Flags7(_contents[_index++]);
 
     protected override void LoadMapperNumber() =>
         MapperNumber = (Flags7.UpperMapperNybble << 4) | Flags6.LowerMapperNybble;
 
     protected override void LoadFlags8() =>
-        Flags8 = new Flags8(_contents[HeaderFlags8Index]);
+        Flags8 = new Flags8(_contents[_index++]);
 
     protected override void LoadFlags9() =>
-        Flags9 = new Flags9(_contents[HeaderFlags9Index]);
+        Flags9 = new Flags9(_contents[_index++]);
 
     public override string ToString() =>
         base.ToString() + "\n" +
