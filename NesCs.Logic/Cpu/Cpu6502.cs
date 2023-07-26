@@ -14,6 +14,7 @@ public class Cpu6502
         private int[][] _patch;
         private int _start;
         private int _end;
+        private List<(int, byte, string)> _trace;
 
         public Builder()
         {
@@ -21,6 +22,7 @@ public class Cpu6502
             _ramSize =_start = _end = _pc = 0;
             _program = _ram = Array.Empty<byte>();
             _patch = Array.Empty<int[]>();
+            _trace = new();
         }
 
         public Builder RunningProgram(byte[] program)
@@ -89,6 +91,12 @@ public class Cpu6502
             return this;
         }
 
+        public Builder TracingWith(List<(int, byte, string)> trace)
+        {
+            _trace = trace;
+            return this;
+        }
+
         public Cpu6502 Build()
         {
             _patch ??= Array.Empty<int[]>();
@@ -101,34 +109,49 @@ public class Cpu6502
                 _ram[address] = value;
             }
 
-            return new Cpu6502(_program, _start, _end, _pc, _a, _x, _y, _s, _p, _ram);
+            return new Cpu6502(_program, _start, _end, _pc, _a, _x, _y, _s, _p, _ram, _trace);
         }
     }
 
-    private byte _p;
-    private byte _a;
-    private int _pc;
-    private byte _x;
-    private byte _y;
-    private byte _s;
-    private byte[] _program;
+    [Flags]
+    public enum SRFlags
+    {
+        C = 1 << 0,
+        Z = 1 << 1,
+        I = 1 << 2,
+        D = 1 << 3,
+        B = 1 << 4,
+        X = 1 << 5,
+        V = 1 << 6,
+        N = 1 << 7
+    }
+
+    public SRFlags P { get; private set; }
+    public byte A { get; private set; }
+    public int PC { get; private set; }
+    public byte X { get; private set; }
+    public byte Y { get; private set; }
+    public byte S { get; private set; }
+    private readonly byte[] _program;
     private int _start;
     private int _end;
     private byte[] _ram;
     private int _ip;
+    private readonly List<(int, byte, string)> _trace;
 
-    private Cpu6502(byte[] program, int start, int end, int pc, byte a, byte x, byte y, byte s, byte p, byte[] ram)
+    private Cpu6502(byte[] program, int start, int end, int pc, byte a, byte x, byte y, byte s, byte p, byte[] ram, List<(int, byte, string)> trace)
     {
         _program = program;
         _start = start;
         _end = end;
-        _pc = pc;
-        _a = a;
-        _x = x;
-        _y = y;
-        _s = s;
-        _p = p;
+        PC = pc;
+        A = a;
+        X = x;
+        Y = y;
+        S = s;
+        P = (SRFlags)p;
         _ram = ram;
+        _trace = trace;
         _ip = 0;
     }
 
@@ -138,8 +161,8 @@ public class Cpu6502
         _program = program;
         _start = start;
         _end = end;
-        _pc = 0;
-        _a = 0;
+        PC = 0;
+        A = 0;
         _ram = new byte[0xFFFF];
 
         PowerOn();
@@ -147,9 +170,9 @@ public class Cpu6502
 
     private void PowerOn()
     {
-        _a = _x = _y = 0;
-        _p = 0x34;
-        _s = 0xFD;
+        A = X = Y = 0;
+        P = (SRFlags)0x34;
+        S = 0xFD;
         _ram[0x4017] = 0x00;
         _ram[0x4015] = 0x00;
 
@@ -170,8 +193,9 @@ public class Cpu6502
         _ip = _start;
         while (_ip < _end)
         {
-            var opcode = _program[_ip];
-            _pc += 1;
+            var opcode = _program[_ip++];
+            Trace(PC, opcode, "read");
+            PC += 1;
 
             switch (opcode)
             {
@@ -179,22 +203,45 @@ public class Cpu6502
                 // (indirect),Y   LDA (oper),Y   B1   2   5* 
                 // OPC ($LL),Y	operand is zeropage address; effective address is word in (LL, LL + 1) incremented by Y with carry: C.w($00LL) + Y
 
-                case 0xB1:
-                    _ip += 1;
-                    var address = _program[_ip];
-                    _pc += 1;
 
-                    var value = _ram[address] + _y;
-                    _pc += 1;
 
-                    value = _ram[value];
-                    _pc += 1;
+                // zeropage,X	LDA oper,X	B5	2	4  
+                case 0xB5:
+                    var address = _program[_ip++];
+                    Trace(PC, address, "read");
+
+                    var value = _ram[address];
+                    Trace(address, value, "read");
+
+                    PC += 1;
+                    value = (byte)(address + X);
+                    A = _ram[address + X];
+                    Trace(value, A, "read");
+
+                    SetZeroFlagBasedOnAccumulator();
+                    ClearNegativeFlag();
+
                     break;
             }
         }
     }
 
-    private int GetCurrentOpcode() => _program[_p++ - _start];
+    private void SetZeroFlagBasedOnAccumulator()
+    {
+        if (A == 0)
+        {
+            P |= SRFlags.Z;
+        }
+        else
+        {
+            P &= ~SRFlags.Z;
+        }
+    }
 
-    private byte GetByte() => _program[_p++ - _start];
+    private void ClearNegativeFlag() => P &= ~SRFlags.N;
+
+    private void Trace(int pc, byte value, string type) =>
+        _trace.Add((pc, value, type));
+
+    public byte PeekMemory(int address) => _ram[address];
 }
