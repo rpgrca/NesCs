@@ -13,4 +13,6 @@ public interface INesFile
     Flags10 Flags10 { get; }
     Byte13 Byte13 { get; }
     Byte15 Byte15 { get; }
+
+    byte[] ProgramRom { get; }
 }

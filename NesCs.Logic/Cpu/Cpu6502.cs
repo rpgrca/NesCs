@@ -11,9 +11,5 @@ public class Cpu6502
     public void Run()
     {
         _ip = 0;
-        while (_ip < 10)
-        {
-            var opcode = _program[_ip];
-        }
     }
 }

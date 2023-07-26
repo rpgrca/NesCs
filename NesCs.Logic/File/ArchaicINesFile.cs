@@ -28,6 +28,7 @@ internal class ArchaicINesFile : INesFile
     public Flags10 Flags10 { get; protected set; }
     public Byte13 Byte13 { get; protected set; }
     public Byte15 Byte15 { get; protected set; }
+    public byte[] ProgramRom => _programRom;
 
     internal ArchaicINesFile(string filename, byte[] contents, NesFileOptions options)
     {
