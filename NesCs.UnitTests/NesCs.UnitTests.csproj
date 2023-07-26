@@ -27,4 +27,7 @@
     <ProjectReference Include="..\NesCs.Logic\NesCs.Logic.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\1.Branch_Basics.nes" />
+  </ItemGroup>
 </Project>
