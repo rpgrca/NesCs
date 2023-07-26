@@ -3,18 +3,20 @@ using System.IO.Abstractions.TestingHelpers;
 using System.Reflection;
 using Microsoft.Extensions.FileProviders;
 using NesCs.Logic.File;
+using System.Text.Json;
 
 namespace NesCs.UnitTests;
 
+
 public class Cpu6502Must
 {
-    [Fact]
-    public void Test()
+
+    [Fact(Skip = "Sample test for future implementation")]
+    public void FutureTest()
     {
-/*
         var nesFile = CreateNesFile("1.Branch_Basics.nes");
-        var sut = new Cpu6502(nesFile.ProgramRom);
-        sut.Run();*/
+        var sut = new Cpu6502(nesFile.ProgramRom, nesFile.Mapper.StartAddress, nesFile.Mapper.EndAddress);
+        sut.Run();
     }
 
     private static INesFile CreateNesFile(string romName) =>
