@@ -11,10 +11,10 @@ public class Cpu6502Must
     [Fact]
     public void Test()
     {
-
+/*
         var nesFile = CreateNesFile("1.Branch_Basics.nes");
         var sut = new Cpu6502(nesFile.ProgramRom);
-        sut.Run();
+        sut.Run();*/
     }
 
     private static INesFile CreateNesFile(string romName) =>

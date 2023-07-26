@@ -52,7 +52,7 @@ public class NesFileMust
         Assert.Equal(expectedIgnoreMirroring, sut.Flags6.IgnoreMirroring);
         Assert.Equal(expectedConsoleType, sut.Flags7.ConsoleType);
         Assert.Equal(expectedVersionFormat, sut.Flags7.HasVersion2Format);
-        Assert.Equal(expectedMapperNumber, sut.MapperNumber);
+        Assert.Equal(expectedMapperNumber, sut.Mapper.Number);
         Assert.Equal(expectedProgramRamSize, sut.Flags8.ProgramRamSize);
         Assert.Equal(expectedTvSystem, sut.Flags9.TvSystem);
     }
@@ -69,14 +69,14 @@ public class NesFileMust
         /* Archaic iNES */
         yield return new object[] { new byte[] { 0x4e, 0x45, 0x53, 0x1A, 0x20, 0x10, 0b10000011, 0b00000000, 0x00, 0b0, 0b0, 0x00, 0x01, 0x02, 0x04, 0x05 }, 32, 16,
              /* Flags6  */ Mirroring.Vertical, true, false, false,
-             /* Flags7  */ ConsoleType.NesOrFamicom, false, 0,
+             /* Flags7  */ ConsoleType.NesOrFamicom, false, 8,
              /* Flags8  */ 0,
              /* Flags9  */ 0 };
 
         /* Archaic iNES */
         yield return new object[] { new byte[] { 0x4e, 0x45, 0x53, 0x1A, 0x20, 0x10, 0b01111100, 0b00010111, 0x20, 0b1, 0b110010, 0x00, 0x00, 0x00, 0x00, 0x00 }, 32, 16,
             /* Flags6  */ Mirroring.Horizontal, false, true, true,
-            /* Flags7  */ ConsoleType.NesOrFamicom, false, 0,
+            /* Flags7  */ ConsoleType.NesOrFamicom, false, 7,
             /* Flags8  */ 0,
             /* Flags9  */ 0 };
     }
@@ -102,7 +102,7 @@ public class NesFileMust
         Assert.Equal(expectedIgnoreMirroring, sut.Flags6.IgnoreMirroring);
         Assert.Equal(expectedConsoleType, sut.Flags7.ConsoleType);
         Assert.Equal(expectedVersionFormat, sut.Flags7.HasVersion2Format);
-        Assert.Equal(expectedMapperNumber, sut.MapperNumber);
+        Assert.Equal(expectedMapperNumber, sut.Mapper.Number);
         Assert.Equal(expectedProgramRamSize, sut.Flags8.ProgramRamSize);
         Assert.Equal(expectedTvSystem, sut.Flags9.TvSystem);
         Assert.Equal(expectedTvSystemExtended, sut.Flags10.TvSystem);

@@ -10,8 +10,23 @@ internal class OriginalINesFile : ArchaicINesFile
     protected override void LoadFlags7() =>
         Flags7 = new Flags7(_contents[_index++]);
 
-    protected override void LoadMapperNumber() =>
-        MapperNumber = (Flags7.UpperMapperNybble << 4) | Flags6.LowerMapperNybble;
+    protected override void LoadMapperNumber()
+    {
+        var mapper = (Flags7.UpperMapperNybble << 4) | Flags6.LowerMapperNybble;
+        if (mapper <= 255)
+        {
+            Mapper = mapper switch
+            {
+                <= 255 => new Mapper
+                {
+                    Number = mapper,
+                    StartAddress = 0xC000,
+                    EndAddress = 0xFFFF
+                },
+                _ => throw new ArgumentException($"Cannot load mapper {mapper}"),
+            };
+        }
+    }
 
     protected override void LoadFlags8() =>
         Flags8 = new Flags8(_contents[_index++]);

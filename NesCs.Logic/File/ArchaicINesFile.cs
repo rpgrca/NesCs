@@ -20,7 +20,7 @@ internal class ArchaicINesFile : INesFile
     public string Filename { get; }
     public int ProgramRomSize { get; private set; }
     public int CharacterRomSize { get; private set; }
-    public int MapperNumber { get; protected set; }
+    public Mapper Mapper { get; protected set; }
     public Flags6 Flags6 { get; private set; }
     public Flags7 Flags7 { get; protected set; }
     public Flags8 Flags8 { get; protected set; }
@@ -101,7 +101,17 @@ internal class ArchaicINesFile : INesFile
 
     protected virtual void LoadMapperNumber()
     {
-        _index++;
+        var mapper =  Flags6.LowerMapperNybble;
+        Mapper = mapper switch
+        {
+            <= 32 => new Mapper
+            {
+                Number = mapper,
+                StartAddress = 0xC000,
+                EndAddress = 0xFFFF
+            },
+            _ => throw new ArgumentException($"Cannot load mapper {mapper}"),
+        };
     }
 
     protected virtual void LoadFlags8()
@@ -182,7 +192,7 @@ internal class ArchaicINesFile : INesFile
             File format       : {GetType().Name}
             Program ROM size  : {ProgramRomSize} blocks ({ProgramRomSize * ProgramRomBlockSize} bytes)
             Character ROM size: {CharacterRomSize} blocks ({CharacterRomSize * CharacterRomBlockSize} bytes)
-            Mapper number     : {MapperNumber}
+            Mapper number     : {Mapper.Number}
             Flags 6           : {Flags6}
         """;
 }
