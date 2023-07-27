@@ -9,7 +9,7 @@ public static class Utilities
 	public static Cpu6502 CreateSubjectUnderTestFromSample(SampleCpuTest data, List<(int, byte, string)> trace) =>
         new Cpu6502.Builder()
             .Running(Convert.FromHexString(data.Name.Replace(" ", string.Empty)).Take(2).ToArray())
-            .WithRamSizeOf(0xffff)
+            .WithRamSizeOf(0x10000)
             .WithStackPointerAt(data.Initial.Value.S)
             .WithProcessorStatusAs(data.Initial.Value.P)
             .WithXAs(data.Initial.Value.X)

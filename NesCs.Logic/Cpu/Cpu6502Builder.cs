@@ -102,7 +102,7 @@ public partial class Cpu6502
         public Cpu6502 Build()
         {
             _patch ??= Array.Empty<int[]>();
-            if (_ramSize < 1) _ramSize = 0xFFFF;
+            if (_ramSize < 1) _ramSize = 0x10000;
             if (_ram.Length < 1) _ram = new byte[_ramSize];
             if (_end < 1) _end = _program.Length;
 

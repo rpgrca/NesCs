@@ -117,7 +117,7 @@ public partial class Cpu6502
         }
     }
 
-    private void ReadyForNextInstruction() => PC++;
+    private void ReadyForNextInstruction() => PC = (PC + 1) & 0xffff;
 
     private byte ReadByteFromProgram()
     {
