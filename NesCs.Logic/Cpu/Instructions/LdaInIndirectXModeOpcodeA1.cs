@@ -6,11 +6,11 @@ public class LdaInIndirectXModeOpcodeA1 : IInstruction
     {
         cpu.ReadyForNextInstruction();
         var address = cpu.ReadByteFromProgram();
-        var low = cpu.ReadByteFromMemory(address);
+        _ = cpu.ReadByteFromMemory(address);
 
         address = (byte)(address + cpu.ReadByteFromRegisterX());
         cpu.ReadyForNextInstruction();
-        low = cpu.ReadByteFromMemory(address);
+        var low = cpu.ReadByteFromMemory(address);
 
         address = (byte)(address + 1);
         var high = cpu.ReadByteFromMemory(address);
