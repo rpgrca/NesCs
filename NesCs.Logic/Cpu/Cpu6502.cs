@@ -216,16 +216,17 @@ public class Cpu6502
                     var high = _ram[address + 1];
                     Trace(address + 1, high, "read");
 
-                    A = _ram[PC];
-                    Trace(PC, A, "read");
+                    var effectiveAddress = (high << 8) | (low + Y);
+                    value = _ram[effectiveAddress];
+                    Trace(effectiveAddress, value, "read");
                     PC++;
 
-                    var effectiveAddress = ((high << 8) | low) + Y;
+                    effectiveAddress = ((high << 8) | low) + Y;
                     A = _ram[effectiveAddress];
                     Trace(effectiveAddress, A, "read");
 
                     SetZeroFlagBasedOnAccumulator();
-                    ClearNegativeFlag();
+                    SetNegativeFlagBasedOnAccumulator();
                     break;
 
 
@@ -277,6 +278,8 @@ public class Cpu6502
     }
 
     private void ClearNegativeFlag() => P &= ~SRFlags.N;
+
+    private void SetCarryFlag() => P |= SRFlags.C;
 
     private void Trace(int pc, byte value, string type) =>
         _trace.Add((pc, value, type));
