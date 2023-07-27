@@ -22,12 +22,13 @@ public static class Utilities
 
 	public static void Equal(SampleCpuTestStatus? final, Cpu6502 sut)
 	{
-		Assert.Equal(final.Value.S, sut.S);
-		Assert.Equal(final.Value.X, sut.X);
-		Assert.Equal(final.Value.Y, sut.Y);
-		Assert.Equal(final.Value.A, sut.A);
-		Assert.Equal(final.Value.P, (byte)sut.P);
-		Assert.Equal(final.Value.PC, sut.PC);
+		var (p, a, pc, x, y, s) = sut.TakeSnapshot();
+		Assert.Equal(final.Value.S, s);
+		Assert.Equal(final.Value.X, x);
+		Assert.Equal(final.Value.Y, y);
+		Assert.Equal(final.Value.A, a);
+		Assert.Equal(final.Value.P, (byte)p);
+		Assert.Equal(final.Value.PC, pc);
 
 		foreach (var memory in final.Value.RAM)
 		{

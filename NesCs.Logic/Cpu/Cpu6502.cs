@@ -1,19 +1,22 @@
+using NesCs.Logic.Cpu.Instructions;
+
 namespace NesCs.Logic.Cpu;
 
 public partial class Cpu6502
 {
-    public ProcessorStatus P { get; private set; }
-    public byte A { get; private set; }
-    public int PC { get; private set; }
-    public byte X { get; private set; }
-    public byte Y { get; private set; }
-    public byte S { get; private set; }
+    private ProcessorStatus P { get; set; }
+    private byte A { get; set; }
+    private int PC { get; set; }
+    private byte X { get; set; }
+    private byte Y { get; set; }
+    private byte S { get; set; }
     private readonly byte[] _program;
     private int _start;
     private int _end;
     private byte[] _ram;
     private int _ip;
     private readonly List<(int, byte, string)> _trace;
+    private IInstruction[] _instructions;
 
     private Cpu6502(byte[] program, int start, int end, int pc, byte a, byte x, byte y, byte s, byte p, byte[] ram, List<(int, byte, string)> trace)
     {
@@ -29,6 +32,16 @@ public partial class Cpu6502
         _ram = ram;
         _trace = trace;
         _ip = 0;
+
+        _instructions = new IInstruction[0x100];
+        for (var index = 0; index < 0x100; index++)
+        {
+            _instructions[index] = new NotImplementedInstruction();
+        }
+
+        _instructions[0xA5] = new InstructionA5();
+        _instructions[0xB1] = new InstructionB1();
+        _instructions[0xB5] = new InstructionB5();
     }
 
     private void PowerOn()
@@ -53,87 +66,37 @@ public partial class Cpu6502
 
     public void Run()
     {
-        byte address, low, high;
-
         _ip = _start;
         while (_ip < _end)
         {
             var opcode = ReadByteFromProgram();
-
-            switch (opcode)
-            {
-                case 0xA5:
-                    ReadyForNextInstruction();
-                    address = ReadByteFromProgram();
-
-                    ReadyForNextInstruction();
-                    A = ReadByteFromMemory(address);
-
-                    SetZeroFlagBasedOnAccumulator();
-                    SetNegativeFlagBasedOnAccumulator();
-                    break;
-
-                // LDA Load Accumulator with Memory (Indirect), Y
-                // (indirect),Y   LDA (oper),Y   B1   2   5* 
-                // OPC ($LL),Y	operand is zeropage address; effective address is word in (LL, LL + 1) incremented by Y with carry: C.w($00LL) + Y
-                case 0xB1:
-                    ReadyForNextInstruction();
-                    address = ReadByteFromProgram();
-
-                    ReadyForNextInstruction();
-                    low = ReadByteFromMemory(address);
-                    address = (byte)((address + 1) & 0xff);
-                    high = ReadByteFromMemory(address);
-
-                    var effectiveAddress = (high << 8) | ((low + Y) & 0xff);
-                    A = ReadByteFromMemory(effectiveAddress);
-
-                    var effectiveAddress2 = (((high << 8) | low) + Y) & 0xffff;
-                    if (effectiveAddress != effectiveAddress2)
-                    {
-                        A = ReadByteFromMemory(effectiveAddress2);
-                    }
-
-                    SetZeroFlagBasedOnAccumulator();
-                    SetNegativeFlagBasedOnAccumulator();
-                    break;
-
-                // zeropage,X	LDA oper,X	B5	2	4
-                case 0xB5:
-                    ReadyForNextInstruction();
-                    address = ReadByteFromProgram();
-                    _ = ReadByteFromMemory(address);
-
-                    ReadyForNextInstruction();
-                    A = ReadByteFromMemory((byte)(address + X));
-
-                    SetZeroFlagBasedOnAccumulator();
-                    SetNegativeFlagBasedOnAccumulator();
-                    break;
-
-                default:
-                    throw new ArgumentException($"Opcode {opcode} not handled");
-            }
+            _instructions[opcode].Execute(this);
         }
     }
 
-    private void ReadyForNextInstruction() => PC = (PC + 1) & 0xffff;
+    internal byte ReadByteFromRegisterY() => Y;
 
-    private byte ReadByteFromProgram()
+    internal byte ReadByteFromRegisterX() => X;
+
+    internal void ReadyForNextInstruction() => PC = (PC + 1) & 0xffff;
+
+    internal byte ReadByteFromProgram()
     {
         var address = _program[_ip++];
         Trace(PC, address, "read");
         return address;
     }
 
-    private byte ReadByteFromMemory(int address)
+    internal byte ReadByteFromMemory(int address)
     {
         var low = _ram[address];
         Trace(address, low, "read");
         return low;
     }
 
-    private void SetZeroFlagBasedOnAccumulator()
+    internal void SetValueIntoAccumulator(byte value) => A = value;
+
+    internal void SetZeroFlagBasedOnAccumulator()
     {
         if (A == 0)
         {
@@ -145,7 +108,7 @@ public partial class Cpu6502
         }
     }
 
-    private void SetNegativeFlagBasedOnAccumulator()
+    internal void SetNegativeFlagBasedOnAccumulator()
     {
         if (((ProcessorStatus)A & ProcessorStatus.N) == ProcessorStatus.N)
         {
@@ -164,4 +127,6 @@ public partial class Cpu6502
     private void Trace(int pc, byte value, string type) => _trace.Add((pc, value, type));
 
     public byte PeekMemory(int address) => _ram[address];
+
+    public (ProcessorStatus P, byte A, int PC, byte X, byte Y, byte S) TakeSnapshot() => (P, A, PC, X, Y, S);
 }
