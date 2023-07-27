@@ -245,7 +245,7 @@ public class Cpu6502
                     Trace(value, A, "read");
 
                     SetZeroFlagBasedOnAccumulator();
-                    ClearNegativeFlag();
+                    SetNegativeFlagBasedOnAccumulator();
                     break;
 
                 default:
@@ -263,6 +263,18 @@ public class Cpu6502
         else
         {
             P &= ~SRFlags.Z;
+        }
+    }
+
+    private void SetNegativeFlagBasedOnAccumulator()
+    {
+        if (((SRFlags)A & SRFlags.N) == SRFlags.N)
+        {
+            P |= SRFlags.N;
+        }
+        else
+        {
+            P &= ~SRFlags.N;
         }
     }
 
