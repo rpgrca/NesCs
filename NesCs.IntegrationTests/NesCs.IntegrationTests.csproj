@@ -23,7 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NesCs.Logic\NesCs.Logic.csproj" />
-    <ProjectReference Include="..\NesCs.UnitTests\NesCs.UnitTests.csproj" />
+    <ProjectReference Include="..\NesCs.Tests.Common\NesCs.Tests.Common.csproj" />
   </ItemGroup>
 
 </Project>

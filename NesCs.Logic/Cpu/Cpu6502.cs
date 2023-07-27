@@ -1,3 +1,5 @@
+namespace NesCs.Logic.Cpu;
+
 public class Cpu6502
 {
     public class Builder

@@ -3,7 +3,7 @@ using System.IO.Abstractions.TestingHelpers;
 using System.Reflection;
 using Microsoft.Extensions.FileProviders;
 using NesCs.Logic.File;
-using System.Text.Json;
+using NesCs.Logic.Cpu;
 
 namespace NesCs.UnitTests;
 

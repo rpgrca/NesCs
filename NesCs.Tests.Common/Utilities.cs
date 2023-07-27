@@ -1,6 +1,8 @@
+using Xunit;
 using System.Text.Json;
+using NesCs.Logic.Cpu;
 
-namespace NesCs.UnitTests;
+namespace NesCs.Tests.Common;
 
 public static class Utilities
 {

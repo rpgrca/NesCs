@@ -1,4 +1,5 @@
 using System.Text.Json;
+using NesCs.Tests.Common;
 
 namespace NesCs.UnitTests;
 

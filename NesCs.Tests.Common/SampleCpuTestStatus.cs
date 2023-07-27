@@ -1,4 +1,4 @@
-namespace NesCs.UnitTests;
+namespace NesCs.Tests.Common;
 
 public readonly struct SampleCpuTestStatus
 {
