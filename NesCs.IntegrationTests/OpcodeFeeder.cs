@@ -26,6 +26,8 @@ public class OpcodeFeeder<T> : IEnumerable<object[]> where T : IOpcodeFile
 
 public class OpcodeA5 : IOpcodeFile { public static string Filename => "../../../../../ProcessorTests/nes6502/v1/a5.json"; }
 
+public class OpcodeAD : IOpcodeFile { public static string Filename => "../../../../../ProcessorTests/nes6502/v1/ad.json"; }
+
 public class OpcodeB1 : IOpcodeFile { public static string Filename => "../../../../../ProcessorTests/nes6502/v1/b1.json"; }
 
 public class OpcodeB5 : IOpcodeFile { public static string Filename => "../../../../../ProcessorTests/nes6502/v1/b5.json"; }

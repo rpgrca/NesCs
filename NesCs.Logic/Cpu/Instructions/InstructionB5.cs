@@ -1,6 +1,6 @@
 namespace NesCs.Logic.Cpu.Instructions;
 
-public class InstructionB5 : IInstruction
+public class LdaInZeroPageXModeOpcodeB5 : IInstruction
 {
     public void Execute(Cpu6502 cpu)
     {

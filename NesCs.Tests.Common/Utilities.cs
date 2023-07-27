@@ -6,9 +6,11 @@ namespace NesCs.Tests.Common;
 
 public static class Utilities
 {
-	public static Cpu6502 CreateSubjectUnderTestFromSample(SampleCpuTest data, List<(int, byte, string)> trace) =>
+	public static Cpu6502 CreateSubjectUnderTestFromSample(SampleCpuTest data, List<(int, byte, string)> trace, int ending = 2) =>
         new Cpu6502.Builder()
-            .Running(Convert.FromHexString(data.Name.Replace(" ", string.Empty)).Take(2).ToArray())
+            .Running(Convert.FromHexString(data.Name.Replace(" ", string.Empty)))
+			.StartingAt(0)
+			.EndingAt(ending)
             .WithRamSizeOf(0x10000)
             .WithStackPointerAt(data.Initial.Value.S)
             .WithProcessorStatusAs(data.Initial.Value.P)

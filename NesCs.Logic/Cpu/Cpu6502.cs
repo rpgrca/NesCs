@@ -39,9 +39,10 @@ public partial class Cpu6502
             _instructions[index] = new NotImplementedInstruction();
         }
 
-        _instructions[0xA5] = new InstructionA5();
-        _instructions[0xB1] = new InstructionB1();
-        _instructions[0xB5] = new InstructionB5();
+        _instructions[0xA5] = new LdaInZeroPageModeOpcodeA5();
+        _instructions[0xAD] = new LdaInAbsoluteModeOpcodeAD();
+        _instructions[0xB1] = new LdaInIndirectYModeOpcodeB1();
+        _instructions[0xB5] = new LdaInZeroPageXModeOpcodeB5();
     }
 
     private void PowerOn()
@@ -82,16 +83,16 @@ public partial class Cpu6502
 
     internal byte ReadByteFromProgram()
     {
-        var address = _program[_ip++];
-        Trace(PC, address, "read");
-        return address;
+        var value = _program[_ip++];
+        Trace(PC, value, "read");
+        return value;
     }
 
     internal byte ReadByteFromMemory(int address)
     {
-        var low = _ram[address];
-        Trace(address, low, "read");
-        return low;
+        var value = _ram[address];
+        Trace(address, value, "read");
+        return value;
     }
 
     internal void SetValueIntoAccumulator(byte value) => A = value;

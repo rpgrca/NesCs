@@ -1,6 +1,6 @@
 namespace NesCs.Logic.Cpu.Instructions;
 
-public class InstructionB1 : IInstruction
+public class LdaInIndirectYModeOpcodeB1 : IInstruction
 {
     public void Execute(Cpu6502 cpu)
     {
