@@ -192,6 +192,8 @@ public class Cpu6502
 
     public void Run()
     {
+        try
+        {
         byte address, value;
 
         _ip = _start;
@@ -221,7 +223,7 @@ public class Cpu6502
                     Trace(effectiveAddress, value, "read");
                     PC++;
 
-                    effectiveAddress = ((high << 8) | low) + Y;
+                    effectiveAddress = (((high << 8) | low) + Y) % 65536;
                     A = _ram[effectiveAddress];
                     Trace(effectiveAddress, A, "read");
 
@@ -250,6 +252,11 @@ public class Cpu6502
                 default:
                     throw new ArgumentException($"Opcode {opcode} not handled");
             }
+        }
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.Print($"Exception caught on {_program[0]}-{_program[1]}-{_program[2]}");
         }
     }
 
