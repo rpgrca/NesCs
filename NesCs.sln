@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NesCs.UnitTests", "NesCs.Un
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NesCs.Console", "NesCs.Console\NesCs.Console.csproj", "{1F9111B8-A745-4197-BF2F-818288BAB141}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NesCs.Tests.Common", "NesCs.Tests.Common\NesCs.Tests.Common.csproj", "{150559A7-07AB-494B-B38B-08505354C3F5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NesCs.IntegrationTests", "NesCs.IntegrationTests\NesCs.IntegrationTests.csproj", "{0CEE9617-8446-4FC0-B9B8-3D7D59E8CBD1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +34,13 @@ Global
 		{1F9111B8-A745-4197-BF2F-818288BAB141}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F9111B8-A745-4197-BF2F-818288BAB141}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F9111B8-A745-4197-BF2F-818288BAB141}.Release|Any CPU.Build.0 = Release|Any CPU
+		{150559A7-07AB-494B-B38B-08505354C3F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{150559A7-07AB-494B-B38B-08505354C3F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{150559A7-07AB-494B-B38B-08505354C3F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{150559A7-07AB-494B-B38B-08505354C3F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CEE9617-8446-4FC0-B9B8-3D7D59E8CBD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CEE9617-8446-4FC0-B9B8-3D7D59E8CBD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CEE9617-8446-4FC0-B9B8-3D7D59E8CBD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CEE9617-8446-4FC0-B9B8-3D7D59E8CBD1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
