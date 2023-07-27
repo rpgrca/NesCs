@@ -11,9 +11,16 @@ public class LdaInAbsoluteXModeOpcodeBD : IInstruction
         var high = cpu.ReadByteFromProgram();
 
         cpu.ReadyForNextInstruction();
-        var address = ((high << 8) | low) + cpu.ReadByteFromRegisterX();
+        var address = (high << 8) | (low + cpu.ReadByteFromRegisterX()) & 0xff;
         var a = cpu.ReadByteFromMemory(address);
         cpu.SetValueIntoAccumulator(a);
+
+        var address2 = ((high << 8) | low) + cpu.ReadByteFromRegisterX();
+        if (address != address2)
+        {
+            a = cpu.ReadByteFromMemory(address2);
+            cpu.SetValueIntoAccumulator(a);
+        }
 
         cpu.SetZeroFlagBasedOnAccumulator();
         cpu.SetNegativeFlagBasedOnAccumulator();
