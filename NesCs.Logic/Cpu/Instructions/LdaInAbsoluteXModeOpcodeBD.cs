@@ -1,7 +1,12 @@
 namespace NesCs.Logic.Cpu.Instructions;
 
-public class LdaInAbsoluteXModeOpcodeBD : IInstruction
+// Covers opcode 0xB9 and 0xBD
+public class LdaInAbsoluteIndexedMode : IInstruction
 {
+    private readonly Func<Cpu6502, byte> _indexRegister;
+
+    public LdaInAbsoluteIndexedMode(Func<Cpu6502, byte> indexRegister) => _indexRegister = indexRegister;
+
     public void Execute(Cpu6502 cpu)
     {
         cpu.ReadyForNextInstruction();
@@ -11,11 +16,11 @@ public class LdaInAbsoluteXModeOpcodeBD : IInstruction
         var high = cpu.ReadByteFromProgram();
 
         cpu.ReadyForNextInstruction();
-        var address = (high << 8) | (low + cpu.ReadByteFromRegisterX()) & 0xff;
+        var address = (high << 8) | (low + _indexRegister(cpu)) & 0xff;
         var a = cpu.ReadByteFromMemory(address);
         cpu.SetValueIntoAccumulator(a);
 
-        var address2 = (((high << 8) | low) + cpu.ReadByteFromRegisterX()) & 0xffff;
+        var address2 = (((high << 8) | low) + _indexRegister(cpu)) & 0xffff;
         if (address != address2)
         {
             a = cpu.ReadByteFromMemory(address2);
