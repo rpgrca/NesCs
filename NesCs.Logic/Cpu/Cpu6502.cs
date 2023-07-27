@@ -44,6 +44,7 @@ public partial class Cpu6502
         _instructions[0xAD] = new LdaInAbsoluteModeOpcodeAD();
         _instructions[0xB1] = new LdaInIndirectYModeOpcodeB1();
         _instructions[0xB5] = new LdaInZeroPageXModeOpcodeB5();
+        _instructions[0xBD] = new LdaInAbsoluteXModeOpcodeBD();
     }
 
     private void PowerOn()
