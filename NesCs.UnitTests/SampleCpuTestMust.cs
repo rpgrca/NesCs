@@ -80,6 +80,7 @@ public class Cpu6502ProcessorMust
 
 	public static IEnumerable<object[]> OpcodeB1JsonFeeder()
 	{
+		/*
 		// Sample from README https://github.com/TomHarte/ProcessorTests/tree/main/nes6502
 		yield return new object[] { """
 {
@@ -126,6 +127,9 @@ public class Cpu6502ProcessorMust
 	]
 }
 """ };
+	}*/
+
 		yield return new object[] { """{ "name": "b1 7c 80", "initial": { "pc": 13603, "s": 190, "a": 10, "x": 194, "y": 196, "p": 108, "ram": [ [13603, 177], [13604, 124], [13605, 128], [124, 82], [125, 205], [52502, 1], [52758, 18]]}, "final": { "pc": 13605, "s": 190, "a": 18, "x": 194, "y": 196, "p": 108, "ram": [ [124, 82], [125, 205], [13603, 177], [13604, 124], [13605, 128], [52502, 1], [52758, 18]]}, "cycles": [ [13603, 177, "read"], [13604, 124, "read"], [124, 82, "read"], [125, 205, "read"], [52502, 1, "read"], [52758, 18, "read"]] }""" };
+		yield return new object[] { """{ "name": "b1 8f ba", "initial": { "pc": 5623, "s": 24, "a": 57, "x": 161, "y": 230, "p": 111, "ram": [ [5623, 177], [5624, 143], [5625, 186], [143, 237], [144, 136], [35027, 88], [35283, 89]]}, "final": { "pc": 5625, "s": 24, "a": 89, "x": 161, "y": 230, "p": 109, "ram": [ [143, 237], [144, 136], [5623, 177], [5624, 143], [5625, 186], [35027, 88], [35283, 89]]}, "cycles": [ [5623, 177, "read"], [5624, 143, "read"], [143, 237, "read"], [144, 136, "read"], [35027, 88, "read"], [35283, 89, "read"]] }""" };
 	}
 }

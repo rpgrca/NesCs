@@ -216,7 +216,7 @@ public class Cpu6502
                     var high = _ram[address + 1];
                     Trace(address + 1, high, "read");
 
-                    var effectiveAddress = (high << 8) | (low + Y);
+                    var effectiveAddress = (high << 8) | ((low + Y) % 256);
                     value = _ram[effectiveAddress];
                     Trace(effectiveAddress, value, "read");
                     PC++;
