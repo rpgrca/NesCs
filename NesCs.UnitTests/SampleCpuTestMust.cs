@@ -25,6 +25,24 @@ public class Cpu6502ProcessorMust
 	}
 
     [Theory]
+	[MemberData(nameof(OpcodeA9JsonFeeder))]
+    public void ExecuteA9SampleTestCorrectly(string jsonText)
+    {
+		var data = JsonSerializer.Deserialize<SampleCpuTest>(jsonText, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+		var trace = new List<(int, byte, string)>();
+		var sut = Utilities.CreateSubjectUnderTestFromSample(data, trace);
+		sut.Run();
+
+		Utilities.Equal(data.Final, sut);
+		Utilities.Equal(data.Cycles, trace);
+    }
+
+	public static IEnumerable<object[]> OpcodeA9JsonFeeder()
+	{
+		yield return new object[] { """{ "name": "a9 c3 7a", "initial": { "pc": 33710, "s": 215, "a": 22, "x": 214, "y": 9, "p": 162, "ram": [ [33710, 169], [33711, 195], [33712, 122]]}, "final": { "pc": 33712, "s": 215, "a": 195, "x": 214, "y": 9, "p": 160, "ram": [ [33710, 169], [33711, 195], [33712, 122]]}, "cycles": [ [33710, 169, "read"], [33711, 195, "read"]] }""" }; // common
+	}
+
+    [Theory]
 	[MemberData(nameof(OpcodeADJsonFeeder))]
     public void ExecuteADSampleTestCorrectly(string jsonText)
     {
