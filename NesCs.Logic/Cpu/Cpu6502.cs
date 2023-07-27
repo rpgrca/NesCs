@@ -207,24 +207,20 @@ public class Cpu6502
                 // (indirect),Y   LDA (oper),Y   B1   2   5* 
                 // OPC ($LL),Y	operand is zeropage address; effective address is word in (LL, LL + 1) incremented by Y with carry: C.w($00LL) + Y
                 case 0xB1:
-                    address = _program[_ip];
+                    address = _program[_ip++];
                     Trace(PC, address, "read");
-                    PC++;
 
                     var low = _ram[address];
                     Trace(address, low, "read");
-                    PC++;
 
                     var high = _ram[address + 1];
                     Trace(address + 1, high, "read");
+
+                    A = _ram[PC];
+                    Trace(PC, A, "read");
                     PC++;
 
-                    var effectiveAddress = high << 8 | low;
-                    A = _ram[effectiveAddress];
-                    Trace(effectiveAddress, A, "read");
-                    PC++;
-
-                    effectiveAddress += Y;
+                    var effectiveAddress = ((high << 8) | low) + Y;
                     A = _ram[effectiveAddress];
                     Trace(effectiveAddress, A, "read");
 
