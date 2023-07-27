@@ -6,6 +6,7 @@ namespace NesCs.UnitTests;
 public class Cpu6502ProcessorMust
 {
     [Theory]
+	[MemberData(nameof(OpcodeA1JsonFeeder))]
 	[MemberData(nameof(OpcodeA5JsonFeeder))]
 	[MemberData(nameof(OpcodeA9JsonFeeder))]
 	[MemberData(nameof(OpcodeADJsonFeeder))]
@@ -23,6 +24,11 @@ public class Cpu6502ProcessorMust
 		Utilities.Equal(data.Final, sut);
 		Utilities.Equal(data.Cycles, trace);
     }
+
+	public static IEnumerable<object[]> OpcodeA1JsonFeeder()
+	{
+		yield return new object[] { 2, """{ "name": "a1 e6 dd", "initial": { "pc": 52264, "s": 229, "a": 55, "x": 175, "y": 132, "p": 236, "ram": [ [52264, 161], [52265, 230], [52266, 221], [230, 178], [149, 154], [150, 85], [21914, 218]]}, "final": { "pc": 52266, "s": 229, "a": 218, "x": 175, "y": 132, "p": 236, "ram": [ [149, 154], [150, 85], [230, 178], [21914, 218], [52264, 161], [52265, 230], [52266, 221]]}, "cycles": [ [52264, 161, "read"], [52265, 230, "read"], [230, 178, "read"], [149, 154, "read"], [150, 85, "read"], [21914, 218, "read"]] }""" };
+	}
 
 	public static IEnumerable<object[]> OpcodeA5JsonFeeder()
 	{
