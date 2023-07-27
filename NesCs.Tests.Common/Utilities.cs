@@ -37,6 +37,7 @@ public static class Utilities
 
 	public static void Equal(JsonElement[][] cycles, List<(int, byte, string)> trace)
 	{
+		Assert.Equal(cycles.Length, trace.Count);
 		for (var index = 0; index < cycles.Length; index++)
 		{
 			Assert.Equal(cycles[index][0].GetInt32(), trace[index].Item1);
