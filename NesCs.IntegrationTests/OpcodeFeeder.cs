@@ -1,5 +1,7 @@
+using System.Text.Json;
 using System.Collections.Generic;
 using System.Collections;
+using NesCs.Tests.Common;
 
 namespace NesCs.IntegrationTests;
 
