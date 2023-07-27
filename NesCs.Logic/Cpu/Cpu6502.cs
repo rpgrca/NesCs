@@ -87,6 +87,8 @@ public partial class Cpu6502
 
     internal void SetValueIntoAccumulator(byte value) => A = value;
 
+    internal void SetValueIntoRegisterX(byte value) => X = value;
+
     internal void SetZeroFlagBasedOnAccumulator()
     {
         if (A == 0)
@@ -99,9 +101,33 @@ public partial class Cpu6502
         }
     }
 
+    internal void SetZeroFlagBasedOnRegisterX()
+    {
+        if (X == 0)
+        {
+            P |= ProcessorStatus.Z;
+        }
+        else
+        {
+            P &= ~ProcessorStatus.Z;
+        }
+    }
+
     internal void SetNegativeFlagBasedOnAccumulator()
     {
         if (((ProcessorStatus)A & ProcessorStatus.N) == ProcessorStatus.N)
+        {
+            P |= ProcessorStatus.N;
+        }
+        else
+        {
+            P &= ~ProcessorStatus.N;
+        }
+    }
+
+    internal void SetNegativeFlagBasedOnRegisterX()
+    {
+        if (((ProcessorStatus)X & ProcessorStatus.N) == ProcessorStatus.N)
         {
             P |= ProcessorStatus.N;
         }
