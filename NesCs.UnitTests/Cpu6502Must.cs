@@ -15,7 +15,11 @@ public class Cpu6502Must
     public void FutureTest()
     {
         var nesFile = CreateNesFile("1.Branch_Basics.nes");
-        var sut = new Cpu6502(nesFile.ProgramRom, nesFile.Mapper.StartAddress, nesFile.Mapper.EndAddress);
+        var sut = new Cpu6502.Builder()
+            .Running(nesFile.ProgramRom)
+            .StartingAt(nesFile.Mapper.StartAddress)
+            .EndingAt(nesFile.Mapper.EndAddress)
+            .Build();
         sut.Run();
     }
 
