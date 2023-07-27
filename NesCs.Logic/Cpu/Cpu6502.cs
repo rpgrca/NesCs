@@ -190,38 +190,66 @@ public class Cpu6502
 
     public void Run()
     {
+        byte address, value;
+
         _ip = _start;
         while (_ip < _end)
         {
             var opcode = _program[_ip++];
             Trace(PC, opcode, "read");
-            PC += 1;
+            PC++;
 
             switch (opcode)
             {
                 // LDA Load Accumulator with Memory
                 // (indirect),Y   LDA (oper),Y   B1   2   5* 
                 // OPC ($LL),Y	operand is zeropage address; effective address is word in (LL, LL + 1) incremented by Y with carry: C.w($00LL) + Y
+                case 0xB1:
+                    address = _program[_ip];
+                    Trace(PC, address, "read");
+                    PC++;
+
+                    var low = _ram[address];
+                    Trace(address, low, "read");
+                    PC++;
+
+                    var high = _ram[address + 1];
+                    Trace(address + 1, high, "read");
+                    PC++;
+
+                    var effectiveAddress = high << 8 | low;
+                    A = _ram[effectiveAddress];
+                    Trace(effectiveAddress, A, "read");
+                    PC++;
+
+                    effectiveAddress += Y;
+                    A = _ram[effectiveAddress];
+                    Trace(effectiveAddress, A, "read");
+
+                    SetZeroFlagBasedOnAccumulator();
+                    ClearNegativeFlag();
+                    break;
 
 
-
-                // zeropage,X	LDA oper,X	B5	2	4  
+                // zeropage,X	LDA oper,X	B5	2	4
                 case 0xB5:
-                    var address = _program[_ip++];
+                    address = _program[_ip++];
                     Trace(PC, address, "read");
 
-                    var value = _ram[address];
+                    value = _ram[address];
                     Trace(address, value, "read");
 
                     PC += 1;
                     value = (byte)(address + X);
-                    A = _ram[address + X];
+                    A = _ram[value];
                     Trace(value, A, "read");
 
                     SetZeroFlagBasedOnAccumulator();
                     ClearNegativeFlag();
-
                     break;
+
+                default:
+                    throw new ArgumentException($"Opcode {opcode} not handled");
             }
         }
     }
