@@ -10,4 +10,6 @@ public readonly struct SampleCpuTest
     public SampleCpuTestStatus? Initial { get; init; }
     public SampleCpuTestStatus? Final { get; init; }
     public JsonElement[][] Cycles { get; init; }
+
+    public override string ToString() => Name;
 }
