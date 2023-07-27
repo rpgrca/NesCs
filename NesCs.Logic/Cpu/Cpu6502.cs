@@ -53,30 +53,40 @@ public partial class Cpu6502
 
     public void Run()
     {
-        byte address, value;
+        byte address, low, high;
 
         _ip = _start;
         while (_ip < _end)
         {
-            var opcode = _program[_ip++];
-            Trace(PC, opcode, "read");
-            PC++;
+            var opcode = ReadByteFromProgram();
 
             switch (opcode)
             {
+                case 0xA5:
+                    ReadyForNextInstruction();
+                    address = ReadByteFromProgram();
+
+                    ReadyForNextInstruction();
+                    A = ReadByteFromMemory(address);
+
+                    SetZeroFlagBasedOnAccumulator();
+                    SetNegativeFlagBasedOnAccumulator();
+                    break;
+
                 // LDA Load Accumulator with Memory (Indirect), Y
                 // (indirect),Y   LDA (oper),Y   B1   2   5* 
                 // OPC ($LL),Y	operand is zeropage address; effective address is word in (LL, LL + 1) incremented by Y with carry: C.w($00LL) + Y
                 case 0xB1:
+                    ReadyForNextInstruction();
                     address = ReadByteFromProgram();
-                    var low = ReadByteFromMemory(address);
 
+                    ReadyForNextInstruction();
+                    low = ReadByteFromMemory(address);
                     address = (byte)((address + 1) & 0xff);
-                    var high = ReadByteFromMemory(address);
+                    high = ReadByteFromMemory(address);
 
                     var effectiveAddress = (high << 8) | ((low + Y) & 0xff);
                     A = ReadByteFromMemory(effectiveAddress);
-                    PC++;
 
                     var effectiveAddress2 = (((high << 8) | low) + Y) & 0xffff;
                     if (effectiveAddress != effectiveAddress2)
@@ -88,13 +98,13 @@ public partial class Cpu6502
                     SetNegativeFlagBasedOnAccumulator();
                     break;
 
-
                 // zeropage,X	LDA oper,X	B5	2	4
                 case 0xB5:
+                    ReadyForNextInstruction();
                     address = ReadByteFromProgram();
                     _ = ReadByteFromMemory(address);
 
-                    PC += 1;
+                    ReadyForNextInstruction();
                     A = ReadByteFromMemory((byte)(address + X));
 
                     SetZeroFlagBasedOnAccumulator();
@@ -106,6 +116,8 @@ public partial class Cpu6502
             }
         }
     }
+
+    private void ReadyForNextInstruction() => PC++;
 
     private byte ReadByteFromProgram()
     {
@@ -149,8 +161,7 @@ public partial class Cpu6502
 
     private void SetCarryFlag() => P |= ProcessorStatus.C;
 
-    private void Trace(int pc, byte value, string type) =>
-        _trace.Add((pc, value, type));
+    private void Trace(int pc, byte value, string type) => _trace.Add((pc, value, type));
 
     public byte PeekMemory(int address) => _ram[address];
 }
