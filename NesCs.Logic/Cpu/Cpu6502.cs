@@ -18,7 +18,7 @@ public partial class Cpu6502
     private readonly List<(int, byte, string)> _trace;
     private IInstruction[] _instructions;
 
-    private Cpu6502(byte[] program, int start, int end, int pc, byte a, byte x, byte y, byte s, byte p, byte[] ram, List<(int, byte, string)> trace)
+    private Cpu6502(byte[] program, int start, int end, int pc, byte a, byte x, byte y, byte s, byte p, byte[] ram, IInstruction[] instructions, List<(int, byte, string)> trace)
     {
         _program = program;
         _start = start;
@@ -30,22 +30,9 @@ public partial class Cpu6502
         S = s;
         P = (ProcessorStatus)p;
         _ram = ram;
+        _instructions = instructions;
         _trace = trace;
         _ip = 0;
-
-        _instructions = new IInstruction[0x100];
-        for (var index = 0; index < 0x100; index++)
-        {
-            _instructions[index] = new NotImplementedInstruction();
-        }
-
-        _instructions[0xA5] = new LdaInZeroPageModeOpcodeA5();
-        _instructions[0xA9] = new LdaInImmediateModeOpcodeA9();
-        _instructions[0xAD] = new LdaInAbsoluteModeOpcodeAD();
-        _instructions[0xB1] = new LdaInIndirectYModeOpcodeB1();
-        _instructions[0xB5] = new LdaInZeroPageXModeOpcodeB5();
-        _instructions[0xB9] = new LdaInAbsoluteIndexedMode(c => c.ReadByteFromRegisterY());
-        _instructions[0xBD] = new LdaInAbsoluteIndexedMode(c => c.ReadByteFromRegisterX());
     }
 
     private void PowerOn()

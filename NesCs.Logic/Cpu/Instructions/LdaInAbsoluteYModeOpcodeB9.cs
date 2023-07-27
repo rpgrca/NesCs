@@ -2,27 +2,10 @@ namespace NesCs.Logic.Cpu.Instructions;
 
 public class LdaInAbsoluteYModeOpcodeB9 : IInstruction
 {
-    public void Execute(Cpu6502 cpu)
-    {
-        cpu.ReadyForNextInstruction();
-        var low = cpu.ReadByteFromProgram();
+    private readonly IInstruction _ldaInAbsoluteMode;
 
-        cpu.ReadyForNextInstruction();
-        var high = cpu.ReadByteFromProgram();
+    public LdaInAbsoluteYModeOpcodeB9() =>
+        _ldaInAbsoluteMode = new LdaInAbsoluteIndexedMode(c => c.ReadByteFromRegisterY());
 
-        cpu.ReadyForNextInstruction();
-        var address = (high << 8) | (low + cpu.ReadByteFromRegisterY()) & 0xff;
-        var a = cpu.ReadByteFromMemory(address);
-        cpu.SetValueIntoAccumulator(a);
-
-        var address2 = (((high << 8) | low) + cpu.ReadByteFromRegisterY()) & 0xffff;
-        if (address != address2)
-        {
-            a = cpu.ReadByteFromMemory(address2);
-            cpu.SetValueIntoAccumulator(a);
-        }
-
-        cpu.SetZeroFlagBasedOnAccumulator();
-        cpu.SetNegativeFlagBasedOnAccumulator();
-    }
+    public void Execute(Cpu6502 cpu) => _ldaInAbsoluteMode.Execute(cpu);
 }

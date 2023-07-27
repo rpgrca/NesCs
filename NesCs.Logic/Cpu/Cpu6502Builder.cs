@@ -1,21 +1,16 @@
+using NesCs.Logic.Cpu.Instructions;
+
 namespace NesCs.Logic.Cpu;
 
 public partial class Cpu6502
 {
     public class Builder
     {
-        private byte _p;
-        private byte _a;
-        private int _pc;
-        private byte _x;
-        private byte _y;
-        private byte _s;
-        private byte[] _program;
-        private byte[] _ram;
-        private int _ramSize;
+        private byte _p, _a, _x, _y, _s;
+        private int _pc, _ramSize, _start, _end;
+        private byte[] _program, _ram;
         private int[][] _patch;
-        private int _start;
-        private int _end;
+        private readonly IInstruction[] _instructions;
         private List<(int, byte, string)> _trace;
 
         public Builder()
@@ -25,6 +20,20 @@ public partial class Cpu6502
             _program = _ram = Array.Empty<byte>();
             _patch = Array.Empty<int[]>();
             _trace = new();
+
+            _instructions = new IInstruction[0x100];
+            for (var index = 0; index < 0x100; index++)
+            {
+                _instructions[index] = new NotImplementedInstruction();
+            }
+ 
+            _instructions[0xA5] = new LdaInZeroPageModeOpcodeA5();
+            _instructions[0xA9] = new LdaInImmediateModeOpcodeA9();
+            _instructions[0xAD] = new LdaInAbsoluteModeOpcodeAD();
+            _instructions[0xB1] = new LdaInIndirectYModeOpcodeB1();
+            _instructions[0xB5] = new LdaInZeroPageXModeOpcodeB5();
+            _instructions[0xB9] = new LdaInAbsoluteYModeOpcodeB9();
+            _instructions[0xBD] = new LdaInAbsoluteXModeOpcodeBD();
         }
 
         public Builder Running(byte[] program)
@@ -111,7 +120,7 @@ public partial class Cpu6502
                 _ram[address] = value;
             }
 
-            return new Cpu6502(_program, _start, _end, _pc, _a, _x, _y, _s, _p, _ram, _trace);
+            return new Cpu6502(_program, _start, _end, _pc, _a, _x, _y, _s, _p, _ram, _instructions, _trace);
         }
     }
 }
