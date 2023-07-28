@@ -13,20 +13,22 @@ public abstract class LoadInAbsoluteIndexedMode : IInstruction
         cpu.ReadyForNextInstruction();
         var address = (high << 8) | (low + ObtainValueForIndex(cpu)) & 0xff;
         var value = cpu.ReadByteFromMemory(address);
-        StoreValueInFinalDestination(cpu, value);
 
         var address2 = (((high << 8) | low) + ObtainValueForIndex(cpu)) & 0xffff;
         if (address != address2)
         {
             value = cpu.ReadByteFromMemory(address2);
-            StoreValueInFinalDestination(cpu, value);
         }
 
+        value = ExecuteOperation(cpu, value);
+        StoreValueInFinalDestination(cpu, value);
         cpu.SetZeroFlagBasedOn(value);
         cpu.SetNegativeFlagBasedOn(value);
     }
 
     protected abstract byte ObtainValueForIndex(Cpu6502 cpu);
+
+    protected abstract byte ExecuteOperation(Cpu6502 cpu, byte value);
 
     protected abstract void StoreValueInFinalDestination(Cpu6502 cpu, byte value);
 }
