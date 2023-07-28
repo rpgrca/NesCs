@@ -18,7 +18,23 @@ public static class Utilities
             .WithYAs(data.Initial.Value.Y)
 			.WithAccumulatorAs(data.Initial.Value.A)
             .WithProgramCounterAs(data.Initial.Value.PC)
-            .RamPatchedAs(data.Initial.Value.RAM)
+            .RamPatchedAs(data.Initial.Value.RAM.Select(p => ((int)p[0], (byte)p[1])).ToArray())
+			.TracingWith(trace)
+            .Build();
+
+	public static Cpu6502 CreateSubjectUnderTestFromSample(byte[] opcodes, (byte S, byte P, int PC, byte X, byte Y, byte A, (int Address, byte Value)[] RAM) initial, List<(int, byte, string)> trace) =>
+        new Cpu6502.Builder()
+            .Running(opcodes)
+			.StartingAt(0)
+			.EndingAt(1)
+            .WithRamSizeOf(0x10000)
+            .WithStackPointerAt(initial.S)
+            .WithProcessorStatusAs(initial.P)
+            .WithXAs(initial.X)
+            .WithYAs(initial.Y)
+			.WithAccumulatorAs(initial.A)
+            .WithProgramCounterAs(initial.PC)
+            .RamPatchedAs(initial.RAM)
 			.TracingWith(trace)
             .Build();
 

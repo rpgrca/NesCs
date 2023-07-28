@@ -9,7 +9,7 @@ public partial class Cpu6502
         private byte _p, _a, _x, _y, _s;
         private int _pc, _ramSize, _start, _end;
         private byte[] _program, _ram;
-        private int[][] _patch;
+        private (int Address, byte Value)[] _patch;
         private readonly IInstruction[] _instructions;
         private List<(int, byte, string)> _trace;
 
@@ -18,7 +18,7 @@ public partial class Cpu6502
             _p = _a = _x = _y = _s = 0;
             _ramSize = _start = _end = _pc = 0;
             _program = _ram = Array.Empty<byte>();
-            _patch = Array.Empty<int[]>();
+            _patch = Array.Empty<(int, byte)>();
             _trace = new();
 
             _instructions = new IInstruction[0x100];
@@ -117,7 +117,7 @@ public partial class Cpu6502
             return this;
         }
 
-        public Builder RamPatchedAs(int[][] patch)
+        public Builder RamPatchedAs((int, byte)[] patch)
         {
             _patch = patch;
             return this;
@@ -131,12 +131,12 @@ public partial class Cpu6502
 
         public Cpu6502 Build()
         {
-            _patch ??= Array.Empty<int[]>();
+            _patch ??= Array.Empty<(int, byte)>();
             if (_ramSize < 1) _ramSize = 0x10000;
             if (_ram.Length < 1) _ram = new byte[_ramSize];
             if (_end < 1) _end = _program.Length;
 
-            foreach ((int address, byte value) in _patch.Select(v => (v[0], (byte)v[1])))
+            foreach ((int address, byte value) in _patch)
             {
                 _ram[address] = value;
             }
