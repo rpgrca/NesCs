@@ -10,6 +10,7 @@ public class Cpu6502ProcessorMust
 	[MemberData(nameof(OpcodeA1JsonFeeder))]
 	[MemberData(nameof(OpcodeA2JsonFeeder))]
 	[MemberData(nameof(OpcodeA5JsonFeeder))]
+	[MemberData(nameof(OpcodeA6JsonFeeder))]
 	[MemberData(nameof(OpcodeA9JsonFeeder))]
 	[MemberData(nameof(OpcodeADJsonFeeder))]
 	[MemberData(nameof(OpcodeB1JsonFeeder))]
@@ -27,25 +28,24 @@ public class Cpu6502ProcessorMust
 		Utilities.Equal(data.Cycles, trace);
     }
 
-	public static IEnumerable<object[]> OpcodeA0JsonFeeder()
-	{
-		yield return new object[] { 2, """{ "name": "a0 3c 6e", "initial": { "pc": 16399, "s": 180, "a": 201, "x": 61, "y": 70, "p": 45, "ram": [ [16399, 160], [16400, 60], [16401, 110]]}, "final": { "pc": 16401, "s": 180, "a": 201, "x": 61, "y": 60, "p": 45, "ram": [ [16399, 160], [16400, 60], [16401, 110]]}, "cycles": [ [16399, 160, "read"], [16400, 60, "read"]] }""" };
-	}
+	public static IEnumerable<object[]> OpcodeA0JsonFeeder() =>
+		new object[][] { new object[] { 2, """{ "name": "a0 3c 6e", "initial": { "pc": 16399, "s": 180, "a": 201, "x": 61, "y": 70, "p": 45, "ram": [ [16399, 160], [16400, 60], [16401, 110]]}, "final": { "pc": 16401, "s": 180, "a": 201, "x": 61, "y": 60, "p": 45, "ram": [ [16399, 160], [16400, 60], [16401, 110]]}, "cycles": [ [16399, 160, "read"], [16400, 60, "read"]] }""" } };
 
-	public static IEnumerable<object[]> OpcodeA1JsonFeeder()
-	{
-		yield return new object[] { 2, """{ "name": "a1 e6 dd", "initial": { "pc": 52264, "s": 229, "a": 55, "x": 175, "y": 132, "p": 236, "ram": [ [52264, 161], [52265, 230], [52266, 221], [230, 178], [149, 154], [150, 85], [21914, 218]]}, "final": { "pc": 52266, "s": 229, "a": 218, "x": 175, "y": 132, "p": 236, "ram": [ [149, 154], [150, 85], [230, 178], [21914, 218], [52264, 161], [52265, 230], [52266, 221]]}, "cycles": [ [52264, 161, "read"], [52265, 230, "read"], [230, 178, "read"], [149, 154, "read"], [150, 85, "read"], [21914, 218, "read"]] }""" };
-	}
+    public static IEnumerable<object[]> OpcodeA1JsonFeeder() =>
+		new object[][] { new object[] { 2, """{ "name": "a1 e6 dd", "initial": { "pc": 52264, "s": 229, "a": 55, "x": 175, "y": 132, "p": 236, "ram": [ [52264, 161], [52265, 230], [52266, 221], [230, 178], [149, 154], [150, 85], [21914, 218]]}, "final": { "pc": 52266, "s": 229, "a": 218, "x": 175, "y": 132, "p": 236, "ram": [ [149, 154], [150, 85], [230, 178], [21914, 218], [52264, 161], [52265, 230], [52266, 221]]}, "cycles": [ [52264, 161, "read"], [52265, 230, "read"], [230, 178, "read"], [149, 154, "read"], [150, 85, "read"], [21914, 218, "read"]] }""" } };
 
-	public static IEnumerable<object[]> OpcodeA2JsonFeeder()
-	{
-		yield return new object[] { 2, """{ "name": "a2 97 a1", "initial": { "pc": 56542, "s": 190, "a": 31, "x": 139, "y": 177, "p": 33, "ram": [ [56542, 162], [56543, 151], [56544, 161]]}, "final": { "pc": 56544, "s": 190, "a": 31, "x": 151, "y": 177, "p": 161, "ram": [ [56542, 162], [56543, 151], [56544, 161]]}, "cycles": [ [56542, 162, "read"], [56543, 151, "read"]] }""" };
-	}
+	public static IEnumerable<object[]> OpcodeA2JsonFeeder() =>
+		new object[][] { new object[] { 2, """{ "name": "a2 97 a1", "initial": { "pc": 56542, "s": 190, "a": 31, "x": 139, "y": 177, "p": 33, "ram": [ [56542, 162], [56543, 151], [56544, 161]]}, "final": { "pc": 56544, "s": 190, "a": 31, "x": 151, "y": 177, "p": 161, "ram": [ [56542, 162], [56543, 151], [56544, 161]]}, "cycles": [ [56542, 162, "read"], [56543, 151, "read"]] }""" } };
 
 	public static IEnumerable<object[]> OpcodeA5JsonFeeder()
 	{
 		yield return new object[] { 2, """{ "name": "a5 78 f1", "initial": { "pc": 44571, "s": 149, "a": 49, "x": 224, "y": 25, "p": 110, "ram": [ [44571, 165], [44572, 120], [44573, 241], [120, 118]]}, "final": { "pc": 44573, "s": 149, "a": 118, "x": 224, "y": 25, "p": 108, "ram": [ [120, 118], [44571, 165], [44572, 120], [44573, 241]]}, "cycles": [ [44571, 165, "read"], [44572, 120, "read"], [120, 118, "read"]] }""" }; // common, validates 9999
 		yield return new object[] { 2, """{ "name": "a5 46 e9", "initial": { "pc": 65534, "s": 198, "a": 122, "x": 73, "y": 75, "p": 109, "ram": [ [65534, 165], [65535, 70], [0, 233], [70, 6]]}, "final": { "pc": 0, "s": 198, "a": 6, "x": 73, "y": 75, "p": 109, "ram": [ [0, 233], [70, 6], [65534, 165], [65535, 70]]}, "cycles": [ [65534, 165, "read"], [65535, 70, "read"], [70, 6, "read"]] }""" }; // handle wrap around PC turning 0
+	}
+
+	public static IEnumerable<object[]> OpcodeA6JsonFeeder()
+	{
+		yield return new object[] { 2, """{ "name": "a6 ed bc", "initial": { "pc": 37163, "s": 182, "a": 193, "x": 104, "y": 243, "p": 103, "ram": [ [37163, 166], [37164, 237], [37165, 188], [237, 68]]}, "final": { "pc": 37165, "s": 182, "a": 193, "x": 68, "y": 243, "p": 101, "ram": [ [237, 68], [37163, 166], [37164, 237], [37165, 188]]}, "cycles": [ [37163, 166, "read"], [37164, 237, "read"], [237, 68, "read"]] }""" };
 	}
 
 	public static IEnumerable<object[]> OpcodeA9JsonFeeder()
