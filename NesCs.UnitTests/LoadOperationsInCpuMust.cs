@@ -3,7 +3,7 @@ using NesCs.Tests.Common;
 
 namespace NesCs.UnitTests;
 
-public class Cpu6502ProcessorMust
+public class LoadOperationsInCpuMust
 {
     [Theory]
 	[MemberData(nameof(OpcodeA0JsonFeeder))]
@@ -24,7 +24,7 @@ public class Cpu6502ProcessorMust
     [MemberData(nameof(OpcodeBCJsonFeeder))]
     [MemberData(nameof(OpcodeBDJsonFeeder))]
     [MemberData(nameof(OpcodeBEJsonFeeder))]
-    public void ExecuteA5SampleTestCorrectly(int amount, string jsonText)
+    public void BeExecutedCorrectly(int amount, string jsonText)
     {
 		var data = JsonSerializer.Deserialize<SampleCpuTest>(jsonText, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 		var trace = new List<(int, byte, string)>();
