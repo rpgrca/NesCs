@@ -5,7 +5,7 @@ using Microsoft.Extensions.FileProviders;
 using NesCs.Logic.File;
 using NesCs.Logic.Cpu;
 
-namespace NesCs.UnitTests;
+namespace NesCs.UnitTests.Cpu;
 
 
 public class Cpu6502Must
