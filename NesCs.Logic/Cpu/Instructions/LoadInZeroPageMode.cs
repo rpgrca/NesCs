@@ -1,13 +1,14 @@
 namespace NesCs.Logic.Cpu.Instructions;
 
-public abstract class LoadInImmediateMode : IInstruction
+public abstract class LoadInZeroPageMode : IInstruction
 {
     public void Execute(Cpu6502 cpu)
     {
         cpu.ReadyForNextInstruction();
-        var value = cpu.ReadByteFromProgram();
+        var address = cpu.ReadByteFromProgram();
 
         cpu.ReadyForNextInstruction();
+        var value = cpu.ReadByteFromMemory(address);
         StoreValueInFinalDestination(cpu, value);
 
         cpu.SetZeroFlagBasedOn(value);

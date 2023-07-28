@@ -1,11 +1,7 @@
 namespace NesCs.Logic.Cpu.Instructions;
 
-public class LdyInImmediateModeOpcodeA0 : IInstruction
+public class LdyInImmediateModeOpcodeA0 : LoadInImmediateMode
 {
-    private readonly IInstruction _loadInImmediateMode;
-
-    public LdyInImmediateModeOpcodeA0() =>
-        _loadInImmediateMode = new LoadInImmediateMode((c, v) => c.SetValueIntoRegisterY(v));
-
-    public void Execute(Cpu6502 cpu) => _loadInImmediateMode.Execute(cpu);
+    protected override void StoreValueInFinalDestination(Cpu6502 cpu, byte value) =>
+        cpu.SetValueIntoRegisterY(value);
 }
