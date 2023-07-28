@@ -8,8 +8,9 @@ public class LogicalInclusiveOrInCpuMust
 	[Theory]
     [MemberData(nameof(Opcode05JsonFeeder))]
 	[MemberData(nameof(Opcode09JsonFeeder))]
-	[MemberData(nameof(Opcode15JsonFeeder))]
     [MemberData(nameof(Opcode0DJsonFeeder))]
+	[MemberData(nameof(Opcode15JsonFeeder))]
+	[MemberData(nameof(Opcode1DJsonFeeder))]
 	public void BeExecutedCorrectly(string jsonText)
 	{
         var data = JsonSerializer.Deserialize<SampleCpuTest>(jsonText, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
@@ -31,11 +32,12 @@ public class LogicalInclusiveOrInCpuMust
         yield return new object[] { """{ "name": "09 da ad", "initial": { "pc": 44847, "s": 201, "a": 33, "x": 97, "y": 103, "p": 44, "ram": [ [44847, 9], [44848, 218], [44849, 173]]}, "final": { "pc": 44849, "s": 201, "a": 251, "x": 97, "y": 103, "p": 172, "ram": [ [44847, 9], [44848, 218], [44849, 173]]}, "cycles": [ [44847, 9, "read"], [44848, 218, "read"]] }""" };
     }
 
+    public static IEnumerable<object[]> Opcode0DJsonFeeder() =>
+        new object[][] { new object[] { """{ "name": "0d cb fd", "initial": { "pc": 29671, "s": 57, "a": 253, "x": 36, "y": 9, "p": 37, "ram": [ [29671, 13], [29672, 203], [29673, 253], [64971, 245], [29674, 10]]}, "final": { "pc": 29674, "s": 57, "a": 253, "x": 36, "y": 9, "p": 165, "ram": [ [29671, 13], [29672, 203], [29673, 253], [29674, 10], [64971, 245]]}, "cycles": [ [29671, 13, "read"], [29672, 203, "read"], [29673, 253, "read"], [64971, 245, "read"]] }""" } };
+
     public static IEnumerable<object[]> Opcode15JsonFeeder() =>
         new object[][] { new object[] { """{ "name": "15 86 a4", "initial": { "pc": 54719, "s": 18, "a": 35, "x": 142, "y": 223, "p": 229, "ram": [ [54719, 21], [54720, 134], [54721, 164], [134, 232], [20, 252]]}, "final": { "pc": 54721, "s": 18, "a": 255, "x": 142, "y": 223, "p": 229, "ram": [ [20, 252], [134, 232], [54719, 21], [54720, 134], [54721, 164]]}, "cycles": [ [54719, 21, "read"], [54720, 134, "read"], [134, 232, "read"], [20, 252, "read"]] }""" } };
 
-    public static IEnumerable<object[]> Opcode0DJsonFeeder()
-    {
-        yield return new object[] { """{ "name": "0d cb fd", "initial": { "pc": 29671, "s": 57, "a": 253, "x": 36, "y": 9, "p": 37, "ram": [ [29671, 13], [29672, 203], [29673, 253], [64971, 245], [29674, 10]]}, "final": { "pc": 29674, "s": 57, "a": 253, "x": 36, "y": 9, "p": 165, "ram": [ [29671, 13], [29672, 203], [29673, 253], [29674, 10], [64971, 245]]}, "cycles": [ [29671, 13, "read"], [29672, 203, "read"], [29673, 253, "read"], [64971, 245, "read"]] }""" };
-    }
+    public static IEnumerable<object[]> Opcode1DJsonFeeder() =>
+        new object[][] { new object[] { """{ "name": "1d 7a 25", "initial": { "pc": 34101, "s": 242, "a": 163, "x": 172, "y": 93, "p": 99, "ram": [ [34101, 29], [34102, 122], [34103, 37], [9510, 142], [9766, 96], [34104, 168]]}, "final": { "pc": 34104, "s": 242, "a": 227, "x": 172, "y": 93, "p": 225, "ram": [ [9510, 142], [9766, 96], [34101, 29], [34102, 122], [34103, 37], [34104, 168]]}, "cycles": [ [34101, 29, "read"], [34102, 122, "read"], [34103, 37, "read"], [9510, 142, "read"], [9766, 96, "read"]] }""" } };
 }
