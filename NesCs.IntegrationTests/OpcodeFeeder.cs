@@ -28,6 +28,8 @@ public class Opcode05 : IOpcodeFile { public static string Filename => "../../..
 
 public class Opcode09 : IOpcodeFile { public static string Filename => "../../../../../ProcessorTests/nes6502/v1/09.json"; }
 
+public class Opcode15 : IOpcodeFile { public static string Filename => "../../../../../ProcessorTests/nes6502/v1/15.json"; }
+
 public class OpcodeA0 : IOpcodeFile { public static string Filename => "../../../../../ProcessorTests/nes6502/v1/a0.json"; }
 
 public class OpcodeA1 : IOpcodeFile { public static string Filename => "../../../../../ProcessorTests/nes6502/v1/a1.json"; }

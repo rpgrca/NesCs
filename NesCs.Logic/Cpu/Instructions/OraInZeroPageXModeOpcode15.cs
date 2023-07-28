@@ -1,6 +1,6 @@
 namespace NesCs.Logic.Cpu.Instructions;
 
-public class OraInZeroPageModeOpcode05 : IInstruction
+public class OraInZeroPageXModeOpcode15 : IInstruction
 {
     public void Execute(Cpu6502 cpu)
     {
@@ -8,8 +8,8 @@ public class OraInZeroPageModeOpcode05 : IInstruction
         var offset = cpu.ReadByteFromProgram();
 
         cpu.ReadyForNextInstruction();
-
-        var effectiveAddress = offset;
+        _ = cpu.ReadByteFromMemory(offset);
+        var effectiveAddress = (byte)((cpu.ReadByteFromRegisterX() + offset) & 0xff);
 
         var operand = cpu.ReadByteFromMemory(effectiveAddress);
         var result = (byte)(cpu.ReadByteFromAccumulator() | operand);

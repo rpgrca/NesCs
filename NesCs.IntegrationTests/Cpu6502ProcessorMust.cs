@@ -48,6 +48,7 @@ public class Cpu6502ProcessorMust
     [Theory]
     [ClassData(typeof(OpcodeFeeder<Opcode05>))]
     [ClassData(typeof(OpcodeFeeder<Opcode09>))]
+    [ClassData(typeof(OpcodeFeeder<Opcode15>))]
     public void Execute10000InclusiveOrTestsPerOpcodeCorrectly(SampleCpuTest data)
     {
         var trace = new List<(int, byte, string)>();
