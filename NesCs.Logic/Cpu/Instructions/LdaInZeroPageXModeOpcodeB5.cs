@@ -1,18 +1,10 @@
 namespace NesCs.Logic.Cpu.Instructions;
 
-public class LdaInZeroPageXModeOpcodeB5 : IInstruction
+public class LdaInZeroPageXModeOpcodeB5 : LoadInZeroIndexedMode
 {
-    public void Execute(Cpu6502 cpu)
-    {
-        cpu.ReadyForNextInstruction();
-        var address = cpu.ReadByteFromProgram();
-        _ = cpu.ReadByteFromMemory(address);
+    protected override byte ObtainValueForIndex(Cpu6502 cpu) =>
+        cpu.ReadByteFromRegisterX();
 
-        cpu.ReadyForNextInstruction();
-        var a = cpu.ReadByteFromMemory((byte)(address + cpu.ReadByteFromRegisterX()));
-        cpu.SetValueIntoAccumulator(a);
-
-        cpu.SetZeroFlagBasedOnAccumulator();
-        cpu.SetNegativeFlagBasedOnAccumulator();
-    }
+    protected override void StoreValueInFinalDestination(Cpu6502 cpu, byte value) =>
+        cpu.SetValueIntoAccumulator(value);
 }
