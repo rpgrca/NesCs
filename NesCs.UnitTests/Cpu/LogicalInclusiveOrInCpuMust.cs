@@ -10,6 +10,7 @@ public class LogicalInclusiveOrInCpuMust
     [MemberData(nameof(Opcode05JsonFeeder))]
 	[MemberData(nameof(Opcode09JsonFeeder))]
     [MemberData(nameof(Opcode0DJsonFeeder))]
+	[MemberData(nameof(Opcode11JsonFeeder))]
 	[MemberData(nameof(Opcode15JsonFeeder))]
     [MemberData(nameof(Opcode19JsonFeeder))]
 	[MemberData(nameof(Opcode1DJsonFeeder))]
@@ -39,6 +40,9 @@ public class LogicalInclusiveOrInCpuMust
 
     public static IEnumerable<object[]> Opcode0DJsonFeeder() =>
         new object[][] { new object[] { """{ "name": "0d cb fd", "initial": { "pc": 29671, "s": 57, "a": 253, "x": 36, "y": 9, "p": 37, "ram": [ [29671, 13], [29672, 203], [29673, 253], [64971, 245], [29674, 10]]}, "final": { "pc": 29674, "s": 57, "a": 253, "x": 36, "y": 9, "p": 165, "ram": [ [29671, 13], [29672, 203], [29673, 253], [29674, 10], [64971, 245]]}, "cycles": [ [29671, 13, "read"], [29672, 203, "read"], [29673, 253, "read"], [64971, 245, "read"]] }""" } };
+
+    public static IEnumerable<object[]> Opcode11JsonFeeder() =>
+        new object[][] { new object[] { """{ "name": "11 1b 8f", "initial": { "pc": 19390, "s": 95, "a": 224, "x": 196, "y": 65, "p": 169, "ram": [ [19390, 17], [19391, 27], [19392, 143], [27, 206], [28, 193], [49423, 216], [49679, 62]]}, "final": { "pc": 19392, "s": 95, "a": 254, "x": 196, "y": 65, "p": 169, "ram": [ [27, 206], [28, 193], [19390, 17], [19391, 27], [19392, 143], [49423, 216], [49679, 62]]}, "cycles": [ [19390, 17, "read"], [19391, 27, "read"], [27, 206, "read"], [28, 193, "read"], [49423, 216, "read"], [49679, 62, "read"]] }""" } };
 
     public static IEnumerable<object[]> Opcode15JsonFeeder() =>
         new object[][] { new object[] { """{ "name": "15 86 a4", "initial": { "pc": 54719, "s": 18, "a": 35, "x": 142, "y": 223, "p": 229, "ram": [ [54719, 21], [54720, 134], [54721, 164], [134, 232], [20, 252]]}, "final": { "pc": 54721, "s": 18, "a": 255, "x": 142, "y": 223, "p": 229, "ram": [ [20, 252], [134, 232], [54719, 21], [54720, 134], [54721, 164]]}, "cycles": [ [54719, 21, "read"], [54720, 134, "read"], [134, 232, "read"], [20, 252, "read"]] }""" } };
