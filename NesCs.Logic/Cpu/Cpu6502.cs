@@ -71,6 +71,8 @@ public partial class Cpu6502
 
     internal int ReadByteFromProgramCounter() => PC;
 
+    internal byte ReadByteFromAccumulator() => A;
+
     internal void ReadyForNextInstruction() => PC = (PC + 1) & 0xffff;
 
     internal byte ReadByteFromProgram()

@@ -5,6 +5,7 @@ namespace NesCs.IntegrationTests;
 public class Cpu6502ProcessorMust
 {
 	[Theory]
+    [ClassData(typeof(OpcodeFeeder<Opcode09>))]
     [ClassData(typeof(OpcodeFeeder<OpcodeA0>))]
     [ClassData(typeof(OpcodeFeeder<OpcodeA1>))]
     [ClassData(typeof(OpcodeFeeder<OpcodeA2>))]
@@ -38,7 +39,19 @@ public class Cpu6502ProcessorMust
     public void Execute10000NopTestsPerOpcodeCorrectly(SampleCpuTest data)
     {
         var trace = new List<(int, byte, string)>();
-		var sut = Utilities.CreateSubjectUnderTestFromSample(data, trace, 1);
+		var sut = Utilities.CreateSubjectUnderTestFromSample(data, trace);
+        sut.Run();
+
+        Utilities.Equal(data.Final, sut);
+        Utilities.Equal(data.Cycles, trace);
+    }
+
+    [Theory]
+    [ClassData(typeof(OpcodeFeeder<Opcode09>))]
+    public void Execute10000InclusiveOrTestsPerOpcodeCorrectly(SampleCpuTest data)
+    {
+        var trace = new List<(int, byte, string)>();
+		var sut = Utilities.CreateSubjectUnderTestFromSample(data, trace);
         sut.Run();
 
         Utilities.Equal(data.Final, sut);
