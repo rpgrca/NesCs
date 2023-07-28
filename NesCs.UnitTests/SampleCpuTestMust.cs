@@ -16,6 +16,7 @@ public class Cpu6502ProcessorMust
 	[MemberData(nameof(OpcodeADJsonFeeder))]
 	[MemberData(nameof(OpcodeAEJsonFeeder))]
 	[MemberData(nameof(OpcodeB1JsonFeeder))]
+	[MemberData(nameof(OpcodeB4JsonFeeder))]
     [MemberData(nameof(OpcodeB5JsonFeeder))]
     [MemberData(nameof(OpcodeB6JsonFeeder))]
 	[MemberData(nameof(OpcodeB9JsonFeeder))]
@@ -71,6 +72,9 @@ public class Cpu6502ProcessorMust
 		yield return new object[] { 2, """{ "name": "b1 96 e3", "initial": { "pc": 46214, "s": 250, "a": 105, "x": 244, "y": 129, "p": 43, "ram": [ [46214, 177], [46215, 150], [46216, 227], [150, 230], [151, 255], [65383, 109], [103, 180]]}, "final": { "pc": 46216, "s": 250, "a": 180, "x": 244, "y": 129, "p": 169, "ram": [ [103, 180], [150, 230], [151, 255], [46214, 177], [46215, 150], [46216, 227], [65383, 109]]}, "cycles": [ [46214, 177, "read"], [46215, 150, "read"], [150, 230, "read"], [151, 255, "read"], [65383, 109, "read"], [103, 180, "read"]] }""" }; // wrap around 65536 sample
 		yield return new object[] { 2, """{ "name": "b1 ff a1", "initial": { "pc": 53704, "s": 196, "a": 234, "x": 238, "y": 126, "p": 227, "ram": [ [53704, 177], [53705, 255], [53706, 161], [255, 80], [0, 201], [51662, 192]]}, "final": { "pc": 53706, "s": 196, "a": 192, "x": 238, "y": 126, "p": 225, "ram": [ [0, 201], [255, 80], [51662, 192], [53704, 177], [53705, 255], [53706, 161]]}, "cycles": [ [53704, 177, "read"], [53705, 255, "read"], [255, 80, "read"], [0, 201, "read"], [51662, 192, "read"]] }""" };                                                     // wrap around high byte address sample
 	}
+
+	public static IEnumerable<object[]> OpcodeB4JsonFeeder() =>
+		new object[][] { new object[] { 2, """{ "name": "b4 6b 7b", "initial": { "pc": 16335, "s": 84, "a": 203, "x": 231, "y": 191, "p": 227, "ram": [ [16335, 180], [16336, 107], [16337, 123], [107, 245], [82, 249]]}, "final": { "pc": 16337, "s": 84, "a": 203, "x": 231, "y": 249, "p": 225, "ram": [ [82, 249], [107, 245], [16335, 180], [16336, 107], [16337, 123]]}, "cycles": [ [16335, 180, "read"], [16336, 107, "read"], [107, 245, "read"], [82, 249, "read"]] }""" } };
 
 	public static IEnumerable<object[]> OpcodeB5JsonFeeder()
 	{

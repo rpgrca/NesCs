@@ -37,6 +37,7 @@ public partial class Cpu6502
             _instructions[0xAD] = new LdaInAbsoluteModeOpcodeAD();
             _instructions[0xAE] = new LdxInAbsoluteModeOpcodeAE();
             _instructions[0xB1] = new LdaInIndirectYModeOpcodeB1();
+            _instructions[0xB4] = new LdyInZeroPageXModeOpcodeB4();
             _instructions[0xB5] = new LdaInZeroPageXModeOpcodeB5();
             _instructions[0xB6] = new LdxInZeroPageYModeOpcodeB6();
             _instructions[0xB9] = new LdaInAbsoluteYModeOpcodeB9();
