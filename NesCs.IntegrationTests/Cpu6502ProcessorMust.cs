@@ -46,6 +46,7 @@ public class Cpu6502ProcessorMust
     }
 
     [Theory]
+    [ClassData(typeof(OpcodeFeeder<Opcode01>))]
     [ClassData(typeof(OpcodeFeeder<Opcode05>))]
     [ClassData(typeof(OpcodeFeeder<Opcode09>))]
     [ClassData(typeof(OpcodeFeeder<Opcode0D>))]

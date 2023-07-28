@@ -6,6 +6,7 @@ namespace NesCs.UnitTests.Cpu;
 public class LogicalInclusiveOrInCpuMust
 {
 	[Theory]
+    [MemberData(nameof(Opcode01JsonFeeder))]
     [MemberData(nameof(Opcode05JsonFeeder))]
 	[MemberData(nameof(Opcode09JsonFeeder))]
     [MemberData(nameof(Opcode0DJsonFeeder))]
@@ -22,6 +23,9 @@ public class LogicalInclusiveOrInCpuMust
         Utilities.Equal(data.Final, sut);
         Utilities.Equal(data.Cycles, trace);
 	}
+
+    public static IEnumerable<object[]> Opcode01JsonFeeder() =>
+        new object[][] { new object[] { """{ "name": "01 b3 87", "initial": { "pc": 44283, "s": 5, "a": 100, "x": 118, "y": 148, "p": 47, "ram": [ [44283, 1], [44284, 179], [44285, 135], [179, 33], [41, 154], [42, 130], [33434, 252]]}, "final": { "pc": 44285, "s": 5, "a": 252, "x": 118, "y": 148, "p": 173, "ram": [ [41, 154], [42, 130], [179, 33], [33434, 252], [44283, 1], [44284, 179], [44285, 135]]}, "cycles": [ [44283, 1, "read"], [44284, 179, "read"], [179, 33, "read"], [41, 154, "read"], [42, 130, "read"], [33434, 252, "read"]] }""" } };
 
     public static IEnumerable<object[]> Opcode05JsonFeeder() =>
         new object[][] { new object[] { """{ "name": "05 65 9c", "initial": { "pc": 3097, "s": 200, "a": 209, "x": 135, "y": 48, "p": 232, "ram": [ [3097, 5], [3098, 101], [3099, 156], [101, 45]]}, "final": { "pc": 3099, "s": 200, "a": 253, "x": 135, "y": 48, "p": 232, "ram": [ [101, 45], [3097, 5], [3098, 101], [3099, 156]]}, "cycles": [ [3097, 5, "read"], [3098, 101, "read"], [101, 45, "read"]] }""" } };

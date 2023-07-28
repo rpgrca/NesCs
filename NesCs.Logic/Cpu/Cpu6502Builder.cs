@@ -27,6 +27,7 @@ public partial class Cpu6502
                 _instructions[index] = new NotImplementedInstruction();
             }
 
+            _instructions[0x01] = new OraInIndirectXModeOpcode01();
             _instructions[0x05] = new OraInZeroPageModeOpcode05();
             _instructions[0x09] = new OraInImmediateModeOpcode09();
             _instructions[0x0D] = new OraInAbsoluteModeOpcode0D();
