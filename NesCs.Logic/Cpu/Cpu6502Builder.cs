@@ -27,6 +27,7 @@ public partial class Cpu6502
                 _instructions[index] = new NotImplementedInstruction();
             }
  
+            _instructions[0xA0] = new LdyInImmediateModeOpcodeA0();
             _instructions[0xA1] = new LdaInIndirectXModeOpcodeA1();
             _instructions[0xA2] = new LdxInImmediateModeOpcodeA2();
             _instructions[0xA5] = new LdaInZeroPageModeOpcodeA5();

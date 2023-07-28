@@ -2,10 +2,10 @@ namespace NesCs.Logic.Cpu.Instructions;
 
 public class LdxInImmediateModeOpcodeA2 : IInstruction
 {
-    private readonly IInstruction _ldInImmediateMode;
+    private readonly IInstruction _loadInImmediateMode;
 
     public LdxInImmediateModeOpcodeA2() =>
-        _ldInImmediateMode = new LoadInImmediateMode((c, v) => c.SetValueIntoRegisterX(v));
+        _loadInImmediateMode = new LoadInImmediateMode((c, v) => c.SetValueIntoRegisterX(v));
 
-    public void Execute(Cpu6502 cpu) => _ldInImmediateMode.Execute(cpu);
+    public void Execute(Cpu6502 cpu) => _loadInImmediateMode.Execute(cpu);
 }

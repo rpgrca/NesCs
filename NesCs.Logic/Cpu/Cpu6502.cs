@@ -89,6 +89,8 @@ public partial class Cpu6502
 
     internal void SetValueIntoRegisterX(byte value) => X = value;
 
+    internal void SetValueIntoRegisterY(byte value) => Y = value;
+
     internal void SetZeroFlagBasedOnAccumulator()
     {
         if (A == 0)

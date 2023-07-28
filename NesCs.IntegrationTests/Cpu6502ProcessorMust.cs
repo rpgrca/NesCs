@@ -5,6 +5,7 @@ namespace NesCs.IntegrationTests;
 public class Cpu6502ProcessorMust
 {
 	[Theory]
+    [ClassData(typeof(OpcodeFeeder<OpcodeA0>))]
     [ClassData(typeof(OpcodeFeeder<OpcodeA1>))]
     [ClassData(typeof(OpcodeFeeder<OpcodeA2>))]
     [ClassData(typeof(OpcodeFeeder<OpcodeA5>))]
