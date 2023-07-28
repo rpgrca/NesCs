@@ -12,6 +12,7 @@ public class Cpu6502ProcessorMust
     [ClassData(typeof(OpcodeFeeder<OpcodeA5>))]
     [ClassData(typeof(OpcodeFeeder<OpcodeA6>))]
     [ClassData(typeof(OpcodeFeeder<OpcodeA9>))]
+    [ClassData(typeof(OpcodeFeeder<OpcodeAC>))]
     [ClassData(typeof(OpcodeFeeder<OpcodeAD>))]
     [ClassData(typeof(OpcodeFeeder<OpcodeAE>))]
     [ClassData(typeof(OpcodeFeeder<OpcodeB1>))]

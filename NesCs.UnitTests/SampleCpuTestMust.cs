@@ -13,6 +13,7 @@ public class Cpu6502ProcessorMust
 	[MemberData(nameof(OpcodeA5JsonFeeder))]
 	[MemberData(nameof(OpcodeA6JsonFeeder))]
 	[MemberData(nameof(OpcodeA9JsonFeeder))]
+	[MemberData(nameof(OpcodeACJsonFeeder))]
 	[MemberData(nameof(OpcodeADJsonFeeder))]
 	[MemberData(nameof(OpcodeAEJsonFeeder))]
 	[MemberData(nameof(OpcodeB1JsonFeeder))]
@@ -58,6 +59,9 @@ public class Cpu6502ProcessorMust
 	{
 		yield return new object[] { 2, """{ "name": "a9 c3 7a", "initial": { "pc": 33710, "s": 215, "a": 22, "x": 214, "y": 9, "p": 162, "ram": [ [33710, 169], [33711, 195], [33712, 122]]}, "final": { "pc": 33712, "s": 215, "a": 195, "x": 214, "y": 9, "p": 160, "ram": [ [33710, 169], [33711, 195], [33712, 122]]}, "cycles": [ [33710, 169, "read"], [33711, 195, "read"]] }""" }; // common
 	}
+
+	public static IEnumerable<object[]> OpcodeACJsonFeeder() =>
+		new object[][] { new object[] { 3, """{ "name": "ac f4 c7", "initial": { "pc": 26394, "s": 48, "a": 233, "x": 96, "y": 193, "p": 235, "ram": [ [26394, 172], [26395, 244], [26396, 199], [51188, 14], [26397, 174]]}, "final": { "pc": 26397, "s": 48, "a": 233, "x": 96, "y": 14, "p": 105, "ram": [ [26394, 172], [26395, 244], [26396, 199], [26397, 174], [51188, 14]]}, "cycles": [ [26394, 172, "read"], [26395, 244, "read"], [26396, 199, "read"], [51188, 14, "read"]] }""" } };
 
 	public static IEnumerable<object[]> OpcodeADJsonFeeder() =>
 		new object[][] { new object[] { 3, """{ "name": "ad 19 5f", "initial": { "pc": 29984, "s": 178, "a": 200, "x": 197, "y": 56, "p": 226, "ram": [ [29984, 173], [29985, 25], [29986, 95], [24345, 36], [29987, 41]]}, "final": { "pc": 29987, "s": 178, "a": 36, "x": 197, "y": 56, "p": 96, "ram": [ [24345, 36], [29984, 173], [29985, 25], [29986, 95], [29987, 41]]}, "cycles": [ [29984, 173, "read"], [29985, 25, "read"], [29986, 95, "read"], [24345, 36, "read"]] }""" } };
