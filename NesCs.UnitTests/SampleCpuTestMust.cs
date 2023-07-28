@@ -21,6 +21,7 @@ public class Cpu6502ProcessorMust
     [MemberData(nameof(OpcodeB5JsonFeeder))]
     [MemberData(nameof(OpcodeB6JsonFeeder))]
 	[MemberData(nameof(OpcodeB9JsonFeeder))]
+    [MemberData(nameof(OpcodeBCJsonFeeder))]
     [MemberData(nameof(OpcodeBDJsonFeeder))]
     [MemberData(nameof(OpcodeBEJsonFeeder))]
     public void ExecuteA5SampleTestCorrectly(int amount, string jsonText)
@@ -133,6 +134,9 @@ public class Cpu6502ProcessorMust
 	{
 		yield return new object[] { 3, """{ "name": "b9 bc b9", "initial": { "pc": 57299, "s": 12, "a": 148, "x": 64, "y": 42, "p": 171, "ram": [ [57299, 185], [57300, 188], [57301, 185], [47590, 199], [57302, 15]]}, "final": { "pc": 57302, "s": 12, "a": 199, "x": 64, "y": 42, "p": 169, "ram": [ [47590, 199], [57299, 185], [57300, 188], [57301, 185], [57302, 15]]}, "cycles": [ [57299, 185, "read"], [57300, 188, "read"], [57301, 185, "read"], [47590, 199, "read"]] }""" };
 	}
+
+	public static IEnumerable<object[]> OpcodeBCJsonFeeder() =>
+		new object[][] { new object[] { 3, """{ "name": "bc 48 d8", "initial": { "pc": 57096, "s": 9, "a": 182, "x": 226, "y": 5, "p": 43, "ram": [ [57096, 188], [57097, 72], [57098, 216], [55338, 227], [55594, 1], [57099, 15]]}, "final": { "pc": 57099, "s": 9, "a": 182, "x": 226, "y": 1, "p": 41, "ram": [ [55338, 227], [55594, 1], [57096, 188], [57097, 72], [57098, 216], [57099, 15]]}, "cycles": [ [57096, 188, "read"], [57097, 72, "read"], [57098, 216, "read"], [55338, 227, "read"], [55594, 1, "read"]] }""" } };
 
 	public static IEnumerable<object[]> OpcodeBDJsonFeeder()
 	{

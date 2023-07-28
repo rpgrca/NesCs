@@ -54,6 +54,8 @@ public class OpcodeB6 : IOpcodeFile { public static string Filename => "../../..
 
 public class OpcodeB9 : IOpcodeFile { public static string Filename => "../../../../../ProcessorTests/nes6502/v1/b9.json"; }
 
+public class OpcodeBC : IOpcodeFile { public static string Filename => "../../../../../ProcessorTests/nes6502/v1/bc.json"; }
+
 public class OpcodeBD : IOpcodeFile { public static string Filename => "../../../../../ProcessorTests/nes6502/v1/bd.json"; }
 
 public class OpcodeBE : IOpcodeFile { public static string Filename => "../../../../../ProcessorTests/nes6502/v1/be.json"; }

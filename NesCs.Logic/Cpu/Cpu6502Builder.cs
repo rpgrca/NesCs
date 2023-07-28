@@ -16,7 +16,7 @@ public partial class Cpu6502
         public Builder()
         {
             _p = _a = _x = _y = _s = 0;
-            _ramSize =_start = _end = _pc = 0;
+            _ramSize = _start = _end = _pc = 0;
             _program = _ram = Array.Empty<byte>();
             _patch = Array.Empty<int[]>();
             _trace = new();
@@ -26,7 +26,7 @@ public partial class Cpu6502
             {
                 _instructions[index] = new NotImplementedInstruction();
             }
- 
+
             _instructions[0xA0] = new LdyInImmediateModeOpcodeA0();
             _instructions[0xA1] = new LdaInIndirectXModeOpcodeA1();
             _instructions[0xA2] = new LdxInImmediateModeOpcodeA2();
@@ -42,6 +42,7 @@ public partial class Cpu6502
             _instructions[0xB5] = new LdaInZeroPageXModeOpcodeB5();
             _instructions[0xB6] = new LdxInZeroPageYModeOpcodeB6();
             _instructions[0xB9] = new LdaInAbsoluteYModeOpcodeB9();
+            _instructions[0xBC] = new LdyInAbsoluteXModeOpcodeBC();
             _instructions[0xBD] = new LdaInAbsoluteXModeOpcodeBD();
             _instructions[0xBE] = new LdxInAbsoluteYModeOpcodeBE();
         }

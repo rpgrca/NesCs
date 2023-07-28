@@ -20,6 +20,7 @@ public class Cpu6502ProcessorMust
     [ClassData(typeof(OpcodeFeeder<OpcodeB5>))]
     [ClassData(typeof(OpcodeFeeder<OpcodeB6>))]
     [ClassData(typeof(OpcodeFeeder<OpcodeB9>))]
+    [ClassData(typeof(OpcodeFeeder<OpcodeBC>))]
     [ClassData(typeof(OpcodeFeeder<OpcodeBD>))]
     [ClassData(typeof(OpcodeFeeder<OpcodeBE>))]
     public void Execute10000DifferentSampleTestsCorrectly(SampleCpuTest data)
