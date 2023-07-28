@@ -23,10 +23,22 @@ public class Cpu6502ProcessorMust
     [ClassData(typeof(OpcodeFeeder<OpcodeBC>))]
     [ClassData(typeof(OpcodeFeeder<OpcodeBD>))]
     [ClassData(typeof(OpcodeFeeder<OpcodeBE>))]
-    public void Execute10000DifferentSampleTestsCorrectly(SampleCpuTest data)
+    public void Execute10000LoadTestsPerOpcodeCorrectly(SampleCpuTest data)
     {
         var trace = new List<(int, byte, string)>();
 		var sut = Utilities.CreateSubjectUnderTestFromSample(data, trace);
+        sut.Run();
+
+        Utilities.Equal(data.Final, sut);
+        Utilities.Equal(data.Cycles, trace);
+    }
+
+    [Theory]
+    [ClassData(typeof(OpcodeFeeder<OpcodeEA>))]
+    public void Execute10000NopTestsPerOpcodeCorrectly(SampleCpuTest data)
+    {
+        var trace = new List<(int, byte, string)>();
+		var sut = Utilities.CreateSubjectUnderTestFromSample(data, trace, 1);
         sut.Run();
 
         Utilities.Equal(data.Final, sut);
