@@ -39,6 +39,7 @@ public partial class Cpu6502
             _instructions[0xB5] = new LdaInZeroPageXModeOpcodeB5();
             _instructions[0xB9] = new LdaInAbsoluteYModeOpcodeB9();
             _instructions[0xBD] = new LdaInAbsoluteXModeOpcodeBD();
+            _instructions[0xBE] = new LdxInAbsoluteYModeOpcodeBE();
         }
 
         public Builder Running(byte[] program)

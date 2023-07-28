@@ -1,11 +1,10 @@
 namespace NesCs.Logic.Cpu.Instructions;
 
-public class LdaInAbsoluteXModeOpcodeBD : IInstruction
+public class LdaInAbsoluteXModeOpcodeBD : LoadInAbsoluteIndexedMode
 {
-    private readonly IInstruction _ldaInAbsoluteMode;
+    protected override byte ObtainValueForIndex(Cpu6502 cpu) =>
+        cpu.ReadByteFromRegisterX();
 
-    public LdaInAbsoluteXModeOpcodeBD() =>
-        _ldaInAbsoluteMode = new LdaInAbsoluteIndexedMode(c => c.ReadByteFromRegisterX());
-
-    public void Execute(Cpu6502 cpu) => _ldaInAbsoluteMode.Execute(cpu);
+    protected override void StoreValueInFinalDestination(Cpu6502 cpu, byte value) =>
+        cpu.SetValueIntoAccumulator(value);
 }

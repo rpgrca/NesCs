@@ -1,11 +1,7 @@
 namespace NesCs.Logic.Cpu.Instructions;
 
-internal class LdaInAbsoluteIndexedMode : IInstruction
+public abstract class LoadInAbsoluteIndexedMode : IInstruction
 {
-    private readonly Func<Cpu6502, byte> _indexRegister;
-
-    public LdaInAbsoluteIndexedMode(Func<Cpu6502, byte> indexRegister) => _indexRegister = indexRegister;
-
     public void Execute(Cpu6502 cpu)
     {
         cpu.ReadyForNextInstruction();
@@ -15,18 +11,22 @@ internal class LdaInAbsoluteIndexedMode : IInstruction
         var high = cpu.ReadByteFromProgram();
 
         cpu.ReadyForNextInstruction();
-        var address = (high << 8) | (low + _indexRegister(cpu)) & 0xff;
-        var a = cpu.ReadByteFromMemory(address);
-        cpu.SetValueIntoAccumulator(a);
+        var address = (high << 8) | (low + ObtainValueForIndex(cpu)) & 0xff;
+        var value = cpu.ReadByteFromMemory(address);
+        StoreValueInFinalDestination(cpu, value);
 
-        var address2 = (((high << 8) | low) + _indexRegister(cpu)) & 0xffff;
+        var address2 = (((high << 8) | low) + ObtainValueForIndex(cpu)) & 0xffff;
         if (address != address2)
         {
-            a = cpu.ReadByteFromMemory(address2);
-            cpu.SetValueIntoAccumulator(a);
+            value = cpu.ReadByteFromMemory(address2);
+            StoreValueInFinalDestination(cpu, value);
         }
 
-        cpu.SetZeroFlagBasedOnAccumulator();
-        cpu.SetNegativeFlagBasedOnAccumulator();
+        cpu.SetZeroFlagBasedOn(value);
+        cpu.SetNegativeFlagBasedOn(value);
     }
+
+    protected abstract byte ObtainValueForIndex(Cpu6502 cpu);
+
+    protected abstract void StoreValueInFinalDestination(Cpu6502 cpu, byte value);
 }
