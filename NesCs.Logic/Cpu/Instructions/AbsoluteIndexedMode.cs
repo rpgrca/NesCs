@@ -1,6 +1,6 @@
 namespace NesCs.Logic.Cpu.Instructions;
 
-public abstract class LoadInAbsoluteIndexedMode : IInstruction
+public abstract class AbsoluteIndexedMode : IInstruction
 {
     public void Execute(Cpu6502 cpu)
     {

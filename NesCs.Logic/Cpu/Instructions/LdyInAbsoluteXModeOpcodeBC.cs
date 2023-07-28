@@ -1,6 +1,6 @@
 namespace NesCs.Logic.Cpu.Instructions;
 
-public class LdyInAbsoluteXModeOpcodeBC : LoadInAbsoluteIndexedMode
+public class LdyInAbsoluteXModeOpcodeBC : AbsoluteIndexedMode
 {
     protected override byte ExecuteOperation(Cpu6502 cpu, byte value) => value;
 
