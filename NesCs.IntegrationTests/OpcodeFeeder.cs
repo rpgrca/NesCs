@@ -24,6 +24,8 @@ public class OpcodeFeeder<T> : IEnumerable<object[]> where T : IOpcodeFile
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 }
 
+public class Opcode05 : IOpcodeFile { public static string Filename => "../../../../../ProcessorTests/nes6502/v1/05.json"; }
+
 public class Opcode09 : IOpcodeFile { public static string Filename => "../../../../../ProcessorTests/nes6502/v1/09.json"; }
 
 public class OpcodeA0 : IOpcodeFile { public static string Filename => "../../../../../ProcessorTests/nes6502/v1/a0.json"; }
