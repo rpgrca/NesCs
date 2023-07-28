@@ -52,5 +52,4 @@ public class LogicalInclusiveOrInCpuMust
 
     public static IEnumerable<object[]> Opcode1DJsonFeeder() =>
         new object[][] { new object[] { """{ "name": "1d 7a 25", "initial": { "pc": 34101, "s": 242, "a": 163, "x": 172, "y": 93, "p": 99, "ram": [ [34101, 29], [34102, 122], [34103, 37], [9510, 142], [9766, 96], [34104, 168]]}, "final": { "pc": 34104, "s": 242, "a": 227, "x": 172, "y": 93, "p": 225, "ram": [ [9510, 142], [9766, 96], [34101, 29], [34102, 122], [34103, 37], [34104, 168]]}, "cycles": [ [34101, 29, "read"], [34102, 122, "read"], [34103, 37, "read"], [9510, 142, "read"], [9766, 96, "read"]] }""" } };
-
 }

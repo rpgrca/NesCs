@@ -63,4 +63,16 @@ public class Cpu6502ProcessorMust
         Utilities.Equal(data.Final, sut);
         Utilities.Equal(data.Cycles, trace);
     }
+
+    [Theory]
+    [ClassData(typeof(OpcodeFeeder<Opcode29>))]
+    public void Execute10000LogicalAndTestsPerOpcodeCorrectly(SampleCpuTest data)
+    {
+        var trace = new List<(int, byte, string)>();
+		var sut = Utilities.CreateSubjectUnderTestFromSample(data, trace);
+        sut.Run();
+
+        Utilities.Equal(data.Final, sut);
+        Utilities.Equal(data.Cycles, trace);
+    }
 }
