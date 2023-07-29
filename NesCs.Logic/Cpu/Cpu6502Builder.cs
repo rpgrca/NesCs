@@ -38,6 +38,7 @@ public partial class Cpu6502
             _instructions[0x21] = new AndInIndirectXModeOpcode21();
             _instructions[0x25] = new AndInZeroPageModeOpcode25();
             _instructions[0x29] = new AndInImmediateModeOpcode29();
+            _instructions[0x2C] = new BitTestAbsoluteOpcode2C();
             _instructions[0x2D] = new AndInAbsoluteModeOpcode2D();
             _instructions[0x31] = new AndInIndirectYModeOpcode31();
             _instructions[0x35] = new AndInZeroPageXModeOpcode35();

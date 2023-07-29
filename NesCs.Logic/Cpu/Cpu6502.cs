@@ -139,7 +139,7 @@ public partial class Cpu6502
 
     internal void SetNegativeFlagBasedOn(byte value)
     {
-        if ((value & 0b10000000) != 0)
+        if (((ProcessorStatus)value & ProcessorStatus.N) == ProcessorStatus.N)
         {
             P |= ProcessorStatus.N;
         }
@@ -149,7 +149,34 @@ public partial class Cpu6502
         }
     }
 
-    private void ClearNegativeFlag() => P &= ~ProcessorStatus.N;
+    internal void SetOverflowFlagBasedOn(byte value, byte result)
+    {
+        // Formula from http://www.righto.com/2012/12/the-6502-overflow-flag-explained.html
+        if (!(((value ^ result) & 0x80) != 0 && ((value^result) & 0x80) != 0))
+        {
+            P |= ProcessorStatus.V;
+        }
+        else
+        {
+            ClearOverflowFlag();
+        }
+    }
+
+    internal void SetOverflowFlagBasedOn(byte value)
+    {
+        if (((ProcessorStatus)value & ProcessorStatus.V) == ProcessorStatus.V)
+        {
+            P |= ProcessorStatus.V;
+        }
+        else
+        {
+            P &= ~ProcessorStatus.V;
+        }
+    }
+
+    internal void ClearNegativeFlag() => P &= ~ProcessorStatus.N;
+
+    internal void ClearOverflowFlag() => P &= ~ProcessorStatus.V;
 
     private void SetCarryFlag() => P |= ProcessorStatus.C;
 
