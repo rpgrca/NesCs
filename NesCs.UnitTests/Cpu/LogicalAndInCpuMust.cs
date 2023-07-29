@@ -5,6 +5,7 @@ namespace NesCs.UnitTests.Cpu;
 public class LogicalAndInCpuMust
 {
 	[Theory]
+    [MemberData(nameof(Opcode21JsonFeeder))]
     [MemberData(nameof(Opcode25JsonFeeder))]
     [MemberData(nameof(Opcode29JsonFeeder))]
     [MemberData(nameof(Opcode2DJsonFeeder))]
@@ -19,6 +20,11 @@ public class LogicalAndInCpuMust
 
         Utilities.Equal(sampleCpu.Final, sut);
         Utilities.Equal(sampleCpu.Cycles, trace);
+    }
+
+    public static IEnumerable<object[]> Opcode21JsonFeeder()
+    {
+        yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "21 b5 b2", "initial": { "pc": 62965, "s": 60, "a": 130, "x": 81, "y": 56, "p": 45, "ram": [ [62965, 33], [62966, 181], [62967, 178], [181, 28], [6, 43], [7, 252], [64555, 62]]}, "final": { "pc": 62967, "s": 60, "a": 2, "x": 81, "y": 56, "p": 45, "ram": [ [6, 43], [7, 252], [181, 28], [62965, 33], [62966, 181], [62967, 178], [64555, 62]]}, "cycles": [ [62965, 33, "read"], [62966, 181, "read"], [181, 28, "read"], [6, 43, "read"], [7, 252, "read"], [64555, 62, "read"]] }""") };
     }
 
     public static IEnumerable<object[]> Opcode25JsonFeeder()

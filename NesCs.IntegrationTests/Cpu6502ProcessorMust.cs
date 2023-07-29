@@ -65,6 +65,7 @@ public class Cpu6502ProcessorMust
     }
 
     [Theory]
+    [ProcessorFileTestData("21")]
     [ProcessorFileTestData("25")]
     [ProcessorFileTestData("29")]
     [ProcessorFileTestData("2d")]
