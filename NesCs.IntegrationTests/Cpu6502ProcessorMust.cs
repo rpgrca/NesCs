@@ -86,6 +86,7 @@ public class Cpu6502ProcessorMust
     [Theory]
     [ProcessorFileTestData("a8")]
     [ProcessorFileTestData("aa")]
+    [ProcessorFileTestData("ba")]
     public void Execute10000TransferTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
     {
         var trace = new List<(int, byte, string)>();

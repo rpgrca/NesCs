@@ -65,11 +65,15 @@ public partial class Cpu6502
         }
     }
 
+    internal ProcessorStatus ReadByteFromStatus() => P;
+
     internal byte ReadByteFromRegisterY() => Y;
 
     internal byte ReadByteFromRegisterX() => X;
 
     internal int ReadByteFromProgramCounter() => PC;
+
+    internal int ReadByteFromStackPointer() => S;
 
     internal byte ReadByteFromAccumulator() => A;
 
