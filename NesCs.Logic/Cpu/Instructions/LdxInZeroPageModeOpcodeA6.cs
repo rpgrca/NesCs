@@ -1,7 +1,9 @@
 namespace NesCs.Logic.Cpu.Instructions;
 
-public class LdxInZeroPageModeOpcodeA6 : LoadInZeroPageMode
+public class LdxInZeroPageModeOpcodeA6 : ZeroPageMode
 {
+    protected override byte ExecuteOperation(Cpu6502 cpu, byte value) => value;
+
     protected override void StoreValueInFinalDestination(Cpu6502 cpu, byte value) =>
         cpu.SetValueIntoRegisterX(value);
 }

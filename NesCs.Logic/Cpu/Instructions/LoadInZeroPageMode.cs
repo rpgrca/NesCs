@@ -1,6 +1,6 @@
 namespace NesCs.Logic.Cpu.Instructions;
 
-public abstract class LoadInZeroPageMode : IInstruction
+public abstract class ZeroPageMode : IInstruction
 {
     public void Execute(Cpu6502 cpu)
     {
@@ -9,6 +9,7 @@ public abstract class LoadInZeroPageMode : IInstruction
 
         cpu.ReadyForNextInstruction();
         var value = cpu.ReadByteFromMemory(address);
+        value = ExecuteOperation(cpu, value);
         StoreValueInFinalDestination(cpu, value);
 
         cpu.SetZeroFlagBasedOn(value);
@@ -16,4 +17,6 @@ public abstract class LoadInZeroPageMode : IInstruction
     }
 
     protected abstract void StoreValueInFinalDestination(Cpu6502 cpu, byte value);
+
+    protected abstract byte ExecuteOperation(Cpu6502 cpu, byte value);
 }
