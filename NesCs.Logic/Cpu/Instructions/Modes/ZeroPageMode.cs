@@ -1,4 +1,4 @@
-namespace NesCs.Logic.Cpu.Instructions;
+namespace NesCs.Logic.Cpu.Instructions.Modes;
 
 public abstract class ZeroPageMode : IInstruction
 {

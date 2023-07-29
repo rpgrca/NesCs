@@ -1,4 +1,4 @@
-namespace NesCs.Logic.Cpu.Instructions;
+namespace NesCs.Logic.Cpu.Instructions.Modes;
 
 public class IndirectXMode : IInstruction
 {
@@ -15,7 +15,7 @@ public class IndirectXMode : IInstruction
         address = (byte)(address + 1);
         var high = cpu.ReadByteFromMemory(address);
 
-        var effectiveAddress = (high << 8) | low;
+        var effectiveAddress = high << 8 | low;
         var value = cpu.ReadByteFromMemory(effectiveAddress);
         value = ExecuteOperation(cpu, value);
         StoreValueInFinalDestination(cpu, value);

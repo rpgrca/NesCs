@@ -1,4 +1,4 @@
-namespace NesCs.Logic.Cpu.Instructions;
+namespace NesCs.Logic.Cpu.Instructions.Modes;
 
 public abstract class AbsoluteIndexedMode : IInstruction
 {
@@ -11,10 +11,10 @@ public abstract class AbsoluteIndexedMode : IInstruction
         var high = cpu.ReadByteFromProgram();
 
         cpu.ReadyForNextInstruction();
-        var address = (high << 8) | (low + ObtainValueForIndex(cpu)) & 0xff;
+        var address = high << 8 | low + ObtainValueForIndex(cpu) & 0xff;
         var value = cpu.ReadByteFromMemory(address);
 
-        var address2 = (((high << 8) | low) + ObtainValueForIndex(cpu)) & 0xffff;
+        var address2 = (high << 8 | low) + ObtainValueForIndex(cpu) & 0xffff;
         if (address != address2)
         {
             value = cpu.ReadByteFromMemory(address2);

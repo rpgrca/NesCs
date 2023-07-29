@@ -1,4 +1,4 @@
-namespace NesCs.Logic.Cpu.Instructions;
+namespace NesCs.Logic.Cpu.Instructions.Modes;
 
 public abstract class AbsoluteMode : IInstruction
 {
@@ -11,7 +11,7 @@ public abstract class AbsoluteMode : IInstruction
         var high = cpu.ReadByteFromProgram();
 
         cpu.ReadyForNextInstruction();
-        var address = (high << 8) | low;
+        var address = high << 8 | low;
         var value = cpu.ReadByteFromMemory(address);
 
         value = ExecuteOperation(cpu, value);
