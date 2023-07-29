@@ -84,6 +84,7 @@ public class Cpu6502ProcessorMust
     }
 
     [Theory]
+    [ProcessorFileTestData("a8")]
     [ProcessorFileTestData("aa")]
     public void Execute10000TransferTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
     {
