@@ -5,32 +5,32 @@ namespace NesCs.IntegrationTests;
 public class Cpu6502ProcessorMust
 {
 	[Theory]
-    [ClassData(typeof(OpcodeFeeder<OpcodeA0>))]
-    [ClassData(typeof(OpcodeFeeder<OpcodeA1>))]
-    [ClassData(typeof(OpcodeFeeder<OpcodeA2>))]
-    [ClassData(typeof(OpcodeFeeder<OpcodeA4>))]
-    [ClassData(typeof(OpcodeFeeder<OpcodeA5>))]
-    [ClassData(typeof(OpcodeFeeder<OpcodeA6>))]
-    [ClassData(typeof(OpcodeFeeder<OpcodeA9>))]
-    [ClassData(typeof(OpcodeFeeder<OpcodeAC>))]
-    [ClassData(typeof(OpcodeFeeder<OpcodeAD>))]
-    [ClassData(typeof(OpcodeFeeder<OpcodeAE>))]
-    [ClassData(typeof(OpcodeFeeder<OpcodeB1>))]
-    [ClassData(typeof(OpcodeFeeder<OpcodeB4>))]
-    [ClassData(typeof(OpcodeFeeder<OpcodeB5>))]
-    [ClassData(typeof(OpcodeFeeder<OpcodeB6>))]
-    [ClassData(typeof(OpcodeFeeder<OpcodeB9>))]
-    [ClassData(typeof(OpcodeFeeder<OpcodeBC>))]
-    [ClassData(typeof(OpcodeFeeder<OpcodeBD>))]
-    [ClassData(typeof(OpcodeFeeder<OpcodeBE>))]
-    public void Execute10000LoadTestsPerOpcodeCorrectly(SampleCpuTest data)
+    [ProcessorFileTest1Data(typeof(OpcodeA0))]
+    [ProcessorFileTest1Data(typeof(OpcodeA1))]
+    [ProcessorFileTest1Data(typeof(OpcodeA2))]
+    [ProcessorFileTest1Data(typeof(OpcodeA4))]
+    [ProcessorFileTest1Data(typeof(OpcodeA5))]
+    [ProcessorFileTest1Data(typeof(OpcodeA6))]
+    [ProcessorFileTest1Data(typeof(OpcodeA9))]
+    [ProcessorFileTest1Data(typeof(OpcodeAC))]
+    [ProcessorFileTest1Data(typeof(OpcodeAD))]
+    [ProcessorFileTest1Data(typeof(OpcodeAE))]
+    [ProcessorFileTest1Data(typeof(OpcodeB1))]
+    [ProcessorFileTest1Data(typeof(OpcodeB4))]
+    [ProcessorFileTest1Data(typeof(OpcodeB5))]
+    [ProcessorFileTest1Data(typeof(OpcodeB6))]
+    [ProcessorFileTest1Data(typeof(OpcodeB9))]
+    [ProcessorFileTest1Data(typeof(OpcodeBC))]
+    [ProcessorFileTest1Data(typeof(OpcodeBD))]
+    [ProcessorFileTest1Data(typeof(OpcodeBE))]
+    public void Execute10000LoadTestsPerOpcodeCorrectly1(SampleCpu sampleCpu)
     {
         var trace = new List<(int, byte, string)>();
-		var sut = Utilities.CreateSubjectUnderTestFromSample(data, trace);
+		var sut = Utilities.CreateSubjectUnderTestFromSample(sampleCpu.Opcodes, sampleCpu.Initial, trace);
         sut.Run();
 
-        Utilities.Equal(data.Final, sut);
-        Utilities.Equal(data.Cycles, trace);
+        Utilities.Equal(sampleCpu.Final, sut);
+        Utilities.Equal(sampleCpu.Cycles, trace);
     }
 
     [Theory]
