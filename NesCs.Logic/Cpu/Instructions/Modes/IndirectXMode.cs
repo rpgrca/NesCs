@@ -20,8 +20,8 @@ public class IndirectXMode : IInstruction
         value = ExecuteOperation(cpu, value);
         StoreValueInFinalDestination(cpu, value);
 
-        cpu.SetZeroFlagBasedOnAccumulator();
-        cpu.SetNegativeFlagBasedOnAccumulator();
+        cpu.SetZeroFlagBasedOn(value);
+        cpu.SetNegativeFlagBasedOn(value);
     }
 
     protected virtual byte ExecuteOperation(Cpu6502 cpu, byte value) => value;

@@ -99,6 +99,8 @@ public partial class Cpu6502
 
     internal void SetValueIntoRegisterY(byte value) => Y = value;
 
+    internal void SetValueIntoStackPointer(byte value) => S = value;
+
     internal void SetZeroFlagBasedOnAccumulator()
     {
         if (A == 0)
@@ -137,37 +139,13 @@ public partial class Cpu6502
 
     internal void SetNegativeFlagBasedOn(byte value)
     {
-        if (((ProcessorStatus)value & ProcessorStatus.N) == ProcessorStatus.N)
+        if ((value & 0b10000000) != 0)
         {
             P |= ProcessorStatus.N;
         }
         else
         {
-            P &= ~ProcessorStatus.N;
-        }
-    }
-
-    internal void SetNegativeFlagBasedOnAccumulator()
-    {
-        if (((ProcessorStatus)A & ProcessorStatus.N) == ProcessorStatus.N)
-        {
-            P |= ProcessorStatus.N;
-        }
-        else
-        {
-            P &= ~ProcessorStatus.N;
-        }
-    }
-
-    internal void SetNegativeFlagBasedOnRegisterX()
-    {
-        if (((ProcessorStatus)X & ProcessorStatus.N) == ProcessorStatus.N)
-        {
-            P |= ProcessorStatus.N;
-        }
-        else
-        {
-            P &= ~ProcessorStatus.N;
+            ClearNegativeFlag();
         }
     }
 
