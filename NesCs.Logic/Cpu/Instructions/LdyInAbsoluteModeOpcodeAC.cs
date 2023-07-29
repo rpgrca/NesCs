@@ -1,6 +1,6 @@
 namespace NesCs.Logic.Cpu.Instructions;
 
-public class LdyInAbsoluteModeOpcodeAC : LoadInAbsoluteMode
+public class LdyInAbsoluteModeOpcodeAC : AbsoluteMode
 {
     protected override void StoreValueInFinalDestination(Cpu6502 cpu, byte value) =>
         cpu.SetValueIntoRegisterY(value);
