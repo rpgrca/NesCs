@@ -12,4 +12,6 @@ public readonly struct SampleCpu
     public SampleStatus Final { get; init; }
     [JsonConverter(typeof(SampleCycleArrayConverter))]
     public SampleCycle[] Cycles { get; init; }
+
+    public override string ToString() => Name;
 }
