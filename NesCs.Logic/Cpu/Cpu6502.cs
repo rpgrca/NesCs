@@ -73,7 +73,7 @@ public partial class Cpu6502
 
     internal int ReadByteFromProgramCounter() => PC;
 
-    internal int ReadByteFromStackPointer() => S;
+    internal byte ReadByteFromStackPointer() => S;
 
     internal byte ReadByteFromAccumulator() => A;
 
