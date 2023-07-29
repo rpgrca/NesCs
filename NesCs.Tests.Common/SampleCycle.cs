@@ -4,14 +4,9 @@ using NesCs.Tests.Common.Converters;
 namespace NesCs.Tests.Common;
 
 [JsonConverter(typeof(SampleCycleConverter))]
-public class SampleCycle
+public readonly struct SampleCycle
 {
-    public int Address;
-    public byte Value;
-    public string Type;
-
-    public SampleCycle()
-    {
-        Type = string.Empty;
-    }
+    public int Address { get; init; }
+    public byte Value { get; init; }
+    public string Type { get; init; }
 }

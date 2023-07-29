@@ -26,11 +26,11 @@ public class SampleCpuConverter : JsonConverter<SampleCpu>
                     break;
 
                 case "initial":
-                    initial = JsonSerializer.Deserialize<SampleStatus>(ref reader, options);
+                    initial = JsonSerializer.Deserialize<SampleStatus>(ref reader, options)!;
                     break;
 
                 case "final":
-                    final = JsonSerializer.Deserialize<SampleStatus>(ref reader, options);
+                    final = JsonSerializer.Deserialize<SampleStatus>(ref reader, options)!;
                     break;
 
                 case "cycles":

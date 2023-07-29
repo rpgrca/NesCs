@@ -7,7 +7,6 @@ using NesCs.Logic.Cpu;
 
 namespace NesCs.UnitTests.Cpu;
 
-
 public class Cpu6502Must
 {
 

@@ -4,21 +4,12 @@ using NesCs.Tests.Common.Converters;
 namespace NesCs.Tests.Common;
 
 [JsonConverter(typeof(SampleCpuConverter))]
-public class SampleCpu
+public readonly struct SampleCpu
 {
-    public string Name;
-    public byte[] Opcodes;
-    public SampleStatus Initial;
-    public SampleStatus Final;
+    public string Name { get; init; }
+    public byte[] Opcodes { get; init; }
+    public SampleStatus Initial { get; init; }
+    public SampleStatus Final { get; init; }
     [JsonConverter(typeof(SampleCycleArrayConverter))]
-    public SampleCycle[] Cycles;
-
-    public SampleCpu()
-    {
-        Name = string.Empty;
-        Opcodes = Array.Empty<byte>();
-        Cycles = Array.Empty<SampleCycle>();
-        Initial = new SampleStatus();
-        Final = new SampleStatus();
-    }
+    public SampleCycle[] Cycles { get; init; }
 }

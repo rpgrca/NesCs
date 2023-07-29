@@ -4,19 +4,14 @@ using NesCs.Tests.Common.Converters;
 namespace NesCs.Tests.Common;
 
 [JsonConverter(typeof(SampleStatusConverter))]
-public class SampleStatus
+public readonly struct SampleStatus
 {
-    public byte S;
-    public byte P;
-    public int PC;
-    public byte X;
-    public byte Y;
-    public byte A;
+    public byte S { get; init; }
+    public byte P { get; init; }
+    public int PC { get; init; }
+    public byte X { get; init; }
+    public byte Y { get; init; }
+    public byte A { get; init; }
     [JsonConverter(typeof(SampleRamArrayConverter))]
-    public SampleRam[] RAM;
-
-    public SampleStatus()
-    {
-        RAM = Array.Empty<SampleRam>();
-    }
+    public SampleRam[] RAM { get; init; }
 }

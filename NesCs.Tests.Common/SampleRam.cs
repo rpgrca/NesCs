@@ -4,8 +4,8 @@ using NesCs.Tests.Common.Converters;
 namespace NesCs.Tests.Common;
 
 [JsonConverter(typeof(SampleRamConverter))]
-public class SampleRam
+public readonly struct SampleRam
 {
-    public int Address;
-    public byte Value;
+    public int Address { get; init; }
+    public byte Value { get; init; }
 }
