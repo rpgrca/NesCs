@@ -2,7 +2,7 @@ using NesCs.Tests.Common;
 
 namespace NesCs.IntegrationTests;
 
-public class Cpu6502ProcessorMust
+public class LoadInstructionsInCpu6502Must
 {
 	[Theory]
     [ProcessorFileTestData("a0")]
@@ -24,85 +24,6 @@ public class Cpu6502ProcessorMust
     [ProcessorFileTestData("bd")]
     [ProcessorFileTestData("be")]
     public void Execute10000LoadTestsPerOpcodeCorrectly1(SampleCpu sampleCpu)
-    {
-        var trace = new List<(int, byte, string)>();
-		var sut = Utilities.CreateSubjectUnderTestFromSample(sampleCpu.Opcodes, sampleCpu.Initial, trace);
-        sut.Run();
-
-        Utilities.Equal(sampleCpu.Final, sut);
-        Utilities.Equal(sampleCpu.Cycles, trace);
-    }
-
-    [Theory]
-    [ProcessorFileTestData("ea")]
-    public void Execute10000NopTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
-    {
-        var trace = new List<(int, byte, string)>();
-		var sut = Utilities.CreateSubjectUnderTestFromSample(sampleCpu.Opcodes, sampleCpu.Initial, trace);
-        sut.Run();
-
-        Utilities.Equal(sampleCpu.Final, sut);
-        Utilities.Equal(sampleCpu.Cycles, trace);
-    }
-
-    [Theory]
-    [ProcessorFileTestData("01")]
-    [ProcessorFileTestData("05")]
-    [ProcessorFileTestData("09")]
-    [ProcessorFileTestData("0d")]
-    [ProcessorFileTestData("11")]
-    [ProcessorFileTestData("15")]
-    [ProcessorFileTestData("19")]
-    [ProcessorFileTestData("1d")]
-    public void Execute10000InclusiveOrTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
-    {
-        var trace = new List<(int, byte, string)>();
-		var sut = Utilities.CreateSubjectUnderTestFromSample(sampleCpu.Opcodes, sampleCpu.Initial, trace);
-        sut.Run();
-
-        Utilities.Equal(sampleCpu.Final, sut);
-        Utilities.Equal(sampleCpu.Cycles, trace);
-    }
-
-    [Theory]
-    [ProcessorFileTestData("21")]
-    [ProcessorFileTestData("25")]
-    [ProcessorFileTestData("29")]
-    [ProcessorFileTestData("2d")]
-    [ProcessorFileTestData("31")]
-    [ProcessorFileTestData("35")]
-    [ProcessorFileTestData("39")]
-    [ProcessorFileTestData("3d")]
-    public void Execute10000LogicalAndTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
-    {
-        var trace = new List<(int, byte, string)>();
-		var sut = Utilities.CreateSubjectUnderTestFromSample(sampleCpu.Opcodes, sampleCpu.Initial, trace);
-        sut.Run();
-
-        Utilities.Equal(sampleCpu.Final, sut);
-        Utilities.Equal(sampleCpu.Cycles, trace);
-    }
-
-    [Theory]
-    [ProcessorFileTestData("8a")]
-    [ProcessorFileTestData("9a")]
-    [ProcessorFileTestData("98")]
-    [ProcessorFileTestData("a8")]
-    [ProcessorFileTestData("aa")]
-    [ProcessorFileTestData("ba")]
-    public void Execute10000TransferTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
-    {
-        var trace = new List<(int, byte, string)>();
-		var sut = Utilities.CreateSubjectUnderTestFromSample(sampleCpu.Opcodes, sampleCpu.Initial, trace);
-        sut.Run();
-
-        Utilities.Equal(sampleCpu.Final, sut);
-        Utilities.Equal(sampleCpu.Cycles, trace);
-    }
-
-    [Theory]
-    [ProcessorFileTestData("2c")]
-    public void Execute10000BitTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
     {
         var trace = new List<(int, byte, string)>();
 		var sut = Utilities.CreateSubjectUnderTestFromSample(sampleCpu.Opcodes, sampleCpu.Initial, trace);
