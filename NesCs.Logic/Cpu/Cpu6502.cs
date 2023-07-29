@@ -138,6 +138,8 @@ public partial class Cpu6502
 
     internal void ClearNegativeFlag() => P &= ~ProcessorStatus.N;
 
+    internal void ClearCarryFlag() => P &= ~ProcessorStatus.C;
+
     private void Trace(int pc, byte value, string type) => _trace.Add((pc, value, type));
 
     public byte PeekMemory(int address) => _ram[address];

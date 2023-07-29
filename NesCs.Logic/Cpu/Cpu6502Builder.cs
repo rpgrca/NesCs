@@ -33,6 +33,7 @@ public partial class Cpu6502
             _instructions[0x0D] = new OraInAbsoluteModeOpcode0D();
             _instructions[0x11] = new OraInIndirectYModeOpcode11();
             _instructions[0x15] = new OraInZeroPageXModeOpcode15();
+            _instructions[0x18] = new ClearCarryFlagOpcode18();
             _instructions[0x19] = new OraInAbsoluteYModeOpcode19();
             _instructions[0x1D] = new OraInAbsoluteXModeOpcode0D();
             _instructions[0x21] = new AndInIndirectXModeOpcode21();
