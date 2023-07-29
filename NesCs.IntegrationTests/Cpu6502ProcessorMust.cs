@@ -5,24 +5,24 @@ namespace NesCs.IntegrationTests;
 public class Cpu6502ProcessorMust
 {
 	[Theory]
-    [ProcessorFileTest1Data(typeof(OpcodeA0))]
-    [ProcessorFileTest1Data(typeof(OpcodeA1))]
-    [ProcessorFileTest1Data(typeof(OpcodeA2))]
-    [ProcessorFileTest1Data(typeof(OpcodeA4))]
-    [ProcessorFileTest1Data(typeof(OpcodeA5))]
-    [ProcessorFileTest1Data(typeof(OpcodeA6))]
-    [ProcessorFileTest1Data(typeof(OpcodeA9))]
-    [ProcessorFileTest1Data(typeof(OpcodeAC))]
-    [ProcessorFileTest1Data(typeof(OpcodeAD))]
-    [ProcessorFileTest1Data(typeof(OpcodeAE))]
-    [ProcessorFileTest1Data(typeof(OpcodeB1))]
-    [ProcessorFileTest1Data(typeof(OpcodeB4))]
-    [ProcessorFileTest1Data(typeof(OpcodeB5))]
-    [ProcessorFileTest1Data(typeof(OpcodeB6))]
-    [ProcessorFileTest1Data(typeof(OpcodeB9))]
-    [ProcessorFileTest1Data(typeof(OpcodeBC))]
-    [ProcessorFileTest1Data(typeof(OpcodeBD))]
-    [ProcessorFileTest1Data(typeof(OpcodeBE))]
+    [ProcessorFileTestData(typeof(OpcodeA0))]
+    [ProcessorFileTestData(typeof(OpcodeA1))]
+    [ProcessorFileTestData(typeof(OpcodeA2))]
+    [ProcessorFileTestData(typeof(OpcodeA4))]
+    [ProcessorFileTestData(typeof(OpcodeA5))]
+    [ProcessorFileTestData(typeof(OpcodeA6))]
+    [ProcessorFileTestData(typeof(OpcodeA9))]
+    [ProcessorFileTestData(typeof(OpcodeAC))]
+    [ProcessorFileTestData(typeof(OpcodeAD))]
+    [ProcessorFileTestData(typeof(OpcodeAE))]
+    [ProcessorFileTestData(typeof(OpcodeB1))]
+    [ProcessorFileTestData(typeof(OpcodeB4))]
+    [ProcessorFileTestData(typeof(OpcodeB5))]
+    [ProcessorFileTestData(typeof(OpcodeB6))]
+    [ProcessorFileTestData(typeof(OpcodeB9))]
+    [ProcessorFileTestData(typeof(OpcodeBC))]
+    [ProcessorFileTestData(typeof(OpcodeBD))]
+    [ProcessorFileTestData(typeof(OpcodeBE))]
     public void Execute10000LoadTestsPerOpcodeCorrectly1(SampleCpu sampleCpu)
     {
         var trace = new List<(int, byte, string)>();
@@ -34,45 +34,45 @@ public class Cpu6502ProcessorMust
     }
 
     [Theory]
-    [ClassData(typeof(OpcodeFeeder<OpcodeEA>))]
-    public void Execute10000NopTestsPerOpcodeCorrectly(SampleCpuTest data)
+    [ProcessorFileTestData(typeof(OpcodeEA))]
+    public void Execute10000NopTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
     {
         var trace = new List<(int, byte, string)>();
-		var sut = Utilities.CreateSubjectUnderTestFromSample(data, trace);
+		var sut = Utilities.CreateSubjectUnderTestFromSample(sampleCpu.Opcodes, sampleCpu.Initial, trace);
         sut.Run();
 
-        Utilities.Equal(data.Final, sut);
-        Utilities.Equal(data.Cycles, trace);
+        Utilities.Equal(sampleCpu.Final, sut);
+        Utilities.Equal(sampleCpu.Cycles, trace);
     }
 
     [Theory]
-    [ClassData(typeof(OpcodeFeeder<Opcode01>))]
-    [ClassData(typeof(OpcodeFeeder<Opcode05>))]
-    [ClassData(typeof(OpcodeFeeder<Opcode09>))]
-    [ClassData(typeof(OpcodeFeeder<Opcode0D>))]
-    [ClassData(typeof(OpcodeFeeder<Opcode11>))]
-    [ClassData(typeof(OpcodeFeeder<Opcode15>))]
-    [ClassData(typeof(OpcodeFeeder<Opcode19>))]
-    [ClassData(typeof(OpcodeFeeder<Opcode1D>))]
-    public void Execute10000InclusiveOrTestsPerOpcodeCorrectly(SampleCpuTest data)
+    [ProcessorFileTestData(typeof(Opcode01))]
+    [ProcessorFileTestData(typeof(Opcode05))]
+    [ProcessorFileTestData(typeof(Opcode09))]
+    [ProcessorFileTestData(typeof(Opcode0D))]
+    [ProcessorFileTestData(typeof(Opcode11))]
+    [ProcessorFileTestData(typeof(Opcode15))]
+    [ProcessorFileTestData(typeof(Opcode19))]
+    [ProcessorFileTestData(typeof(Opcode1D))]
+    public void Execute10000InclusiveOrTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
     {
         var trace = new List<(int, byte, string)>();
-		var sut = Utilities.CreateSubjectUnderTestFromSample(data, trace);
+		var sut = Utilities.CreateSubjectUnderTestFromSample(sampleCpu.Opcodes, sampleCpu.Initial, trace);
         sut.Run();
 
-        Utilities.Equal(data.Final, sut);
-        Utilities.Equal(data.Cycles, trace);
+        Utilities.Equal(sampleCpu.Final, sut);
+        Utilities.Equal(sampleCpu.Cycles, trace);
     }
 
     [Theory]
-    [ClassData(typeof(OpcodeFeeder<Opcode29>))]
-    public void Execute10000LogicalAndTestsPerOpcodeCorrectly(SampleCpuTest data)
+    [ProcessorFileTestData(typeof(Opcode29))]
+    public void Execute10000LogicalAndTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
     {
         var trace = new List<(int, byte, string)>();
-		var sut = Utilities.CreateSubjectUnderTestFromSample(data, trace);
+		var sut = Utilities.CreateSubjectUnderTestFromSample(sampleCpu.Opcodes, sampleCpu.Initial, trace);
         sut.Run();
 
-        Utilities.Equal(data.Final, sut);
-        Utilities.Equal(data.Cycles, trace);
+        Utilities.Equal(sampleCpu.Final, sut);
+        Utilities.Equal(sampleCpu.Cycles, trace);
     }
 }

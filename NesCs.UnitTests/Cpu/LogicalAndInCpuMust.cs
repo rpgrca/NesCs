@@ -9,9 +9,9 @@ public class LogicalAndInCpuMust
     [MemberData(nameof(Opcode29JsonFeeder))]
 	public void BeExecutedCorrectly(string jsonText)
     {
-        var data = JsonSerializer.Deserialize<SampleCpuTest>(jsonText, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+        var data = JsonDeserializer.Deserialize(jsonText);
         var trace = new List<(int, byte, string)>();
-        var sut = Utilities.CreateSubjectUnderTestFromSample(data, trace);
+        var sut = Utilities.CreateSubjectUnderTestFromSample(data.Opcodes, data.Initial, trace);
         sut.Run();
 
         Utilities.Equal(data.Final, sut);

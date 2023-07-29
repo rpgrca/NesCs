@@ -6,11 +6,11 @@ using NesCs.Tests.Common.Converters;
 namespace NesCs.Tests.Common;
 
 // Based on https://andrewlock.net/creating-a-custom-xunit-theory-test-dataattribute-to-load-data-from-json-files/
-public class ProcessorFileTest1DataAttribute : DataAttribute
+public class ProcessorFileTestDataAttribute : DataAttribute
 {
     private readonly string _filename;
 
-    public ProcessorFileTest1DataAttribute(Type opcodeFile)
+    public ProcessorFileTestDataAttribute(Type opcodeFile)
     {
         // Based on https://stackoverflow.com/questions/76046475/how-to-invoke-static-interface-method-via-reflection
         _filename = opcodeFile
