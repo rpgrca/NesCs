@@ -1,21 +1,10 @@
 namespace NesCs.Logic.Cpu.Instructions;
 
-public class OraInZeroPageXModeOpcode15 : IInstruction
+public class OraInZeroPageXModeOpcode15 : ZeroIndexedMode
 {
-    public void Execute(Cpu6502 cpu)
-    {
-        cpu.ReadyForNextInstruction();
-        var offset = cpu.ReadByteFromProgram();
+    protected override byte ObtainValueForIndex(Cpu6502 cpu) =>
+        cpu.ReadByteFromRegisterX();
 
-        cpu.ReadyForNextInstruction();
-        _ = cpu.ReadByteFromMemory(offset);
-        var effectiveAddress = (byte)((cpu.ReadByteFromRegisterX() + offset) & 0xff);
-
-        var operand = cpu.ReadByteFromMemory(effectiveAddress);
-        var result = (byte)(cpu.ReadByteFromAccumulator() | operand);
-        cpu.SetValueIntoAccumulator(result);
-
-        cpu.SetZeroFlagBasedOn(result);
-        cpu.SetNegativeFlagBasedOn(result);
-    }
+    protected override byte ExecuteOperation(Cpu6502 cpu, byte value) =>
+        (byte)(cpu.ReadByteFromAccumulator() | value);
 }

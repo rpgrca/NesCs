@@ -28,7 +28,8 @@ public abstract class AbsoluteIndexedMode : IInstruction
 
     protected abstract byte ObtainValueForIndex(Cpu6502 cpu);
 
-    protected abstract byte ExecuteOperation(Cpu6502 cpu, byte value);
+    protected virtual byte ExecuteOperation(Cpu6502 cpu, byte value) => value;
 
-    protected abstract void StoreValueInFinalDestination(Cpu6502 cpu, byte value);
+    protected virtual void StoreValueInFinalDestination(Cpu6502 cpu, byte value) =>
+        cpu.SetValueIntoAccumulator(value);
 }
