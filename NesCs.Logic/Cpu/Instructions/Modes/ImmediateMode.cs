@@ -1,6 +1,6 @@
-namespace NesCs.Logic.Cpu.Instructions;
+namespace NesCs.Logic.Cpu.Instructions.Modes;
 
-public abstract class LoadInImmediateMode : IInstruction
+public class ImmediateMode : IInstruction
 {
     public void Execute(Cpu6502 cpu)
     {
@@ -8,11 +8,14 @@ public abstract class LoadInImmediateMode : IInstruction
         var value = cpu.ReadByteFromProgram();
 
         cpu.ReadyForNextInstruction();
+        value = ExecuteOperation(cpu, value);
         StoreValueInFinalDestination(cpu, value);
 
         cpu.SetZeroFlagBasedOn(value);
         cpu.SetNegativeFlagBasedOn(value);
     }
+
+    protected virtual byte ExecuteOperation(Cpu6502 cpu, byte value) => value;
 
     protected virtual void StoreValueInFinalDestination(Cpu6502 cpu, byte value) =>
         cpu.SetValueIntoAccumulator(value);

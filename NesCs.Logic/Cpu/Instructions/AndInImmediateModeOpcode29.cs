@@ -1,17 +1,9 @@
+using NesCs.Logic.Cpu.Instructions.Modes;
+
 namespace NesCs.Logic.Cpu.Instructions;
 
-public class AndInImmediateModeOpcode29 : IInstruction
+public class AndInImmediateModeOpcode29 : ImmediateMode
 {
-    public void Execute(Cpu6502 cpu)
-    {
-        cpu.ReadyForNextInstruction();
-        var value = cpu.ReadByteFromProgram();
-
-        cpu.ReadyForNextInstruction();
-        value = (byte)(cpu.ReadByteFromAccumulator() & value);
-        cpu.SetValueIntoAccumulator(value);
-
-        cpu.SetZeroFlagBasedOn(value);
-        cpu.SetNegativeFlagBasedOn(value);
-    }
+    protected override byte ExecuteOperation(Cpu6502 cpu, byte value) =>
+        (byte)(cpu.ReadByteFromAccumulator() & value);
 }
