@@ -69,6 +69,7 @@ public class Cpu6502ProcessorMust
     [ProcessorFileTestData("29")]
     [ProcessorFileTestData("2d")]
     [ProcessorFileTestData("35")]
+    [ProcessorFileTestData("3d")]
     public void Execute10000LogicalAndTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
     {
         var trace = new List<(int, byte, string)>();

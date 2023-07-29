@@ -9,6 +9,7 @@ public class LogicalAndInCpuMust
     [MemberData(nameof(Opcode29JsonFeeder))]
     [MemberData(nameof(Opcode2DJsonFeeder))]
     [MemberData(nameof(Opcode35JsonFeeder))]
+    [MemberData(nameof(Opcode3DJsonFeeder))]
 	public void BeExecutedCorrectly(SampleCpu sampleCpu)
     {
         var trace = new List<(int, byte, string)>();
@@ -34,10 +35,13 @@ public class LogicalAndInCpuMust
         yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "2d 13 74", "initial": { "pc": 22459, "s": 95, "a": 150, "x": 15, "y": 155, "p": 227, "ram": [ [22459, 45], [22460, 19], [22461, 116], [29715, 221], [22462, 26]]}, "final": { "pc": 22462, "s": 95, "a": 148, "x": 15, "y": 155, "p": 225, "ram": [ [22459, 45], [22460, 19], [22461, 116], [22462, 26], [29715, 221]]}, "cycles": [ [22459, 45, "read"], [22460, 19, "read"], [22461, 116, "read"], [29715, 221, "read"]] }""") };
     }
 
-     public static IEnumerable<object[]> Opcode35JsonFeeder()
+    public static IEnumerable<object[]> Opcode35JsonFeeder()
     {
         yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "35 ac 7c", "initial": { "pc": 39961, "s": 30, "a": 31, "x": 28, "y": 166, "p": 107, "ram": [ [39961, 53], [39962, 172], [39963, 124], [172, 212], [200, 229]]}, "final": { "pc": 39963, "s": 30, "a": 5, "x": 28, "y": 166, "p": 105, "ram": [ [172, 212], [200, 229], [39961, 53], [39962, 172], [39963, 124]]}, "cycles": [ [39961, 53, "read"], [39962, 172, "read"], [172, 212, "read"], [200, 229, "read"]] }""") };
     }
 
-
+    public static IEnumerable<object[]> Opcode3DJsonFeeder()
+    {
+        yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "3d 18 f9", "initial": { "pc": 65080, "s": 38, "a": 118, "x": 255, "y": 142, "p": 106, "ram": [ [65080, 61], [65081, 24], [65082, 249], [63767, 162], [64023, 103], [65083, 65]]}, "final": { "pc": 65083, "s": 38, "a": 102, "x": 255, "y": 142, "p": 104, "ram": [ [63767, 162], [64023, 103], [65080, 61], [65081, 24], [65082, 249], [65083, 65]]}, "cycles": [ [65080, 61, "read"], [65081, 24, "read"], [65082, 249, "read"], [63767, 162, "read"], [64023, 103, "read"]] }""") };
+    }
 }
