@@ -1,6 +1,6 @@
 namespace NesCs.Logic.Cpu.Instructions;
 
-public class LdyInZeroPageXModeOpcodeB4 : LoadInZeroIndexedMode
+public class LdyInZeroPageXModeOpcodeB4 : ZeroIndexedMode
 {
     protected override byte ObtainValueForIndex(Cpu6502 cpu) =>
         cpu.ReadByteFromRegisterX();

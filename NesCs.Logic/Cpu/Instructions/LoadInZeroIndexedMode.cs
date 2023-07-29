@@ -1,6 +1,6 @@
 namespace NesCs.Logic.Cpu.Instructions;
 
-public abstract class LoadInZeroIndexedMode : IInstruction
+public abstract class ZeroIndexedMode : IInstruction
 {
     public void Execute(Cpu6502 cpu)
     {
@@ -10,13 +10,17 @@ public abstract class LoadInZeroIndexedMode : IInstruction
 
         cpu.ReadyForNextInstruction();
         var value = cpu.ReadByteFromMemory((byte)(address + ObtainValueForIndex(cpu)));
+        value = ExecuteOperation(cpu, value);
         StoreValueInFinalDestination(cpu, value);
 
         cpu.SetZeroFlagBasedOn(value);
         cpu.SetNegativeFlagBasedOn(value);
     }
 
-    protected abstract void StoreValueInFinalDestination(Cpu6502 cpu, byte value);
-
     protected abstract byte ObtainValueForIndex(Cpu6502 cpu);
+
+    protected virtual void StoreValueInFinalDestination(Cpu6502 cpu, byte value) =>
+        cpu.SetValueIntoAccumulator(value);
+
+    protected virtual byte ExecuteOperation(Cpu6502 cpu, byte value) => value;
 }

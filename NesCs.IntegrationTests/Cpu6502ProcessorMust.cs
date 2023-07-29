@@ -67,6 +67,7 @@ public class Cpu6502ProcessorMust
     [Theory]
     [ProcessorFileTestData(typeof(Opcode25))]
     [ProcessorFileTestData(typeof(Opcode29))]
+    [ProcessorFileTestData(typeof(Opcode35))]
     public void Execute10000LogicalAndTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
     {
         var trace = new List<(int, byte, string)>();

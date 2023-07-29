@@ -16,7 +16,8 @@ public abstract class ZeroPageMode : IInstruction
         cpu.SetNegativeFlagBasedOn(value);
     }
 
-    protected abstract void StoreValueInFinalDestination(Cpu6502 cpu, byte value);
+    protected virtual void StoreValueInFinalDestination(Cpu6502 cpu, byte value) =>
+        cpu.SetValueIntoAccumulator(value);
 
-    protected abstract byte ExecuteOperation(Cpu6502 cpu, byte value);
+    protected virtual byte ExecuteOperation(Cpu6502 cpu, byte value) => value;
 }
