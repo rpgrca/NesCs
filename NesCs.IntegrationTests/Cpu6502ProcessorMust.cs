@@ -82,4 +82,16 @@ public class Cpu6502ProcessorMust
         Utilities.Equal(sampleCpu.Final, sut);
         Utilities.Equal(sampleCpu.Cycles, trace);
     }
+
+    [Theory]
+    [ProcessorFileTestData("aa")]
+    public void Execute10000TransferTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
+    {
+        var trace = new List<(int, byte, string)>();
+		var sut = Utilities.CreateSubjectUnderTestFromSample(sampleCpu.Opcodes, sampleCpu.Initial, trace);
+        sut.Run();
+
+        Utilities.Equal(sampleCpu.Final, sut);
+        Utilities.Equal(sampleCpu.Cycles, trace);
+    }
 }

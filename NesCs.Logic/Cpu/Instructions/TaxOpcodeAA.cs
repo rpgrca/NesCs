@@ -1,0 +1,10 @@
+namespace NesCs.Logic.Cpu.Instructions;
+
+public class TaxOpcodeAA : TransferInstruction
+{
+    protected override byte ObtainValueFromSource(Cpu6502 cpu) =>
+        cpu.ReadByteFromAccumulator();
+
+    protected override void StoreValueInFinalDestination(Cpu6502 cpu, byte value) =>
+        cpu.SetValueIntoRegisterX(value);
+}
