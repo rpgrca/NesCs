@@ -1,17 +1,13 @@
 namespace NesCs.Logic.Cpu.Instructions;
 
-public class BitTestAbsoluteOpcode2C : IInstruction
+public class BitTestZeroPageModeOpcode24 : IInstruction
 {
     public void Execute(Cpu6502 cpu)
     {
         cpu.ReadyForNextInstruction();
-        var low = cpu.ReadByteFromProgram();
+        var address = cpu.ReadByteFromProgram();
 
         cpu.ReadyForNextInstruction();
-        var high = cpu.ReadByteFromProgram();
-
-        cpu.ReadyForNextInstruction();
-        var address = high << 8 | low;
         var value = cpu.ReadByteFromMemory(address);
 
         var result = (byte)(value & cpu.ReadByteFromAccumulator());
