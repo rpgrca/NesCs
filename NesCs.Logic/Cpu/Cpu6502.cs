@@ -35,6 +35,7 @@ public partial class Cpu6502
         _ip = 0;
     }
 
+/*
     private void PowerOn()
     {
         A = X = Y = 0;
@@ -53,7 +54,7 @@ public partial class Cpu6502
         {
             _ram[index] = 0x00;
         }
-    }
+    }*/
 
     public void Run()
     {
@@ -64,8 +65,6 @@ public partial class Cpu6502
             _instructions[opcode].Execute(this);
         }
     }
-
-    internal ProcessorStatus ReadByteFromStatus() => P;
 
     internal byte ReadByteFromRegisterY() => Y;
 
@@ -101,30 +100,6 @@ public partial class Cpu6502
 
     internal void SetValueIntoStackPointer(byte value) => S = value;
 
-    internal void SetZeroFlagBasedOnAccumulator()
-    {
-        if (A == 0)
-        {
-            P |= ProcessorStatus.Z;
-        }
-        else
-        {
-            P &= ~ProcessorStatus.Z;
-        }
-    }
-
-    internal void SetZeroFlagBasedOnRegisterX()
-    {
-        if (X == 0)
-        {
-            P |= ProcessorStatus.Z;
-        }
-        else
-        {
-            P &= ~ProcessorStatus.Z;
-        }
-    }
-
     internal void SetZeroFlagBasedOn(byte value)
     {
         if (value == 0)
@@ -149,19 +124,6 @@ public partial class Cpu6502
         }
     }
 
-    internal void SetOverflowFlagBasedOn(byte value, byte result)
-    {
-        // Formula from http://www.righto.com/2012/12/the-6502-overflow-flag-explained.html
-        if (!(((value ^ result) & 0x80) != 0 && ((value^result) & 0x80) != 0))
-        {
-            P |= ProcessorStatus.V;
-        }
-        else
-        {
-            ClearOverflowFlag();
-        }
-    }
-
     internal void SetOverflowFlagBasedOn(byte value)
     {
         if (((ProcessorStatus)value & ProcessorStatus.V) == ProcessorStatus.V)
@@ -175,10 +137,6 @@ public partial class Cpu6502
     }
 
     internal void ClearNegativeFlag() => P &= ~ProcessorStatus.N;
-
-    internal void ClearOverflowFlag() => P &= ~ProcessorStatus.V;
-
-    private void SetCarryFlag() => P |= ProcessorStatus.C;
 
     private void Trace(int pc, byte value, string type) => _trace.Add((pc, value, type));
 
