@@ -86,6 +86,7 @@ public class Cpu6502ProcessorMust
     [Theory]
     [ProcessorFileTestData("8a")]
     [ProcessorFileTestData("9a")]
+    [ProcessorFileTestData("98")]
     [ProcessorFileTestData("a8")]
     [ProcessorFileTestData("aa")]
     [ProcessorFileTestData("ba")]
