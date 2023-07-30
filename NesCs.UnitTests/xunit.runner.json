@@ -2,6 +2,6 @@
 {
     "parallelizeAssembly": true,
     "parallelizeTestCollections": true,
-    "stopOnFail": true,
+    "stopOnFail": false,
     "maxParallelThreads": -1
 }

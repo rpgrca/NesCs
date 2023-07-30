@@ -5,7 +5,7 @@ namespace NesCs.IntegrationTests;
 public class MathInstructionsInCpuMust
 {
     [Theory]
-    [ProcessorFileTestData("e9")]
+    [ProcessorFileTestData("69")]
     public void Execute10000MathTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
     {
         var trace = new List<(int, byte, string)>();

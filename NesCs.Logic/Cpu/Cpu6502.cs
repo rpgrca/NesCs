@@ -78,6 +78,8 @@ public partial class Cpu6502
 
     internal ProcessorStatus ReadCarryFlag() => P & ProcessorStatus.C;
 
+    internal ProcessorStatus ReadOverflowFlag() => P & ProcessorStatus.V;
+
     internal void ReadyForNextInstruction() => PC = (PC + 1) & 0xffff;
 
     internal byte ReadByteFromProgram()
@@ -138,6 +140,8 @@ public partial class Cpu6502
         }
     }
 
+    internal void SetOverflowFlag() => P |= ProcessorStatus.V;
+
     internal void SetCarryFlag() => P |= ProcessorStatus.C;
 
     internal void SetDecimalFlag() => P |= ProcessorStatus.D;
@@ -153,6 +157,8 @@ public partial class Cpu6502
     internal void ClearInterruptDisable() => P &= ~ProcessorStatus.I;
 
     internal void ClearOverflowFlag() => P &= ~ProcessorStatus.V;
+
+    internal void ClearZeroFlag() => P &= ~ProcessorStatus.Z;
 
     private void Trace(int pc, byte value, string type) => _trace.Add((pc, value, type));
 

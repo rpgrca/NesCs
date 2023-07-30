@@ -10,15 +10,30 @@ public class SubtractInImmediateModeOpcodeE9 : IInstruction
         var value = cpu.ReadByteFromProgram();
 
         cpu.ReadyForNextInstruction();
-        value = (byte)(cpu.ReadByteFromAccumulator() - (value - ~cpu.ReadCarryFlag()));
-        cpu.SetValueIntoAccumulator(value);
+        var a = cpu.ReadByteFromAccumulator();
+        var (result, overflow) = CalculateSub(cpu, a, value);
 
-        if (((ProcessorStatus)value & ProcessorStatus.V) == ProcessorStatus.V)
+        cpu.SetValueIntoAccumulator(result);
+        cpu.SetZeroFlagBasedOn(result);
+        cpu.SetNegativeFlagBasedOn(result);
+ 
+        if (overflow)
         {
+            cpu.SetOverflowFlag();
             cpu.ClearCarryFlag();
         }
+        else
+        {
+            cpu.ClearOverflowFlag();
+        }
+    }
 
-        cpu.SetZeroFlagBasedOn(value);
-        cpu.SetNegativeFlagBasedOn(value);
+    private (byte Result, bool Overflow) CalculateSub(Cpu6502 cpu, byte minuend, byte subtrahend)
+    {
+        var result = (byte)(minuend - subtrahend - (cpu.ReadCarryFlag() == ProcessorStatus.None? 1 : 0));
+        var operandSign = (((ProcessorStatus)subtrahend & ProcessorStatus.N) == ProcessorStatus.N)? 1 : 0;
+        var carryFlag = (cpu.ReadCarryFlag() == ProcessorStatus.C)? 1 : 0;
+        var resultSign = (((ProcessorStatus)result & ProcessorStatus.N) == ProcessorStatus.N)? 1 : 0;
+        return (result, operandSign != carryFlag && operandSign == resultSign);
     }
 }
