@@ -6,6 +6,7 @@ public class FlagInstructionsInCpuMust
 {
     [Theory]
     [ProcessorFileTestData("18")]
+    [ProcessorFileTestData("d8")]
     public void Execute10000FlagTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
     {
         var trace = new List<(int, byte, string)>();
