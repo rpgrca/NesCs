@@ -11,29 +11,55 @@ public class SubtractInImmediateModeOpcodeE9 : IInstruction
 
         cpu.ReadyForNextInstruction();
         var a = cpu.ReadByteFromAccumulator();
-        var (result, overflow) = CalculateSub(cpu, a, value);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        value = (byte)~value;
+        var sum = a + value + (cpu.ReadCarryFlag() == ProcessorStatus.C? 1 : 0);
+        var result = (byte)(sum & 0xff);
 
         cpu.SetValueIntoAccumulator(result);
-        cpu.SetZeroFlagBasedOn(result);
-        cpu.SetNegativeFlagBasedOn(result);
- 
-        if (overflow)
+        cpu.ClearCarryFlag();
+        cpu.ClearNegativeFlag();
+        cpu.ClearOverflowFlag();
+        cpu.ClearZeroFlag();
+
+        // TODO: Not a real 8-bit implementation but works for the time being
+        if ((sum >> 8) != 0)
+        {
+            cpu.SetCarryFlag();
+        }
+
+        if (((a ^ result) & (value ^ result) & 0x80) != 0)
         {
             cpu.SetOverflowFlag();
-            cpu.ClearCarryFlag();
         }
-        else
-        {
-            cpu.ClearOverflowFlag();
-        }
-    }
 
-    private (byte Result, bool Overflow) CalculateSub(Cpu6502 cpu, byte minuend, byte subtrahend)
-    {
-        var result = (byte)(minuend - subtrahend - (cpu.ReadCarryFlag() == ProcessorStatus.None? 1 : 0));
-        var operandSign = (((ProcessorStatus)subtrahend & ProcessorStatus.N) == ProcessorStatus.N)? 1 : 0;
-        var carryFlag = (cpu.ReadCarryFlag() == ProcessorStatus.C)? 1 : 0;
-        var resultSign = (((ProcessorStatus)result & ProcessorStatus.N) == ProcessorStatus.N)? 1 : 0;
-        return (result, operandSign != carryFlag && operandSign == resultSign);
+        cpu.SetZeroFlagBasedOn(result);
+        cpu.SetNegativeFlagBasedOn(result);
     }
 }

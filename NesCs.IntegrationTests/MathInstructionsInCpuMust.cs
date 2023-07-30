@@ -6,6 +6,7 @@ public class MathInstructionsInCpuMust
 {
     [Theory]
     [ProcessorFileTestData("69")]
+    [ProcessorFileTestData("e9")]
     public void Execute10000MathTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
     {
         var trace = new List<(int, byte, string)>();
