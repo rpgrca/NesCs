@@ -5,6 +5,7 @@ public partial class Cpu6502
     [Flags]
     public enum ProcessorStatus
     {
+        None = 0,
         C = 1 << 0,
         Z = 1 << 1,
         I = 1 << 2,
