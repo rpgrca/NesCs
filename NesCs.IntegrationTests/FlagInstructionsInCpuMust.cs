@@ -10,6 +10,7 @@ public class FlagInstructionsInCpuMust
     [ProcessorFileTestData("58")]
     [ProcessorFileTestData("b8")]
     [ProcessorFileTestData("d8")]
+    [ProcessorFileTestData("f8")]
     public void Execute10000FlagTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
     {
         var trace = new List<(int, byte, string)>();

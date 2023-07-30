@@ -10,6 +10,7 @@ public class FlagOperationsInCpuMust
     [MemberData(nameof(Opcode58JsonFeeder))]
     [MemberData(nameof(OpcodeB8JsonFeeder))]
     [MemberData(nameof(OpcodeD8JsonFeeder))]
+    [MemberData(nameof(OpcodeF8JsonFeeder))]
     public void BeExecutedCorrectly(SampleCpu sampleCpu)
     {
         var trace = new List<(int, byte, string)>();
@@ -47,6 +48,12 @@ public class FlagOperationsInCpuMust
     public static IEnumerable<object[]> OpcodeD8JsonFeeder()
     {
         /* No decimal set */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "d8 01 b8", "initial": { "pc": 60103, "s": 196, "a": 110, "x": 41, "y": 251, "p": 37, "ram": [ [60103, 216], [60104, 1], [60105, 184]]}, "final": { "pc": 60104, "s": 196, "a": 110, "x": 41, "y": 251, "p": 37, "ram": [ [60103, 216], [60104, 1], [60105, 184]]}, "cycles": [ [60103, 216, "read"], [60104, 1, "read"]] }""") };
-        /* Decimal set    */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "d8 45 dd", "initial": { "pc": 9012, "s": 248, "a": 154, "x": 207, "y": 181, "p": 41, "ram": [ [9012, 216], [9013, 69], [9014, 221]]}, "final": { "pc": 9013, "s": 248, "a": 154, "x": 207, "y": 181, "p": 33, "ram": [ [9012, 216], [9013, 69], [9014, 221]]}, "cycles": [ [9012, 216, "read"], [9013, 69, "read"]] }""")};
+        /* Decimal set    */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "d8 45 dd", "initial": { "pc": 9012, "s": 248, "a": 154, "x": 207, "y": 181, "p": 41, "ram": [ [9012, 216], [9013, 69], [9014, 221]]}, "final": { "pc": 9013, "s": 248, "a": 154, "x": 207, "y": 181, "p": 33, "ram": [ [9012, 216], [9013, 69], [9014, 221]]}, "cycles": [ [9012, 216, "read"], [9013, 69, "read"]] }""") };
+    }
+
+    public static IEnumerable<object[]> OpcodeF8JsonFeeder()
+    {
+        /* No decimal set */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "f8 16 85", "initial": { "pc": 49048, "s": 130, "a": 201, "x": 24, "y": 115, "p": 229, "ram": [ [49048, 248], [49049, 22], [49050, 133]]}, "final": { "pc": 49049, "s": 130, "a": 201, "x": 24, "y": 115, "p": 237, "ram": [ [49048, 248], [49049, 22], [49050, 133]]}, "cycles": [ [49048, 248, "read"], [49049, 22, "read"]] }""") };
+        /* Decimal set    */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "f8 9c d8", "initial": { "pc": 26481, "s": 4, "a": 14, "x": 109, "y": 119, "p": 172, "ram": [ [26481, 248], [26482, 156], [26483, 216]]}, "final": { "pc": 26482, "s": 4, "a": 14, "x": 109, "y": 119, "p": 172, "ram": [ [26481, 248], [26482, 156], [26483, 216]]}, "cycles": [ [26481, 248, "read"], [26482, 156, "read"]] }""") };
     }
 }
