@@ -46,6 +46,7 @@ public partial class Cpu6502
             _instructions[0x35] = new AndInZeroPageXModeOpcode35();
             _instructions[0x39] = new AndInAbsoluteYModeOpcode39();
             _instructions[0x3D] = new AndInAbsoluteXModeOpcode3D();
+            _instructions[0x58] = new ClearInterruptDisableOpcode58();
             _instructions[0x8A] = new TransferXToAccumulatorOpcode8A();
             _instructions[0x98] = new TransferYToAccumulatorOpcode98();
             _instructions[0x9A] = new TransferXToStackOpcode9A();
@@ -65,6 +66,7 @@ public partial class Cpu6502
             _instructions[0xB4] = new LdyInZeroPageXModeOpcodeB4();
             _instructions[0xB5] = new LdaInZeroPageXModeOpcodeB5();
             _instructions[0xB6] = new LdxInZeroPageYModeOpcodeB6();
+            _instructions[0xB8] = new ClearOverflowFlagOpcodeB8();
             _instructions[0xB9] = new LdaInAbsoluteYModeOpcodeB9();
             _instructions[0xBA] = new TransferStackToXOpcodeBA();
             _instructions[0xBC] = new LdyInAbsoluteXModeOpcodeBC();

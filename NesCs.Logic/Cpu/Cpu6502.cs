@@ -142,6 +142,10 @@ public partial class Cpu6502
 
     internal void ClearDecimalMode() => P &= ~ProcessorStatus.D;
 
+    internal void ClearInterruptDisable() => P &= ~ProcessorStatus.I;
+
+    internal void ClearOverflowFlag() => P &= ~ProcessorStatus.V;
+
     private void Trace(int pc, byte value, string type) => _trace.Add((pc, value, type));
 
     public byte PeekMemory(int address) => _ram[address];

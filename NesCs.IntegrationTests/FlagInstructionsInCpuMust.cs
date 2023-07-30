@@ -6,6 +6,8 @@ public class FlagInstructionsInCpuMust
 {
     [Theory]
     [ProcessorFileTestData("18")]
+    [ProcessorFileTestData("58")]
+    [ProcessorFileTestData("b8")]
     [ProcessorFileTestData("d8")]
     public void Execute10000FlagTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
     {
