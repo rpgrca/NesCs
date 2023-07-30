@@ -7,6 +7,7 @@ public class MathInstructionsInCpuMust
     [Theory]
     [ProcessorFileTestData("69")]
     [ProcessorFileTestData("6d")]
+    [ProcessorFileTestData("7d")]
     [ProcessorFileTestData("e9")]
     public void Execute10000MathTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
     {
