@@ -1,4 +1,4 @@
-using NesCs.Tests.Common;
+using NesCs.Common.Tests;
 
 namespace NesCs.UnitTests.Cpu;
 

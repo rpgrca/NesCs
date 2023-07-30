@@ -1,7 +1,7 @@
 using System.Text.Json;
-using NesCs.Tests.Common.Converters;
+using NesCs.Common.Tests.Converters;
 
-namespace NesCs.Tests.Common;
+namespace NesCs.Common.Tests;
 
 public static class JsonDeserializer
 {

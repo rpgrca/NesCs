@@ -1,7 +1,8 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using NesCs.Common.Tests;
 
-namespace NesCs.Tests.Common.Converters;
+namespace NesCs.Common.Tests.Converters;
 
 public class SampleStatusConverter : JsonConverter<SampleStatus>
 {

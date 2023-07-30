@@ -1,9 +1,9 @@
 using System.Reflection;
 using System.Text.Json;
 using Xunit.Sdk;
-using NesCs.Tests.Common.Converters;
+using NesCs.Common.Tests.Converters;
 
-namespace NesCs.Tests.Common;
+namespace NesCs.Common.Tests;
 
 // Based on https://andrewlock.net/creating-a-custom-xunit-theory-test-dataattribute-to-load-data-from-json-files/
 public class ProcessorFileTestDataAttribute : DataAttribute
