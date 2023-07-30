@@ -6,6 +6,7 @@ public class FlagInstructionsInCpuMust
 {
     [Theory]
     [ProcessorFileTestData("18")]
+    [ProcessorFileTestData("38")]
     [ProcessorFileTestData("58")]
     [ProcessorFileTestData("b8")]
     [ProcessorFileTestData("d8")]

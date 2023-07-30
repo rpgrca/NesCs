@@ -6,6 +6,7 @@ public class FlagOperationsInCpuMust
 {
     [Theory]
     [MemberData(nameof(Opcode18JsonFeeder))]
+    [MemberData(nameof(Opcode38JsonFeeder))]
     [MemberData(nameof(Opcode58JsonFeeder))]
     [MemberData(nameof(OpcodeB8JsonFeeder))]
     [MemberData(nameof(OpcodeD8JsonFeeder))]
@@ -23,6 +24,12 @@ public class FlagOperationsInCpuMust
     {
         /* No carry set */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "18 2d db", "initial": { "pc": 46370, "s": 169, "a": 138, "x": 75, "y": 143, "p": 224, "ram": [ [46370, 24], [46371, 45], [46372, 219]]}, "final": { "pc": 46371, "s": 169, "a": 138, "x": 75, "y": 143, "p": 224, "ram": [ [46370, 24], [46371, 45], [46372, 219]]}, "cycles": [ [46370, 24, "read"], [46371, 45, "read"]] }""") };
         /* Carry set    */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "18 bd 37", "initial": { "pc": 33057, "s": 162, "a": 126, "x": 230, "y": 151, "p": 39, "ram": [ [33057, 24], [33058, 189], [33059, 55]]}, "final": { "pc": 33058, "s": 162, "a": 126, "x": 230, "y": 151, "p": 38, "ram": [ [33057, 24], [33058, 189], [33059, 55]]}, "cycles": [ [33057, 24, "read"], [33058, 189, "read"]] }""")};
+    }
+
+    public static IEnumerable<object[]> Opcode38JsonFeeder()
+    {
+        /* No carry set */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "38 b8 e1", "initial": { "pc": 22541, "s": 41, "a": 169, "x": 120, "y": 222, "p": 100, "ram": [ [22541, 56], [22542, 184], [22543, 225]]}, "final": { "pc": 22542, "s": 41, "a": 169, "x": 120, "y": 222, "p": 101, "ram": [ [22541, 56], [22542, 184], [22543, 225]]}, "cycles": [ [22541, 56, "read"], [22542, 184, "read"]] }""") };
+        /* Carry set    */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "38 42 2d", "initial": { "pc": 56307, "s": 216, "a": 187, "x": 187, "y": 193, "p": 227, "ram": [ [56307, 56], [56308, 66], [56309, 45]]}, "final": { "pc": 56308, "s": 216, "a": 187, "x": 187, "y": 193, "p": 227, "ram": [ [56307, 56], [56308, 66], [56309, 45]]}, "cycles": [ [56307, 56, "read"], [56308, 66, "read"]] }""") };
     }
 
     public static IEnumerable<object[]> Opcode58JsonFeeder()
