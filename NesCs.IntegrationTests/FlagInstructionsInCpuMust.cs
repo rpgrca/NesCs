@@ -8,6 +8,7 @@ public class FlagInstructionsInCpuMust
     [ProcessorFileTestData("18")]
     [ProcessorFileTestData("38")]
     [ProcessorFileTestData("58")]
+    [ProcessorFileTestData("78")]
     [ProcessorFileTestData("b8")]
     [ProcessorFileTestData("d8")]
     [ProcessorFileTestData("f8")]

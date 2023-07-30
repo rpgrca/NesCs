@@ -140,6 +140,8 @@ public partial class Cpu6502
 
     internal void SetDecimalFlag() => P |= ProcessorStatus.D;
 
+    internal void SetInterruptDisable() => P |= ProcessorStatus.I;
+
     internal void ClearNegativeFlag() => P &= ~ProcessorStatus.N;
 
     internal void ClearCarryFlag() => P &= ~ProcessorStatus.C;

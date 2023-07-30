@@ -8,6 +8,7 @@ public class FlagOperationsInCpuMust
     [MemberData(nameof(Opcode18JsonFeeder))]
     [MemberData(nameof(Opcode38JsonFeeder))]
     [MemberData(nameof(Opcode58JsonFeeder))]
+    [MemberData(nameof(Opcode78JsonFeeder))]
     [MemberData(nameof(OpcodeB8JsonFeeder))]
     [MemberData(nameof(OpcodeD8JsonFeeder))]
     [MemberData(nameof(OpcodeF8JsonFeeder))]
@@ -37,6 +38,12 @@ public class FlagOperationsInCpuMust
     {
         /* No interrupt set */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "58 aa 12", "initial": { "pc": 12360, "s": 147, "a": 15, "x": 154, "y": 104, "p": 34, "ram": [ [12360, 88], [12361, 170], [12362, 18]]}, "final": { "pc": 12361, "s": 147, "a": 15, "x": 154, "y": 104, "p": 34, "ram": [ [12360, 88], [12361, 170], [12362, 18]]}, "cycles": [ [12360, 88, "read"], [12361, 170, "read"]] }""") };
         /* Interrupt set    */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "58 5b 95", "initial": { "pc": 22482, "s": 222, "a": 219, "x": 39, "y": 4, "p": 172, "ram": [ [22482, 88], [22483, 91], [22484, 149]]}, "final": { "pc": 22483, "s": 222, "a": 219, "x": 39, "y": 4, "p": 168, "ram": [ [22482, 88], [22483, 91], [22484, 149]]}, "cycles": [ [22482, 88, "read"], [22483, 91, "read"]] }""") };
+    }
+
+    public static IEnumerable<object[]> Opcode78JsonFeeder()
+    {
+        /* No interrupt set */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "78 ac 1b", "initial": { "pc": 1235, "s": 187, "a": 144, "x": 128, "y": 69, "p": 107, "ram": [ [1235, 120], [1236, 172], [1237, 27]]}, "final": { "pc": 1236, "s": 187, "a": 144, "x": 128, "y": 69, "p": 111, "ram": [ [1235, 120], [1236, 172], [1237, 27]]}, "cycles": [ [1235, 120, "read"], [1236, 172, "read"]] }""") };
+        /* Interrupt set    */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "78 f9 09", "initial": { "pc": 7305, "s": 242, "a": 186, "x": 145, "y": 98, "p": 228, "ram": [ [7305, 120], [7306, 249], [7307, 9]]}, "final": { "pc": 7306, "s": 242, "a": 186, "x": 145, "y": 98, "p": 228, "ram": [ [7305, 120], [7306, 249], [7307, 9]]}, "cycles": [ [7305, 120, "read"], [7306, 249, "read"]] }""") };
     }
 
     public static IEnumerable<object[]> OpcodeB8JsonFeeder()
