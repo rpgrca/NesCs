@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using NesCs.Common.Tests.Converters;
+using NesCs.Logic.Cpu;
 
 namespace NesCs.Common.Tests;
 
@@ -7,7 +8,7 @@ namespace NesCs.Common.Tests;
 public readonly struct SampleStatus
 {
     public byte S { get; init; }
-    public byte P { get; init; }
+    public Cpu6502.ProcessorStatus P { get; init; }
     public int PC { get; init; }
     public byte X { get; init; }
     public byte Y { get; init; }

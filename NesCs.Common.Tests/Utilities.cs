@@ -28,7 +28,7 @@ public static class Utilities
         Assert.Equal(final.X, x);
         Assert.Equal(final.Y, y);
         Assert.Equal(final.A, a);
-        Assert.Equal(final.P, (byte)p);
+        Assert.Equal(final.P, p);
         Assert.Equal(final.PC, pc);
 
         foreach (var memory in final.RAM)

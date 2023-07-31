@@ -18,7 +18,7 @@ public partial class Cpu6502
     private readonly List<(int, byte, string)> _trace;
     private IInstruction[] _instructions;
 
-    private Cpu6502(byte[] program, int start, int end, int pc, byte a, byte x, byte y, byte s, byte p, byte[] ram, IInstruction[] instructions, List<(int, byte, string)> trace)
+    private Cpu6502(byte[] program, int start, int end, int pc, byte a, byte x, byte y, byte s, ProcessorStatus p, byte[] ram, IInstruction[] instructions, List<(int, byte, string)> trace)
     {
         _program = program;
         _start = start;
@@ -28,7 +28,7 @@ public partial class Cpu6502
         X = x;
         Y = y;
         S = s;
-        P = (ProcessorStatus)p;
+        P = p;
         _ram = ram;
         _instructions = instructions;
         _trace = trace;
@@ -143,6 +143,10 @@ public partial class Cpu6502
     internal void SetOverflowFlag() => P |= ProcessorStatus.V;
 
     internal void SetCarryFlag() => P |= ProcessorStatus.C;
+
+    internal void SetZeroFlag() => P |= ProcessorStatus.Z;
+
+    internal void SetNegativeFlag() => P |= ProcessorStatus.N;
 
     internal void SetDecimalFlag() => P |= ProcessorStatus.D;
 

@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using NesCs.Common.Tests;
+using static NesCs.Logic.Cpu.Cpu6502;
 
 namespace NesCs.Common.Tests.Converters;
 
@@ -11,7 +12,8 @@ public class SampleStatusConverter : JsonConverter<SampleStatus>
         if (reader.TokenType != JsonTokenType.StartObject) throw new JsonException();
 
         int pc = 0;
-        byte s = 0, a = 0, x = 0, y = 0, p = 0;
+        byte s = 0, a = 0, x = 0, y = 0;
+        ProcessorStatus p = ProcessorStatus.None;
         SampleRam[] ram = Array.Empty<SampleRam>();
 
         while (reader.Read())
@@ -47,7 +49,7 @@ public class SampleStatusConverter : JsonConverter<SampleStatus>
                     break;
 
                 case "p":
-                    p = JsonSerializer.Deserialize<byte>(ref reader, options)!;
+                    p = JsonSerializer.Deserialize<ProcessorStatus>(ref reader, options)!;
                     break;
 
                 case "ram":

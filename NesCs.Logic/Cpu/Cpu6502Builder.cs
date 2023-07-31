@@ -6,7 +6,8 @@ public partial class Cpu6502
 {
     public class Builder
     {
-        private byte _p, _a, _x, _y, _s;
+        private ProcessorStatus _p;
+        private byte _a, _x, _y, _s;
         private int _pc, _ramSize, _start, _end;
         private byte[] _program, _ram;
         private (int Address, byte Value)[] _patch;
@@ -15,7 +16,8 @@ public partial class Cpu6502
 
         public Builder()
         {
-            _p = _a = _x = _y = _s = 0;
+            _p = ProcessorStatus.None;
+            _a = _x = _y = _s = 0;
             _ramSize = _start = _end = _pc = 0;
             _program = _ram = Array.Empty<byte>();
             _patch = Array.Empty<(int, byte)>();
@@ -87,6 +89,7 @@ public partial class Cpu6502
             _instructions[0xE5] = new SubtractInZeroPageModeOpcodeE5();
             _instructions[0xE9] = new SubtractInImmediateModeOpcodeE9();
             _instructions[0xEA] = new NopOpcodeEA();
+            _instructions[0xEC] = new CompareXAbsoluteModeOpcodeEC();
             _instructions[0xED] = new SubtractInAbsoluteModeOpcodeED();
             _instructions[0xF1] = new SubtractInIndirectYModeOpcodeF1();
             _instructions[0xF5] = new SubtractInZeroPageXModeOpcodeF5();
@@ -131,7 +134,7 @@ public partial class Cpu6502
             return this;
         }
 
-        public Builder WithProcessorStatusAs(byte p)
+        public Builder WithProcessorStatusAs(ProcessorStatus p)
         {
             _p = p;
             return this;
