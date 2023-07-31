@@ -6,6 +6,7 @@ public class MathInstructionsInCpuMust
 {
     [Theory]
     [ProcessorFileTestData("61")]
+    [ProcessorFileTestData("65")]
     [ProcessorFileTestData("69")]
     [ProcessorFileTestData("6d")]
     [ProcessorFileTestData("71")]
