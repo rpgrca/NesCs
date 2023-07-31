@@ -51,6 +51,7 @@ public partial class Cpu6502
             _instructions[0x61] = new AddInIndirectXModeOpcode61();
             _instructions[0x69] = new AddInImmediateModeOpcode69();
             _instructions[0x6D] = new AddInAbsoluteModeOpcode6D();
+            _instructions[0x71] = new AddInIndirectYModeOpcode71();
             _instructions[0x78] = new SetInterruptDisableOpcode78();
             _instructions[0x79] = new AddInAbsoluteYModeOpcode6D();
             _instructions[0x7D] = new AddInAbsoluteXModeOpcode6D();
