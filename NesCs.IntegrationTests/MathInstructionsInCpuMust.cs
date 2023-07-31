@@ -68,6 +68,7 @@ public class MathInstructionsInCpuMust
     }
 
     [Theory]
+    [ProcessorFileTestData("c8")]
     [ProcessorFileTestData("e8")]
     public void Execute10000ChangeTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
     {
