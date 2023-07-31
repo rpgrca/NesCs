@@ -10,6 +10,7 @@ public class MathInstructionsInCpuMust
     [ProcessorFileTestData("69")]
     [ProcessorFileTestData("6d")]
     [ProcessorFileTestData("71")]
+    [ProcessorFileTestData("75")]
     [ProcessorFileTestData("79")]
     [ProcessorFileTestData("7d")]
     [ProcessorFileTestData("e9")]
