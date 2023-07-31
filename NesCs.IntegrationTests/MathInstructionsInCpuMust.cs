@@ -44,6 +44,7 @@ public class MathInstructionsInCpuMust
 
     [Theory]
     [ProcessorFileTestData("c0")]
+    [ProcessorFileTestData("c4")]
     [ProcessorFileTestData("e0")]
     [ProcessorFileTestData("e4")]
     [ProcessorFileTestData("ec")]

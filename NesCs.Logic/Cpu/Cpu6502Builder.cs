@@ -85,6 +85,7 @@ public partial class Cpu6502
             _instructions[0xBD] = new LdaInAbsoluteXModeOpcodeBD();
             _instructions[0xBE] = new LdxInAbsoluteYModeOpcodeBE();
             _instructions[0xC0] = new CompareYImmediateModeOpcodeC0();
+            _instructions[0xC4] = new CompareYZeroPageModeOpcodeC4();
             _instructions[0xD8] = new ClearDecimalModeOpcodeD8();
             _instructions[0xE0] = new CompareXImmediateModeOpcodeE0();
             _instructions[0xE1] = new SubtractInIndirectXModeOpcodeE1();
