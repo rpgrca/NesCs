@@ -6,13 +6,13 @@ public partial class Cpu6502
     public enum ProcessorStatus
     {
         None = 0,
-        C = 1 << 0,
-        Z = 1 << 1,
-        I = 1 << 2,
-        D = 1 << 3,
-        B = 1 << 4,
-        X = 1 << 5,
-        V = 1 << 6,
-        N = 1 << 7
+        C = 1,
+        Z = 2,
+        I = 4,
+        D = 8,
+        B = 16,
+        X = 32,
+        V = 64,
+        N = 128
     }
 }
