@@ -5,6 +5,7 @@ namespace NesCs.UnitTests.Cpu;
 public class BranchInstructionsInCpuMust
 {
     [Theory]
+    [MemberData(nameof(Opcode30JsonFeeder))]
     [MemberData(nameof(Opcode90JsonFeeder))]
     [MemberData(nameof(OpcodeB0JsonFeeder))]
     [MemberData(nameof(OpcodeF0JsonFeeder))]
@@ -16,6 +17,17 @@ public class BranchInstructionsInCpuMust
 
         Utilities.Equal(sampleCpu.Final, sut);
         Utilities.Equal(sampleCpu.Cycles, trace);
+    }
+
+    public static IEnumerable<object[]> Opcode30JsonFeeder()
+    {
+
+        // TODO: Missing negative pc test, none found in b0.json
+        /* no jump                       */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "30 e3 c6", "initial": { "pc": 6629, "s": 67, "a": 153, "x": 104, "y": 127, "p": 43, "ram": [ [6629, 48], [6630, 227], [6631, 198]]}, "final": { "pc": 6631, "s": 67, "a": 153, "x": 104, "y": 127, "p": 43, "ram": [ [6629, 48], [6630, 227], [6631, 198]]}, "cycles": [ [6629, 48, "read"], [6630, 227, "read"]] }""") };
+        /* jump backward to same page    */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "30 fd 0f", "initial": { "pc": 47559, "s": 63, "a": 159, "x": 144, "y": 6, "p": 174, "ram": [ [47559, 48], [47560, 253], [47561, 15], [47558, 97]]}, "final": { "pc": 47558, "s": 63, "a": 159, "x": 144, "y": 6, "p": 174, "ram": [ [47558, 97], [47559, 48], [47560, 253], [47561, 15]]}, "cycles": [ [47559, 48, "read"], [47560, 253, "read"], [47561, 15, "read"]] }""") };
+        /* jump backward to another page */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "30 c0 44", "initial": { "pc": 28966, "s": 140, "a": 182, "x": 107, "y": 138, "p": 175, "ram": [ [28966, 48], [28967, 192], [28968, 68], [29160, 153], [28904, 214]]}, "final": { "pc": 28904, "s": 140, "a": 182, "x": 107, "y": 138, "p": 175, "ram": [ [28904, 214], [28966, 48], [28967, 192], [28968, 68], [29160, 153]]}, "cycles": [ [28966, 48, "read"], [28967, 192, "read"], [28968, 68, "read"], [29160, 153, "read"]] }""") };
+        /* jump forward to same page     */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "30 66 b3", "initial": { "pc": 39754, "s": 28, "a": 72, "x": 92, "y": 202, "p": 232, "ram": [ [39754, 48], [39755, 102], [39756, 179], [39858, 29]]}, "final": { "pc": 39858, "s": 28, "a": 72, "x": 92, "y": 202, "p": 232, "ram": [ [39754, 48], [39755, 102], [39756, 179], [39858, 29]]}, "cycles": [ [39754, 48, "read"], [39755, 102, "read"], [39756, 179, "read"]] }""") };
+        /* jump forward to another page  */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "30 60 08", "initial": { "pc": 41700, "s": 11, "a": 180, "x": 148, "y": 222, "p": 234, "ram": [ [41700, 48], [41701, 96], [41702, 8], [41542, 100], [41798, 146]]}, "final": { "pc": 41798, "s": 11, "a": 180, "x": 148, "y": 222, "p": 234, "ram": [ [41542, 100], [41700, 48], [41701, 96], [41702, 8], [41798, 146]]}, "cycles": [ [41700, 48, "read"], [41701, 96, "read"], [41702, 8, "read"], [41542, 100, "read"]] }""") };
     }
 
     public static IEnumerable<object[]> Opcode90JsonFeeder()

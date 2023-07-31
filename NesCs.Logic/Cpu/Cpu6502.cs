@@ -80,6 +80,8 @@ public partial class Cpu6502
 
     internal bool ReadZeroFlag() => (P & ProcessorStatus.Z) == ProcessorStatus.Z;
 
+    internal bool ReadNegativeFlag() => (P & ProcessorStatus.N) == ProcessorStatus.N;
+
     internal void ReadyForNextInstruction() => PC = (PC + 1) & 0xffff;
 
     internal byte ReadByteFromProgram()
