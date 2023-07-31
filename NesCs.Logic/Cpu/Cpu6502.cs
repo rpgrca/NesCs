@@ -78,7 +78,7 @@ public partial class Cpu6502
 
     internal ProcessorStatus ReadCarryFlag() => P & ProcessorStatus.C;
 
-    internal ProcessorStatus ReadOverflowFlag() => P & ProcessorStatus.V;
+    internal bool ReadZeroFlag() => (P & ProcessorStatus.Z) == ProcessorStatus.Z;
 
     internal void ReadyForNextInstruction() => PC = (PC + 1) & 0xffff;
 

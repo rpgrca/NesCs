@@ -411,7 +411,6 @@ public class MathInstructionsInCpuMust
         /* 195 NVZC */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "e5 33 ae", "initial": { "pc": 63464, "s": 183, "a": 239, "x": 73, "y": 165, "p": 226, "ram": [ [63464, 229], [63465, 51], [63466, 174], [51, 166]]}, "final": { "pc": 63466, "s": 183, "a": 72, "x": 73, "y": 165, "p": 33, "ram": [ [51, 166], [63464, 229], [63465, 51], [63466, 174]]}, "cycles": [ [63464, 229, "read"], [63465, 51, "read"], [51, 166, "read"]] }""") };
     }
 
-
     public static IEnumerable<object[]> OpcodeE8JsonFeeder()
     {
         /*   0    */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "e8 29 0b", "initial": { "pc": 24991, "s": 58, "a": 98, "x": 44, "y": 157, "p": 33, "ram": [ [24991, 232], [24992, 41], [24993, 11]]}, "final": { "pc": 24992, "s": 58, "a": 98, "x": 45, "y": 157, "p": 33, "ram": [ [24991, 232], [24992, 41], [24993, 11]]}, "cycles": [ [24991, 232, "read"], [24992, 41, "read"]] }""") };
