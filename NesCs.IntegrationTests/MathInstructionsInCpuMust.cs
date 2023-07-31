@@ -44,6 +44,7 @@ public class MathInstructionsInCpuMust
 
     [Theory]
     [ProcessorFileTestData("e0")]
+    [ProcessorFileTestData("e4")]
     [ProcessorFileTestData("ec")]
     public void Execute10000CompareTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
     {
