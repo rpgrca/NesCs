@@ -2,20 +2,14 @@ using static NesCs.Logic.Cpu.Cpu6502;
 
 namespace NesCs.Logic.Cpu.Instructions;
 
-public class CompareXAbsoluteModeOpcodeEC : IInstruction
+public class CompareXImmediateModeOpcodeE0 : IInstruction
 {
     public void Execute(Cpu6502 cpu)
     {
         cpu.ReadyForNextInstruction();
-        var low = cpu.ReadByteFromProgram();
+        var value = cpu.ReadByteFromProgram();
 
         cpu.ReadyForNextInstruction();
-        var high = cpu.ReadByteFromProgram();
-
-        cpu.ReadyForNextInstruction();
-        var address = high << 8 | low;
-        var value = cpu.ReadByteFromMemory(address);
-
         var result = (ProcessorStatus)(cpu.ReadByteFromRegisterX() - value);
         cpu.ClearCarryFlag();
         cpu.ClearNegativeFlag();
