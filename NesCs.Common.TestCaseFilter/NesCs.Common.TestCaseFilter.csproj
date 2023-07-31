@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\NesCs.Common.Tests\NesCs.Common.Tests.csproj" />
+    <ProjectReference Include="..\NesCs.Logic\NesCs.Logic.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>NesCs.Common.TestCaseFilter</RootNamespace>
+  </PropertyGroup>
+
+</Project>
