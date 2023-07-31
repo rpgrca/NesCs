@@ -27,6 +27,7 @@ public class MathInstructionsInCpuMust
     [Theory]
     [ProcessorFileTestData("e1")]
     [ProcessorFileTestData("ed")]
+    [ProcessorFileTestData("f1")]
     [ProcessorFileTestData("f9")]
     [ProcessorFileTestData("fd")]
     public void Execute10000SubtractionTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
