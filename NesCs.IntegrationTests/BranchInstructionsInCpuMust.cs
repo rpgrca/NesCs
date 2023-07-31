@@ -5,7 +5,7 @@ namespace NesCs.IntegrationTests;
 public class BranchInstructionsInCpuMust
 {
     [Theory]
-    [ProcessorFileTestData("b0")]
+    [ProcessorFileTestData("90")]
     [ProcessorFileTestData("f0")]
     public void Execute10000BranchTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
     {

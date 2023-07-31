@@ -60,6 +60,7 @@ public partial class Cpu6502
             _instructions[0x79] = new AddInAbsoluteYModeOpcode6D();
             _instructions[0x7D] = new AddInAbsoluteXModeOpcode6D();
             _instructions[0x8A] = new TransferXToAccumulatorOpcode8A();
+            _instructions[0x90] = new BranchIfCarryNotSetOpcode90();
             _instructions[0x98] = new TransferYToAccumulatorOpcode98();
             _instructions[0x9A] = new TransferXToStackOpcode9A();
             _instructions[0xA0] = new LdyInImmediateModeOpcodeA0();
