@@ -100,6 +100,7 @@ public partial class Cpu6502
             _instructions[0xE1] = new SubtractInIndirectXModeOpcodeE1();
             _instructions[0xE4] = new CompareXZeroPageModeOpcodeE4();
             _instructions[0xE5] = new SubtractInZeroPageModeOpcodeE5();
+            _instructions[0xE8] = new IncrementXOpcodeE8();
             _instructions[0xE9] = new SubtractInImmediateModeOpcodeE9();
             _instructions[0xEA] = new NopOpcodeEA();
             _instructions[0xEC] = new CompareXAbsoluteModeOpcodeEC();
