@@ -20,6 +20,7 @@ public class MathInstructionsInCpuMust
     [MemberData(nameof(OpcodeC9JsonFeeder))]
     [MemberData(nameof(OpcodeCCJsonFeeder))]
     [MemberData(nameof(OpcodeCDJsonFeeder))]
+    [MemberData(nameof(OpcodeD1JsonFeeder))]
     [MemberData(nameof(OpcodeD5JsonFeeder))]
     [MemberData(nameof(OpcodeD9JsonFeeder))]
     [MemberData(nameof(OpcodeDDJsonFeeder))]

@@ -91,6 +91,7 @@ public partial class Cpu6502
             _instructions[0xC9] = new CompareImmediateModeOpcodeC9();
             _instructions[0xCC] = new CompareYAbsoluteModeOpcodeCC();
             _instructions[0xCD] = new CompareAbsoluteModeOpcodeCD();
+            _instructions[0xD1] = new CompareIndirectYModeOpcodeD1();
             _instructions[0xD5] = new CompareZeroPageXModeOpcodeD5();
             _instructions[0xD8] = new ClearDecimalModeOpcodeD8();
             _instructions[0xD9] = new CompareAbsoluteYModeOpcodeD9();
