@@ -104,6 +104,8 @@ public partial class Cpu6502
 
     internal void SetValueIntoStackPointer(byte value) => S = value;
 
+    internal void SetValueIntoProgramCounter(int value) => PC = value;
+
     internal void SetZeroFlagBasedOn(byte value)
     {
         if (value == 0)
