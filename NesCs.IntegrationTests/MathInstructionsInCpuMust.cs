@@ -50,6 +50,7 @@ public class MathInstructionsInCpuMust
     [ProcessorFileTestData("cc")]
     [ProcessorFileTestData("cd")]
     [ProcessorFileTestData("d5")]
+    [ProcessorFileTestData("dd")]
     [ProcessorFileTestData("e0")]
     [ProcessorFileTestData("e4")]
     [ProcessorFileTestData("ec")]
