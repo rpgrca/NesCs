@@ -25,6 +25,7 @@ public class MathInstructionsInCpuMust
     }
 
     [Theory]
+    [ProcessorFileTestData("e1")]
     [ProcessorFileTestData("ed")]
     [ProcessorFileTestData("f9")]
     [ProcessorFileTestData("fd")]

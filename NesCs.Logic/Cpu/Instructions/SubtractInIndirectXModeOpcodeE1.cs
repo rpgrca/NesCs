@@ -1,25 +1,22 @@
 namespace NesCs.Logic.Cpu.Instructions;
 
-public class SubtractInAbsoluteYModeOpcodeF9 : IInstruction
+public class SubtractInIndirectXModeOpcodeE1 : IInstruction
 {
     public void Execute(Cpu6502 cpu)
     {
         cpu.ReadyForNextInstruction();
-        var low = cpu.ReadByteFromProgram();
+        var address = cpu.ReadByteFromProgram();
+        _ = cpu.ReadByteFromMemory(address);
 
+        address = (byte)(address + cpu.ReadByteFromRegisterX());
         cpu.ReadyForNextInstruction();
-        var high = cpu.ReadByteFromProgram();
+        var low = cpu.ReadByteFromMemory(address);
 
-        cpu.ReadyForNextInstruction();
-        var address = high << 8 | low + cpu.ReadByteFromRegisterY() & 0xff;
-        var value = cpu.ReadByteFromMemory(address);
+        address = (byte)(address + 1);
+        var high = cpu.ReadByteFromMemory(address);
 
-        var address2 = (high << 8 | low) + cpu.ReadByteFromRegisterY() & 0xffff;
-        if (address != address2)
-        {
-            value = cpu.ReadByteFromMemory(address2);
-        }
-
+        var effectiveAddress = high << 8 | low;
+        var value = cpu.ReadByteFromMemory(effectiveAddress);
         var a = cpu.ReadByteFromAccumulator();
 
         value = (byte)~value;

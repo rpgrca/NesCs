@@ -45,6 +45,5 @@ public class SubtractInAbsoluteXModeOpcodeFD : IInstruction
 
         cpu.SetZeroFlagBasedOn(result);
         cpu.SetNegativeFlagBasedOn(result);
-
     }
 }
