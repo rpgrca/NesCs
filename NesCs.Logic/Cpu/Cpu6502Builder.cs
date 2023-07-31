@@ -87,6 +87,7 @@ public partial class Cpu6502
             _instructions[0xEA] = new NopOpcodeEA();
             _instructions[0xED] = new SubtractInAbsoluteModeOpcodeED();
             _instructions[0xF8] = new SetDecimalFlagOpcodeF8();
+            _instructions[0xFD] = new SubtractInAbsoluteXModeOpcodeFD();
         }
 
         public Builder Running(byte[] program)

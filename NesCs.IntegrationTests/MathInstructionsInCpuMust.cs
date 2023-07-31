@@ -26,6 +26,7 @@ public class MathInstructionsInCpuMust
 
     [Theory]
     [ProcessorFileTestData("ed")]
+    [ProcessorFileTestData("fd")]
     public void Execute10000SubtractionTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
     {
         var trace = new List<(int, byte, string)>();
