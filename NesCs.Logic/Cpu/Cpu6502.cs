@@ -76,7 +76,7 @@ public partial class Cpu6502
 
     internal byte ReadByteFromAccumulator() => A;
 
-    internal ProcessorStatus ReadCarryFlag() => P & ProcessorStatus.C;
+    internal bool ReadCarryFlag() => (P & ProcessorStatus.C) == ProcessorStatus.C;
 
     internal bool ReadZeroFlag() => (P & ProcessorStatus.Z) == ProcessorStatus.Z;
 

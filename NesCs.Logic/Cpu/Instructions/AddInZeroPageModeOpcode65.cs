@@ -11,7 +11,7 @@ public class AddInZeroPageModeOpcode65 : IInstruction
         var value = cpu.ReadByteFromMemory(address);
 
         var a = cpu.ReadByteFromAccumulator();
-        var sum = a + value + (cpu.ReadCarryFlag() == Cpu6502.ProcessorStatus.C? 1 : 0);
+        var sum = a + value + (cpu.ReadCarryFlag()? 1 : 0);
         var result = (byte)(sum & 0xff);
 
         cpu.SetValueIntoAccumulator(result);

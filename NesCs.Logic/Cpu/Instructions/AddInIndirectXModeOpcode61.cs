@@ -19,7 +19,7 @@ public class AddInIndirectXModeOpcode61 : IInstruction
         var value = cpu.ReadByteFromMemory(effectiveAddress);
 
         var a = cpu.ReadByteFromAccumulator();
-        var sum = a + value + (cpu.ReadCarryFlag() == Cpu6502.ProcessorStatus.C? 1 : 0);
+        var sum = a + value + (cpu.ReadCarryFlag()? 1 : 0);
         var result = (byte)(sum & 0xff);
 
         cpu.SetValueIntoAccumulator(result);

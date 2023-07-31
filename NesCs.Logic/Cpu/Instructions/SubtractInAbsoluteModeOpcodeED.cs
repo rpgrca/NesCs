@@ -17,7 +17,7 @@ public class SubtractInAbsoluteModeOpcodeED : IInstruction
         var a = cpu.ReadByteFromAccumulator();
 
         value = (byte)~value;
-        var sum = a + value + (cpu.ReadCarryFlag() == Cpu6502.ProcessorStatus.C? 1 : 0);
+        var sum = a + value + (cpu.ReadCarryFlag()? 1 : 0);
         var result = (byte)(sum & 0xff);
 
         cpu.SetValueIntoAccumulator(result);
