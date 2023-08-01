@@ -7,6 +7,7 @@ public class BranchInstructionsInCpuMust
     [Theory]
     [MemberData(nameof(Opcode10JsonFeeder))]
     [MemberData(nameof(Opcode30JsonFeeder))]
+    [MemberData(nameof(Opcode4CJsonFeeder))]
     [MemberData(nameof(Opcode70JsonFeeder))]
     [MemberData(nameof(Opcode90JsonFeeder))]
     [MemberData(nameof(OpcodeB0JsonFeeder))]
@@ -42,6 +43,12 @@ public class BranchInstructionsInCpuMust
         /* jump forward to another page  */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "30 60 08", "initial": { "pc": 41700, "s": 11, "a": 180, "x": 148, "y": 222, "p": 234, "ram": [ [41700, 48], [41701, 96], [41702, 8], [41542, 100], [41798, 146]]}, "final": { "pc": 41798, "s": 11, "a": 180, "x": 148, "y": 222, "p": 234, "ram": [ [41542, 100], [41700, 48], [41701, 96], [41702, 8], [41798, 146]]}, "cycles": [ [41700, 48, "read"], [41701, 96, "read"], [41702, 8, "read"], [41542, 100, "read"]] }""") };
     }
 
+    public static IEnumerable<object[]> Opcode4CJsonFeeder()
+    {
+        /*   0  */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "4c 7a 8b", "initial": { "pc": 48659, "s": 156, "a": 226, "x": 92, "y": 82, "p": 44, "ram": [ [48659, 76], [48660, 122], [48661, 139], [35706, 107]]}, "final": { "pc": 35706, "s": 156, "a": 226, "x": 92, "y": 82, "p": 44, "ram": [ [35706, 107], [48659, 76], [48660, 122], [48661, 139]]}, "cycles": [ [48659, 76, "read"], [48660, 122, "read"], [48661, 139, "read"]] }""") };
+    }
+
+    // TODO: Missing negative pc test, none found in b0.json
     public static IEnumerable<object[]> Opcode70JsonFeeder()
     {
         /* no jump                       */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "70 46 ad", "initial": { "pc": 22193, "s": 172, "a": 83, "x": 254, "y": 72, "p": 173, "ram": [ [22193, 112], [22194, 70], [22195, 173]]}, "final": { "pc": 22195, "s": 172, "a": 83, "x": 254, "y": 72, "p": 173, "ram": [ [22193, 112], [22194, 70], [22195, 173]]}, "cycles": [ [22193, 112, "read"], [22194, 70, "read"]] }""") };
