@@ -7,6 +7,7 @@ public class ExclusiveOrInstructionsInCpu6502Must
     [Theory]
     [ProcessorFileTestData("45")]
     [ProcessorFileTestData("49")]
+    [ProcessorFileTestData("55")]
     public void Execute10000ExclusiveOrTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
     {
         var trace = new List<(int, byte, string)>();
