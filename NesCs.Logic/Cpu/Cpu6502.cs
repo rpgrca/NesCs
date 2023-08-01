@@ -4,6 +4,7 @@ namespace NesCs.Logic.Cpu;
 
 public partial class Cpu6502
 {
+    private const int StackMemoryBase = 0x0100;
     private ProcessorStatus P { get; set; }
     private byte A { get; set; }
     private int PC { get; set; }
@@ -95,6 +96,14 @@ public partial class Cpu6502
 
     internal byte ReadByteFromMemory(int address)
     {
+        var value = _ram[address];
+        Trace(address, value, "read");
+        return value;
+    }
+
+    internal byte ReadByteFromStackMemory()
+    {
+        var address = StackMemoryBase + S;
         var value = _ram[address];
         Trace(address, value, "read");
         return value;
