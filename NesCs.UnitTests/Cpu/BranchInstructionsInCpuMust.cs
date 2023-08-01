@@ -7,6 +7,7 @@ public class BranchInstructionsInCpuMust
     [Theory]
     [MemberData(nameof(Opcode10JsonFeeder))]
     [MemberData(nameof(Opcode30JsonFeeder))]
+    [MemberData(nameof(Opcode70JsonFeeder))]
     [MemberData(nameof(Opcode90JsonFeeder))]
     [MemberData(nameof(OpcodeB0JsonFeeder))]
     [MemberData(nameof(OpcodeD0JsonFeeder))]
@@ -39,6 +40,15 @@ public class BranchInstructionsInCpuMust
         /* jump backward to another page */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "30 c0 44", "initial": { "pc": 28966, "s": 140, "a": 182, "x": 107, "y": 138, "p": 175, "ram": [ [28966, 48], [28967, 192], [28968, 68], [29160, 153], [28904, 214]]}, "final": { "pc": 28904, "s": 140, "a": 182, "x": 107, "y": 138, "p": 175, "ram": [ [28904, 214], [28966, 48], [28967, 192], [28968, 68], [29160, 153]]}, "cycles": [ [28966, 48, "read"], [28967, 192, "read"], [28968, 68, "read"], [29160, 153, "read"]] }""") };
         /* jump forward to same page     */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "30 66 b3", "initial": { "pc": 39754, "s": 28, "a": 72, "x": 92, "y": 202, "p": 232, "ram": [ [39754, 48], [39755, 102], [39756, 179], [39858, 29]]}, "final": { "pc": 39858, "s": 28, "a": 72, "x": 92, "y": 202, "p": 232, "ram": [ [39754, 48], [39755, 102], [39756, 179], [39858, 29]]}, "cycles": [ [39754, 48, "read"], [39755, 102, "read"], [39756, 179, "read"]] }""") };
         /* jump forward to another page  */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "30 60 08", "initial": { "pc": 41700, "s": 11, "a": 180, "x": 148, "y": 222, "p": 234, "ram": [ [41700, 48], [41701, 96], [41702, 8], [41542, 100], [41798, 146]]}, "final": { "pc": 41798, "s": 11, "a": 180, "x": 148, "y": 222, "p": 234, "ram": [ [41542, 100], [41700, 48], [41701, 96], [41702, 8], [41798, 146]]}, "cycles": [ [41700, 48, "read"], [41701, 96, "read"], [41702, 8, "read"], [41542, 100, "read"]] }""") };
+    }
+
+    public static IEnumerable<object[]> Opcode70JsonFeeder()
+    {
+        /* no jump                       */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "70 46 ad", "initial": { "pc": 22193, "s": 172, "a": 83, "x": 254, "y": 72, "p": 173, "ram": [ [22193, 112], [22194, 70], [22195, 173]]}, "final": { "pc": 22195, "s": 172, "a": 83, "x": 254, "y": 72, "p": 173, "ram": [ [22193, 112], [22194, 70], [22195, 173]]}, "cycles": [ [22193, 112, "read"], [22194, 70, "read"]] }""") };
+        /* jump forward to same page     */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "70 e6 a3", "initial": { "pc": 12337, "s": 65, "a": 154, "x": 94, "y": 206, "p": 238, "ram": [ [12337, 112], [12338, 230], [12339, 163], [12313, 78]]}, "final": { "pc": 12313, "s": 65, "a": 154, "x": 94, "y": 206, "p": 238, "ram": [ [12313, 78], [12337, 112], [12338, 230], [12339, 163]]}, "cycles": [ [12337, 112, "read"], [12338, 230, "read"], [12339, 163, "read"]] }""") };
+        /* jump forward to another page  */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "70 7e 66", "initial": { "pc": 15082, "s": 172, "a": 162, "x": 26, "y": 192, "p": 111, "ram": [ [15082, 112], [15083, 126], [15084, 102], [14954, 6], [15210, 108]]}, "final": { "pc": 15210, "s": 172, "a": 162, "x": 26, "y": 192, "p": 111, "ram": [ [14954, 6], [15082, 112], [15083, 126], [15084, 102], [15210, 108]]}, "cycles": [ [15082, 112, "read"], [15083, 126, "read"], [15084, 102, "read"], [14954, 6, "read"]] }""") };
+        /* jump backward to same page    */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "70 9a b6", "initial": { "pc": 18342, "s": 58, "a": 96, "x": 248, "y": 241, "p": 227, "ram": [ [18342, 112], [18343, 154], [18344, 182], [18242, 199]]}, "final": { "pc": 18242, "s": 58, "a": 96, "x": 248, "y": 241, "p": 227, "ram": [ [18242, 199], [18342, 112], [18343, 154], [18344, 182]]}, "cycles": [ [18342, 112, "read"], [18343, 154, "read"], [18344, 182, "read"]] }""") };
+        /* jump backward to another page */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "70 c7 d9", "initial": { "pc": 46870, "s": 158, "a": 10, "x": 216, "y": 11, "p": 101, "ram": [ [46870, 112], [46871, 199], [46872, 217], [47071, 32], [46815, 58]]}, "final": { "pc": 46815, "s": 158, "a": 10, "x": 216, "y": 11, "p": 101, "ram": [ [46815, 58], [46870, 112], [46871, 199], [46872, 217], [47071, 32]]}, "cycles": [ [46870, 112, "read"], [46871, 199, "read"], [46872, 217, "read"], [47071, 32, "read"]] }""") };
     }
 
     public static IEnumerable<object[]> Opcode90JsonFeeder()

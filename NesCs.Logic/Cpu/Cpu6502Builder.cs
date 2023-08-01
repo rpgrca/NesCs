@@ -99,7 +99,7 @@ public partial class Cpu6502
             //_instructions[0x6B]
             //_instructions[0x6C]
             _instructions[0x6D] = new AddInAbsoluteModeOpcode6D();
-            //_instructions[0x70]
+            _instructions[0x70] = new BranchIfOverflowSetOpcode70();
             _instructions[0x71] = new AddInIndirectYModeOpcode71();
             //_instructions[0x72]
             //_instructions[0x74]
