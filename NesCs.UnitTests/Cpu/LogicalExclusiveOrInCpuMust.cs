@@ -5,6 +5,7 @@ namespace NesCs.UnitTests.Cpu;
 public class LogicalExclusiveOrInCpuMust
 {
 	[Theory]
+    [MemberData(nameof(Opcode41JsonFeeder))]
     [MemberData(nameof(Opcode45JsonFeeder))]
     [MemberData(nameof(Opcode49JsonFeeder))]
     [MemberData(nameof(Opcode4DJsonFeeder))]
