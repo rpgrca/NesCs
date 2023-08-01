@@ -5,6 +5,7 @@ namespace NesCs.IntegrationTests;
 public class ExclusiveOrInstructionsInCpu6502Must
 {
     [Theory]
+    [ProcessorFileTestData("41")]
     [ProcessorFileTestData("45")]
     [ProcessorFileTestData("49")]
     [ProcessorFileTestData("4d")]
