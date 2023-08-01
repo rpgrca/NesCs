@@ -9,6 +9,7 @@ public class ExclusiveOrInstructionsInCpu6502Must
     [ProcessorFileTestData("49")]
     [ProcessorFileTestData("4d")]
     [ProcessorFileTestData("55")]
+    [ProcessorFileTestData("5d")]
     public void Execute10000ExclusiveOrTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
     {
         var trace = new List<(int, byte, string)>();
