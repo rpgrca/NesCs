@@ -97,7 +97,7 @@ public partial class Cpu6502
             _instructions[0x69] = new AddInImmediateModeOpcode69();
             //_instructions[0x6A]
             //_instructions[0x6B]
-            //_instructions[0x6C]
+            _instructions[0x6C] = new JumpInIndirectModeOpcode6C();
             _instructions[0x6D] = new AddInAbsoluteModeOpcode6D();
             _instructions[0x70] = new BranchIfOverflowSetOpcode70();
             _instructions[0x71] = new AddInIndirectYModeOpcode71();

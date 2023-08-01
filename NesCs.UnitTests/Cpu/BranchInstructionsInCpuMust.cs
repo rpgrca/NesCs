@@ -8,6 +8,7 @@ public class BranchInstructionsInCpuMust
     [MemberData(nameof(Opcode10JsonFeeder))]
     [MemberData(nameof(Opcode30JsonFeeder))]
     [MemberData(nameof(Opcode4CJsonFeeder))]
+    [MemberData(nameof(Opcode6CJsonFeeder))]
     [MemberData(nameof(Opcode70JsonFeeder))]
     [MemberData(nameof(Opcode90JsonFeeder))]
     [MemberData(nameof(OpcodeB0JsonFeeder))]
@@ -46,6 +47,12 @@ public class BranchInstructionsInCpuMust
     public static IEnumerable<object[]> Opcode4CJsonFeeder()
     {
         /*   0  */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "4c 7a 8b", "initial": { "pc": 48659, "s": 156, "a": 226, "x": 92, "y": 82, "p": 44, "ram": [ [48659, 76], [48660, 122], [48661, 139], [35706, 107]]}, "final": { "pc": 35706, "s": 156, "a": 226, "x": 92, "y": 82, "p": 44, "ram": [ [35706, 107], [48659, 76], [48660, 122], [48661, 139]]}, "cycles": [ [48659, 76, "read"], [48660, 122, "read"], [48661, 139, "read"]] }""") };
+    }
+
+    public static IEnumerable<object[]> Opcode6CJsonFeeder()
+    {
+        /* common            */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "6c a5 12", "initial": { "pc": 60280, "s": 77, "a": 148, "x": 227, "y": 97, "p": 168, "ram": [ [60280, 108], [60281, 165], [60282, 18], [4773, 80], [4774, 37], [9552, 104]]}, "final": { "pc": 9552, "s": 77, "a": 148, "x": 227, "y": 97, "p": 168, "ram": [ [4773, 80], [4774, 37], [9552, 104], [60280, 108], [60281, 165], [60282, 18]]}, "cycles": [ [60280, 108, "read"], [60281, 165, "read"], [60282, 18, "read"], [4773, 80, "read"], [4774, 37, "read"]] }""") };
+        /* 6502 indirect bug */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "6c ff b4", "initial": { "pc": 60908, "s": 168, "a": 133, "x": 33, "y": 251, "p": 171, "ram": [ [60908, 108], [60909, 255], [60910, 180], [46335, 198], [46080, 76], [19654, 56]]}, "final": { "pc": 19654, "s": 168, "a": 133, "x": 33, "y": 251, "p": 171, "ram": [ [19654, 56], [46080, 76], [46335, 198], [60908, 108], [60909, 255], [60910, 180]]}, "cycles": [ [60908, 108, "read"], [60909, 255, "read"], [60910, 180, "read"], [46335, 198, "read"], [46080, 76, "read"]] }""") };
     }
 
     // TODO: Missing negative pc test, none found in b0.json
