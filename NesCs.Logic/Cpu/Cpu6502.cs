@@ -119,6 +119,8 @@ public partial class Cpu6502
 
     internal void SetValueIntoProgramCounter(int value) => PC = value;
 
+    internal void SetFlags(ProcessorStatus flags) => P = flags;
+
     internal void SetZeroFlagBasedOn(byte value)
     {
         if (value == 0)

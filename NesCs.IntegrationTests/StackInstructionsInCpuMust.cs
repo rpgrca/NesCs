@@ -2,17 +2,12 @@ using NesCs.Common.Tests;
 
 namespace NesCs.IntegrationTests;
 
-public class BranchInstructionsInCpuMust
+public class StackInstructionsInCpuMust
 {
     [Theory]
-    [ProcessorFileTestData("10")]
-    [ProcessorFileTestData("4c")]
-    [ProcessorFileTestData("6c")]
-    [ProcessorFileTestData("70")]
-    [ProcessorFileTestData("90")]
-    [ProcessorFileTestData("d0")]
-    [ProcessorFileTestData("f0")]
-    public void Execute10000BranchTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
+    [ProcessorFileTestData("28")]
+    [ProcessorFileTestData("60")]
+    public void Execute10000PullTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
     {
         var trace = new List<(int, byte, string)>();
 		var sut = Utilities.CreateSubjectUnderTestFromSample(sampleCpu.Opcodes, sampleCpu.Initial, trace);
