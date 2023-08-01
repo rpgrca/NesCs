@@ -68,6 +68,7 @@ public class MathInstructionsInCpuMust
     }
 
     [Theory]
+    [ProcessorFileTestData("88")]
     [ProcessorFileTestData("c8")]
     [ProcessorFileTestData("ca")]
     [ProcessorFileTestData("e8")]

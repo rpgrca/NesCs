@@ -111,7 +111,7 @@ public partial class Cpu6502
             _instructions[0x7D] = new AddInAbsoluteXModeOpcode6D();
             //_instructions[0x80]
             //_instructions[0x82]
-            //_instructions[0x88]
+            _instructions[0x88] = new DecrementYOpcode88();
             //_instructions[0x89]
             _instructions[0x8A] = new TransferXToAccumulatorOpcode8A();
             //_instructions[0x8B]
