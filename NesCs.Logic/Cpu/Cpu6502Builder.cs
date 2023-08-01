@@ -73,7 +73,7 @@ public partial class Cpu6502
             //_instructions[0x42]
             //_instructions[0x44]
             //_instructions[0x45]
-            //_instructions[0x49]
+            _instructions[0x49] = new XorInImmediateModeOpcode49();
             //_instructions[0x4A]
             //_instructions[0x4B]
             _instructions[0x4C] = new JumpInAbsoluteModeOpcode4C();
