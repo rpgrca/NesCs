@@ -84,7 +84,7 @@ public partial class Cpu6502
             //_instructions[0x54]
             _instructions[0x55] = new XorInZeroPageXModeOpcode55();
             _instructions[0x58] = new ClearInterruptDisableOpcode58();
-            //_instructions[0x59]
+            _instructions[0x59] = new XorInAbsoluteYModeOpcode59();
             //_instructions[0x5A]
             //_instructions[0x5C]
             _instructions[0x5D] = new XorInAbsoluteXModeOpcode5D();

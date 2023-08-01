@@ -9,6 +9,7 @@ public class LogicalExclusiveOrInCpuMust
     [MemberData(nameof(Opcode49JsonFeeder))]
     [MemberData(nameof(Opcode4DJsonFeeder))]
     [MemberData(nameof(Opcode55JsonFeeder))]
+    [MemberData(nameof(Opcode59JsonFeeder))]
     [MemberData(nameof(Opcode5DJsonFeeder))]
 	public void BeExecutedCorrectly(SampleCpu sampleCpu)
 	{
@@ -50,6 +51,14 @@ public class LogicalExclusiveOrInCpuMust
         /*   2 Z  */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "55 e9 62", "initial": { "pc": 24494, "s": 96, "a": 65, "x": 230, "y": 169, "p": 163, "ram": [ [24494, 85], [24495, 233], [24496, 98], [233, 8], [207, 169]]}, "final": { "pc": 24496, "s": 96, "a": 232, "x": 230, "y": 169, "p": 161, "ram": [ [207, 169], [233, 8], [24494, 85], [24495, 233], [24496, 98]]}, "cycles": [ [24494, 85, "read"], [24495, 233, "read"], [233, 8, "read"], [207, 169, "read"]] }""") };
         /* 128 N  */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "55 33 dd", "initial": { "pc": 689, "s": 57, "a": 202, "x": 200, "y": 229, "p": 109, "ram": [ [689, 85], [690, 51], [691, 221], [51, 219], [251, 115]]}, "final": { "pc": 691, "s": 57, "a": 185, "x": 200, "y": 229, "p": 237, "ram": [ [51, 219], [251, 115], [689, 85], [690, 51], [691, 221]]}, "cycles": [ [689, 85, "read"], [690, 51, "read"], [51, 219, "read"], [251, 115, "read"]] }""") };
         /* 130 NZ */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "55 76 c0", "initial": { "pc": 40976, "s": 252, "a": 43, "x": 1, "y": 157, "p": 230, "ram": [ [40976, 85], [40977, 118], [40978, 192], [118, 210], [119, 60]]}, "final": { "pc": 40978, "s": 252, "a": 23, "x": 1, "y": 157, "p": 100, "ram": [ [118, 210], [119, 60], [40976, 85], [40977, 118], [40978, 192]]}, "cycles": [ [40976, 85, "read"], [40977, 118, "read"], [118, 210, "read"], [119, 60, "read"]] }""") };
+    }
+
+    public static IEnumerable<object[]> Opcode59JsonFeeder()
+    {
+        /*   0    */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "59 e8 d2", "initial": { "pc": 63202, "s": 35, "a": 56, "x": 41, "y": 88, "p": 237, "ram": [ [63202, 89], [63203, 232], [63204, 210], [53824, 135], [54080, 204], [63205, 4]]}, "final": { "pc": 63205, "s": 35, "a": 244, "x": 41, "y": 88, "p": 237, "ram": [ [53824, 135], [54080, 204], [63202, 89], [63203, 232], [63204, 210], [63205, 4]]}, "cycles": [ [63202, 89, "read"], [63203, 232, "read"], [63204, 210, "read"], [53824, 135, "read"], [54080, 204, "read"]] }""") };
+        /*   2 Z  */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "59 4a a8", "initial": { "pc": 25408, "s": 199, "a": 2, "x": 25, "y": 192, "p": 103, "ram": [ [25408, 89], [25409, 74], [25410, 168], [43018, 73], [43274, 54], [25411, 76]]}, "final": { "pc": 25411, "s": 199, "a": 52, "x": 25, "y": 192, "p": 101, "ram": [ [25408, 89], [25409, 74], [25410, 168], [25411, 76], [43018, 73], [43274, 54]]}, "cycles": [ [25408, 89, "read"], [25409, 74, "read"], [25410, 168, "read"], [43018, 73, "read"], [43274, 54, "read"]] }""") };
+        /* 128 N  */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "59 69 f6", "initial": { "pc": 65404, "s": 199, "a": 189, "x": 88, "y": 87, "p": 164, "ram": [ [65404, 89], [65405, 105], [65406, 246], [63168, 207], [65407, 146]]}, "final": { "pc": 65407, "s": 199, "a": 114, "x": 88, "y": 87, "p": 36, "ram": [ [63168, 207], [65404, 89], [65405, 105], [65406, 246], [65407, 146]]}, "cycles": [ [65404, 89, "read"], [65405, 105, "read"], [65406, 246, "read"], [63168, 207, "read"]] }""") };
+        /* 130 NZ */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "59 b7 b7", "initial": { "pc": 32139, "s": 239, "a": 103, "x": 220, "y": 38, "p": 38, "ram": [ [32139, 89], [32140, 183], [32141, 183], [47069, 248], [32142, 192]]}, "final": { "pc": 32142, "s": 239, "a": 159, "x": 220, "y": 38, "p": 164, "ram": [ [32139, 89], [32140, 183], [32141, 183], [32142, 192], [47069, 248]]}, "cycles": [ [32139, 89, "read"], [32140, 183, "read"], [32141, 183, "read"], [47069, 248, "read"]] }""") };
     }
 
     public static IEnumerable<object[]> Opcode5DJsonFeeder()
