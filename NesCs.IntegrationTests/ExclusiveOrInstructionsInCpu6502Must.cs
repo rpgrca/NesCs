@@ -5,6 +5,7 @@ namespace NesCs.IntegrationTests;
 public class ExclusiveOrInstructionsInCpu6502Must
 {
     [Theory]
+    [ProcessorFileTestData("45")]
     [ProcessorFileTestData("49")]
     public void Execute10000ExclusiveOrTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
     {
