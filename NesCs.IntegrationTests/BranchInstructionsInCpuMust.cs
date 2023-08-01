@@ -7,6 +7,7 @@ public class BranchInstructionsInCpuMust
     [Theory]
     [ProcessorFileTestData("10")]
     [ProcessorFileTestData("90")]
+    [ProcessorFileTestData("d0")]
     [ProcessorFileTestData("f0")]
     public void Execute10000BranchTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
     {
