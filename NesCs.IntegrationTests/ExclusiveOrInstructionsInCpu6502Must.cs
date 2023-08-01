@@ -9,6 +9,7 @@ public class ExclusiveOrInstructionsInCpu6502Must
     [ProcessorFileTestData("45")]
     [ProcessorFileTestData("49")]
     [ProcessorFileTestData("4d")]
+    [ProcessorFileTestData("51")]
     [ProcessorFileTestData("55")]
     [ProcessorFileTestData("59")]
     [ProcessorFileTestData("5d")]
