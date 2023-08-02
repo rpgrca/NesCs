@@ -67,7 +67,7 @@ public partial class Cpu6502
             //_instructions[0x23] W
             _instructions[0x24] = new BitTestZeroPageModeOpcode24();
             _instructions[0x25] = new AndInZeroPageModeOpcode25();
-            //_instructions[0x26] W
+            _instructions[0x26] = new RotateLeftZeroPageOpcode26();
             //_instructions[0x27] W
             _instructions[0x28] = new PullProcessorStatusOpcode28();
             _instructions[0x29] = new AndInImmediateModeOpcode29();
