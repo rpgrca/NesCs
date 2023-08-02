@@ -147,7 +147,7 @@ public partial class Cpu6502
             //_instructions[0x73] W
             //_instructions[0x74] R
             _instructions[0x75] = new AddInZeroPageXModeOpcode75();
-            //_instructions[0x76] W
+            _instructions[0x76] = new RotateRightZeroPageXOpcode76();
             //_instructions[0x77] W
             _instructions[0x78] = new SetInterruptDisableOpcode78();
             _instructions[0x79] = new AddInAbsoluteYModeOpcode6D();
