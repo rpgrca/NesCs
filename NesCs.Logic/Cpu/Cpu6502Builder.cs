@@ -51,7 +51,7 @@ public partial class Cpu6502
             //_instructions[0x13] W
             //_instructions[0x14] R
             _instructions[0x15] = new OraInZeroPageXModeOpcode15();
-            //_instructions[0x16] W
+            _instructions[0x16] = new ShiftLeftZeroPageXOpcode16();
             //_instructions[0x17] W
             _instructions[0x18] = new ClearCarryFlagOpcode18();
             _instructions[0x19] = new OraInAbsoluteYModeOpcode19();
