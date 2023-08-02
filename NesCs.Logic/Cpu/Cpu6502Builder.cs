@@ -37,7 +37,7 @@ public partial class Cpu6502
             _instructions[0x05] = new OraInZeroPageModeOpcode05();
             _instructions[0x06] = new ShiftLeftZeroPageOpcode06();
             //_instructions[0x07] W
-            //_instructions[0x08] W
+            _instructions[0x08] = new PushProcessorStatusOpcode08();
             _instructions[0x09] = new OraInImmediateModeOpcode09();
             _instructions[0x0A] = new ShiftLeftAccumulatorOpcode0A();
             //_instructions[0x0B] R

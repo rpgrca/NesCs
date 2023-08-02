@@ -5,6 +5,7 @@ namespace NesCs.IntegrationTests;
 public class StackInstructionsInCpuMust
 {
     [Theory]
+    [ProcessorFileTestData("08")]
     [ProcessorFileTestData("28")]
     [ProcessorFileTestData("40")]
     [ProcessorFileTestData("60")]

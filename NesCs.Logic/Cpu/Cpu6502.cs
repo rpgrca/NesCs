@@ -115,6 +115,14 @@ public partial class Cpu6502
         return value;
     }
 
+    internal void WriteByteToStackMemory(byte value)
+    {
+        var address = StackMemoryBase + S;
+        _ram[address] = value;
+        Trace(address, value, "write");
+        S -= 1;
+    }
+
     internal void SetValueIntoAccumulator(byte value) => A = value;
 
     internal void SetValueIntoRegisterX(byte value) => X = value;
@@ -124,6 +132,8 @@ public partial class Cpu6502
     internal void SetValueIntoStackPointer(byte value) => S = value;
 
     internal void SetValueIntoProgramCounter(int value) => PC = value;
+
+    internal ProcessorStatus GetFlags() => P;
 
     internal void SetFlags(ProcessorStatus flags) => P = flags;
 
