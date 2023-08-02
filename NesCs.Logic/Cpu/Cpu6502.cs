@@ -101,6 +101,12 @@ public partial class Cpu6502
         return value;
     }
 
+    internal void WriteByteToMemory(int address, byte value)
+    {
+        _ram[address] = value;
+        Trace(address, value, "write");
+    }
+
     internal byte ReadByteFromStackMemory()
     {
         var address = StackMemoryBase + S;
