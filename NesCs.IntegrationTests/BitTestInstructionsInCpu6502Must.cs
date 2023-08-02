@@ -9,6 +9,7 @@ public class BitTestInstructionsInCpu6502Must
     [ProcessorFileTestData("2a")]
     [ProcessorFileTestData("2c")]
     [ProcessorFileTestData("4a")]
+    [ProcessorFileTestData("6a")]
     public void Execute10000BitTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
     {
         var trace = new List<(int, byte, string)>();
