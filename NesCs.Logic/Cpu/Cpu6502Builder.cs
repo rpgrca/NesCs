@@ -123,7 +123,7 @@ public partial class Cpu6502
             //_instructions[0x5B] W
             //_instructions[0x5C] R
             _instructions[0x5D] = new XorInAbsoluteXModeOpcode5D();
-            //_instructions[0x5E] W
+            _instructions[0x5E] = new ShiftRightAbsoluteXOpcode5E();
             //_instructions[0x5F] W
             _instructions[0x60] = new ReturnFromSubroutineOpcode60();
             _instructions[0x61] = new AddInIndirectXModeOpcode61();
