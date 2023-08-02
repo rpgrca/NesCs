@@ -91,7 +91,7 @@ public partial class Cpu6502
             //_instructions[0x3B] W
             //_instructions[0x3C] R
             _instructions[0x3D] = new AndInAbsoluteXModeOpcode3D();
-            //_instructions[0x3E] W
+            _instructions[0x3E] = new RotateLeftAbsoluteXOpcode3E();
             //_instructions[0x3F] W
             _instructions[0x40] = new ReturnFromInterruptOpcode40();
             _instructions[0x41] = new XorInIndirectXModeOpcode41();
