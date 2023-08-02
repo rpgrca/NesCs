@@ -11,6 +11,7 @@ public class TransferOpcodesMust
     [MemberData(nameof(Opcode9AJsonFeeder))]
     [MemberData(nameof(Opcode95JsonFeeder))]
     [MemberData(nameof(Opcode98JsonFeeder))]
+    [MemberData(nameof(Opcode9DJsonFeeder))]
     [MemberData(nameof(OpcodeA8JsonFeeder))]
     [MemberData(nameof(OpcodeAAJsonFeeder))]
     [MemberData(nameof(OpcodeBAJsonFeeder))]
@@ -54,6 +55,12 @@ public class TransferOpcodesMust
     public static IEnumerable<object[]> Opcode98JsonFeeder()
     {
         yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "98 88 51", "initial": { "pc": 35923, "s": 254, "a": 69, "x": 136, "y": 44, "p": 166, "ram": [ [35923, 152], [35924, 136], [35925, 81]]}, "final": { "pc": 35924, "s": 254, "a": 44, "x": 136, "y": 44, "p": 36, "ram": [ [35923, 152], [35924, 136], [35925, 81]]}, "cycles": [ [35923, 152, "read"], [35924, 136, "read"]] }""") };
+    }
+
+    public static IEnumerable<object[]> Opcode9DJsonFeeder()
+    {
+        /* normal test   */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "9d eb d2", "initial": { "pc": 36083, "s": 40, "a": 81, "x": 2, "y": 8, "p": 41, "ram": [ [36083, 157], [36084, 235], [36085, 210], [53997, 123], [36086, 174]]}, "final": { "pc": 36086, "s": 40, "a": 81, "x": 2, "y": 8, "p": 41, "ram": [ [36083, 157], [36084, 235], [36085, 210], [36086, 174], [53997, 81]]}, "cycles": [ [36083, 157, "read"], [36084, 235, "read"], [36085, 210, "read"], [53997, 123, "read"], [53997, 81, "write"]] }""") };
+        /* boundary wrap */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "9d 94 e1", "initial": { "pc": 62551, "s": 41, "a": 31, "x": 127, "y": 7, "p": 168, "ram": [ [62551, 157], [62552, 148], [62553, 225], [57619, 79], [62554, 18]]}, "final": { "pc": 62554, "s": 41, "a": 31, "x": 127, "y": 7, "p": 168, "ram": [ [57619, 79], [57875, 31], [62551, 157], [62552, 148], [62553, 225], [62554, 18]]}, "cycles": [ [62551, 157, "read"], [62552, 148, "read"], [62553, 225, "read"], [57619, 79, "read"], [57875, 31, "write"]] }""") };
     }
 
     public static IEnumerable<object[]> OpcodeA8JsonFeeder()

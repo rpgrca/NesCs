@@ -186,7 +186,7 @@ public partial class Cpu6502
             _instructions[0x9A] = new TransferXToStackOpcode9A();
             //_instructions[0x9B] W
             //_instructions[0x9C] W
-            //_instructions[0x9D] W
+            _instructions[0x9D] = new StoreAccumulatorAbsoluteXOpcode9D();
             //_instructions[0x9E] W
             //_instructions[0x9F] W
             _instructions[0xA0] = new LdyInImmediateModeOpcodeA0();
