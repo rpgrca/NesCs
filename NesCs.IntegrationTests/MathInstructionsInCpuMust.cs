@@ -87,6 +87,7 @@ public class MathInstructionsInCpuMust
     [ProcessorFileTestData("0a")]
     [ProcessorFileTestData("0e")]
     [ProcessorFileTestData("16")]
+    [ProcessorFileTestData("1e")]
     public void Execute10000ShiftTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
     {
         var trace = new List<(int, byte, string)>();
