@@ -9,6 +9,7 @@ public class BitTestInstructionsInCpu6502Must
     [ProcessorFileTestData("26")]
     [ProcessorFileTestData("2a")]
     [ProcessorFileTestData("2c")]
+    [ProcessorFileTestData("2e")]
     [ProcessorFileTestData("36")]
     [ProcessorFileTestData("4a")]
     [ProcessorFileTestData("6a")]
