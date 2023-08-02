@@ -8,6 +8,7 @@ public class StackInstructionsInCpuMust
     [ProcessorFileTestData("28")]
     [ProcessorFileTestData("40")]
     [ProcessorFileTestData("60")]
+    [ProcessorFileTestData("68")]
     public void Execute10000PullTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
     {
         var trace = new List<(int, byte, string)>();

@@ -93,7 +93,7 @@ public partial class Cpu6502
             //_instructions[0x62]
             //_instructions[0x64]
             _instructions[0x65] = new AddInZeroPageModeOpcode65();
-            //_instructions[0x68]
+            _instructions[0x68] = new PullAccumulatorOpcode68();
             _instructions[0x69] = new AddInImmediateModeOpcode69();
             //_instructions[0x6A]
             //_instructions[0x6B]
