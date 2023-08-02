@@ -162,7 +162,7 @@ public partial class Cpu6502
             //_instructions[0x82] R
             //_instructions[0x83] W
             //_instructions[0x84] W
-            //_instructions[0x85] W
+            _instructions[0x85] = new StoreAccumulatorZeroPageOpcode85();
             //_instructions[0x86] W
             //_instructions[0x87] W
             _instructions[0x88] = new DecrementYOpcode88();

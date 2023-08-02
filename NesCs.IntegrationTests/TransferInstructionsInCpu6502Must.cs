@@ -5,6 +5,7 @@ namespace NesCs.IntegrationTests;
 public class TransferInstructionsInCpu6502Must
 {
     [Theory]
+    [ProcessorFileTestData("85")]
     [ProcessorFileTestData("8a")]
     [ProcessorFileTestData("9a")]
     [ProcessorFileTestData("98")]

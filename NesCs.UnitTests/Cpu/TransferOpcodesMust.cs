@@ -5,6 +5,7 @@ namespace NesCs.UnitTests.Cpu;
 public class TransferOpcodesMust
 {
 	[Theory]
+    [MemberData(nameof(Opcode85JsonFeeder))]
     [MemberData(nameof(Opcode8AJsonFeeder))]
     [MemberData(nameof(Opcode9AJsonFeeder))]
     [MemberData(nameof(Opcode98JsonFeeder))]
@@ -19,6 +20,11 @@ public class TransferOpcodesMust
 
         Utilities.Equal(sampleCpu.Final, sut);
         Utilities.Equal(sampleCpu.Cycles, trace);
+    }
+
+    public static IEnumerable<object[]> Opcode85JsonFeeder()
+    {
+        /*   0  */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "85 c2 e1", "initial": { "pc": 5715, "s": 250, "a": 58, "x": 0, "y": 100, "p": 33, "ram": [ [5715, 133], [5716, 194], [5717, 225]]}, "final": { "pc": 5717, "s": 250, "a": 58, "x": 0, "y": 100, "p": 33, "ram": [ [194, 58], [5715, 133], [5716, 194], [5717, 225]]}, "cycles": [ [5715, 133, "read"], [5716, 194, "read"], [194, 58, "write"]] }""") };
     }
 
     public static IEnumerable<object[]> Opcode8AJsonFeeder()
