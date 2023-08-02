@@ -131,7 +131,7 @@ public partial class Cpu6502
             //_instructions[0x63] W
             //_instructions[0x64] R
             _instructions[0x65] = new AddInZeroPageModeOpcode65();
-            //_instructions[0x66] W
+            _instructions[0x66] = new RotateRightZeroPageOpcode66();
             //_instructions[0x67] W
             _instructions[0x68] = new PullAccumulatorOpcode68();
             _instructions[0x69] = new AddInImmediateModeOpcode69();

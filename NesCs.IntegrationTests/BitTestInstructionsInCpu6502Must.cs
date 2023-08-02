@@ -17,6 +17,7 @@ public class BitTestInstructionsInCpu6502Must
     [ProcessorFileTestData("4e")]
     [ProcessorFileTestData("56")]
     [ProcessorFileTestData("5e")]
+    [ProcessorFileTestData("66")]
     [ProcessorFileTestData("6a")]
     public void Execute10000BitTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
     {
