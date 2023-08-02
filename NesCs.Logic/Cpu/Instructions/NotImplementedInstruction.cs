@@ -12,5 +12,5 @@ public class NotImplementedInstruction : IInstruction
     }
 
     public void Execute(Cpu6502 cpu) =>
-        throw new NotImplementedException($"Not implemented opcode {_opcode}: {_message}");
+        throw new NotImplementedException($"Not implemented opcode {_opcode:X}: {_message}");
 }
