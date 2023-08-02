@@ -7,6 +7,7 @@ public class BranchInstructionsInCpuMust
     [Theory]
     [ProcessorFileTestData("10")]
     [ProcessorFileTestData("4c")]
+    [ProcessorFileTestData("50")]
     [ProcessorFileTestData("6c")]
     [ProcessorFileTestData("70")]
     [ProcessorFileTestData("90")]
