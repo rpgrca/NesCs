@@ -158,7 +158,7 @@ public partial class Cpu6502
             _instructions[0x7E] = new RotateRightAbsoluteXOpcode7E();
             //_instructions[0x7F] W
             //_instructions[0x80] R
-            //_instructions[0x81] W
+            _instructions[0x81] = new StoreAccumulatorIndirectXOpcode81();
             //_instructions[0x82] R
             //_instructions[0x83] W
             //_instructions[0x84] W
