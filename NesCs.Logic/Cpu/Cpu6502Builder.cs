@@ -61,7 +61,7 @@ public partial class Cpu6502
             _instructions[0x1D] = new OraInAbsoluteXModeOpcode0D();
             _instructions[0x1E] = new ShiftLeftAbsoluteXOpcode1E();
             //_instructions[0x1F] W
-            //_instructions[0x20] W
+            _instructions[0x20] = new JumpToSubroutineOpcode20();
             _instructions[0x21] = new AndInIndirectXModeOpcode21();
             //_instructions[0x22] R
             //_instructions[0x23] W
