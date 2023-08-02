@@ -8,6 +8,7 @@ public class StackInstructionsInCpuMust
     [ProcessorFileTestData("08")]
     [ProcessorFileTestData("28")]
     [ProcessorFileTestData("40")]
+    [ProcessorFileTestData("48")]
     [ProcessorFileTestData("60")]
     [ProcessorFileTestData("68")]
     public void Execute10000PullTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
