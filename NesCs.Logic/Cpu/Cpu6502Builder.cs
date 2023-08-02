@@ -139,7 +139,7 @@ public partial class Cpu6502
             //_instructions[0x6B] R
             _instructions[0x6C] = new JumpInIndirectModeOpcode6C();
             _instructions[0x6D] = new AddInAbsoluteModeOpcode6D();
-            //_instructions[0x6E] W
+            _instructions[0x6E] = new RotateRightAbsoluteOpcode6E();
             //_instructions[0x6F] W
             _instructions[0x70] = new BranchIfOverflowSetOpcode70();
             _instructions[0x71] = new AddInIndirectYModeOpcode71();
