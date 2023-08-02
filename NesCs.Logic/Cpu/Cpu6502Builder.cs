@@ -174,7 +174,7 @@ public partial class Cpu6502
             //_instructions[0x8E] W
             //_instructions[0x8F] W
             _instructions[0x90] = new BranchIfCarryNotSetOpcode90();
-            //_instructions[0x91] W
+            _instructions[0x91] = new StoreAccumulatorIndirectYOpcode91();
             //_instructions[0x92] R
             //_instructions[0x93] W
             //_instructions[0x94] W

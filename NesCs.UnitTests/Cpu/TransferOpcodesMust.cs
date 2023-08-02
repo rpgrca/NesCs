@@ -9,6 +9,7 @@ public class TransferOpcodesMust
     [MemberData(nameof(Opcode85JsonFeeder))]
     [MemberData(nameof(Opcode8AJsonFeeder))]
     [MemberData(nameof(Opcode8DJsonFeeder))]
+    [MemberData(nameof(Opcode91JsonFeeder))]
     [MemberData(nameof(Opcode9AJsonFeeder))]
     [MemberData(nameof(Opcode95JsonFeeder))]
     [MemberData(nameof(Opcode98JsonFeeder))]
@@ -45,6 +46,12 @@ public class TransferOpcodesMust
     public static IEnumerable<object[]> Opcode8DJsonFeeder()
     {
         /*   0  */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "8d aa 66", "initial": { "pc": 49817, "s": 119, "a": 16, "x": 102, "y": 155, "p": 232, "ram": [ [49817, 141], [49818, 170], [49819, 102], [49820, 213]]}, "final": { "pc": 49820, "s": 119, "a": 16, "x": 102, "y": 155, "p": 232, "ram": [ [26282, 16], [49817, 141], [49818, 170], [49819, 102], [49820, 213]]}, "cycles": [ [49817, 141, "read"], [49818, 170, "read"], [49819, 102, "read"], [26282, 16, "write"]] }""") };
+    }
+
+    public static IEnumerable<object[]> Opcode91JsonFeeder()
+    {
+        /* normal test   */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "91 12 c4", "initial": { "pc": 18971, "s": 177, "a": 50, "x": 202, "y": 94, "p": 225, "ram": [ [18971, 145], [18972, 18], [18973, 196], [18, 29], [19, 160], [41083, 155]]}, "final": { "pc": 18973, "s": 177, "a": 50, "x": 202, "y": 94, "p": 225, "ram": [ [18, 29], [19, 160], [18971, 145], [18972, 18], [18973, 196], [41083, 50]]}, "cycles": [ [18971, 145, "read"], [18972, 18, "read"], [18, 29, "read"], [19, 160, "read"], [41083, 155, "read"], [41083, 50, "write"]] }""") };
+        /* boundary wrap */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "91 a5 c1", "initial": { "pc": 13446, "s": 224, "a": 91, "x": 209, "y": 153, "p": 163, "ram": [ [13446, 145], [13447, 165], [13448, 193], [165, 172], [166, 249], [63813, 147]]}, "final": { "pc": 13448, "s": 224, "a": 91, "x": 209, "y": 153, "p": 163, "ram": [ [165, 172], [166, 249], [13446, 145], [13447, 165], [13448, 193], [63813, 147], [64069, 91]]}, "cycles": [ [13446, 145, "read"], [13447, 165, "read"], [165, 172, "read"], [166, 249, "read"], [63813, 147, "read"], [64069, 91, "write"]] }""") };
     }
 
     public static IEnumerable<object[]> Opcode95JsonFeeder()
