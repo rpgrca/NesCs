@@ -85,6 +85,7 @@ public class MathInstructionsInCpuMust
     [Theory]
     [ProcessorFileTestData("06")]
     [ProcessorFileTestData("0a")]
+    [ProcessorFileTestData("0e")]
     [ProcessorFileTestData("16")]
     public void Execute10000ShiftTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
     {

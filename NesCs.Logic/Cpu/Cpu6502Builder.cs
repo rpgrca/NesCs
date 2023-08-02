@@ -43,7 +43,7 @@ public partial class Cpu6502
             //_instructions[0x0B] R
             //_instructions[0x0C] R
             _instructions[0x0D] = new OraInAbsoluteModeOpcode0D();
-            //_instructions[0x0E] W
+            _instructions[0x0E] = new ShiftLeftAbsoluteOpcode0E();
             //_instructions[0x0F] W
             _instructions[0x10] = new BranchIfPositiveOpcode10();
             _instructions[0x11] = new OraInIndirectYModeOpcode11();
