@@ -182,7 +182,7 @@ public partial class Cpu6502
             //_instructions[0x96] W
             //_instructions[0x97] W
             _instructions[0x98] = new TransferYToAccumulatorOpcode98();
-            //_instructions[0x99] W
+            _instructions[0x99] = new StoreAccumulatorAbsoluteYOpcode99();
             _instructions[0x9A] = new TransferXToStackOpcode9A();
             //_instructions[0x9B] W
             //_instructions[0x9C] W
