@@ -83,7 +83,7 @@ public partial class Cpu6502
             //_instructions[0x33] W
             //_instructions[0x34] R
             _instructions[0x35] = new AndInZeroPageXModeOpcode35();
-            //_instructions[0x36] W
+            _instructions[0x36] = new RotateLeftZeroPageXOpcode36();
             //_instructions[0x37] W
             _instructions[0x38] = new SetCarryFlagOpcode38();
             _instructions[0x39] = new AndInAbsoluteYModeOpcode39();
