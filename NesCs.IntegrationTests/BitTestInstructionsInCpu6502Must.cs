@@ -21,6 +21,7 @@ public class BitTestInstructionsInCpu6502Must
     [ProcessorFileTestData("6a")]
     [ProcessorFileTestData("6e")]
     [ProcessorFileTestData("76")]
+    [ProcessorFileTestData("7e")]
     public void Execute10000BitTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
     {
         var trace = new List<(int, byte, string)>();
