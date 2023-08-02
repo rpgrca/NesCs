@@ -6,6 +6,7 @@ public class StackInstructionsInCpuMust
 {
     [Theory]
     [ProcessorFileTestData("28")]
+    [ProcessorFileTestData("40")]
     [ProcessorFileTestData("60")]
     public void Execute10000PullTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
     {

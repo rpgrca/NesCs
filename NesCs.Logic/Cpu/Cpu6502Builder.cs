@@ -68,7 +68,7 @@ public partial class Cpu6502
             //_instructions[0x3A]
             //_instructions[0x3C]
             _instructions[0x3D] = new AndInAbsoluteXModeOpcode3D();
-            //_instructions[0x40]
+            _instructions[0x40] = new ReturnFromInterruptOpcode40();
             _instructions[0x41] = new XorInIndirectXModeOpcode41();
             //_instructions[0x42]
             //_instructions[0x44]
