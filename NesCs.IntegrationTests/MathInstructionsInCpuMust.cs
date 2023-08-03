@@ -72,6 +72,7 @@ public class MathInstructionsInCpuMust
     [ProcessorFileTestData("c6")]
     [ProcessorFileTestData("c8")]
     [ProcessorFileTestData("ca")]
+    [ProcessorFileTestData("d6")]
     [ProcessorFileTestData("e8")]
     public void Execute10000ChangeTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
     {
