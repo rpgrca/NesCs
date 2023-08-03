@@ -45,6 +45,7 @@ public class MathInstructionsInCpuMust
     [MemberData(nameof(OpcodeE9JsonFeeder))]
     [MemberData(nameof(OpcodeECJsonFeeder))]
     [MemberData(nameof(OpcodeEDJsonFeeder))]
+    [MemberData(nameof(OpcodeEEJsonFeeder))]
     [MemberData(nameof(OpcodeF1JsonFeeder))]
     [MemberData(nameof(OpcodeF5JsonFeeder))]
     [MemberData(nameof(OpcodeF6JsonFeeder))]
@@ -599,6 +600,14 @@ public class MathInstructionsInCpuMust
         /* 193 NVC  */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "ed ca 0a", "initial": { "pc": 16519, "s": 15, "a": 202, "x": 152, "y": 25, "p": 108, "ram": [ [16519, 237], [16520, 202], [16521, 10], [2762, 69], [16522, 159]]}, "final": { "pc": 16522, "s": 15, "a": 132, "x": 152, "y": 25, "p": 173, "ram": [ [2762, 69], [16519, 237], [16520, 202], [16521, 10], [16522, 159]]}, "cycles": [ [16519, 237, "read"], [16520, 202, "read"], [16521, 10, "read"], [2762, 69, "read"]] }""") };
         /* 194 NVZ  */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "ed fd 8d", "initial": { "pc": 19623, "s": 76, "a": 87, "x": 185, "y": 240, "p": 235, "ram": [ [19623, 237], [19624, 253], [19625, 141], [36349, 85], [19626, 237]]}, "final": { "pc": 19626, "s": 76, "a": 2, "x": 185, "y": 240, "p": 41, "ram": [ [19623, 237], [19624, 253], [19625, 141], [19626, 237], [36349, 85]]}, "cycles": [ [19623, 237, "read"], [19624, 253, "read"], [19625, 141, "read"], [36349, 85, "read"]] }""") };
         /* 195 NVZC */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "ed 9f ac", "initial": { "pc": 46747, "s": 125, "a": 122, "x": 136, "y": 62, "p": 234, "ram": [ [46747, 237], [46748, 159], [46749, 172], [44191, 84], [46750, 126]]}, "final": { "pc": 46750, "s": 125, "a": 37, "x": 136, "y": 62, "p": 41, "ram": [ [44191, 84], [46747, 237], [46748, 159], [46749, 172], [46750, 126]]}, "cycles": [ [46747, 237, "read"], [46748, 159, "read"], [46749, 172, "read"], [44191, 84, "read"]] }""") };
+    }
+
+    public static IEnumerable<object[]> OpcodeEEJsonFeeder()
+    {
+        /*   0    */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "ee 26 e9", "initial": { "pc": 24411, "s": 33, "a": 144, "x": 212, "y": 15, "p": 37, "ram": [ [24411, 238], [24412, 38], [24413, 233], [59686, 99], [24414, 169]]}, "final": { "pc": 24414, "s": 33, "a": 144, "x": 212, "y": 15, "p": 37, "ram": [ [24411, 238], [24412, 38], [24413, 233], [24414, 169], [59686, 100]]}, "cycles": [ [24411, 238, "read"], [24412, 38, "read"], [24413, 233, "read"], [59686, 99, "read"], [59686, 99, "write"], [59686, 100, "write"]] }""") };
+        /*   2 Z  */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "ee c2 b7", "initial": { "pc": 46566, "s": 237, "a": 7, "x": 18, "y": 201, "p": 103, "ram": [ [46566, 238], [46567, 194], [46568, 183], [47042, 99], [46569, 106]]}, "final": { "pc": 46569, "s": 237, "a": 7, "x": 18, "y": 201, "p": 101, "ram": [ [46566, 238], [46567, 194], [46568, 183], [46569, 106], [47042, 100]]}, "cycles": [ [46566, 238, "read"], [46567, 194, "read"], [46568, 183, "read"], [47042, 99, "read"], [47042, 99, "write"], [47042, 100, "write"]] }""") };
+        /* 128 N  */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "ee 8f c9", "initial": { "pc": 52479, "s": 152, "a": 110, "x": 89, "y": 254, "p": 169, "ram": [ [52479, 238], [52480, 143], [52481, 201], [51599, 119], [52482, 203]]}, "final": { "pc": 52482, "s": 152, "a": 110, "x": 89, "y": 254, "p": 41, "ram": [ [51599, 120], [52479, 238], [52480, 143], [52481, 201], [52482, 203]]}, "cycles": [ [52479, 238, "read"], [52480, 143, "read"], [52481, 201, "read"], [51599, 119, "read"], [51599, 119, "write"], [51599, 120, "write"]] }""") };
+        /* 130 NZ */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "ee 08 67", "initial": { "pc": 51369, "s": 63, "a": 191, "x": 43, "y": 3, "p": 98, "ram": [ [51369, 238], [51370, 8], [51371, 103], [26376, 139], [51372, 129]]}, "final": { "pc": 51372, "s": 63, "a": 191, "x": 43, "y": 3, "p": 224, "ram": [ [26376, 140], [51369, 238], [51370, 8], [51371, 103], [51372, 129]]}, "cycles": [ [51369, 238, "read"], [51370, 8, "read"], [51371, 103, "read"], [26376, 139, "read"], [26376, 139, "write"], [26376, 140, "write"]] }""") };
     }
 
     public static IEnumerable<object[]> OpcodeF1JsonFeeder()
