@@ -1,7 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using NesCs.Common.Tests;
-using static NesCs.Logic.Cpu.Cpu6502;
+using NesCs.Logic.Cpu;
 
 namespace NesCs.Common.Tests.Converters;
 

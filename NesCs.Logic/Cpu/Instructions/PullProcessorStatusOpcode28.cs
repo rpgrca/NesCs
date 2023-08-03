@@ -12,7 +12,7 @@ public class PullProcessorStatusOpcode28 : IInstruction
         sp += 1;
         cpu.SetValueIntoStackPointer(sp);
 
-        var pc = (Cpu6502.ProcessorStatus)cpu.ReadByteFromStackMemory() & ~Cpu6502.ProcessorStatus.B | Cpu6502.ProcessorStatus.X;
+        var pc = (ProcessorStatus)cpu.ReadByteFromStackMemory() & ~ProcessorStatus.B | ProcessorStatus.X;
         cpu.SetFlags(pc);
     }
 }

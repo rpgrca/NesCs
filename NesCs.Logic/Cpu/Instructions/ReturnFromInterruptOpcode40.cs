@@ -14,7 +14,7 @@ public class ReturnFromInterruptOpcode40 : IInstruction
         cpu.SetValueIntoStackPointer(sp);
 
         cpu.ReadyForNextInstruction();
-        var p = (Cpu6502.ProcessorStatus)cpu.ReadByteFromStackMemory() & ~Cpu6502.ProcessorStatus.B | Cpu6502.ProcessorStatus.X;
+        var p = (ProcessorStatus)cpu.ReadByteFromStackMemory() & ~ProcessorStatus.B | ProcessorStatus.X;
         cpu.SetFlags(p);
         cpu.ReadyForNextInstruction();
         sp += 1;

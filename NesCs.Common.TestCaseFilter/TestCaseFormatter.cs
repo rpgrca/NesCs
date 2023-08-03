@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Text;
 using System.Numerics;
 
@@ -10,7 +9,7 @@ public class TestCaseFormatter
 {
     private readonly StringBuilder _builder;
 
-    public TestCaseFormatter(string opcode, Dictionary<Cpu6502.ProcessorStatus, string> cases)
+    public TestCaseFormatter(string opcode, Dictionary<ProcessorStatus, string> cases)
     {
         _builder = new StringBuilder();
         _builder.AppendLine($"    public static IEnumerable<object[]> Opcode{opcode}JsonFeeder()");
@@ -24,7 +23,7 @@ public class TestCaseFormatter
         {
             var ps = value.Key == 0
                 ? ""
-                : new string(((Cpu6502.ProcessorStatus)value.Key).ToString().Replace(" ", "").Replace(",", "").Reverse().ToArray());
+                : new string(value.Key.ToString().Replace(" ", "").Replace(",", "").Reverse().ToArray());
 
             _builder.Append("        ");
             _builder.Append(string.Format(formatNumber, (int)value.Key));

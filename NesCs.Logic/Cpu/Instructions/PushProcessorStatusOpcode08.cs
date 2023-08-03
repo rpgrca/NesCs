@@ -7,7 +7,7 @@ public class PushProcessorStatusOpcode08 : IInstruction
         cpu.ReadyForNextInstruction();
         _ = cpu.ReadByteFromMemory(cpu.ReadByteFromProgramCounter());
 
-        var pc = cpu.GetFlags() | Cpu6502.ProcessorStatus.B;
+        var pc = cpu.GetFlags() | ProcessorStatus.B;
         cpu.WriteByteToStackMemory((byte)pc);
     }
 }

@@ -21,9 +21,9 @@ public class ForceInterruptOpcode00 : IInstruction
         cpu.WriteByteToStackMemory(pcl);
 
         var flags = cpu.GetFlags();
-        cpu.WriteByteToStackMemory((byte)(flags | Cpu6502.ProcessorStatus.B));
+        cpu.WriteByteToStackMemory((byte)(flags | ProcessorStatus.B));
 
-        flags |= Cpu6502.ProcessorStatus.I;
+        flags |= ProcessorStatus.I;
         cpu.SetFlags(flags);
 
         pcl = cpu.ReadByteFromMemory(0xfffe);

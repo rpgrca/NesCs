@@ -8,7 +8,7 @@
             .Running(bin)
             .ImageStartsAt(0x0a)
             .WithSizeOf(65526)
-            .WithProcessorStatusAs(NesCs.Logic.Cpu.Cpu6502.ProcessorStatus.X)
+            .WithProcessorStatusAs(NesCs.Logic.Cpu.ProcessorStatus.X)
             .WithProgramCounterAs(0x400)
             .Build();
 

@@ -11,12 +11,12 @@ public partial class Cpu6502
     private byte X { get; set; }
     private byte Y { get; set; }
     private byte S { get; set; }
-    private int _start;
-    private int _end;
-    private byte[] _ram;
+    private readonly int _start;
+    private readonly int _end;
+    private readonly byte[] _ram;
     private int _counter;
-    private IInstruction[] _instructions;
-    private ITracer _tracer;
+    private readonly IInstruction[] _instructions;
+    private readonly ITracer _tracer;
 
     private Cpu6502(byte[] program, int programSize, int ramSize, int memoryOffset, int start, int end, int pc, byte a, byte x, byte y, byte s, ProcessorStatus p, (int Address, byte Value)[] ramPatches, IInstruction[] instructions, ITracer tracer)
     {
@@ -71,10 +71,6 @@ public partial class Cpu6502
             _counter = _start;
             while (_counter++ < _end || _start == _end)
             {
-                if (_counter == 48)
-                {
-                    System.Diagnostics.Debugger.Break();
-                }
                 var opcode = ReadByteFromProgram();
                 /*previous = current;
                 current = $"${PC:X4}: ${opcode:X2}        ";
