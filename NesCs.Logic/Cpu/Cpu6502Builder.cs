@@ -8,7 +8,7 @@ public partial class Cpu6502
     {
         private ProcessorStatus _p;
         private byte _a, _x, _y, _s;
-        private int _pc, _ramSize, _start, _end;
+        private int _pc, _ramSize, _start, _end, _imageStart, _programSize;
         private byte[] _program, _ram;
         private (int Address, byte Value)[] _patch;
         private readonly IInstruction[] _instructions;
@@ -18,7 +18,7 @@ public partial class Cpu6502
         {
             _p = ProcessorStatus.None;
             _a = _x = _y = _s = 0;
-            _ramSize = _start = _end = _pc = 0;
+            _ramSize = _start = _end = _pc = _programSize = _imageStart = 0;
             _program = _ram = Array.Empty<byte>();
             _patch = Array.Empty<(int, byte)>();
             _trace = new();
@@ -293,6 +293,18 @@ public partial class Cpu6502
             return this;
         }
 
+        public Builder WithSizeOf(int size)
+        {
+            _programSize = size;
+            return this;
+        }
+
+        public Builder ImageStartsAt(int imageStart)
+        {
+            _imageStart = imageStart;
+            return this;
+        }
+
         public Builder StartingAt(int start)
         {
             _start = start;
@@ -362,16 +374,11 @@ public partial class Cpu6502
         public Cpu6502 Build()
         {
             _patch ??= Array.Empty<(int, byte)>();
+            if (_programSize < 1) _programSize = _program.Length;
             if (_ramSize < 1) _ramSize = 0x10000;
-            if (_ram.Length < 1) _ram = new byte[_ramSize];
-            if (_end < 1) _end = _program.Length;
+            if (_end < 1) _end = int.MaxValue;
 
-            foreach ((int address, byte value) in _patch)
-            {
-                _ram[address] = value;
-            }
-
-            return new Cpu6502(_program, _start, _end, _pc, _a, _x, _y, _s, _p, _ram, _instructions, _trace);
+            return new Cpu6502(_program, _programSize, _ramSize, _imageStart, _start, _end, _pc, _a, _x, _y, _s, _p, _patch, _instructions, _trace);
         }
     }
 }

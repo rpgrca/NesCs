@@ -11,17 +11,23 @@ public partial class Cpu6502
     private byte X { get; set; }
     private byte Y { get; set; }
     private byte S { get; set; }
-    private readonly byte[] _program;
     private int _start;
     private int _end;
     private byte[] _ram;
-    private int _ip;
+    private int _counter;
     private readonly List<(int, byte, string)> _trace;
     private IInstruction[] _instructions;
 
-    private Cpu6502(byte[] program, int start, int end, int pc, byte a, byte x, byte y, byte s, ProcessorStatus p, byte[] ram, IInstruction[] instructions, List<(int, byte, string)> trace)
+    private Cpu6502(byte[] program, int programSize, int ramSize, int memoryOffset, int start, int end, int pc, byte a, byte x, byte y, byte s, ProcessorStatus p, (int Address, byte Value)[] ramPatches, IInstruction[] instructions, List<(int, byte, string)> trace)
     {
-        _program = program;
+        _ram = new byte[ramSize];
+        Array.Copy(program, 0, _ram, memoryOffset, programSize);
+
+        foreach (var ramPatch in ramPatches)
+        {
+            _ram[ramPatch.Address] = ramPatch.Value;
+        }
+
         _start = start;
         _end = end;
         PC = pc;
@@ -30,10 +36,9 @@ public partial class Cpu6502
         Y = y;
         S = s;
         P = p;
-        _ram = ram;
+        _counter = 0;
         _instructions = instructions;
         _trace = trace;
-        _ip = 0;
     }
 
 /*
@@ -59,11 +64,35 @@ public partial class Cpu6502
 
     public void Run()
     {
-        var counter = _start;
-        while (counter++ < _end)
+        try
         {
-            var opcode = ReadByteFromProgram();
-            _instructions[opcode].Execute(this);
+            var current = "$0000: $00 $00";
+            var previous = string.Empty;
+            _counter = _start;
+            while (_counter++ < _end || _start == _end)
+            {
+                if (_counter == 48)
+                {
+                    System.Diagnostics.Debugger.Break();
+                }
+                var opcode = ReadByteFromProgram();
+                /*previous = current;
+                current = $"${PC:X4}: ${opcode:X2}        ";
+                System.Diagnostics.Debug.Print($"*-------------*-----------------------*----------*----------*");
+                System.Diagnostics.Debug.Print($"|  PC: ${PC:X4}  |  Acc: ${A:X2} ({Convert.ToString(A, 2).PadLeft(8, '0')})  |  X: ${X:X2}  |  Y: ${Y:X2}  |");
+                System.Diagnostics.Debug.Print("*-------------*-----------------------*----------*----------*");
+                System.Diagnostics.Debug.Print($"|  NV-BDIZC   | : {previous}       XXX #$00          ");
+                System.Diagnostics.Debug.Print($"|  {Convert.ToString((byte)P, 2).PadLeft(8, '0')}   | : {current}                               ");
+                System.Diagnostics.Debug.Print("*-------------*");*/
+                _instructions[opcode].Execute(this);
+            }
+        }
+        catch (Exception ex)
+        {
+            var error = $"{ex.Message} (on cycle {_counter})";
+            Console.WriteLine(error);
+            System.Diagnostics.Debug.Print(error);
+            throw;
         }
     }
 
@@ -89,7 +118,7 @@ public partial class Cpu6502
 
     internal byte ReadByteFromProgram()
     {
-        var value = _program[PC - _start];
+        var value = _ram[PC - _start];
         Trace(PC, value, "read");
         return value;
     }
@@ -197,7 +226,10 @@ public partial class Cpu6502
 
     internal void ClearZeroFlag() => P &= ~ProcessorStatus.Z;
 
-    private void Trace(int pc, byte value, string type) => _trace.Add((pc, value, type));
+    private void Trace(int pc, byte value, string type)
+    {
+        _trace.Add((pc, value, type));
+    }
 
     public byte PeekMemory(int address) => _ram[address];
 
