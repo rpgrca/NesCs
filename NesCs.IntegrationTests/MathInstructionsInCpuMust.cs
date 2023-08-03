@@ -79,6 +79,7 @@ public class MathInstructionsInCpuMust
     [ProcessorFileTestData("e8")]
     [ProcessorFileTestData("ee")]
     [ProcessorFileTestData("f6")]
+    [ProcessorFileTestData("fe")]
     public void Execute10000ChangeTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
     {
         var trace = new List<(int, byte, string)>();

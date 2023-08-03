@@ -283,7 +283,7 @@ public partial class Cpu6502
             //_instructions[0xFB] W
             //_instructions[0xFC] R
             _instructions[0xFD] = new SubtractInAbsoluteXModeOpcodeFD();
-            //_instructions[0xFE] W
+            _instructions[0xFE] = new IncrementMemoryAbsoluteXOpcodeFE();
             //_instructions[0xFF] W
         }
 
