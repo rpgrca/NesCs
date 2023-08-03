@@ -11,6 +11,7 @@ public class TransferInstructionsInCpu6502Must
     [ProcessorFileTestData("8a")]
     [ProcessorFileTestData("8d")]
     [ProcessorFileTestData("91")]
+    [ProcessorFileTestData("94")]
     [ProcessorFileTestData("95")]
     [ProcessorFileTestData("98")]
     [ProcessorFileTestData("99")]
