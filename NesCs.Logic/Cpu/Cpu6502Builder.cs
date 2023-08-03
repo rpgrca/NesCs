@@ -235,7 +235,7 @@ public partial class Cpu6502
             //_instructions[0xCB] R
             _instructions[0xCC] = new CompareYAbsoluteModeOpcodeCC();
             _instructions[0xCD] = new CompareAbsoluteModeOpcodeCD();
-            //_instructions[0xCE] W
+            _instructions[0xCE] = new DecrementMemoryAbsoluteOpcodeCE();
             //_instructions[0xCF] W
             _instructions[0xD0] = new BranchIfNotEqualOpcodeD0();
             _instructions[0xD1] = new CompareIndirectYModeOpcodeD1();
