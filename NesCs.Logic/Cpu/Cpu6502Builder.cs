@@ -12,7 +12,7 @@ public partial class Cpu6502
         private byte[] _program, _ram;
         private (int Address, byte Value)[] _patch;
         private readonly IInstruction[] _instructions;
-        private List<(int, byte, string)> _trace;
+        private ITracer _tracer;
 
         public Builder()
         {
@@ -21,7 +21,7 @@ public partial class Cpu6502
             _ramSize = _start = _end = _pc = _programSize = _imageStart = 0;
             _program = _ram = Array.Empty<byte>();
             _patch = Array.Empty<(int, byte)>();
-            _trace = new();
+            _tracer = new DummyTracer();
 
             _instructions = new IInstruction[0x100];
             for (var index = 0; index < 0x100; index++)
@@ -365,9 +365,9 @@ public partial class Cpu6502
             return this;
         }
 
-        public Builder TracingWith(List<(int, byte, string)> trace)
+        public Builder TracingWith(ITracer tracer)
         {
-            _trace = trace;
+            _tracer = tracer;
             return this;
         }
 
@@ -378,7 +378,7 @@ public partial class Cpu6502
             if (_ramSize < 1) _ramSize = 0x10000;
             if (_end < 1) _end = int.MaxValue;
 
-            return new Cpu6502(_program, _programSize, _ramSize, _imageStart, _start, _end, _pc, _a, _x, _y, _s, _p, _patch, _instructions, _trace);
+            return new Cpu6502(_program, _programSize, _ramSize, _imageStart, _start, _end, _pc, _a, _x, _y, _s, _p, _patch, _instructions, _tracer);
         }
     }
 }

@@ -15,17 +15,17 @@ public partial class Cpu6502
     private int _end;
     private byte[] _ram;
     private int _counter;
-    private readonly List<(int, byte, string)> _trace;
     private IInstruction[] _instructions;
+    private ITracer _tracer;
 
-    private Cpu6502(byte[] program, int programSize, int ramSize, int memoryOffset, int start, int end, int pc, byte a, byte x, byte y, byte s, ProcessorStatus p, (int Address, byte Value)[] ramPatches, IInstruction[] instructions, List<(int, byte, string)> trace)
+    private Cpu6502(byte[] program, int programSize, int ramSize, int memoryOffset, int start, int end, int pc, byte a, byte x, byte y, byte s, ProcessorStatus p, (int Address, byte Value)[] ramPatches, IInstruction[] instructions, ITracer tracer)
     {
         _ram = new byte[ramSize];
         Array.Copy(program, 0, _ram, memoryOffset, programSize);
 
-        foreach (var ramPatch in ramPatches)
+        foreach (var (address, value) in ramPatches)
         {
-            _ram[ramPatch.Address] = ramPatch.Value;
+            _ram[address] = value;
         }
 
         _start = start;
@@ -38,7 +38,7 @@ public partial class Cpu6502
         P = p;
         _counter = 0;
         _instructions = instructions;
-        _trace = trace;
+        _tracer = tracer;
     }
 
 /*
@@ -119,28 +119,28 @@ public partial class Cpu6502
     internal byte ReadByteFromProgram()
     {
         var value = _ram[PC - _start];
-        Trace(PC, value, "read");
+        _tracer.Read(PC, value);
         return value;
     }
 
     internal byte ReadByteFromMemory(int address)
     {
         var value = _ram[address];
-        Trace(address, value, "read");
+        _tracer.Read(address, value);
         return value;
     }
 
     internal void WriteByteToMemory(int address, byte value)
     {
         _ram[address] = value;
-        Trace(address, value, "write");
+        _tracer.Write(address, value);
     }
 
     internal byte ReadByteFromStackMemory()
     {
         var address = StackMemoryBase + S;
         var value = _ram[address];
-        Trace(address, value, "read");
+        _tracer.Read(address, value);
         return value;
     }
 
@@ -148,7 +148,7 @@ public partial class Cpu6502
     {
         var address = StackMemoryBase + S;
         _ram[address] = value;
-        Trace(address, value, "write");
+        _tracer.Write(address, value);
         S -= 1;
     }
 
@@ -225,11 +225,6 @@ public partial class Cpu6502
     internal void ClearOverflowFlag() => P &= ~ProcessorStatus.V;
 
     internal void ClearZeroFlag() => P &= ~ProcessorStatus.Z;
-
-    private void Trace(int pc, byte value, string type)
-    {
-        _trace.Add((pc, value, type));
-    }
 
     public byte PeekMemory(int address) => _ram[address];
 

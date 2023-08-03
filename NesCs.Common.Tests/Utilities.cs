@@ -5,9 +5,8 @@ namespace NesCs.Common.Tests;
 
 public static class Utilities
 {
-    public static Cpu6502 CreateSubjectUnderTestFromSample(SampleStatus initial, List<(int, byte, string)> trace)
-    {
-        return new Cpu6502.Builder()
+    public static Cpu6502 CreateSubjectUnderTestFromSample(SampleStatus initial, List<(int, byte, string)> trace) =>
+        new Cpu6502.Builder()
             .ImageStartsAt(initial.PC)
             .StartingAt(0)
             .EndingAt(1)
@@ -19,9 +18,8 @@ public static class Utilities
             .WithAccumulatorAs(initial.A)
             .WithProgramCounterAs(initial.PC)
             .RamPatchedAs(initial.RAM.Select(p => (p.Address, p.Value)).ToArray())
-            .TracingWith(trace)
+            .TracingWith(new TracerSpy(trace))
             .Build();
-    }
 
     public static void Equal(SampleStatus final, Cpu6502 sut)
     {
