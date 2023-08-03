@@ -8,8 +8,8 @@ public static class Utilities
     public static Cpu6502 CreateSubjectUnderTestFromSample(byte[] opcodes, SampleStatus initial, List<(int, byte, string)> trace) =>
         new Cpu6502.Builder()
             .Running(opcodes)
-            .StartingAt(0)
-            .EndingAt(1)
+            .StartingAt(initial.PC)
+            .EndingAt(initial.PC + 1)
             .WithRamSizeOf(0x10000)
             .WithStackPointerAt(initial.S)
             .WithProcessorStatusAs(initial.P)

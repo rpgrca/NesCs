@@ -59,8 +59,8 @@ public partial class Cpu6502
 
     public void Run()
     {
-        _ip = _start;
-        while (_ip < _end)
+        var counter = _start;
+        while (counter++ < _end)
         {
             var opcode = ReadByteFromProgram();
             _instructions[opcode].Execute(this);
@@ -89,7 +89,7 @@ public partial class Cpu6502
 
     internal byte ReadByteFromProgram()
     {
-        var value = _program[_ip++];
+        var value = _program[PC - _start];
         Trace(PC, value, "read");
         return value;
     }
