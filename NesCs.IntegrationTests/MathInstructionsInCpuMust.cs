@@ -17,7 +17,7 @@ public class MathInstructionsInCpuMust
     public void Execute10000MathTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
     {
         var trace = new List<(int, byte, string)>();
-		var sut = Utilities.CreateSubjectUnderTestFromSample(sampleCpu.Opcodes, sampleCpu.Initial, trace);
+		var sut = Utilities.CreateSubjectUnderTestFromSample(sampleCpu.Initial, trace);
         sut.Run();
 
         Utilities.Equal(sampleCpu.Final, sut);
@@ -35,7 +35,7 @@ public class MathInstructionsInCpuMust
     public void Execute10000SubtractionTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
     {
         var trace = new List<(int, byte, string)>();
-		var sut = Utilities.CreateSubjectUnderTestFromSample(sampleCpu.Opcodes, sampleCpu.Initial, trace);
+		var sut = Utilities.CreateSubjectUnderTestFromSample(sampleCpu.Initial, trace);
         sut.Run();
 
         Utilities.Equal(sampleCpu.Final, sut);
@@ -60,7 +60,7 @@ public class MathInstructionsInCpuMust
     public void Execute10000CompareTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
     {
         var trace = new List<(int, byte, string)>();
-		var sut = Utilities.CreateSubjectUnderTestFromSample(sampleCpu.Opcodes, sampleCpu.Initial, trace);
+		var sut = Utilities.CreateSubjectUnderTestFromSample(sampleCpu.Initial, trace);
         sut.Run();
 
         Utilities.Equal(sampleCpu.Final, sut);
@@ -83,7 +83,7 @@ public class MathInstructionsInCpuMust
     public void Execute10000ChangeTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
     {
         var trace = new List<(int, byte, string)>();
-		var sut = Utilities.CreateSubjectUnderTestFromSample(sampleCpu.Opcodes, sampleCpu.Initial, trace);
+		var sut = Utilities.CreateSubjectUnderTestFromSample(sampleCpu.Initial, trace);
         sut.Run();
 
         Utilities.Equal(sampleCpu.Final, sut);
@@ -99,7 +99,7 @@ public class MathInstructionsInCpuMust
     public void Execute10000ShiftTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
     {
         var trace = new List<(int, byte, string)>();
-		var sut = Utilities.CreateSubjectUnderTestFromSample(sampleCpu.Opcodes, sampleCpu.Initial, trace);
+		var sut = Utilities.CreateSubjectUnderTestFromSample(sampleCpu.Initial, trace);
         sut.Run();
 
         Utilities.Equal(sampleCpu.Final, sut);

@@ -5,7 +5,7 @@ namespace NesCs.Common.Tests;
 
 public static class Utilities
 {
-    public static Cpu6502 CreateSubjectUnderTestFromSample(byte[] opcodes, SampleStatus initial, List<(int, byte, string)> trace)
+    public static Cpu6502 CreateSubjectUnderTestFromSample(SampleStatus initial, List<(int, byte, string)> trace)
     {
         return new Cpu6502.Builder()
             .ImageStartsAt(initial.PC)

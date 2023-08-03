@@ -26,7 +26,7 @@ public class LoadInstructionsInCpu6502Must
     public void Execute10000LoadTestsPerOpcodeCorrectly1(SampleCpu sampleCpu)
     {
         var trace = new List<(int, byte, string)>();
-		var sut = Utilities.CreateSubjectUnderTestFromSample(sampleCpu.Opcodes, sampleCpu.Initial, trace);
+		var sut = Utilities.CreateSubjectUnderTestFromSample(sampleCpu.Initial, trace);
         sut.Run();
 
         Utilities.Equal(sampleCpu.Final, sut);

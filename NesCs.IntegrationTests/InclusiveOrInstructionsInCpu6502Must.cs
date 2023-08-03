@@ -16,7 +16,7 @@ public class InclusiveOrInstructionsInCpu6502Must
     public void Execute10000InclusiveOrTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
     {
         var trace = new List<(int, byte, string)>();
-		var sut = Utilities.CreateSubjectUnderTestFromSample(sampleCpu.Opcodes, sampleCpu.Initial, trace);
+		var sut = Utilities.CreateSubjectUnderTestFromSample(sampleCpu.Initial, trace);
         sut.Run();
 
         Utilities.Equal(sampleCpu.Final, sut);
