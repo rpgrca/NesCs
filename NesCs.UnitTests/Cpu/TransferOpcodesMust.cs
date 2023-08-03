@@ -13,11 +13,12 @@ public class TransferOpcodesMust
     [MemberData(nameof(Opcode8CJsonFeeder))]
     [MemberData(nameof(Opcode8DJsonFeeder))]
     [MemberData(nameof(Opcode91JsonFeeder))]
-    [MemberData(nameof(Opcode9AJsonFeeder))]
     [MemberData(nameof(Opcode94JsonFeeder))]
     [MemberData(nameof(Opcode95JsonFeeder))]
+    [MemberData(nameof(Opcode96JsonFeeder))]
     [MemberData(nameof(Opcode98JsonFeeder))]
     [MemberData(nameof(Opcode99JsonFeeder))]
+    [MemberData(nameof(Opcode9AJsonFeeder))]
     [MemberData(nameof(Opcode9DJsonFeeder))]
     [MemberData(nameof(OpcodeA8JsonFeeder))]
     [MemberData(nameof(OpcodeAAJsonFeeder))]
@@ -83,11 +84,9 @@ public class TransferOpcodesMust
         /*   0  */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "95 dd 50", "initial": { "pc": 34346, "s": 195, "a": 118, "x": 249, "y": 148, "p": 34, "ram": [ [34346, 149], [34347, 221], [34348, 80], [221, 25]]}, "final": { "pc": 34348, "s": 195, "a": 118, "x": 249, "y": 148, "p": 34, "ram": [ [214, 118], [221, 25], [34346, 149], [34347, 221], [34348, 80]]}, "cycles": [ [34346, 149, "read"], [34347, 221, "read"], [221, 25, "read"], [214, 118, "write"]] }""") };
     }
 
-    public static IEnumerable<object[]> Opcode9AJsonFeeder()
+    public static IEnumerable<object[]> Opcode96JsonFeeder()
     {
-        yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "9a 28 e4", "initial": { "pc": 41217, "s": 7, "a": 109, "x": 185, "y": 102, "p": 168, "ram": [ [41217, 154], [41218, 40], [41219, 228]]}, "final": { "pc": 41218, "s": 185, "a": 109, "x": 185, "y": 102, "p": 168, "ram": [ [41217, 154], [41218, 40], [41219, 228]]}, "cycles": [ [41217, 154, "read"], [41218, 40, "read"]] }""") };
-        yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "9a 27 d7", "initial": { "pc": 5395, "s": 249, "a": 100, "x": 89, "y": 185, "p": 224, "ram": [ [5395, 154], [5396, 39], [5397, 215]]}, "final": { "pc": 5396, "s": 89, "a": 100, "x": 89, "y": 185, "p": 224, "ram": [ [5395, 154], [5396, 39], [5397, 215]]}, "cycles": [ [5395, 154, "read"], [5396, 39, "read"]] }""") }; // negative flag not affected
-        yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "9a 8f 66", "initial": { "pc": 61438, "s": 41, "a": 42, "x": 2, "y": 170, "p": 34, "ram": [ [61438, 154], [61439, 143], [61440, 102]]}, "final": { "pc": 61439, "s": 2, "a": 42, "x": 2, "y": 170, "p": 34, "ram": [ [61438, 154], [61439, 143], [61440, 102]]}, "cycles": [ [61438, 154, "read"], [61439, 143, "read"]] }""") }; // zero flag not affected
+        /*   0  */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "96 59 4f", "initial": { "pc": 40932, "s": 175, "a": 104, "x": 225, "y": 122, "p": 228, "ram": [ [40932, 150], [40933, 89], [40934, 79], [89, 220]]}, "final": { "pc": 40934, "s": 175, "a": 104, "x": 225, "y": 122, "p": 228, "ram": [ [89, 220], [211, 225], [40932, 150], [40933, 89], [40934, 79]]}, "cycles": [ [40932, 150, "read"], [40933, 89, "read"], [89, 220, "read"], [211, 225, "write"]] }""") };
     }
 
     public static IEnumerable<object[]> Opcode98JsonFeeder()
@@ -98,6 +97,13 @@ public class TransferOpcodesMust
     public static IEnumerable<object[]> Opcode99JsonFeeder()
     {
         /*   0  */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "99 f8 b7", "initial": { "pc": 45189, "s": 27, "a": 45, "x": 29, "y": 41, "p": 228, "ram": [ [45189, 153], [45190, 248], [45191, 183], [46881, 82], [45192, 231]]}, "final": { "pc": 45192, "s": 27, "a": 45, "x": 29, "y": 41, "p": 228, "ram": [ [45189, 153], [45190, 248], [45191, 183], [45192, 231], [46881, 82], [47137, 45]]}, "cycles": [ [45189, 153, "read"], [45190, 248, "read"], [45191, 183, "read"], [46881, 82, "read"], [47137, 45, "write"]] }""") };
+    }
+
+    public static IEnumerable<object[]> Opcode9AJsonFeeder()
+    {
+        yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "9a 28 e4", "initial": { "pc": 41217, "s": 7, "a": 109, "x": 185, "y": 102, "p": 168, "ram": [ [41217, 154], [41218, 40], [41219, 228]]}, "final": { "pc": 41218, "s": 185, "a": 109, "x": 185, "y": 102, "p": 168, "ram": [ [41217, 154], [41218, 40], [41219, 228]]}, "cycles": [ [41217, 154, "read"], [41218, 40, "read"]] }""") };
+        yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "9a 27 d7", "initial": { "pc": 5395, "s": 249, "a": 100, "x": 89, "y": 185, "p": 224, "ram": [ [5395, 154], [5396, 39], [5397, 215]]}, "final": { "pc": 5396, "s": 89, "a": 100, "x": 89, "y": 185, "p": 224, "ram": [ [5395, 154], [5396, 39], [5397, 215]]}, "cycles": [ [5395, 154, "read"], [5396, 39, "read"]] }""") }; // negative flag not affected
+        yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "9a 8f 66", "initial": { "pc": 61438, "s": 41, "a": 42, "x": 2, "y": 170, "p": 34, "ram": [ [61438, 154], [61439, 143], [61440, 102]]}, "final": { "pc": 61439, "s": 2, "a": 42, "x": 2, "y": 170, "p": 34, "ram": [ [61438, 154], [61439, 143], [61440, 102]]}, "cycles": [ [61438, 154, "read"], [61439, 143, "read"]] }""") }; // zero flag not affected
     }
 
     public static IEnumerable<object[]> Opcode9DJsonFeeder()
