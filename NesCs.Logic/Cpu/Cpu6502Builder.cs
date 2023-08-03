@@ -259,7 +259,7 @@ public partial class Cpu6502
             //_instructions[0xE3] W
             _instructions[0xE4] = new CompareXZeroPageModeOpcodeE4();
             _instructions[0xE5] = new SubtractInZeroPageModeOpcodeE5();
-            //_instructions[0xE6] W
+            _instructions[0xE6] = new IncrementMemoryZeroPageOpcodeE6();
             //_instructions[0xE7] W
             _instructions[0xE8] = new IncrementXOpcodeE8();
             _instructions[0xE9] = new SubtractInImmediateModeOpcodeE9();
