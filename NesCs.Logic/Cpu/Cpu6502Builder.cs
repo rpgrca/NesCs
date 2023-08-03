@@ -227,7 +227,7 @@ public partial class Cpu6502
             //_instructions[0xC3] W
             _instructions[0xC4] = new CompareYZeroPageModeOpcodeC4();
             _instructions[0xC5] = new CompareZeroPageModeOpcodeC5();
-            //_instructions[0xC6] W
+            _instructions[0xC6] = new DecrementMemoryZeroPageOpcodeC6();
             //_instructions[0xC7] W
             _instructions[0xC8] = new IncrementYOpcodeC8();
             _instructions[0xC9] = new CompareImmediateModeOpcodeC9();
