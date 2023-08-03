@@ -5,6 +5,7 @@ namespace NesCs.UnitTests.Cpu;
 public class BranchInstructionsInCpuMust
 {
     [Theory]
+    [MemberData(nameof(Opcode00JsonFeeder))]
     [MemberData(nameof(Opcode10JsonFeeder))]
     [MemberData(nameof(Opcode20JsonFeeder))]
     [MemberData(nameof(Opcode30JsonFeeder))]
@@ -24,6 +25,12 @@ public class BranchInstructionsInCpuMust
 
         Utilities.Equal(sampleCpu.Final, sut);
         Utilities.Equal(sampleCpu.Cycles, trace);
+    }
+
+    public static IEnumerable<object[]> Opcode00JsonFeeder()
+    {
+        /* add B flag    */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "00 4f 1b", "initial": { "pc": 510, "s": 96, "a": 200, "x": 204, "y": 4, "p": 175, "ram": [ [510, 0], [511, 79], [512, 27], [65534, 149], [65535, 56], [14485, 6]]}, "final": { "pc": 14485, "s": 93, "a": 200, "x": 204, "y": 4, "p": 175, "ram": [ [350, 191], [351, 0], [352, 2], [510, 0], [511, 79], [512, 27], [14485, 6], [65534, 149], [65535, 56]]}, "cycles": [ [510, 0, "read"], [511, 79, "read"], [352, 2, "write"], [351, 0, "write"], [350, 191, "write"], [65534, 149, "read"], [65535, 56, "read"]] }""") };
+        /* add B, I flag */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "00 35 26", "initial": { "pc": 59521, "s": 242, "a": 4, "x": 71, "y": 56, "p": 97, "ram": [ [59521, 0], [59522, 53], [59523, 38], [65534, 21], [65535, 35], [8981, 229]]}, "final": { "pc": 8981, "s": 239, "a": 4, "x": 71, "y": 56, "p": 101, "ram": [ [496, 113], [497, 131], [498, 232], [8981, 229], [59521, 0], [59522, 53], [59523, 38], [65534, 21], [65535, 35]]}, "cycles": [ [59521, 0, "read"], [59522, 53, "read"], [498, 232, "write"], [497, 131, "write"], [496, 113, "write"], [65534, 21, "read"], [65535, 35, "read"]] }""") };
     }
 
     // TODO: Missing negative pc test, none found in b0.json

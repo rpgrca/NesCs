@@ -29,7 +29,7 @@ public partial class Cpu6502
                 _instructions[index] = new NotImplementedInstruction(index);
             }
 
-            // _instructions[0x00] W
+            _instructions[0x00] = new ForceInterruptOpcode00();
             _instructions[0x01] = new OraInIndirectXModeOpcode01();
             //_instructions[0x02] R
             //_instructions[0x03] W
@@ -108,7 +108,7 @@ public partial class Cpu6502
             _instructions[0x4C] = new JumpInAbsoluteModeOpcode4C();
             _instructions[0x4D] = new XorInAbsoluteModeOpcode4D();
             _instructions[0x4E] = new ShiftRightAbsoluteOpcode4E();
-            //_instructions[0x4F] W
+            //_instructions[0x4F]         var flags = cpu.GetFlags();W
             _instructions[0x50] = new BranchIfOverflowNotSetOpcode50();
             _instructions[0x51] = new XorInIndirectYModeOpcode51();
             //_instructions[0x52] R

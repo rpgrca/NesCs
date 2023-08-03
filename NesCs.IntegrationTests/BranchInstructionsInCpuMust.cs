@@ -5,6 +5,7 @@ namespace NesCs.IntegrationTests;
 public class BranchInstructionsInCpuMust
 {
     [Theory]
+    [ProcessorFileTestData("00")]
     [ProcessorFileTestData("10")]
     [ProcessorFileTestData("20")]
     [ProcessorFileTestData("4c")]
