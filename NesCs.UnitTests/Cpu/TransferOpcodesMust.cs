@@ -8,6 +8,7 @@ public class TransferOpcodesMust
     [MemberData(nameof(Opcode81JsonFeeder))]
     [MemberData(nameof(Opcode84JsonFeeder))]
     [MemberData(nameof(Opcode85JsonFeeder))]
+    [MemberData(nameof(Opcode86JsonFeeder))]
     [MemberData(nameof(Opcode8AJsonFeeder))]
     [MemberData(nameof(Opcode8CJsonFeeder))]
     [MemberData(nameof(Opcode8DJsonFeeder))]
@@ -44,6 +45,11 @@ public class TransferOpcodesMust
     public static IEnumerable<object[]> Opcode85JsonFeeder()
     {
         /*   0  */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "85 c2 e1", "initial": { "pc": 5715, "s": 250, "a": 58, "x": 0, "y": 100, "p": 33, "ram": [ [5715, 133], [5716, 194], [5717, 225]]}, "final": { "pc": 5717, "s": 250, "a": 58, "x": 0, "y": 100, "p": 33, "ram": [ [194, 58], [5715, 133], [5716, 194], [5717, 225]]}, "cycles": [ [5715, 133, "read"], [5716, 194, "read"], [194, 58, "write"]] }""") };
+    }
+
+    public static IEnumerable<object[]> Opcode86JsonFeeder()
+    {
+        /*   0  */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "86 69 18", "initial": { "pc": 45098, "s": 23, "a": 25, "x": 149, "y": 47, "p": 104, "ram": [ [45098, 134], [45099, 105], [45100, 24]]}, "final": { "pc": 45100, "s": 23, "a": 25, "x": 149, "y": 47, "p": 104, "ram": [ [105, 149], [45098, 134], [45099, 105], [45100, 24]]}, "cycles": [ [45098, 134, "read"], [45099, 105, "read"], [105, 149, "write"]] }""") };
     }
 
     public static IEnumerable<object[]> Opcode8AJsonFeeder()
