@@ -14,6 +14,7 @@ public partial class Cpu6502
     private readonly int _start;
     private readonly int _end;
     private readonly byte[] _ram;
+    private int _cycles;
     private int _counter;
     private readonly IInstruction[] _instructions;
     private readonly ITracer _tracer;
@@ -36,7 +37,7 @@ public partial class Cpu6502
         Y = y;
         S = s;
         P = p;
-        _counter = 0;
+        _cycles = _counter = 0;
         _instructions = instructions;
         _tracer = tracer;
     }
@@ -71,6 +72,7 @@ public partial class Cpu6502
             _counter = _start;
             while (_counter++ < _end || _start == _end)
             {
+                var cycles = PC;
                 var opcode = ReadByteFromProgram();
                 /*previous = current;
                 current = $"${PC:X4}: ${opcode:X2}        ";
@@ -81,6 +83,7 @@ public partial class Cpu6502
                 System.Diagnostics.Debug.Print($"|  {Convert.ToString((byte)P, 2).PadLeft(8, '0')}   | : {current}                               ");
                 System.Diagnostics.Debug.Print("*-------------*");*/
                 _instructions[opcode].Execute(this);
+                _cycles += PC - cycles;
             }
         }
         catch (Exception ex)
