@@ -251,7 +251,7 @@ public partial class Cpu6502
             //_instructions[0xDB] W
             //_instructions[0xDC] R
             _instructions[0xDD] = new CompareAbsoluteXModeOpcodeDD();
-            //_instructions[0xDE] W
+            _instructions[0xDE] = new DecrementMemoryAbsoluteXOpcodeDE();
             //_instructions[0xDF] W
             _instructions[0xE0] = new CompareXImmediateModeOpcodeE0();
             _instructions[0xE1] = new SubtractInIndirectXModeOpcodeE1();
