@@ -169,7 +169,7 @@ public partial class Cpu6502
             //_instructions[0x89] R
             _instructions[0x8A] = new TransferXToAccumulatorOpcode8A();
             //_instructions[0x8B] R
-            //_instructions[0x8C] W
+            _instructions[0x8C] = new StoreRegisterYAbsoluteOpcode8C();
             _instructions[0x8D] = new StoreAccumulatorAbsoluteOpcode8D();
             //_instructions[0x8E] W
             //_instructions[0x8F] W
