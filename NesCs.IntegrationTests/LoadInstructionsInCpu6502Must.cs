@@ -8,6 +8,7 @@ public class LoadInstructionsInCpu6502Must
     [ProcessorFileTestData("a0")]
     [ProcessorFileTestData("a1")]
     [ProcessorFileTestData("a2")]
+    [ProcessorFileTestData("a3")]
     [ProcessorFileTestData("a4")]
     [ProcessorFileTestData("a5")]
     [ProcessorFileTestData("a6")]
