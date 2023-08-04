@@ -256,7 +256,7 @@ public partial class Cpu6502
             _instructions[0xE0] = new CompareXImmediateModeOpcodeE0();
             _instructions[0xE1] = new SubtractInIndirectXModeOpcodeE1();
             //_instructions[0xE2] R
-            //_instructions[0xE3] = new IllegalIncrementSubtractOpcodeE3();
+            _instructions[0xE3] = new IllegalIncrementSubtractOpcodeE3();
             _instructions[0xE4] = new CompareXZeroPageModeOpcodeE4();
             _instructions[0xE5] = new SubtractInZeroPageModeOpcodeE5();
             _instructions[0xE6] = new IncrementMemoryZeroPageOpcodeE6();
