@@ -55,7 +55,7 @@ public partial class Cpu6502
             //_instructions[0x17] W
             _instructions[0x18] = new ClearCarryFlagOpcode18();
             _instructions[0x19] = new OraInAbsoluteYModeOpcode19();
-            //_instructions[0x1A] R
+            _instructions[0x1A] = new IllegalNopOpcode1A();
             //_instructions[0x1B] W
             //_instructions[0x1C] R
             _instructions[0x1D] = new OraInAbsoluteXModeOpcode0D();

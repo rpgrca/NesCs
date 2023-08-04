@@ -8,6 +8,7 @@ public class NopInstructionsInCpu6502Must
     [ProcessorFileTestData("04")]
     [ProcessorFileTestData("0c")]
     [ProcessorFileTestData("14")]
+    [ProcessorFileTestData("1a")]
     [ProcessorFileTestData("34")]
     [ProcessorFileTestData("44")]
     [ProcessorFileTestData("54")]
