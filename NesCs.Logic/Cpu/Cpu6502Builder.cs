@@ -87,7 +87,7 @@ public partial class Cpu6502
             //_instructions[0x37] W
             _instructions[0x38] = new SetCarryFlagOpcode38();
             _instructions[0x39] = new AndInAbsoluteYModeOpcode39();
-            //_instructions[0x3A] R
+            _instructions[0x3A] = new IllegalNopOpcode3A();
             //_instructions[0x3B] W
             //_instructions[0x3C] R
             _instructions[0x3D] = new AndInAbsoluteXModeOpcode3D();
