@@ -1,6 +1,6 @@
 namespace NesCs.Logic.Cpu.Instructions;
 
-public class IllegalNopOpcode14 : IInstruction
+public class IllegalReadIgnoreOpcode04 : IInstruction
 {
     public void Execute(Cpu6502 cpu)
     {
@@ -8,9 +8,6 @@ public class IllegalNopOpcode14 : IInstruction
         var address = cpu.ReadByteFromMemory(cpu.ReadByteFromProgramCounter());
 
         cpu.ReadyForNextInstruction();
-        _ = cpu.ReadByteFromMemory(address);
-
-        address += cpu.ReadByteFromRegisterX();
         _ = cpu.ReadByteFromMemory(address);
     }
 }

@@ -33,7 +33,7 @@ public partial class Cpu6502
             _instructions[0x01] = new OraInIndirectXModeOpcode01();
             //_instructions[0x02] R
             //_instructions[0x03] = new IllegalShiftLeftOrOpcode03();
-            _instructions[0x04] = new IllegalNopOpcode04();
+            _instructions[0x04] = new IllegalReadIgnoreOpcode04();
             _instructions[0x05] = new OraInZeroPageModeOpcode05();
             _instructions[0x06] = new ShiftLeftZeroPageOpcode06();
             //_instructions[0x07] = new IllegalShiftLeftOrOpcode07();
@@ -41,7 +41,7 @@ public partial class Cpu6502
             _instructions[0x09] = new OraInImmediateModeOpcode09();
             _instructions[0x0A] = new ShiftLeftAccumulatorOpcode0A();
             //_instructions[0x0B] R
-            _instructions[0x0C] = new IllegalNopOpcode0C();
+            _instructions[0x0C] = new IllegalReadIgnoreOpcode0C();
             _instructions[0x0D] = new OraInAbsoluteModeOpcode0D();
             _instructions[0x0E] = new ShiftLeftAbsoluteOpcode0E();
             //_instructions[0x0F] = new IllegalShiftLeftOrOpcode0F();
@@ -49,7 +49,7 @@ public partial class Cpu6502
             _instructions[0x11] = new OraInIndirectYModeOpcode11();
             //_instructions[0x12] R
             //_instructions[0x13] = new IllegalShiftLeftOrOpcode13();
-            _instructions[0x14] = new IllegalNopOpcode14();
+            _instructions[0x14] = new IllegalReadIgnoreOpcode14();
             _instructions[0x15] = new OraInZeroPageXModeOpcode15();
             _instructions[0x16] = new ShiftLeftZeroPageXOpcode16();
             //_instructions[0x17] = new IllegalShiftLeftOrOpcode17();
@@ -57,7 +57,7 @@ public partial class Cpu6502
             _instructions[0x19] = new OraInAbsoluteYModeOpcode19();
             _instructions[0x1A] = new IllegalNopOpcode1A();
             //_instructions[0x1B] = new IllegalShiftLeftOrOpcode1B();
-            _instructions[0x1C] = new IllegalNopOpcode1C();
+            _instructions[0x1C] = new IllegalReadIgnoreOpcode1C();
             _instructions[0x1D] = new OraInAbsoluteXModeOpcode0D();
             _instructions[0x1E] = new ShiftLeftAbsoluteXOpcode1E();
             //_instructions[0x1F] = new IllegalShiftLeftOrOpcode1F();
@@ -81,7 +81,7 @@ public partial class Cpu6502
             _instructions[0x31] = new AndInIndirectYModeOpcode31();
             //_instructions[0x32] R
             //_instructions[0x33] = new IllegalRotateLeftAndOpcode33();
-            _instructions[0x34] = new IllegalNopOpcode34();
+            _instructions[0x34] = new IllegalReadIgnoreOpcode34();
             _instructions[0x35] = new AndInZeroPageXModeOpcode35();
             _instructions[0x36] = new RotateLeftZeroPageXOpcode36();
             //_instructions[0x37] = new IllegalRotateLeftAndOpcode37();
@@ -89,7 +89,7 @@ public partial class Cpu6502
             _instructions[0x39] = new AndInAbsoluteYModeOpcode39();
             _instructions[0x3A] = new IllegalNopOpcode3A();
             //_instructions[0x3B] = new IllegalRotateLeftAndOpcode3B();
-            _instructions[0x3C] = new IllegalNopOpcode3C();
+            _instructions[0x3C] = new IllegalReadIgnoreOpcode3C();
             _instructions[0x3D] = new AndInAbsoluteXModeOpcode3D();
             _instructions[0x3E] = new RotateLeftAbsoluteXOpcode3E();
             //_instructions[0x3F] = new IllegalRotateLeftAndOpcode3F();
@@ -97,7 +97,7 @@ public partial class Cpu6502
             _instructions[0x41] = new XorInIndirectXModeOpcode41();
             //_instructions[0x42] R
             //_instructions[0x43] = new IllegalShiftRightXorOpcode43();
-            _instructions[0x44] = new IllegalNopOpcode44();
+            _instructions[0x44] = new IllegalReadIgnoreOpcode44();
             _instructions[0x45] = new XorInZeroPageModeOpcode45();
             _instructions[0x46] = new ShiftRightZeroPageOpcode46();
             //_instructions[0x47] = new IllegalShiftRightXorOpcode47();
@@ -113,7 +113,7 @@ public partial class Cpu6502
             _instructions[0x51] = new XorInIndirectYModeOpcode51();
             //_instructions[0x52] R
             //_instructions[0x53] = new IllegalShiftRightXorOpcode53();
-            _instructions[0x54] = new IllegalNopOpcode54();
+            _instructions[0x54] = new IllegalReadIgnoreOpcode54();
             _instructions[0x55] = new XorInZeroPageXModeOpcode55();
             _instructions[0x56] = new ShiftRightZeroPageXOpcode56();
             //_instructions[0x57] = new IllegalShiftRightXorOpcode53();
@@ -121,7 +121,7 @@ public partial class Cpu6502
             _instructions[0x59] = new XorInAbsoluteYModeOpcode59();
             _instructions[0x5A] = new IllegalNopOpcode5A();
             //_instructions[0x5B] = new IllegalShiftRightXorOpcode5B();
-            _instructions[0x5C] = new IllegalNopOpcode5C();
+            _instructions[0x5C] = new IllegalReadIgnoreOpcode5C();
             _instructions[0x5D] = new XorInAbsoluteXModeOpcode5D();
             _instructions[0x5E] = new ShiftRightAbsoluteXOpcode5E();
             //_instructions[0x5F] = new IllegalShiftRightXorOpcode5F();
@@ -129,7 +129,7 @@ public partial class Cpu6502
             _instructions[0x61] = new AddInIndirectXModeOpcode61();
             //_instructions[0x62] R
             //_instructions[0x63] = new IllegalRotateRightAddOpcode63();
-            _instructions[0x64] = new IllegalNopOpcode64();
+            _instructions[0x64] = new IllegalReadIgnoreOpcode64();
             _instructions[0x65] = new AddInZeroPageModeOpcode65();
             _instructions[0x66] = new RotateRightZeroPageOpcode66();
             //_instructions[0x67] = new IllegalRotateRightAddOpcode67();
@@ -145,7 +145,7 @@ public partial class Cpu6502
             _instructions[0x71] = new AddInIndirectYModeOpcode71();
             //_instructions[0x72] R
             //_instructions[0x73] = new IllegalRotateRightAddOpcode73();
-            _instructions[0x74] = new IllegalNopOpcode74();
+            _instructions[0x74] = new IllegalReadIgnoreOpcode74();
             _instructions[0x75] = new AddInZeroPageXModeOpcode75();
             _instructions[0x76] = new RotateRightZeroPageXOpcode76();
             //_instructions[0x77] = new IllegalRotateRightAddOpcode77();
@@ -153,11 +153,11 @@ public partial class Cpu6502
             _instructions[0x79] = new AddInAbsoluteYModeOpcode6D();
             _instructions[0x7A] = new IllegalNopOpcode7A();
             //_instructions[0x7B] = new IllegalRotateRightAddOpcode7B();
-            _instructions[0x7C] = new IllegalNopOpcode7C();
+            _instructions[0x7C] = new IllegalReadIgnoreOpcode7C();
             _instructions[0x7D] = new AddInAbsoluteXModeOpcode6D();
             _instructions[0x7E] = new RotateRightAbsoluteXOpcode7E();
             //_instructions[0x7F] = new IllegalRotateRightAddOpcode7F();
-            _instructions[0x80] = new IllegalNopOpcode80();
+            _instructions[0x80] = new IllegalReadSkipOpcode80();
             _instructions[0x81] = new StoreAccumulatorIndirectXOpcode81();
             //_instructions[0x82] R
             //_instructions[0x83] = new IllegalSaxIndirectXOpcode83();
@@ -166,7 +166,7 @@ public partial class Cpu6502
             _instructions[0x86] = new StoreRegisterXZeroPageOpcode86();
             //_instructions[0x87] = new IllegalSaxAbsoluteYOpcode87();
             _instructions[0x88] = new DecrementYOpcode88();
-            //_instructions[0x89] R
+            //_instructions[0x89] = new IllegalReadSkipOpcode89();
             _instructions[0x8A] = new TransferXToAccumulatorOpcode8A();
             //_instructions[0x8B] R
             _instructions[0x8C] = new StoreRegisterYAbsoluteOpcode8C();
@@ -241,7 +241,7 @@ public partial class Cpu6502
             _instructions[0xD1] = new CompareIndirectYModeOpcodeD1();
             //_instructions[0xD2] R
             //_instructions[0xD3] = new IllegalDecrementCompareOpcodeD3();
-            _instructions[0xD4] = new IllegalNopOpcodeD4();
+            _instructions[0xD4] = new IllegalReadIgnoreOpcodeD4();
             _instructions[0xD5] = new CompareZeroPageXModeOpcodeD5();
             _instructions[0xD6] = new DecrementMemoryZeroPageXOpcodeD6();
             //_instructions[0xD7] = new IllegalDecrementCompareOpcodeD7();
@@ -249,7 +249,7 @@ public partial class Cpu6502
             _instructions[0xD9] = new CompareAbsoluteYModeOpcodeD9();
             _instructions[0xDA] = new IllegalNopOpcodeDA();
             //_instructions[0xDB] = new IllegalDecrementCompareOpcodeDB();
-            _instructions[0xDC] = new IllegalNopOpcodeDC();
+            _instructions[0xDC] = new IllegalReadIgnoreOpcodeDC();
             _instructions[0xDD] = new CompareAbsoluteXModeOpcodeDD();
             _instructions[0xDE] = new DecrementMemoryAbsoluteXOpcodeDE();
             //_instructions[0xDF] = new IllegalDecrementCompareOpcodeDF();
@@ -273,7 +273,7 @@ public partial class Cpu6502
             _instructions[0xF1] = new SubtractInIndirectYModeOpcodeF1();
             //_instructions[0xF2] R
             //_instructions[0xF3] = new IllegalIncrementSubtractOpcodeF3();
-            _instructions[0xF4] = new IllegalNopOpcodeF4();
+            _instructions[0xF4] = new IllegalReadIgnoreOpcodeF4();
             _instructions[0xF5] = new SubtractInZeroPageXModeOpcodeF5();
             _instructions[0xF6] = new IncrementMemoryZeroPageXOpcodeF6();
             //_instructions[0xF7] = new IllegalIncrementSubtractOpcodeF7();
@@ -281,7 +281,7 @@ public partial class Cpu6502
             _instructions[0xF9] = new SubtractInAbsoluteYModeOpcodeF9();
             _instructions[0xFA] = new IllegalNopOpcodeFA();
             //_instructions[0xFB] = new IllegalIncrementSubtractOpcodeFB();
-            _instructions[0xFC] = new IllegalNopOpcodeFC();
+            _instructions[0xFC] = new IllegalReadIgnoreOpcodeFC();
             _instructions[0xFD] = new SubtractInAbsoluteXModeOpcodeFD();
             _instructions[0xFE] = new IncrementMemoryAbsoluteXOpcodeFE();
             //_instructions[0xFF] = new IllegalIncrementSubtractOpcodeFF();

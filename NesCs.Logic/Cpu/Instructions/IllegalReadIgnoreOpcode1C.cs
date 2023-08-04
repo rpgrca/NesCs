@@ -1,6 +1,6 @@
 namespace NesCs.Logic.Cpu.Instructions;
 
-public class IllegalNopOpcode1C : IInstruction
+public class IllegalReadIgnoreOpcode1C : IInstruction
 {
     public void Execute(Cpu6502 cpu)
     {
