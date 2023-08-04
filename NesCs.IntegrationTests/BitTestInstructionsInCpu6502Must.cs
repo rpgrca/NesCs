@@ -42,6 +42,7 @@ public class BitTestInstructionsInCpu6502Must
     [ProcessorFileTestData("27")]
     [ProcessorFileTestData("2f")]
     [ProcessorFileTestData("33")]
+    [ProcessorFileTestData("37")]
     public void Execute10000IllegalShiftTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
     {
         var trace = new List<(int, byte, string)>();
