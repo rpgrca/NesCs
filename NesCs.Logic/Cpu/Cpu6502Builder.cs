@@ -92,7 +92,7 @@ public partial class Cpu6502
             _instructions[0x3C] = new IllegalReadIgnoreOpcode3C();
             _instructions[0x3D] = new AndInAbsoluteXModeOpcode3D();
             _instructions[0x3E] = new RotateLeftAbsoluteXOpcode3E();
-            //_instructions[0x3F] = new IllegalRotateLeftAndOpcode3F();
+            _instructions[0x3F] = new IllegalRotateLeftAndOpcode3F();
             _instructions[0x40] = new ReturnFromInterruptOpcode40();
             _instructions[0x41] = new XorInIndirectXModeOpcode41();
             //_instructions[0x42] R
