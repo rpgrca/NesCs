@@ -1,5 +1,5 @@
 namespace NesCs.Logic.Cpu.Instructions;
 
-public class IllegalNopOpcode74 : IllegalNopOpcode54
+public class IllegalNopOpcode74 : IllegalNopOpcode14
 {
 }
