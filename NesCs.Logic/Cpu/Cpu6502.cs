@@ -19,7 +19,7 @@ public partial class Cpu6502
     private readonly IInstruction[] _instructions;
     private readonly ITracer _tracer;
 
-    private Cpu6502(byte[] program, int programSize, int ramSize, int memoryOffset, int start, int end, int pc, byte a, byte x, byte y, byte s, ProcessorStatus p, (int Address, byte Value)[] ramPatches, IInstruction[] instructions, ITracer tracer)
+    private Cpu6502(byte[] program, int programSize, int ramSize, int memoryOffset, int start, int end, int pc, byte a, byte x, byte y, byte s, ProcessorStatus p, int cycles, (int Address, byte Value)[] ramPatches, IInstruction[] instructions, ITracer tracer)
     {
         _ram = new byte[ramSize];
         Array.Copy(program, 0, _ram, memoryOffset, programSize);
@@ -37,7 +37,8 @@ public partial class Cpu6502
         Y = y;
         S = s;
         P = p;
-        _cycles = _counter = 0;
+        _cycles = cycles;
+        _counter = 0;
         _instructions = instructions;
         _tracer = tracer;
     }
@@ -67,23 +68,17 @@ public partial class Cpu6502
     {
         try
         {
-            var current = "$0000: $00 $00";
-            var previous = string.Empty;
             _counter = _start;
             while (_counter++ < _end || _start == _end)
             {
-                var cycles = PC;
+                if (_cycles == 7275)
+                {
+                    System.Diagnostics.Debugger.Break();
+                }
                 var opcode = ReadByteFromProgram();
-                /*previous = current;
-                current = $"${PC:X4}: ${opcode:X2}        ";
-                System.Diagnostics.Debug.Print($"*-------------*-----------------------*----------*----------*");
-                System.Diagnostics.Debug.Print($"|  PC: ${PC:X4}  |  Acc: ${A:X2} ({Convert.ToString(A, 2).PadLeft(8, '0')})  |  X: ${X:X2}  |  Y: ${Y:X2}  |");
-                System.Diagnostics.Debug.Print("*-------------*-----------------------*----------*----------*");
-                System.Diagnostics.Debug.Print($"|  NV-BDIZC   | : {previous}       XXX #$00          ");
-                System.Diagnostics.Debug.Print($"|  {Convert.ToString((byte)P, 2).PadLeft(8, '0')}   | : {current}                               ");
-                System.Diagnostics.Debug.Print("*-------------*");*/
+                _tracer.Display(opcode, PC, A, X, Y, P, S, _cycles);
+
                 _instructions[opcode].Execute(this);
-                _cycles += PC - cycles;
             }
         }
         catch (Exception ex)
@@ -113,7 +108,11 @@ public partial class Cpu6502
 
     internal bool ReadOverflowFlag() => (P & ProcessorStatus.V) == ProcessorStatus.V;
 
-    internal void ReadyForNextInstruction() => PC = (PC + 1) & 0xffff;
+    internal void ReadyForNextInstruction()
+    {
+        PC = (PC + 1) & 0xffff;
+        _cycles++;
+    }
 
     internal byte ReadByteFromProgram()
     {
