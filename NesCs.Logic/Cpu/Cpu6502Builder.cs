@@ -273,7 +273,7 @@ public partial class Cpu6502
             _instructions[0xF1] = new SubtractInIndirectYModeOpcodeF1();
             //_instructions[0xF2] R
             //_instructions[0xF3] W
-            //_instructions[0xF4] R
+            _instructions[0xF4] = new IllegalNopOpcodeF4();
             _instructions[0xF5] = new SubtractInZeroPageXModeOpcodeF5();
             _instructions[0xF6] = new IncrementMemoryZeroPageXOpcodeF6();
             //_instructions[0xF7] W
