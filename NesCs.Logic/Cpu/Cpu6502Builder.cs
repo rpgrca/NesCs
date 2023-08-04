@@ -80,7 +80,7 @@ public partial class Cpu6502
             _instructions[0x30] = new BranchIfMinusOpcode30();
             _instructions[0x31] = new AndInIndirectYModeOpcode31();
             //_instructions[0x32] R
-            //_instructions[0x33] = new IllegalRotateLeftAndOpcode33();
+            _instructions[0x33] = new IllegalRotateLeftAndOpcode33();
             _instructions[0x34] = new IllegalReadIgnoreOpcode34();
             _instructions[0x35] = new AndInZeroPageXModeOpcode35();
             _instructions[0x36] = new RotateLeftZeroPageXOpcode36();
