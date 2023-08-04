@@ -52,11 +52,11 @@ public partial class Cpu6502
             _instructions[0x14] = new IllegalReadIgnoreOpcode14();
             _instructions[0x15] = new OraInZeroPageXModeOpcode15();
             _instructions[0x16] = new ShiftLeftZeroPageXOpcode16();
-            //_instructions[0x17] = new IllegalShiftLeftOrOpcode17();
+            _instructions[0x17] = new IllegalShiftLeftOrOpcode17();
             _instructions[0x18] = new ClearCarryFlagOpcode18();
             _instructions[0x19] = new OraInAbsoluteYModeOpcode19();
             _instructions[0x1A] = new IllegalNopOpcode1A();
-            //_instructions[0x1B] = new IllegalShiftLeftOrOpcode1B();
+            _instructions[0x1B] = new IllegalShiftLeftOrOpcode1B();
             _instructions[0x1C] = new IllegalReadIgnoreOpcode1C();
             _instructions[0x1D] = new OraInAbsoluteXModeOpcode0D();
             _instructions[0x1E] = new ShiftLeftAbsoluteXOpcode1E();
