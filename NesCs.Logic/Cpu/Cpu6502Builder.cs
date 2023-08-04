@@ -108,7 +108,7 @@ public partial class Cpu6502
             _instructions[0x4C] = new JumpInAbsoluteModeOpcode4C();
             _instructions[0x4D] = new XorInAbsoluteModeOpcode4D();
             _instructions[0x4E] = new ShiftRightAbsoluteOpcode4E();
-            //_instructions[0x4F] = new IllegalShiftRightXorOpcode4F();
+            _instructions[0x4F] = new IllegalShiftRightXorOpcode4F();
             _instructions[0x50] = new BranchIfOverflowNotSetOpcode50();
             _instructions[0x51] = new XorInIndirectYModeOpcode51();
             //_instructions[0x52] R
