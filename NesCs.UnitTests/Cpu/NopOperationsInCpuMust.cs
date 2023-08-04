@@ -9,6 +9,7 @@ public class NopOperationsInCpuMust
     [MemberData(nameof(Opcode0CJsonFeeder))]
     [MemberData(nameof(Opcode14JsonFeeder))]
     [MemberData(nameof(Opcode1AJsonFeeder))]
+    [MemberData(nameof(Opcode1CJsonFeeder))]
     [MemberData(nameof(Opcode34JsonFeeder))]
     [MemberData(nameof(Opcode3AJsonFeeder))]
     [MemberData(nameof(Opcode44JsonFeeder))]
@@ -51,6 +52,12 @@ public class NopOperationsInCpuMust
     public static IEnumerable<object[]> Opcode1AJsonFeeder()
     {
         /*   0  */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "1a 66 12", "initial": { "pc": 52409, "s": 45, "a": 165, "x": 165, "y": 152, "p": 236, "ram": [ [52409, 26], [52410, 102], [52411, 18]]}, "final": { "pc": 52410, "s": 45, "a": 165, "x": 165, "y": 152, "p": 236, "ram": [ [52409, 26], [52410, 102], [52411, 18]]}, "cycles": [ [52409, 26, "read"], [52410, 102, "read"]] }""") };
+    }
+
+    public static IEnumerable<object[]> Opcode1CJsonFeeder()
+    {
+        /* common    */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "1c c7 dc", "initial": { "pc": 3457, "s": 46, "a": 178, "x": 53, "y": 153, "p": 103, "ram": [ [3457, 28], [3458, 199], [3459, 220], [56572, 166], [3460, 57]]}, "final": { "pc": 3460, "s": 46, "a": 178, "x": 53, "y": 153, "p": 103, "ram": [ [3457, 28], [3458, 199], [3459, 220], [3460, 57], [56572, 166]]}, "cycles": [ [3457, 28, "read"], [3458, 199, "read"], [3459, 220, "read"], [56572, 166, "read"]] }""") };
+        /* page jump */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "1c a0 fc", "initial": { "pc": 52873, "s": 168, "a": 169, "x": 245, "y": 31, "p": 98, "ram": [ [52873, 28], [52874, 160], [52875, 252], [64661, 108], [52876, 246]]}, "final": { "pc": 52876, "s": 168, "a": 169, "x": 245, "y": 31, "p": 98, "ram": [ [52873, 28], [52874, 160], [52875, 252], [52876, 246], [64661, 108]]}, "cycles": [ [52873, 28, "read"], [52874, 160, "read"], [52875, 252, "read"], [64661, 108, "read"]] }""") };
     }
 
     public static IEnumerable<object[]> Opcode34JsonFeeder()

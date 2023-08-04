@@ -57,7 +57,7 @@ public partial class Cpu6502
             _instructions[0x19] = new OraInAbsoluteYModeOpcode19();
             _instructions[0x1A] = new IllegalNopOpcode1A();
             //_instructions[0x1B] W
-            //_instructions[0x1C] R
+            _instructions[0x1C] = new IllegalNopOpcode1C();
             _instructions[0x1D] = new OraInAbsoluteXModeOpcode0D();
             _instructions[0x1E] = new ShiftLeftAbsoluteXOpcode1E();
             //_instructions[0x1F] W
