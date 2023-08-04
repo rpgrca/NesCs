@@ -96,7 +96,7 @@ public partial class Cpu6502
             _instructions[0x40] = new ReturnFromInterruptOpcode40();
             _instructions[0x41] = new XorInIndirectXModeOpcode41();
             //_instructions[0x42] R
-            //_instructions[0x43] = new IllegalShiftRightXorOpcode43();
+            _instructions[0x43] = new IllegalShiftRightXorOpcode43();
             _instructions[0x44] = new IllegalReadIgnoreOpcode44();
             _instructions[0x45] = new XorInZeroPageModeOpcode45();
             _instructions[0x46] = new ShiftRightZeroPageOpcode46();
