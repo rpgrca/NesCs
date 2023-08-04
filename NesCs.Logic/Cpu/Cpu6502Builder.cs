@@ -151,7 +151,7 @@ public partial class Cpu6502
             //_instructions[0x77] W
             _instructions[0x78] = new SetInterruptDisableOpcode78();
             _instructions[0x79] = new AddInAbsoluteYModeOpcode6D();
-            //_instructions[0x7A] R
+            _instructions[0x7A] = new IllegalNopOpcode7A();
             //_instructions[0x7B] W
             //_instructions[0x7C] R
             _instructions[0x7D] = new AddInAbsoluteXModeOpcode6D();
