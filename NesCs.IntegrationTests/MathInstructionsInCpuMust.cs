@@ -113,6 +113,7 @@ public class MathInstructionsInCpuMust
     [ProcessorFileTestData("f3")]
     [ProcessorFileTestData("f7")]
     [ProcessorFileTestData("fb")]
+    [ProcessorFileTestData("ff")]
     public void Execute10000IllegalMathTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
     {
         var trace = new List<(int, byte, string)>();

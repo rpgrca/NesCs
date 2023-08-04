@@ -284,7 +284,7 @@ public partial class Cpu6502
             _instructions[0xFC] = new IllegalReadIgnoreOpcodeFC();
             _instructions[0xFD] = new SubtractInAbsoluteXModeOpcodeFD();
             _instructions[0xFE] = new IncrementMemoryAbsoluteXOpcodeFE();
-            //_instructions[0xFF] = new IllegalIncrementSubtractOpcodeFF();
+            _instructions[0xFF] = new IllegalIncrementSubtractOpcodeFF();
         }
 
         public Builder Running(byte[] program)
