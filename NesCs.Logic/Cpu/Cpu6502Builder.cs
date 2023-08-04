@@ -153,7 +153,7 @@ public partial class Cpu6502
             _instructions[0x79] = new AddInAbsoluteYModeOpcode6D();
             _instructions[0x7A] = new IllegalNopOpcode7A();
             //_instructions[0x7B] W
-            //_instructions[0x7C] R
+            _instructions[0x7C] = new IllegalNopOpcode7C();
             _instructions[0x7D] = new AddInAbsoluteXModeOpcode6D();
             _instructions[0x7E] = new RotateRightAbsoluteXOpcode7E();
             //_instructions[0x7F] W
