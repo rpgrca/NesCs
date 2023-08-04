@@ -28,6 +28,7 @@ public class NopOperationsInCpuMust
     [MemberData(nameof(OpcodeEAJsonFeeder))]
     [MemberData(nameof(OpcodeF4JsonFeeder))]
     [MemberData(nameof(OpcodeFAJsonFeeder))]
+    [MemberData(nameof(OpcodeFCJsonFeeder))]
     public void BeExecutedCorrectly(SampleCpu sampleCpu)
     {
         var trace = new List<(int, byte, string)>();
@@ -153,5 +154,10 @@ public class NopOperationsInCpuMust
    public static IEnumerable<object[]> OpcodeFAJsonFeeder()
     {
         /*   0  */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "fa 9c 30", "initial": { "pc": 22969, "s": 135, "a": 201, "x": 129, "y": 99, "p": 42, "ram": [ [22969, 250], [22970, 156], [22971, 48]]}, "final": { "pc": 22970, "s": 135, "a": 201, "x": 129, "y": 99, "p": 42, "ram": [ [22969, 250], [22970, 156], [22971, 48]]}, "cycles": [ [22969, 250, "read"], [22970, 156, "read"]] }""") };
+    }
+
+    public static IEnumerable<object[]> OpcodeFCJsonFeeder()
+    {
+        /*   0  */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "fc 53 e3", "initial": { "pc": 17393, "s": 188, "a": 238, "x": 128, "y": 74, "p": 41, "ram": [ [17393, 252], [17394, 83], [17395, 227], [58323, 247], [17396, 89]]}, "final": { "pc": 17396, "s": 188, "a": 238, "x": 128, "y": 74, "p": 41, "ram": [ [17393, 252], [17394, 83], [17395, 227], [17396, 89], [58323, 247]]}, "cycles": [ [17393, 252, "read"], [17394, 83, "read"], [17395, 227, "read"], [58323, 247, "read"]] }""") };
     }
 }
