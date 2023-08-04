@@ -21,6 +21,7 @@ public class NopInstructionsInCpu6502Must
     [ProcessorFileTestData("da")]
     [ProcessorFileTestData("ea")]
     [ProcessorFileTestData("f4")]
+    [ProcessorFileTestData("fa")]
     public void Execute10000NopTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
     {
         var trace = new List<(int, byte, string)>();
