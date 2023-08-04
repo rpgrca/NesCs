@@ -129,7 +129,7 @@ public partial class Cpu6502
             _instructions[0x61] = new AddInIndirectXModeOpcode61();
             //_instructions[0x62] R
             //_instructions[0x63] W
-            //_instructions[0x64] R
+            _instructions[0x64] = new IllegalNopOpcode64();
             _instructions[0x65] = new AddInZeroPageModeOpcode65();
             _instructions[0x66] = new RotateRightZeroPageOpcode66();
             //_instructions[0x67] W
