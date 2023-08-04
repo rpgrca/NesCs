@@ -71,7 +71,7 @@ public partial class Cpu6502
             _counter = _start;
             while (_counter++ < _end || _start == _end)
             {
-                if (_cycles == 7275)
+                if (_cycles == 10934)
                 {
                     System.Diagnostics.Debugger.Break();
                 }

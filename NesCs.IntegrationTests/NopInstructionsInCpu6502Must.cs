@@ -6,6 +6,7 @@ public class NopInstructionsInCpu6502Must
 {
     [Theory]
     [ProcessorFileTestData("04")]
+    [ProcessorFileTestData("44")]
     [ProcessorFileTestData("ea")]
     public void Execute10000NopTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
     {
