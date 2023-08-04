@@ -13,6 +13,7 @@ public class NopInstructionsInCpu6502Must
     [ProcessorFileTestData("3a")]
     [ProcessorFileTestData("44")]
     [ProcessorFileTestData("54")]
+    [ProcessorFileTestData("5a")]
     [ProcessorFileTestData("64")]
     [ProcessorFileTestData("74")]
     [ProcessorFileTestData("d4")]
