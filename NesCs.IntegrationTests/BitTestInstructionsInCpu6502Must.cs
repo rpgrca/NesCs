@@ -34,6 +34,7 @@ public class BitTestInstructionsInCpu6502Must
 
     [Theory]
     [ProcessorFileTestData("03")]
+    [ProcessorFileTestData("07")]
     [ProcessorFileTestData("13")]
     public void Execute10000IllegalShiftTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
     {
