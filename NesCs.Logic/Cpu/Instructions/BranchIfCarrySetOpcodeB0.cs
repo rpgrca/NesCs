@@ -10,13 +10,13 @@ public class BranchIfCarrySetOpcodeB0 : IInstruction
         cpu.ReadyForNextInstruction();
         _ = cpu.ReadByteFromProgramCounter();
 
-        if (cpu.ReadCarryFlag())
+        if (cpu.IsReadCarryFlagSet())
         {
             var pc = cpu.ReadByteFromProgramCounter();
             _ = cpu.ReadByteFromMemory(pc);
 
             var newPc = (pc + offset) & 0xffff;
-            cpu.SetValueIntoProgramCounter(newPc);
+            cpu.SetValueToProgramCounter(newPc);
 
             var v = (pc / 256) - (newPc / 256);
             if (v != 0)

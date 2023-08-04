@@ -5,5 +5,5 @@ namespace NesCs.Logic.Cpu.Instructions;
 public class LdxInImmediateModeOpcodeA2 : ImmediateMode
 {
     protected override void StoreValueInFinalDestination(Cpu6502 cpu, byte value) =>
-        cpu.SetValueIntoRegisterX(value);
+        cpu.SetValueToRegisterX(value);
 }

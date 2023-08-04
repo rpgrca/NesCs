@@ -10,5 +10,5 @@ public class LdaInAbsoluteXModeOpcodeBD : AbsoluteIndexedMode
         cpu.ReadByteFromRegisterX();
 
     protected override void StoreValueInFinalDestination(Cpu6502 cpu, byte value) =>
-        cpu.SetValueIntoAccumulator(value);
+        cpu.SetValueToAccumulator(value);
 }

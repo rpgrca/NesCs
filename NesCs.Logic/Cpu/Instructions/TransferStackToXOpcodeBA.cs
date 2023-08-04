@@ -7,5 +7,5 @@ public class TransferStackToXOpcodeBA : TransferInstruction
         (byte)cpu.ReadByteFromStackPointer();
 
     protected override void StoreValueInFinalDestination(Cpu6502 cpu, byte value) =>
-        cpu.SetValueIntoRegisterX(value);
+        cpu.SetValueToRegisterX(value);
 }

@@ -11,5 +11,5 @@ public enum ProcessorStatus
     B = 16,
     X = 32,
     V = 64,
-    N = 128
+    N = 128,
 }

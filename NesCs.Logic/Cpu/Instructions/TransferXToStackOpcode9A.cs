@@ -11,6 +11,6 @@ public class TransferXToStackOpcode9A : IInstruction
         cpu.ReadyForNextInstruction();
         _ = cpu.ReadByteFromMemory(cpu.ReadByteFromProgramCounter());
 
-        cpu.SetValueIntoStackPointer(value);
+        cpu.SetValueToStackPointer(value);
     }
 }

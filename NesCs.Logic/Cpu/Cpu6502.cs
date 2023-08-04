@@ -11,11 +11,11 @@ public partial class Cpu6502
     private byte X { get; set; }
     private byte Y { get; set; }
     private byte S { get; set; }
+    private int _cycles;
+    private int _counter;
     private readonly int _start;
     private readonly int _end;
     private readonly byte[] _ram;
-    private int _cycles;
-    private int _counter;
     private readonly IInstruction[] _instructions;
     private readonly ITracer _tracer;
 
@@ -100,13 +100,13 @@ public partial class Cpu6502
 
     internal byte ReadByteFromAccumulator() => A;
 
-    internal bool ReadCarryFlag() => (P & ProcessorStatus.C) == ProcessorStatus.C;
+    internal bool IsReadCarryFlagSet() => P.HasFlag(ProcessorStatus.C);
 
-    internal bool ReadZeroFlag() => (P & ProcessorStatus.Z) == ProcessorStatus.Z;
+    internal bool IsReadZeroFlagSet() => P.HasFlag(ProcessorStatus.Z);
 
-    internal bool ReadNegativeFlag() => (P & ProcessorStatus.N) == ProcessorStatus.N;
+    internal bool IsNegativeFlagSet() => P.HasFlag(ProcessorStatus.N);
 
-    internal bool ReadOverflowFlag() => (P & ProcessorStatus.V) == ProcessorStatus.V;
+    internal bool IsOverflowFlagSet() => P.HasFlag(ProcessorStatus.V);
 
     internal void ReadyForNextInstruction()
     {
@@ -134,6 +134,7 @@ public partial class Cpu6502
         _tracer.Write(address, value);
     }
 
+    // TODO: Deberia aumentar el puntero automaticamente
     internal byte ReadByteFromStackMemory()
     {
         var address = StackMemoryBase + S;
@@ -150,37 +151,37 @@ public partial class Cpu6502
         S -= 1;
     }
 
-    internal void SetValueIntoAccumulator(byte value) => A = value;
+    internal void SetValueToAccumulator(byte value) => A = value;
 
-    internal void SetValueIntoRegisterX(byte value) => X = value;
+    internal void SetValueToRegisterX(byte value) => X = value;
 
-    internal void SetValueIntoRegisterY(byte value) => Y = value;
+    internal void SetValueToRegisterY(byte value) => Y = value;
 
-    internal void SetValueIntoStackPointer(byte value) => S = value;
+    internal void SetValueToStackPointer(byte value) => S = value;
 
-    internal void SetValueIntoProgramCounter(int value) => PC = value;
+    internal void SetValueToProgramCounter(int value) => PC = value;
 
     internal ProcessorStatus GetFlags() => P;
 
-    internal void SetFlags(ProcessorStatus flags) => P = flags;
+    internal void OverwriteFlags(ProcessorStatus flags) => P = flags;
 
     internal void SetZeroFlagBasedOn(byte value)
     {
         if (value == 0)
         {
-            P |= ProcessorStatus.Z;
+            SetZeroFlag();
         }
         else
         {
-            P &= ~ProcessorStatus.Z;
+            ClearZeroFlag();
         }
     }
 
     internal void SetNegativeFlagBasedOn(byte value)
     {
-        if (((ProcessorStatus)value & ProcessorStatus.N) == ProcessorStatus.N)
+        if (((ProcessorStatus)value).HasFlag(ProcessorStatus.N))
         {
-            P |= ProcessorStatus.N;
+            SetNegativeFlag();
         }
         else
         {
@@ -190,13 +191,13 @@ public partial class Cpu6502
 
     internal void SetOverflowFlagBasedOn(byte value)
     {
-        if (((ProcessorStatus)value & ProcessorStatus.V) == ProcessorStatus.V)
+        if (((ProcessorStatus)value).HasFlag(ProcessorStatus.V))
         {
-            P |= ProcessorStatus.V;
+            SetOverflowFlag();
         }
         else
         {
-            P &= ~ProcessorStatus.V;
+            ClearOverflowFlag();
         }
     }
 

@@ -17,6 +17,6 @@ public class JumpInIndirectModeOpcode6C : IInstruction
         var newHigh = low == 0xff ? cpu.ReadByteFromMemory(high << 8) : (int)cpu.ReadByteFromMemory(address + 1);
 
         address = newHigh << 8 | newLow;
-        cpu.SetValueIntoProgramCounter(address);
+        cpu.SetValueToProgramCounter(address);
     }
 }

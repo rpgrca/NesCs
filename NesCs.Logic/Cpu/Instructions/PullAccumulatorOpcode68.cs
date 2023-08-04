@@ -10,10 +10,10 @@ public class PullAccumulatorOpcode68 : IInstruction
         _ = cpu.ReadByteFromStackMemory();
         var sp = cpu.ReadByteFromStackPointer();
         sp += 1;
-        cpu.SetValueIntoStackPointer(sp);
+        cpu.SetValueToStackPointer(sp);
 
         var a = cpu.ReadByteFromStackMemory();
-        cpu.SetValueIntoAccumulator(a);
+        cpu.SetValueToAccumulator(a);
 
         cpu.SetZeroFlagBasedOn(a);
         cpu.SetNegativeFlagBasedOn(a);

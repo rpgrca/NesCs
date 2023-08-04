@@ -14,10 +14,10 @@ public class AddInAbsoluteModeOpcode6D : IInstruction
 
         cpu.ReadyForNextInstruction();
         var a = cpu.ReadByteFromAccumulator();
-        var sum = cpu.ReadByteFromAccumulator() + value + (cpu.ReadCarryFlag()? 1 : 0);
+        var sum = cpu.ReadByteFromAccumulator() + value + (cpu.IsReadCarryFlagSet()? 1 : 0);
         var result = (byte)(sum & 0xff);
 
-        cpu.SetValueIntoAccumulator(result);
+        cpu.SetValueToAccumulator(result);
         cpu.ClearCarryFlag();
         cpu.ClearNegativeFlag();
         cpu.ClearOverflowFlag();

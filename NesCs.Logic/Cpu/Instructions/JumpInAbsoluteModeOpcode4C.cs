@@ -13,6 +13,6 @@ public class JumpInAbsoluteModeOpcode4C : IInstruction
         cpu.ReadyForNextInstruction();
         var address = high << 8 | low;
 
-        cpu.SetValueIntoProgramCounter(address);
+        cpu.SetValueToProgramCounter(address);
     }
 }

@@ -17,8 +17,8 @@ public class IllegalLaxIndirectYOpcodeA3 : IInstruction
         address = (high << 8) | low;
         var value = cpu.ReadByteFromMemory(address);
 
-        cpu.SetValueIntoAccumulator(value);
-        cpu.SetValueIntoRegisterX(value);
+        cpu.SetValueToAccumulator(value);
+        cpu.SetValueToRegisterX(value);
 
         cpu.SetZeroFlagBasedOn(value);
         cpu.SetNegativeFlagBasedOn(value);

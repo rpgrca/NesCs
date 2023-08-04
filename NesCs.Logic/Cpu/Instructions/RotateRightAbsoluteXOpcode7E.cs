@@ -30,7 +30,7 @@ public class RotateRightAbsoluteXOpcode7E : IInstruction
         var newCarry = (value & 1) == 1;
 
         var rotatedValue = (byte)(value >> 1);
-        if (cpu.ReadCarryFlag())
+        if (cpu.IsReadCarryFlagSet())
         {
             rotatedValue |= 1 << 7;
         }

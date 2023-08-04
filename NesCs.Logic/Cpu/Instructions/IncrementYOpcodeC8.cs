@@ -8,7 +8,7 @@ public class IncrementYOpcodeC8 : IInstruction
         var y = (byte)(cpu.ReadByteFromRegisterY() + 1);
 
         _ = cpu.ReadByteFromMemory(cpu.ReadByteFromProgramCounter());
-        cpu.SetValueIntoRegisterY(y);
+        cpu.SetValueToRegisterY(y);
 
         cpu.SetZeroFlagBasedOn(y);
         cpu.SetNegativeFlagBasedOn(y);

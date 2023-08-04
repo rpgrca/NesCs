@@ -11,23 +11,23 @@ public class ReturnFromInterruptOpcode40 : IInstruction
         _ = cpu.ReadByteFromStackMemory();
         var sp = cpu.ReadByteFromStackPointer();
         sp += 1;
-        cpu.SetValueIntoStackPointer(sp);
+        cpu.SetValueToStackPointer(sp);
 
         cpu.ReadyForNextInstruction();
         var p = (ProcessorStatus)cpu.ReadByteFromStackMemory() & ~ProcessorStatus.B | ProcessorStatus.X;
-        cpu.SetFlags(p);
+        cpu.OverwriteFlags(p);
         cpu.ReadyForNextInstruction();
         sp += 1;
 
         cpu.ReadyForNextInstruction();
-        cpu.SetValueIntoStackPointer(sp);
+        cpu.SetValueToStackPointer(sp);
         var pcl = cpu.ReadByteFromStackMemory();
 
         sp += 1;
-        cpu.SetValueIntoStackPointer(sp);
+        cpu.SetValueToStackPointer(sp);
 
         var pch = cpu.ReadByteFromStackMemory();
         var address = pch << 8 | pcl;
-        cpu.SetValueIntoProgramCounter(address);
+        cpu.SetValueToProgramCounter(address);
     }
 }

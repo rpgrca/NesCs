@@ -24,10 +24,10 @@ public class ForceInterruptOpcode00 : IInstruction
         cpu.WriteByteToStackMemory((byte)(flags | ProcessorStatus.B));
 
         flags |= ProcessorStatus.I;
-        cpu.SetFlags(flags);
+        cpu.OverwriteFlags(flags);
 
         pcl = cpu.ReadByteFromMemory(0xfffe);
         pch = cpu.ReadByteFromMemory(0xffff);
-        cpu.SetValueIntoProgramCounter(pch << 8 | pcl);
+        cpu.SetValueToProgramCounter(pch << 8 | pcl);
     }
 }

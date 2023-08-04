@@ -19,7 +19,7 @@ public class ShiftRightAccumulatorOpcode4A : IInstruction
         }
 
         a >>= 1;
-        cpu.SetValueIntoAccumulator(a);
+        cpu.SetValueToAccumulator(a);
         cpu.SetNegativeFlagBasedOn(a);
         cpu.SetZeroFlagBasedOn(a);
     }

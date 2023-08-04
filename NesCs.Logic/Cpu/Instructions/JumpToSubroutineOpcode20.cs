@@ -25,6 +25,6 @@ public class JumpToSubroutineOpcode20 : IInstruction
 
         var high = cpu.ReadByteFromProgram();
         var address = high << 8 | low;
-        cpu.SetValueIntoProgramCounter(address);
+        cpu.SetValueToProgramCounter(address);
     }
 }

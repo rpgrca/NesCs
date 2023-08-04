@@ -10,9 +10,9 @@ public class PullProcessorStatusOpcode28 : IInstruction
         _ = cpu.ReadByteFromStackMemory();
         var sp = cpu.ReadByteFromStackPointer();
         sp += 1;
-        cpu.SetValueIntoStackPointer(sp);
+        cpu.SetValueToStackPointer(sp);
 
         var pc = (ProcessorStatus)cpu.ReadByteFromStackMemory() & ~ProcessorStatus.B | ProcessorStatus.X;
-        cpu.SetFlags(pc);
+        cpu.OverwriteFlags(pc);
     }
 }

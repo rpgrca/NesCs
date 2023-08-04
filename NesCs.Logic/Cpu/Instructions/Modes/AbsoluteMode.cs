@@ -22,7 +22,7 @@ public abstract class AbsoluteMode : IInstruction
     }
 
     protected virtual void StoreValueInFinalDestination(Cpu6502 cpu, byte value) =>
-        cpu.SetValueIntoAccumulator(value);
+        cpu.SetValueToAccumulator(value);
 
     protected virtual byte ExecuteOperation(Cpu6502 cpu, byte value) => value;
 }

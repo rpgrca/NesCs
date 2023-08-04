@@ -11,7 +11,7 @@ public class RotateRightAccumulatorOpcode6A : IInstruction
         var newCarry = (value & 1) == 1;
 
         var rotatedValue = (byte)(value >> 1);
-        if (cpu.ReadCarryFlag())
+        if (cpu.IsReadCarryFlagSet())
         {
             rotatedValue |= 1 << 7;
         }
@@ -25,7 +25,7 @@ public class RotateRightAccumulatorOpcode6A : IInstruction
             cpu.ClearCarryFlag();
         }
 
-        cpu.SetValueIntoAccumulator(rotatedValue);
+        cpu.SetValueToAccumulator(rotatedValue);
         cpu.SetZeroFlagBasedOn(rotatedValue);
         cpu.SetNegativeFlagBasedOn(rotatedValue);
     }

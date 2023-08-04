@@ -20,14 +20,14 @@ public class ReturnFromSubroutineOpcode60 : IInstruction
         _ = cpu.ReadByteFromStackMemory();
         var sp = cpu.ReadByteFromStackPointer();
         sp += 1;
-        cpu.SetValueIntoStackPointer(sp);
+        cpu.SetValueToStackPointer(sp);
 
         //     #  address R/W description
         //     4  $0100,S  R  pull PCL from stack, increment S
         cpu.ReadyForNextInstruction();
         var pcl = cpu.ReadByteFromStackMemory();
         sp += 1;
-        cpu.SetValueIntoStackPointer(sp);
+        cpu.SetValueToStackPointer(sp);
 
         //     #  address R/W description
         //     5  $0100,S  R  pull PCH from stack
@@ -39,7 +39,7 @@ public class ReturnFromSubroutineOpcode60 : IInstruction
         cpu.ReadyForNextInstruction();
         var address = (pch << 8 | pcl);
         _ = cpu.ReadByteFromMemory(address);
-        cpu.SetValueIntoProgramCounter(address);
+        cpu.SetValueToProgramCounter(address);
 
         cpu.ReadyForNextInstruction();
     }

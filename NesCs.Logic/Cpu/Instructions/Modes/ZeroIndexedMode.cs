@@ -20,7 +20,7 @@ public abstract class ZeroIndexedMode : IInstruction
     protected abstract byte ObtainValueForIndex(Cpu6502 cpu);
 
     protected virtual void StoreValueInFinalDestination(Cpu6502 cpu, byte value) =>
-        cpu.SetValueIntoAccumulator(value);
+        cpu.SetValueToAccumulator(value);
 
     protected virtual byte ExecuteOperation(Cpu6502 cpu, byte value) => value;
 }

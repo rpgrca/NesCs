@@ -8,7 +8,7 @@ public class RotateLeftAccumulatorOpcode2A : IInstruction
         _ = cpu.ReadByteFromMemory(cpu.ReadByteFromProgramCounter());
 
         var value = cpu.ReadByteFromAccumulator();
-        int rotatedValue = (value << 1) | (cpu.ReadCarryFlag()? 1 : 0);
+        int rotatedValue = (value << 1) | (cpu.IsReadCarryFlagSet()? 1 : 0);
 
         if ((rotatedValue >> 8) != 0)
         {
@@ -20,7 +20,7 @@ public class RotateLeftAccumulatorOpcode2A : IInstruction
         }
 
         var result = (byte)(rotatedValue & 0xff);
-        cpu.SetValueIntoAccumulator(result);
+        cpu.SetValueToAccumulator(result);
 
         cpu.SetZeroFlagBasedOn(result);
         cpu.SetNegativeFlagBasedOn(result);

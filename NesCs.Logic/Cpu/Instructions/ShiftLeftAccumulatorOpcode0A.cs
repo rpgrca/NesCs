@@ -19,7 +19,7 @@ public class ShiftLeftAccumulatorOpcode0A : IInstruction
  
         var result = (byte)(a & 0xff);
 
-        cpu.SetValueIntoAccumulator(result);
+        cpu.SetValueToAccumulator(result);
         cpu.SetNegativeFlagBasedOn(result);
         cpu.SetZeroFlagBasedOn(result);
     }

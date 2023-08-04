@@ -8,7 +8,7 @@ public class DecrementXOpcodeCA : IInstruction
         var x = (byte)(cpu.ReadByteFromRegisterX() - 1);
 
         _ = cpu.ReadByteFromMemory(cpu.ReadByteFromProgramCounter());
-        cpu.SetValueIntoRegisterX(x);
+        cpu.SetValueToRegisterX(x);
 
         cpu.SetZeroFlagBasedOn(x);
         cpu.SetNegativeFlagBasedOn(x);
