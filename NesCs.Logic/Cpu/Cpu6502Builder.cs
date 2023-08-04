@@ -44,7 +44,7 @@ public partial class Cpu6502
             _instructions[0x0C] = new IllegalReadIgnoreOpcode0C();
             _instructions[0x0D] = new OraInAbsoluteModeOpcode0D();
             _instructions[0x0E] = new ShiftLeftAbsoluteOpcode0E();
-            //_instructions[0x0F] = new IllegalShiftLeftOrOpcode0F();
+            _instructions[0x0F] = new IllegalShiftLeftOrOpcode0F();
             _instructions[0x10] = new BranchIfPositiveOpcode10();
             _instructions[0x11] = new OraInIndirectYModeOpcode11();
             //_instructions[0x12] R
