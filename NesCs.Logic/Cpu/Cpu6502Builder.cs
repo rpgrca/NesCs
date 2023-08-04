@@ -33,7 +33,7 @@ public partial class Cpu6502
             _instructions[0x01] = new OraInIndirectXModeOpcode01();
             //_instructions[0x02] R
             //_instructions[0x03] W
-            //_instructions[0x04] R
+            _instructions[0x04] = new IllegalNopOpcode04();
             _instructions[0x05] = new OraInZeroPageModeOpcode05();
             _instructions[0x06] = new ShiftLeftZeroPageOpcode06();
             //_instructions[0x07] W
