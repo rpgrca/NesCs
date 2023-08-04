@@ -18,6 +18,7 @@ public class NopInstructionsInCpu6502Must
     [ProcessorFileTestData("74")]
     [ProcessorFileTestData("7a")]
     [ProcessorFileTestData("d4")]
+    [ProcessorFileTestData("da")]
     [ProcessorFileTestData("ea")]
     [ProcessorFileTestData("f4")]
     public void Execute10000NopTestsPerOpcodeCorrectly(SampleCpu sampleCpu)

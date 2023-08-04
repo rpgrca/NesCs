@@ -247,7 +247,7 @@ public partial class Cpu6502
             //_instructions[0xD7] W
             _instructions[0xD8] = new ClearDecimalModeOpcodeD8();
             _instructions[0xD9] = new CompareAbsoluteYModeOpcodeD9();
-            //_instructions[0xDA] R
+            _instructions[0xDA] = new IllegalNopOpcodeDA();
             //_instructions[0xDB] W
             //_instructions[0xDC] R
             _instructions[0xDD] = new CompareAbsoluteXModeOpcodeDD();
