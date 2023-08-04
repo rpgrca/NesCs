@@ -1,4 +1,3 @@
-using NesCs.Logic;
 using NesCs.Logic.Cpu;
 
 public class Vm6502DebuggerDisplay : ITracer

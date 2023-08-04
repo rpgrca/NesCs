@@ -76,8 +76,8 @@ public partial class Cpu6502
                     System.Diagnostics.Debugger.Break();
                 }
                 var opcode = ReadByteFromProgram();
-                _tracer.Display(opcode, PC, A, X, Y, P, S, _cycles);
 
+                _tracer.Display(opcode, PC, A, X, Y, P, S, _cycles);
                 _instructions[opcode].Execute(this);
             }
         }

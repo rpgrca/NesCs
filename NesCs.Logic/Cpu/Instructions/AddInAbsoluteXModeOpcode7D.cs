@@ -1,6 +1,6 @@
 namespace NesCs.Logic.Cpu.Instructions;
 
-public class AddInAbsoluteYModeOpcode6D : IInstruction
+public class AddInAbsoluteXModeOpcode7D : IInstruction
 {
     public void Execute(Cpu6502 cpu)
     {
@@ -11,10 +11,10 @@ public class AddInAbsoluteYModeOpcode6D : IInstruction
         var high = cpu.ReadByteFromProgram();
 
         cpu.ReadyForNextInstruction();
-        var address = high << 8 | low + cpu.ReadByteFromRegisterY() & 0xff;
+        var address = high << 8 | low + cpu.ReadByteFromRegisterX() & 0xff;
         var value = cpu.ReadByteFromMemory(address);
 
-        var address2 = (high << 8 | low) + cpu.ReadByteFromRegisterY() & 0xffff;
+        var address2 = (high << 8 | low) + cpu.ReadByteFromRegisterX() & 0xffff;
         if (address != address2)
         {
             value = cpu.ReadByteFromMemory(address2);
