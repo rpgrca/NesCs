@@ -110,6 +110,7 @@ public class MathInstructionsInCpuMust
     [ProcessorFileTestData("e3")]
     [ProcessorFileTestData("e7")]
     [ProcessorFileTestData("ef")]
+    [ProcessorFileTestData("f3")]
     public void Execute10000IllegalMathTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
     {
         var trace = new List<(int, byte, string)>();
@@ -119,5 +120,4 @@ public class MathInstructionsInCpuMust
         Utilities.Equal(sampleCpu.Final, sut);
         Utilities.Equal(sampleCpu.Cycles, trace);
     }
-
 }
