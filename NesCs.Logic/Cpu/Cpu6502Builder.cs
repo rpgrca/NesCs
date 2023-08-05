@@ -204,7 +204,7 @@ public partial class Cpu6502
             _instructions[0xAC] = new LdyInAbsoluteModeOpcodeAC();
             _instructions[0xAD] = new LdaInAbsoluteModeOpcodeAD();
             _instructions[0xAE] = new LdxInAbsoluteModeOpcodeAE();
-            //_instructions[0xAF] = new IllegalLaxAbsoluteOpcodeAF();
+            _instructions[0xAF] = new IllegalLaxAbsoluteOpcodeAF();
             _instructions[0xB0] = new BranchIfCarrySetOpcodeB0();
             _instructions[0xB1] = new LdaInIndirectYModeOpcodeB1();
             //_instructions[0xB2] R
