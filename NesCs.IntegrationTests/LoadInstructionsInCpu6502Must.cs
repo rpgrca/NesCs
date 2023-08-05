@@ -8,6 +8,7 @@ public class LoadInstructionsInCpu6502Must
     [ProcessorFileTestData("a0")]
     [ProcessorFileTestData("a1")]
     [ProcessorFileTestData("a2")]
+    [ProcessorFileTestData("a3")]
     [ProcessorFileTestData("a4")]
     [ProcessorFileTestData("a5")]
     [ProcessorFileTestData("a6")]
@@ -26,8 +27,8 @@ public class LoadInstructionsInCpu6502Must
     public void Execute10000LoadTestsPerOpcodeCorrectly1(SampleCpu sampleCpu)
     {
         var trace = new List<(int, byte, string)>();
-		var sut = Utilities.CreateSubjectUnderTestFromSample(sampleCpu.Opcodes, sampleCpu.Initial, trace);
-        sut.Run();
+		var sut = Utilities.CreateSubjectUnderTestFromSample(sampleCpu.Initial, trace);
+        sut.Step();
 
         Utilities.Equal(sampleCpu.Final, sut);
         Utilities.Equal(sampleCpu.Cycles, trace);

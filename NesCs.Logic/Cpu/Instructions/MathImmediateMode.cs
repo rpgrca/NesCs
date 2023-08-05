@@ -13,7 +13,7 @@ public abstract class MathImmediateMode : IInstruction
         var (sum, value) = ExecuteOperation(cpu, a, v);
         var result = (byte)(sum & 0xff);
 
-        cpu.SetValueIntoAccumulator(result);
+        cpu.SetValueToAccumulator(result);
         cpu.ClearCarryFlag();
         cpu.ClearNegativeFlag();
         cpu.ClearOverflowFlag();

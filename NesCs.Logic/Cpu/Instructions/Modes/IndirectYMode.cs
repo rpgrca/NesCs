@@ -31,5 +31,5 @@ public class IndirectYMode : IInstruction
     protected virtual byte ExecuteOperation(Cpu6502 cpu, byte value) => value;
 
     protected virtual void StoreValueInFinalDestination(Cpu6502 cpu, byte value) =>
-        cpu.SetValueIntoAccumulator(value);
+        cpu.SetValueToAccumulator(value);
 }

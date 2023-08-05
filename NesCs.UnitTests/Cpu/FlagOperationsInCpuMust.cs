@@ -15,8 +15,8 @@ public class FlagOperationsInCpuMust
     public void BeExecutedCorrectly(SampleCpu sampleCpu)
     {
         var trace = new List<(int, byte, string)>();
-        var sut = Utilities.CreateSubjectUnderTestFromSample(sampleCpu.Opcodes, sampleCpu.Initial, trace);
-        sut.Run();
+        var sut = Utilities.CreateSubjectUnderTestFromSample(sampleCpu.Initial, trace);
+        sut.Step();
 
         Utilities.Equal(sampleCpu.Final, sut);
         Utilities.Equal(sampleCpu.Cycles, trace);

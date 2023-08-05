@@ -1,20 +1,18 @@
-using System.IO;
-using System.Collections.Generic;
 using System.Text.Json;
 using NesCs.Common.Tests;
 using NesCs.Common.Tests.Converters;
+using NesCs.Logic.Cpu;
 
 namespace NesCs.Common.TestCaseFilter;
 
 public class ProcessorFileFilter
 {
-    private const string ProcessorTestFilesDirectory = "../../ProcessorTests/nes6502/v1/";
     private readonly string _filename;
 
     public ProcessorFileFilter(string filename) =>
         _filename = filename;
 
-    public Dictionary<int, string> FilterUniqueCases()
+    public Dictionary<ProcessorStatus, string> FilterUniqueCases()
     {
         var path = Path.IsPathRooted(_filename)
             ? _filename
@@ -33,7 +31,7 @@ public class ProcessorFileFilter
             }
         };
 
-        var dictionary = new Dictionary<int, string>();
+        var dictionary = new Dictionary<ProcessorStatus, string>();
         foreach (var text in jsonText)
         {
             if (text.Length < 2)

@@ -4,23 +4,35 @@ namespace NesCs.Logic.Cpu;
 
 public partial class Cpu6502
 {
+    private const int StackMemoryBase = 0x0100;
     private ProcessorStatus P { get; set; }
     private byte A { get; set; }
     private int PC { get; set; }
     private byte X { get; set; }
     private byte Y { get; set; }
     private byte S { get; set; }
-    private readonly byte[] _program;
-    private int _start;
-    private int _end;
-    private byte[] _ram;
-    private int _ip;
-    private readonly List<(int, byte, string)> _trace;
-    private IInstruction[] _instructions;
+    private int _cycles;
+    private int _counter;
+    private readonly int _start;
+    private readonly int _end;
+    private readonly byte[] _ram;
+    private readonly IInstruction[] _instructions;
+    private readonly ITracer _tracer;
 
-    private Cpu6502(byte[] program, int start, int end, int pc, byte a, byte x, byte y, byte s, ProcessorStatus p, byte[] ram, IInstruction[] instructions, List<(int, byte, string)> trace)
+    private Cpu6502(byte[] program, int programSize, int ramSize, int[] memoryOffsets, int start, int end, int pc, byte a, byte x, byte y, byte s, ProcessorStatus p, int cycles, (int Address, byte Value)[] ramPatches, IInstruction[] instructions, ITracer tracer)
     {
-        _program = program;
+        _ram = new byte[ramSize];
+
+        foreach (var memoryOffset in memoryOffsets)
+        {
+            Array.Copy(program, 0, _ram, memoryOffset, programSize);
+        }
+
+        foreach (var (address, value) in ramPatches)
+        {
+            _ram[address] = value;
+        }
+
         _start = start;
         _end = end;
         PC = pc;
@@ -29,10 +41,10 @@ public partial class Cpu6502
         Y = y;
         S = s;
         P = p;
-        _ram = ram;
+        _cycles = cycles;
+        _counter = 0;
         _instructions = instructions;
-        _trace = trace;
-        _ip = 0;
+        _tracer = tracer;
     }
 
 /*
@@ -56,13 +68,30 @@ public partial class Cpu6502
         }
     }*/
 
+    public void Step()
+    {
+        var opcode = ReadByteFromProgram();
+
+        _tracer.Display(opcode, PC, A, X, Y, P, S, _cycles);
+        _instructions[opcode].Execute(this);
+    }
+
     public void Run()
     {
-        _ip = _start;
-        while (_ip < _end)
+        try
         {
-            var opcode = ReadByteFromProgram();
-            _instructions[opcode].Execute(this);
+            _counter = _start;
+            while (true)
+            {
+                Step();
+            }
+        }
+        catch (Exception ex)
+        {
+            var error = $"{ex.Message} (on cycle {_counter})";
+            Console.WriteLine(error);
+            System.Diagnostics.Debug.Print(error);
+            throw;
         }
     }
 
@@ -76,51 +105,93 @@ public partial class Cpu6502
 
     internal byte ReadByteFromAccumulator() => A;
 
-    internal ProcessorStatus ReadCarryFlag() => P & ProcessorStatus.C;
+    internal bool IsReadCarryFlagSet() => P.HasFlag(ProcessorStatus.C);
 
-    internal ProcessorStatus ReadOverflowFlag() => P & ProcessorStatus.V;
+    internal bool IsReadZeroFlagSet() => P.HasFlag(ProcessorStatus.Z);
 
-    internal void ReadyForNextInstruction() => PC = (PC + 1) & 0xffff;
+    internal bool IsNegativeFlagSet() => P.HasFlag(ProcessorStatus.N);
+
+    internal bool IsOverflowFlagSet() => P.HasFlag(ProcessorStatus.V);
+
+    internal void ReadyForNextInstruction()
+    {
+        PC = (PC + 1) & 0xffff;
+        _cycles++;
+    }
 
     internal byte ReadByteFromProgram()
     {
-        var value = _program[_ip++];
-        Trace(PC, value, "read");
+        var value = _ram[PC - _start];
+        _tracer.Read(PC, value);
         return value;
     }
 
     internal byte ReadByteFromMemory(int address)
     {
         var value = _ram[address];
-        Trace(address, value, "read");
+        _tracer.Read(address, value);
         return value;
     }
 
-    internal void SetValueIntoAccumulator(byte value) => A = value;
+    internal void WriteByteToMemory(int address, byte value)
+    {
+        if (address == 0x02 || address == 0x03)
+        {
+            System.Diagnostics.Debugger.Break();
+        }
 
-    internal void SetValueIntoRegisterX(byte value) => X = value;
+        _ram[address] = value;
+        _tracer.Write(address, value);
+    }
 
-    internal void SetValueIntoRegisterY(byte value) => Y = value;
+    // TODO: Deberia aumentar el puntero automaticamente
+    internal byte ReadByteFromStackMemory()
+    {
+        var address = StackMemoryBase + S;
+        var value = _ram[address];
+        _tracer.Read(address, value);
+        return value;
+    }
 
-    internal void SetValueIntoStackPointer(byte value) => S = value;
+    internal void WriteByteToStackMemory(byte value)
+    {
+        var address = StackMemoryBase + S;
+        _ram[address] = value;
+        _tracer.Write(address, value);
+        S -= 1;
+    }
+
+    internal void SetValueToAccumulator(byte value) => A = value;
+
+    internal void SetValueToRegisterX(byte value) => X = value;
+
+    internal void SetValueToRegisterY(byte value) => Y = value;
+
+    internal void SetValueToStackPointer(byte value) => S = value;
+
+    internal void SetValueToProgramCounter(int value) => PC = value;
+
+    internal ProcessorStatus GetFlags() => P;
+
+    internal void OverwriteFlags(ProcessorStatus flags) => P = flags;
 
     internal void SetZeroFlagBasedOn(byte value)
     {
         if (value == 0)
         {
-            P |= ProcessorStatus.Z;
+            SetZeroFlag();
         }
         else
         {
-            P &= ~ProcessorStatus.Z;
+            ClearZeroFlag();
         }
     }
 
     internal void SetNegativeFlagBasedOn(byte value)
     {
-        if (((ProcessorStatus)value & ProcessorStatus.N) == ProcessorStatus.N)
+        if (((ProcessorStatus)value).HasFlag(ProcessorStatus.N))
         {
-            P |= ProcessorStatus.N;
+            SetNegativeFlag();
         }
         else
         {
@@ -130,13 +201,13 @@ public partial class Cpu6502
 
     internal void SetOverflowFlagBasedOn(byte value)
     {
-        if (((ProcessorStatus)value & ProcessorStatus.V) == ProcessorStatus.V)
+        if (((ProcessorStatus)value).HasFlag(ProcessorStatus.V))
         {
-            P |= ProcessorStatus.V;
+            SetOverflowFlag();
         }
         else
         {
-            P &= ~ProcessorStatus.V;
+            ClearOverflowFlag();
         }
     }
 
@@ -163,8 +234,6 @@ public partial class Cpu6502
     internal void ClearOverflowFlag() => P &= ~ProcessorStatus.V;
 
     internal void ClearZeroFlag() => P &= ~ProcessorStatus.Z;
-
-    private void Trace(int pc, byte value, string type) => _trace.Add((pc, value, type));
 
     public byte PeekMemory(int address) => _ram[address];
 

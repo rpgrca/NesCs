@@ -6,5 +6,5 @@ public class TransferAccumulatorToYOpcodeA8 : TransferInstruction
         cpu.ReadByteFromAccumulator();
 
     protected override void StoreValueInFinalDestination(Cpu6502 cpu, byte value) =>
-        cpu.SetValueIntoRegisterY(value);
+        cpu.SetValueToRegisterY(value);
 }

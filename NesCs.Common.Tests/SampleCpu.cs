@@ -1,13 +1,14 @@
+using System.Diagnostics;
 using System.Text.Json.Serialization;
 using NesCs.Common.Tests.Converters;
 
 namespace NesCs.Common.Tests;
 
+[DebuggerDisplay("{Name}")]
 [JsonConverter(typeof(SampleCpuConverter))]
 public readonly struct SampleCpu
 {
     public string Name { get; init; }
-    public byte[] Opcodes { get; init; }
     public SampleStatus Initial { get; init; }
     public SampleStatus Final { get; init; }
     [JsonConverter(typeof(SampleCycleArrayConverter))]

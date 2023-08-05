@@ -39,7 +39,7 @@ public class SampleCpuConverter : JsonConverter<SampleCpu>
             }
         }
 
-        return new SampleCpu { Name = name, Opcodes = Convert.FromHexString(name.Replace(" ", string.Empty)), Initial = initial, Final = final, Cycles = cycles };
+        return new SampleCpu { Name = name, Initial = initial, Final = final, Cycles = cycles };
     }
 
     public override void Write(Utf8JsonWriter writer, SampleCpu value, JsonSerializerOptions options) =>

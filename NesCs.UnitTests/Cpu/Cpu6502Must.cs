@@ -19,7 +19,7 @@ public class Cpu6502Must
             .StartingAt(nesFile.Mapper.StartAddress)
             .EndingAt(nesFile.Mapper.EndAddress)
             .Build();
-        sut.Run();
+        sut.Step();
     }
 
     private static INesFile CreateNesFile(string romName) =>
