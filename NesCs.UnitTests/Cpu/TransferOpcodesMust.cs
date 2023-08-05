@@ -137,6 +137,7 @@ public class TransferOpcodesMust
     [MemberData(nameof(OpcodeA7JsonFeeder))]
     [MemberData(nameof(OpcodeAFJsonFeeder))]
     [MemberData(nameof(OpcodeB3JsonFeeder))]
+    [MemberData(nameof(OpcodeB7JsonFeeder))]
 	public void BeExecutedCorrectly_WhenTheyAreIllegalInstructions(SampleCpu sampleCpu)
     {
         var trace = new List<(int, byte, string)>();
@@ -169,5 +170,13 @@ public class TransferOpcodesMust
         /*   2 Z  */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "b3 04 1e", "initial": { "pc": 1734, "s": 175, "a": 224, "x": 7, "y": 248, "p": 171, "ram": [ [1734, 179], [1735, 4], [1736, 30], [4, 130], [5, 134], [34426, 141], [34682, 234]]}, "final": { "pc": 1736, "s": 175, "a": 234, "x": 234, "y": 248, "p": 169, "ram": [ [4, 130], [5, 134], [1734, 179], [1735, 4], [1736, 30], [34426, 141], [34682, 234]]}, "cycles": [ [1734, 179, "read"], [1735, 4, "read"], [4, 130, "read"], [5, 134, "read"], [34426, 141, "read"], [34682, 234, "read"]] }""") };
         /* 128 N  */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "b3 56 9e", "initial": { "pc": 20051, "s": 71, "a": 201, "x": 18, "y": 109, "p": 165, "ram": [ [20051, 179], [20052, 86], [20053, 158], [86, 185], [87, 63], [16166, 214], [16422, 93]]}, "final": { "pc": 20053, "s": 71, "a": 93, "x": 93, "y": 109, "p": 37, "ram": [ [86, 185], [87, 63], [16166, 214], [16422, 93], [20051, 179], [20052, 86], [20053, 158]]}, "cycles": [ [20051, 179, "read"], [20052, 86, "read"], [86, 185, "read"], [87, 63, "read"], [16166, 214, "read"], [16422, 93, "read"]] }""") };
         /* 130 NZ */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "b3 79 29", "initial": { "pc": 8883, "s": 11, "a": 234, "x": 255, "y": 113, "p": 227, "ram": [ [8883, 179], [8884, 121], [8885, 41], [121, 44], [122, 42], [10909, 127]]}, "final": { "pc": 8885, "s": 11, "a": 127, "x": 127, "y": 113, "p": 97, "ram": [ [121, 44], [122, 42], [8883, 179], [8884, 121], [8885, 41], [10909, 127]]}, "cycles": [ [8883, 179, "read"], [8884, 121, "read"], [121, 44, "read"], [122, 42, "read"], [10909, 127, "read"]] }""") };
+    }
+
+    public static IEnumerable<object[]> OpcodeB7JsonFeeder()
+    {
+        /*   0    */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "b7 0c cb", "initial": { "pc": 51556, "s": 58, "a": 209, "x": 51, "y": 61, "p": 96, "ram": [ [51556, 183], [51557, 12], [51558, 203], [12, 214], [73, 19]]}, "final": { "pc": 51558, "s": 58, "a": 19, "x": 19, "y": 61, "p": 96, "ram": [ [12, 214], [73, 19], [51556, 183], [51557, 12], [51558, 203]]}, "cycles": [ [51556, 183, "read"], [51557, 12, "read"], [12, 214, "read"], [73, 19, "read"]] }""") };
+        /*   2 Z  */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "b7 05 3e", "initial": { "pc": 23383, "s": 120, "a": 39, "x": 137, "y": 78, "p": 174, "ram": [ [23383, 183], [23384, 5], [23385, 62], [5, 46], [83, 202]]}, "final": { "pc": 23385, "s": 120, "a": 202, "x": 202, "y": 78, "p": 172, "ram": [ [5, 46], [83, 202], [23383, 183], [23384, 5], [23385, 62]]}, "cycles": [ [23383, 183, "read"], [23384, 5, "read"], [5, 46, "read"], [83, 202, "read"]] }""") };
+        /* 128 N  */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "b7 62 a2", "initial": { "pc": 5926, "s": 186, "a": 105, "x": 182, "y": 184, "p": 173, "ram": [ [5926, 183], [5927, 98], [5928, 162], [98, 106], [26, 11]]}, "final": { "pc": 5928, "s": 186, "a": 11, "x": 11, "y": 184, "p": 45, "ram": [ [26, 11], [98, 106], [5926, 183], [5927, 98], [5928, 162]]}, "cycles": [ [5926, 183, "read"], [5927, 98, "read"], [98, 106, "read"], [26, 11, "read"]] }""") };
+        /* 130 NZ */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "b7 12 7d", "initial": { "pc": 46457, "s": 98, "a": 86, "x": 75, "y": 203, "p": 103, "ram": [ [46457, 183], [46458, 18], [46459, 125], [18, 144], [221, 143]]}, "final": { "pc": 46459, "s": 98, "a": 143, "x": 143, "y": 203, "p": 229, "ram": [ [18, 144], [221, 143], [46457, 183], [46458, 18], [46459, 125]]}, "cycles": [ [46457, 183, "read"], [46458, 18, "read"], [18, 144, "read"], [221, 143, "read"]] }""") };
     }
 }
