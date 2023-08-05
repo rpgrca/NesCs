@@ -166,7 +166,7 @@ public partial class Cpu6502
             _instructions[0x86] = new StoreRegisterXZeroPageOpcode86();
             _instructions[0x87] = new IllegalSaxAbsoluteYOpcode87();
             _instructions[0x88] = new DecrementYOpcode88();
-            //_instructions[0x89] = new IllegalReadSkipOpcode89();
+            _instructions[0x89] = new IllegalReadSkipOpcode89();
             _instructions[0x8A] = new TransferXToAccumulatorOpcode8A();
             //_instructions[0x8B] R
             _instructions[0x8C] = new StoreRegisterYAbsoluteOpcode8C();

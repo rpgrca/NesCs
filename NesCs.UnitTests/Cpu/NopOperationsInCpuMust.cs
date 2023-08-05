@@ -22,6 +22,7 @@ public class NopOperationsInCpuMust
     [MemberData(nameof(Opcode7AJsonFeeder))]
     [MemberData(nameof(Opcode7CJsonFeeder))]
     [MemberData(nameof(Opcode80JsonFeeder))]
+    [MemberData(nameof(Opcode89JsonFeeder))]
     [MemberData(nameof(OpcodeD4JsonFeeder))]
     [MemberData(nameof(OpcodeDAJsonFeeder))]
     [MemberData(nameof(OpcodeDCJsonFeeder))]
@@ -123,6 +124,11 @@ public class NopOperationsInCpuMust
     public static IEnumerable<object[]> Opcode80JsonFeeder()
     {
         /*   0  */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "80 b1 b7", "initial": { "pc": 30423, "s": 145, "a": 16, "x": 184, "y": 201, "p": 39, "ram": [ [30423, 128], [30424, 177], [30425, 183]]}, "final": { "pc": 30425, "s": 145, "a": 16, "x": 184, "y": 201, "p": 39, "ram": [ [30423, 128], [30424, 177], [30425, 183]]}, "cycles": [ [30423, 128, "read"], [30424, 177, "read"]] }""") };
+    }
+
+    public static IEnumerable<object[]> Opcode89JsonFeeder()
+    {
+        /*   0  */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "89 42 67", "initial": { "pc": 35522, "s": 205, "a": 194, "x": 193, "y": 7, "p": 225, "ram": [ [35522, 137], [35523, 66], [35524, 103]]}, "final": { "pc": 35524, "s": 205, "a": 194, "x": 193, "y": 7, "p": 225, "ram": [ [35522, 137], [35523, 66], [35524, 103]]}, "cycles": [ [35522, 137, "read"], [35523, 66, "read"]] }""") };
     }
 
     public static IEnumerable<object[]> OpcodeD4JsonFeeder()
