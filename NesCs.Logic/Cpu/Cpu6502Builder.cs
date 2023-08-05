@@ -264,7 +264,7 @@ public partial class Cpu6502
             _instructions[0xE8] = new IncrementXOpcodeE8();
             _instructions[0xE9] = new SubtractInImmediateModeOpcodeE9();
             _instructions[0xEA] = new NopOpcodeEA();
-            //_instructions[0xEB] = new IllegalSubtractOpcodeEB();
+            _instructions[0xEB] = new IllegalSubtractOpcodeEB();
             _instructions[0xEC] = new CompareXAbsoluteModeOpcodeEC();
             _instructions[0xED] = new SubtractInAbsoluteModeOpcodeED();
             _instructions[0xEE] = new IncrementMemoryAbsoluteOpcodeEE();
