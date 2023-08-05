@@ -208,7 +208,7 @@ public partial class Cpu6502
             _instructions[0xB0] = new BranchIfCarrySetOpcodeB0();
             _instructions[0xB1] = new LdaInIndirectYModeOpcodeB1();
             //_instructions[0xB2] R
-            //_instructions[0xB3] = new IllegalLaxIndirectYOpcodeB3();
+            _instructions[0xB3] = new IllegalLaxIndirectYOpcodeB3();
             _instructions[0xB4] = new LdyInZeroPageXModeOpcodeB4();
             _instructions[0xB5] = new LdaInZeroPageXModeOpcodeB5();
             _instructions[0xB6] = new LdxInZeroPageYModeOpcodeB6();

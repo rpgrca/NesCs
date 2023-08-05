@@ -36,6 +36,7 @@ public class TransferInstructionsInCpu6502Must
 
     [ProcessorFileTestData("a7")]
     [ProcessorFileTestData("af")]
+    [ProcessorFileTestData("b3")]
     public void Execute10000IllegalTransferTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
     {
         var trace = new List<(int, byte, string)>();
