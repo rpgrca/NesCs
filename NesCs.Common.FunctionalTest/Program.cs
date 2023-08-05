@@ -6,10 +6,11 @@
         var bin = File.ReadAllBytes("../../as65/6502_functional_test.bin");
         var cpu = new NesCs.Logic.Cpu.Cpu6502.Builder()
             .Running(bin)
-            .ImageStartsAt(0x0a)
+            .ProgramMappedAt(0x0a)
             .WithSizeOf(65526)
             .WithProcessorStatusAs(NesCs.Logic.Cpu.ProcessorStatus.X)
             .WithProgramCounterAs(0x400)
+            .TracingWith(new Vm6502DebuggerDisplay())
             .Build();
 
         cpu.Run();

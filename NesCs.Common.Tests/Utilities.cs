@@ -7,7 +7,7 @@ public static class Utilities
 {
     public static Cpu6502 CreateSubjectUnderTestFromSample(SampleStatus initial, List<(int, byte, string)> trace) =>
         new Cpu6502.Builder()
-            .ImageStartsAt(initial.PC)
+            .ProgramMappedAt(initial.PC)
             .StartingAt(0)
             .EndingAt(1)
             .WithRamSizeOf(0x10000)

@@ -8,17 +8,19 @@ public partial class Cpu6502
     {
         private ProcessorStatus _p;
         private byte _a, _x, _y, _s;
-        private int _pc, _ramSize, _start, _end, _imageStart, _programSize, _cycles;
+        private int _pc, _ramSize, _start, _end, _programSize, _cycles;
         private byte[] _program;
+        private readonly List<int> _mappedProgramAddresses;
         private (int Address, byte Value)[] _patch;
         private readonly IInstruction[] _instructions;
         private ITracer _tracer;
 
         public Builder()
         {
+            _mappedProgramAddresses = new List<int>();
             _p = ProcessorStatus.None;
             _a = _x = _y = _s = 0;
-            _ramSize = _start = _end = _pc = _programSize = _imageStart = _cycles = 0;
+            _ramSize = _start = _end = _pc = _programSize = _cycles = 0;
             _program = Array.Empty<byte>();
             _patch = Array.Empty<(int, byte)>();
             _tracer = new DummyTracer();
@@ -299,9 +301,9 @@ public partial class Cpu6502
             return this;
         }
 
-        public Builder ImageStartsAt(int imageStart)
+        public Builder ProgramMappedAt(int imageStart)
         {
-            _imageStart = imageStart;
+            _mappedProgramAddresses.Add(imageStart);
             return this;
         }
 
@@ -384,7 +386,7 @@ public partial class Cpu6502
             if (_ramSize < 1) _ramSize = 0x10000;
             if (_end < 1) _end = int.MaxValue;
 
-            return new Cpu6502(_program, _programSize, _ramSize, _imageStart, _start, _end, _pc, _a, _x, _y, _s, _p, _cycles, _patch, _instructions, _tracer);
+            return new Cpu6502(_program, _programSize, _ramSize, _mappedProgramAddresses.ToArray(), _start, _end, _pc, _a, _x, _y, _s, _p, _cycles, _patch, _instructions, _tracer);
         }
     }
 }

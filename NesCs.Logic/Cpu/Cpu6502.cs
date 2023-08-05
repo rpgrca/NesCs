@@ -19,10 +19,14 @@ public partial class Cpu6502
     private readonly IInstruction[] _instructions;
     private readonly ITracer _tracer;
 
-    private Cpu6502(byte[] program, int programSize, int ramSize, int memoryOffset, int start, int end, int pc, byte a, byte x, byte y, byte s, ProcessorStatus p, int cycles, (int Address, byte Value)[] ramPatches, IInstruction[] instructions, ITracer tracer)
+    private Cpu6502(byte[] program, int programSize, int ramSize, int[] memoryOffsets, int start, int end, int pc, byte a, byte x, byte y, byte s, ProcessorStatus p, int cycles, (int Address, byte Value)[] ramPatches, IInstruction[] instructions, ITracer tracer)
     {
         _ram = new byte[ramSize];
-        Array.Copy(program, 0, _ram, memoryOffset, programSize);
+
+        foreach (var memoryOffset in memoryOffsets)
+        {
+            Array.Copy(program, 0, _ram, memoryOffset, programSize);
+        }
 
         foreach (var (address, value) in ramPatches)
         {
