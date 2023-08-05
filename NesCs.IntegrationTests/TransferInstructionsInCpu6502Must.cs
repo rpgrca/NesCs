@@ -34,12 +34,13 @@ public class TransferInstructionsInCpu6502Must
         Utilities.Equal(sampleCpu.Cycles, trace);
     }
 
+    [ProcessorFileTestData("83")]
+    [ProcessorFileTestData("87")]
     [ProcessorFileTestData("a7")]
     [ProcessorFileTestData("af")]
     [ProcessorFileTestData("b3")]
     [ProcessorFileTestData("b7")]
     [ProcessorFileTestData("bf")]
-    [ProcessorFileTestData("83")]
     public void Execute10000IllegalTransferTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
     {
         var trace = new List<(int, byte, string)>();
