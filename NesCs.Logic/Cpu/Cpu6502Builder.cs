@@ -124,7 +124,7 @@ public partial class Cpu6502
             _instructions[0x5C] = new IllegalReadIgnoreOpcode5C();
             _instructions[0x5D] = new XorInAbsoluteXModeOpcode5D();
             _instructions[0x5E] = new ShiftRightAbsoluteXOpcode5E();
-            //_instructions[0x5F] = new IllegalShiftRightXorOpcode5F();
+            _instructions[0x5F] = new IllegalShiftRightXorOpcode5F();
             _instructions[0x60] = new ReturnFromSubroutineOpcode60();
             _instructions[0x61] = new AddInIndirectXModeOpcode61();
             //_instructions[0x62] R
