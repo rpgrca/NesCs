@@ -111,6 +111,7 @@ public class MathInstructionsInCpuMust
     [ProcessorFileTestData("c7")]
     [ProcessorFileTestData("cf")]
     [ProcessorFileTestData("d3")]
+    [ProcessorFileTestData("d7")]
     [ProcessorFileTestData("e3")]
     [ProcessorFileTestData("e7")]
     [ProcessorFileTestData("ef")]
