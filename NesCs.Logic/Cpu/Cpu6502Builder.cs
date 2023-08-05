@@ -156,7 +156,7 @@ public partial class Cpu6502
             _instructions[0x7C] = new IllegalReadIgnoreOpcode7C();
             _instructions[0x7D] = new AddInAbsoluteXModeOpcode7D();
             _instructions[0x7E] = new RotateRightAbsoluteXOpcode7E();
-            //_instructions[0x7F] = new IllegalRotateRightAddOpcode7F();
+            _instructions[0x7F] = new IllegalRotateRightAddOpcode7F();
             _instructions[0x80] = new IllegalReadSkipOpcode80();
             _instructions[0x81] = new StoreAccumulatorIndirectXOpcode81();
             //_instructions[0x82] R
