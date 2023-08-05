@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\NesCs.Logic\NesCs.Logic.csproj" />
+    <ProjectReference Include="..\..\NesCs.Logic\NesCs.Logic.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

@@ -1,6 +1,6 @@
 ﻿if (args.Length < 1)
 {
-    Console.WriteLine($"Usage: program <filename>");
+    Console.WriteLine($"Usage: program path/to/nestest.nes");
     return 1;
 }
 
