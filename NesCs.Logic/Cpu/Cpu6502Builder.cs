@@ -232,7 +232,7 @@ public partial class Cpu6502
             _instructions[0xC8] = new IncrementYOpcodeC8();
             _instructions[0xC9] = new CompareImmediateModeOpcodeC9();
             _instructions[0xCA] = new DecrementXOpcodeCA();
-            //_instructions[0xCB] R
+            //_instructions[0xCB] R AXS / SBX
             _instructions[0xCC] = new CompareYAbsoluteModeOpcodeCC();
             _instructions[0xCD] = new CompareAbsoluteModeOpcodeCD();
             _instructions[0xCE] = new DecrementMemoryAbsoluteOpcodeCE();
@@ -255,7 +255,7 @@ public partial class Cpu6502
             //_instructions[0xDF] = new IllegalDecrementCompareOpcodeDF();
             _instructions[0xE0] = new CompareXImmediateModeOpcodeE0();
             _instructions[0xE1] = new SubtractInIndirectXModeOpcodeE1();
-            //_instructions[0xE2] R
+            _instructions[0xE2] = new IllegalReadSkipOpcodeE2();
             _instructions[0xE3] = new IllegalIncrementSubtractOpcodeE3();
             _instructions[0xE4] = new CompareXZeroPageModeOpcodeE4();
             _instructions[0xE5] = new SubtractInZeroPageModeOpcodeE5();
