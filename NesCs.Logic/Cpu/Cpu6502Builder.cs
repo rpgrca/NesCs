@@ -252,7 +252,7 @@ public partial class Cpu6502
             _instructions[0xDC] = new IllegalReadIgnoreOpcodeDC();
             _instructions[0xDD] = new CompareAbsoluteXModeOpcodeDD();
             _instructions[0xDE] = new DecrementMemoryAbsoluteXOpcodeDE();
-            //_instructions[0xDF] = new IllegalDecrementCompareOpcodeDF();
+            _instructions[0xDF] = new IllegalDecrementCompareOpcodeDF();
             _instructions[0xE0] = new CompareXImmediateModeOpcodeE0();
             _instructions[0xE1] = new SubtractInIndirectXModeOpcodeE1();
             _instructions[0xE2] = new IllegalReadSkipOpcodeE2();
