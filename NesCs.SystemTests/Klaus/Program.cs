@@ -3,7 +3,7 @@
     public static void Main(string[] args)
     {
         //var bin = File.ReadAllBytes("../../6502_65C02_functional_tests/bin_files/6502_functional_test.bin");
-        var bin = File.ReadAllBytes("../../as65/6502_functional_test.bin");
+        var bin = File.ReadAllBytes("../../../as65/6502_functional_test.bin");
         var cpu = new NesCs.Logic.Cpu.Cpu6502.Builder()
             .Running(bin)
             .ProgramMappedAt(0x0a)
