@@ -22,7 +22,9 @@ public class NopOperationsInCpuMust
     [MemberData(nameof(Opcode7AJsonFeeder))]
     [MemberData(nameof(Opcode7CJsonFeeder))]
     [MemberData(nameof(Opcode80JsonFeeder))]
+    [MemberData(nameof(Opcode82JsonFeeder))]
     [MemberData(nameof(Opcode89JsonFeeder))]
+    [MemberData(nameof(OpcodeC2JsonFeeder))]
     [MemberData(nameof(OpcodeD4JsonFeeder))]
     [MemberData(nameof(OpcodeDAJsonFeeder))]
     [MemberData(nameof(OpcodeDCJsonFeeder))]
@@ -126,9 +128,19 @@ public class NopOperationsInCpuMust
         /*   0  */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "80 b1 b7", "initial": { "pc": 30423, "s": 145, "a": 16, "x": 184, "y": 201, "p": 39, "ram": [ [30423, 128], [30424, 177], [30425, 183]]}, "final": { "pc": 30425, "s": 145, "a": 16, "x": 184, "y": 201, "p": 39, "ram": [ [30423, 128], [30424, 177], [30425, 183]]}, "cycles": [ [30423, 128, "read"], [30424, 177, "read"]] }""") };
     }
 
+    public static IEnumerable<object[]> Opcode82JsonFeeder()
+    {
+        /*   0  */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "82 8c e5", "initial": { "pc": 38475, "s": 168, "a": 182, "x": 193, "y": 42, "p": 165, "ram": [ [38475, 130], [38476, 140], [38477, 229]]}, "final": { "pc": 38477, "s": 168, "a": 182, "x": 193, "y": 42, "p": 165, "ram": [ [38475, 130], [38476, 140], [38477, 229]]}, "cycles": [ [38475, 130, "read"], [38476, 140, "read"]] }""") };
+    }
+
     public static IEnumerable<object[]> Opcode89JsonFeeder()
     {
         /*   0  */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "89 42 67", "initial": { "pc": 35522, "s": 205, "a": 194, "x": 193, "y": 7, "p": 225, "ram": [ [35522, 137], [35523, 66], [35524, 103]]}, "final": { "pc": 35524, "s": 205, "a": 194, "x": 193, "y": 7, "p": 225, "ram": [ [35522, 137], [35523, 66], [35524, 103]]}, "cycles": [ [35522, 137, "read"], [35523, 66, "read"]] }""") };
+    }
+
+    public static IEnumerable<object[]> OpcodeC2JsonFeeder()
+    {
+        /*   0  */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "c2 4f 20", "initial": { "pc": 20017, "s": 232, "a": 167, "x": 191, "y": 228, "p": 98, "ram": [ [20017, 194], [20018, 79], [20019, 32]]}, "final": { "pc": 20019, "s": 232, "a": 167, "x": 191, "y": 228, "p": 98, "ram": [ [20017, 194], [20018, 79], [20019, 32]]}, "cycles": [ [20017, 194, "read"], [20018, 79, "read"]] }""") };
     }
 
     public static IEnumerable<object[]> OpcodeD4JsonFeeder()
