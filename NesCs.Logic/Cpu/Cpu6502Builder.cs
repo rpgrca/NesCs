@@ -116,7 +116,7 @@ public partial class Cpu6502
             _instructions[0x54] = new IllegalReadIgnoreOpcode54();
             _instructions[0x55] = new XorInZeroPageXModeOpcode55();
             _instructions[0x56] = new ShiftRightZeroPageXOpcode56();
-            //_instructions[0x57] = new IllegalShiftRightXorOpcode53();
+            _instructions[0x57] = new IllegalShiftRightXorOpcode57();
             _instructions[0x58] = new ClearInterruptDisableOpcode58();
             _instructions[0x59] = new XorInAbsoluteYModeOpcode59();
             _instructions[0x5A] = new IllegalNopOpcode5A();
