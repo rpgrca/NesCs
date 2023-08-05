@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NesCs.Common.FunctionalTest", "NesCs.Common.FunctionalTest\NesCs.Common.FunctionalTest.csproj", "{5E012A6E-9D84-45A2-B430-8888B19F5E8F}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NesCs.Common.TestCaseFilter", "NesCs.Common.TestCaseFilter\NesCs.Common.TestCaseFilter.csproj", "{828B4E1F-F1D4-487B-9BAA-ACC5D8CFE5B0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NesCs.Common.Tests", "NesCs.Common.Tests\NesCs.Common.Tests.csproj", "{21491BBF-E00D-4E4F-9572-58FADE5DC04F}"
@@ -26,10 +24,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5E012A6E-9D84-45A2-B430-8888B19F5E8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5E012A6E-9D84-45A2-B430-8888B19F5E8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5E012A6E-9D84-45A2-B430-8888B19F5E8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5E012A6E-9D84-45A2-B430-8888B19F5E8F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{828B4E1F-F1D4-487B-9BAA-ACC5D8CFE5B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{828B4E1F-F1D4-487B-9BAA-ACC5D8CFE5B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{828B4E1F-F1D4-487B-9BAA-ACC5D8CFE5B0}.Release|Any CPU.ActiveCfg = Release|Any CPU

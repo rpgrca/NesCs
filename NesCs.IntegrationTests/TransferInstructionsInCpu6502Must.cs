@@ -28,7 +28,7 @@ public class TransferInstructionsInCpu6502Must
     {
         var trace = new List<(int, byte, string)>();
 		var sut = Utilities.CreateSubjectUnderTestFromSample(sampleCpu.Initial, trace);
-        sut.Run();
+        sut.Step();
 
         Utilities.Equal(sampleCpu.Final, sut);
         Utilities.Equal(sampleCpu.Cycles, trace);
@@ -48,7 +48,7 @@ public class TransferInstructionsInCpu6502Must
     {
         var trace = new List<(int, byte, string)>();
 		var sut = Utilities.CreateSubjectUnderTestFromSample(sampleCpu.Initial, trace);
-        sut.Run();
+        sut.Step();
 
         Utilities.Equal(sampleCpu.Final, sut);
         Utilities.Equal(sampleCpu.Cycles, trace);

@@ -68,21 +68,22 @@ public partial class Cpu6502
         }
     }*/
 
+    public void Step()
+    {
+        var opcode = ReadByteFromProgram();
+
+        _tracer.Display(opcode, PC, A, X, Y, P, S, _cycles);
+        _instructions[opcode].Execute(this);
+    }
+
     public void Run()
     {
         try
         {
             _counter = _start;
-            while (_counter++ < _end || _start == _end)
+            while (true)
             {
-                if (_cycles == 11430)
-                {
-                    System.Diagnostics.Debugger.Break();
-                }
-                var opcode = ReadByteFromProgram();
-
-                _tracer.Display(opcode, PC, A, X, Y, P, S, _cycles);
-                _instructions[opcode].Execute(this);
+                Step();
             }
         }
         catch (Exception ex)
@@ -134,6 +135,11 @@ public partial class Cpu6502
 
     internal void WriteByteToMemory(int address, byte value)
     {
+        if (address == 0x02 || address == 0x03)
+        {
+            System.Diagnostics.Debugger.Break();
+        }
+
         _ram[address] = value;
         _tracer.Write(address, value);
     }
