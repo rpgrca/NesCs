@@ -134,6 +134,7 @@ public class TransferOpcodesMust
     }
 
     [Theory]
+    [MemberData(nameof(Opcode83JsonFeeder))]
     [MemberData(nameof(OpcodeA7JsonFeeder))]
     [MemberData(nameof(OpcodeAFJsonFeeder))]
     [MemberData(nameof(OpcodeB3JsonFeeder))]
@@ -147,6 +148,11 @@ public class TransferOpcodesMust
 
         Utilities.Equal(sampleCpu.Final, sut);
         Utilities.Equal(sampleCpu.Cycles, trace);
+    }
+
+    public static IEnumerable<object[]> Opcode83JsonFeeder()
+    {
+        /*   0  */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "83 3c 78", "initial": { "pc": 7137, "s": 120, "a": 49, "x": 211, "y": 159, "p": 104, "ram": [ [7137, 131], [7138, 60], [7139, 120], [60, 247], [15, 211], [16, 114]]}, "final": { "pc": 7139, "s": 120, "a": 49, "x": 211, "y": 159, "p": 104, "ram": [ [15, 211], [16, 114], [60, 247], [7137, 131], [7138, 60], [7139, 120], [29395, 17]]}, "cycles": [ [7137, 131, "read"], [7138, 60, "read"], [60, 247, "read"], [15, 211, "read"], [16, 114, "read"], [29395, 17, "write"]] }""") };
     }
 
     public static IEnumerable<object[]> OpcodeA7JsonFeeder()
