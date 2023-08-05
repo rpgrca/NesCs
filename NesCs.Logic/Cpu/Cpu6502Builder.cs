@@ -240,7 +240,7 @@ public partial class Cpu6502
             _instructions[0xD0] = new BranchIfNotEqualOpcodeD0();
             _instructions[0xD1] = new CompareIndirectYModeOpcodeD1();
             //_instructions[0xD2] R
-            //_instructions[0xD3] = new IllegalDecrementCompareOpcodeD3();
+            _instructions[0xD3] = new IllegalDecrementCompareOpcodeD3();
             _instructions[0xD4] = new IllegalReadIgnoreOpcodeD4();
             _instructions[0xD5] = new CompareZeroPageXModeOpcodeD5();
             _instructions[0xD6] = new DecrementMemoryZeroPageXOpcodeD6();
