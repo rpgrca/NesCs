@@ -196,7 +196,7 @@ public partial class Cpu6502
             _instructions[0xA4] = new LdyInZeroPageModeOpcodeA4();
             _instructions[0xA5] = new LdaInZeroPageModeOpcodeA5();
             _instructions[0xA6] = new LdxInZeroPageModeOpcodeA6();
-            //_instructions[0xA7] = new IllegalLaxIndirectOpcodeA7();
+            _instructions[0xA7] = new IllegalLaxIndirectOpcodeA7();
             _instructions[0xA8] = new TransferAccumulatorToYOpcodeA8();
             _instructions[0xA9] = new LdaInImmediateModeOpcodeA9();
             _instructions[0xAA] = new TransferAccumulatorToXOpcodeAA();

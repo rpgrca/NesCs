@@ -33,4 +33,15 @@ public class TransferInstructionsInCpu6502Must
         Utilities.Equal(sampleCpu.Final, sut);
         Utilities.Equal(sampleCpu.Cycles, trace);
     }
+
+    [ProcessorFileTestData("a7")]
+    public void Execute10000IllegalTransferTestsPerOpcodeCorrectly(SampleCpu sampleCpu)
+    {
+        var trace = new List<(int, byte, string)>();
+		var sut = Utilities.CreateSubjectUnderTestFromSample(sampleCpu.Initial, trace);
+        sut.Run();
+
+        Utilities.Equal(sampleCpu.Final, sut);
+        Utilities.Equal(sampleCpu.Cycles, trace);
+    }
 }
