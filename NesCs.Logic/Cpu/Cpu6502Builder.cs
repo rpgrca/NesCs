@@ -172,7 +172,7 @@ public partial class Cpu6502
             _instructions[0x8C] = new StoreRegisterYAbsoluteOpcode8C();
             _instructions[0x8D] = new StoreAccumulatorAbsoluteOpcode8D();
             _instructions[0x8E] = new StoreRegisterXAbsoluteOpcode8E();
-            //_instructions[0x8F] = new IllegalSaxAbsoluteOpcode8F();
+            _instructions[0x8F] = new IllegalSaxAbsoluteOpcode8F();
             _instructions[0x90] = new BranchIfCarryNotSetOpcode90();
             _instructions[0x91] = new StoreAccumulatorIndirectYOpcode91();
             //_instructions[0x92] R

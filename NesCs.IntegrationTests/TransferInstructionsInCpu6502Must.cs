@@ -36,6 +36,7 @@ public class TransferInstructionsInCpu6502Must
 
     [ProcessorFileTestData("83")]
     [ProcessorFileTestData("87")]
+    [ProcessorFileTestData("8f")]
     [ProcessorFileTestData("a7")]
     [ProcessorFileTestData("af")]
     [ProcessorFileTestData("b3")]
