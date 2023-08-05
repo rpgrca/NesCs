@@ -220,7 +220,7 @@ public partial class Cpu6502
             _instructions[0xBC] = new LdyInAbsoluteXModeOpcodeBC();
             _instructions[0xBD] = new LdaInAbsoluteXModeOpcodeBD();
             _instructions[0xBE] = new LdxInAbsoluteYModeOpcodeBE();
-            //_instructions[0xBF] = new IllegalLaxAbsoluteYOpcodeBF();
+            _instructions[0xBF] = new IllegalLaxAbsoluteYOpcodeBF();
             _instructions[0xC0] = new CompareYImmediateModeOpcodeC0();
             _instructions[0xC1] = new CompareIndirectXModeOpcodeC1();
             //_instructions[0xC2] R
