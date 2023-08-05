@@ -34,9 +34,11 @@ public class TransferInstructionsInCpu6502Must
         Utilities.Equal(sampleCpu.Cycles, trace);
     }
 
+    [Theory]
     [ProcessorFileTestData("83")]
     [ProcessorFileTestData("87")]
     [ProcessorFileTestData("8f")]
+    [ProcessorFileTestData("97")]
     [ProcessorFileTestData("a7")]
     [ProcessorFileTestData("af")]
     [ProcessorFileTestData("b3")]

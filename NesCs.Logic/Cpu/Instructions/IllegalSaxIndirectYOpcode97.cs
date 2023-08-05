@@ -1,19 +1,18 @@
 namespace NesCs.Logic.Cpu.Instructions;
 
-public class IllegalSaxAbsoluteOpcode8F : IInstruction
+public class IllegalSaxIndirectYOpcode97 : IInstruction
 {
     public void Execute(Cpu6502 cpu)
     {
         cpu.ReadyForNextInstruction();
-        var low = cpu.ReadByteFromProgram();
+        var address = cpu.ReadByteFromProgram();
+        _ = cpu.ReadByteFromMemory(address);
 
+        address = (byte)(address + cpu.ReadByteFromRegisterY());
         cpu.ReadyForNextInstruction();
-        var high = cpu.ReadByteFromProgram();
 
-        cpu.ReadyForNextInstruction();
-        var address = high << 8 | low;
-        
         var value = (byte)(cpu.ReadByteFromAccumulator() & cpu.ReadByteFromRegisterX());
         cpu.WriteByteToMemory(address, value);
     }
 }
+

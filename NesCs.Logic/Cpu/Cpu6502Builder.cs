@@ -180,7 +180,7 @@ public partial class Cpu6502
             _instructions[0x94] = new StoreRegisterYZeroPageXOpcode94();
             _instructions[0x95] = new StoreAccumulatorZeroPageXOpcode95();
             _instructions[0x96] = new StoreRegisterXZeroPageYOpcode96();
-            //_instructions[0x97] = new IllegalSaxIndirectYOpcode97();
+            _instructions[0x97] = new IllegalSaxIndirectYOpcode97();
             _instructions[0x98] = new TransferYToAccumulatorOpcode98();
             _instructions[0x99] = new StoreAccumulatorAbsoluteYOpcode99();
             _instructions[0x9A] = new TransferXToStackOpcode9A();
