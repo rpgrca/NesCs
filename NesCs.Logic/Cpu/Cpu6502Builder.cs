@@ -112,7 +112,7 @@ public partial class Cpu6502
             _instructions[0x50] = new BranchIfOverflowNotSetOpcode50();
             _instructions[0x51] = new XorInIndirectYModeOpcode51();
             //_instructions[0x52] R
-            //_instructions[0x53] = new IllegalShiftRightXorOpcode53();
+            _instructions[0x53] = new IllegalShiftRightXorOpcode53();
             _instructions[0x54] = new IllegalReadIgnoreOpcode54();
             _instructions[0x55] = new XorInZeroPageXModeOpcode55();
             _instructions[0x56] = new ShiftRightZeroPageXOpcode56();
