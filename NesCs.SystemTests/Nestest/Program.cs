@@ -14,13 +14,29 @@ Console.WriteLine(nesFile.ToString());
 
 var cpu = new NesCs.Logic.Cpu.Cpu6502.Builder()
     .Running(nesFile.ProgramRom)
+    .SupportingInvalidInstructions()
     .ProgramMappedAt(0x8000)
     .ProgramMappedAt(0xC000)
     .WithCyclesAs(7)
-    .WithProgramCounterAs(0xC004)
+    .WithProgramCounterAs(0xC000)
     .WithProcessorStatusAs(NesCs.Logic.Cpu.ProcessorStatus.X | NesCs.Logic.Cpu.ProcessorStatus.I)
     .WithStackPointerAt(0xFD)
-    .TracingWith(new Vm6502DebuggerDisplay())
+    .WithCallback(0xC66E, cpu => {
+        var h2 = cpu.ReadByteFromMemory(0x02);
+        var h3 = cpu.ReadByteFromMemory(0x03);
+
+        var (P, A, PC, X, Y, S) = cpu.TakeSnapshot();
+
+        if (A == 0 && X == 0xFF && Y == 0x15 && S == 0xFD && (byte)P == 0x27 && h2 == 0 && h3 == 0)
+        {
+            Console.WriteLine("\nReached end successfully");
+        }
+        else
+        {
+            Console.WriteLine($"\nFailed! $02: {h2}, $03: {h3}");
+        }
+        cpu.Stop();
+    })
     .Build();
 
 cpu.Run();
