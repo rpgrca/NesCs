@@ -6,18 +6,12 @@ public class IllegalShiftLeftOrOpcode17 : IInstruction
     {
         cpu.ReadyForNextInstruction();
         var address = cpu.ReadByteFromProgram();
-        var low = cpu.ReadByteFromMemory(address);
+        _ = cpu.ReadByteFromMemory(address);
 
-        address = (byte)(address + 1);
+        address = (byte)(address + cpu.ReadByteFromRegisterX());
         cpu.ReadyForNextInstruction();
-        var high = cpu.ReadByteFromMemory(address);
-
-        var effectiveAddress = high << 8 | ((low + cpu.ReadByteFromRegisterY()) & 0xff);
-        _ = cpu.ReadByteFromMemory(effectiveAddress);
-
-        effectiveAddress = ((high << 8 | low) + cpu.ReadByteFromRegisterY()) & 0xffff;
-        var value = cpu.ReadByteFromMemory(effectiveAddress);
-        cpu.WriteByteToMemory(effectiveAddress, value);
+        var value = cpu.ReadByteFromMemory(address);
+        cpu.WriteByteToMemory(address, value);
 
         var operand = value << 1;
         if ((operand >> 8) != 0)
@@ -30,7 +24,7 @@ public class IllegalShiftLeftOrOpcode17 : IInstruction
         }
 
         var result = (byte)(operand & 0xff);
-        cpu.WriteByteToMemory(effectiveAddress, result);
+        cpu.WriteByteToMemory(address, result);
 
         result = (byte)(cpu.ReadByteFromAccumulator() | operand);
         cpu.SetValueToAccumulator(result);
