@@ -1,6 +1,6 @@
 ## C64 Wolfgang Lorenz Test Suite
 
-This test suite was created by Wolfgang Lorenz to test the C64 6502/6510 instructions. As the NES cpu was a 6502 (without decimal support) some of these tests can be run correctly.
+This test suite was created by Wolfgang Lorenz to test the C64 6502/6510 instructions. The test suite itself is public domain. As the NES cpu was a 6502 (without decimal support) some of these tests can be run correctly.
 
 The source code for these tests can be found at Tom Seddon's repository [here](https://github.com/tom-seddon/lorenz-testsuite-beeb/tree/main/ascii-src).
 
