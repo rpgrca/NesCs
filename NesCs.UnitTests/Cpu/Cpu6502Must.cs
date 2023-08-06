@@ -16,8 +16,6 @@ public class Cpu6502Must
         var nesFile = CreateNesFile("1.Branch_Basics.nes");
         var sut = new Cpu6502.Builder()
             .Running(nesFile.ProgramRom)
-            .StartingAt(nesFile.Mapper.StartAddress)
-            .EndingAt(nesFile.Mapper.EndAddress)
             .Build();
         sut.Step();
     }

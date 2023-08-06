@@ -8,7 +8,7 @@ public partial class Cpu6502
     {
         private ProcessorStatus _p;
         private byte _a, _x, _y, _s;
-        private int _pc, _ramSize, _start, _end, _programSize, _cycles;
+        private int _pc, _ramSize, _programSize, _cycles, _vectorAddress;
         private byte[] _program;
         private readonly List<int> _mappedProgramAddresses;
         private (int Address, byte Value)[] _patch;
@@ -24,7 +24,7 @@ public partial class Cpu6502
             _callbacks = new Dictionary<int, Action<Cpu6502>>();
             _p = ProcessorStatus.None;
             _a = _x = _y = _s = 0;
-            _ramSize = _start = _end = _pc = _programSize = _cycles = 0;
+            _ramSize = _pc = _programSize = _cycles = _vectorAddress = 0;
             _program = Array.Empty<byte>();
             _patch = Array.Empty<(int, byte)>();
             _tracer = new DummyTracer();
@@ -218,15 +218,9 @@ public partial class Cpu6502
             return this;
         }
 
-        public Builder StartingAt(int start)
+        public Builder WithResetVectorAt(int vectorAddress)
         {
-            _start = start;
-            return this;
-        }
-
-        public Builder EndingAt(int end)
-        {
-            _end = end;
+            _vectorAddress = vectorAddress;
             return this;
         }
 
@@ -295,10 +289,9 @@ public partial class Cpu6502
             _patch ??= Array.Empty<(int, byte)>();
             if (_programSize < 1) _programSize = _program.Length;
             if (_ramSize < 1) _ramSize = 0x10000;
-            if (_end < 1) _end = int.MaxValue;
             if (_enableInvalid) AddInvalidOpcodes();
 
-            return new Cpu6502(_program, _programSize, _ramSize, _mappedProgramAddresses.ToArray(), _start, _end, _pc, _a, _x, _y, _s, _p, _cycles, _patch, _instructions, _tracer, _callbacks);
+            return new Cpu6502(_program, _programSize, _ramSize, _mappedProgramAddresses.ToArray(), _pc, _a, _x, _y, _s, _p, _cycles, _patch, _instructions, _tracer, _callbacks, _vectorAddress);
         }
 
         private void AddInvalidOpcodes()

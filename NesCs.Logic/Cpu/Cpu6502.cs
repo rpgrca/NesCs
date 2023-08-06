@@ -14,14 +14,13 @@ public partial class Cpu6502
     private int _cycles;
     private int _counter;
     private bool _stopped;
-    private readonly int _start;
-    private readonly int _end;
+    private readonly int _resetVectorAddress;
     private readonly byte[] _ram;
     private readonly IInstruction[] _instructions;
     private readonly ITracer _tracer;
     private readonly Dictionary<int, Action<Cpu6502>> _callbacks;
 
-    private Cpu6502(byte[] program, int programSize, int ramSize, int[] memoryOffsets, int start, int end, int pc, byte a, byte x, byte y, byte s, ProcessorStatus p, int cycles, (int Address, byte Value)[] ramPatches, IInstruction[] instructions, ITracer tracer, Dictionary<int, Action<Cpu6502>> callbacks)
+    private Cpu6502(byte[] program, int programSize, int ramSize, int[] memoryOffsets, int pc, byte a, byte x, byte y, byte s, ProcessorStatus p, int cycles, (int Address, byte Value)[] ramPatches, IInstruction[] instructions, ITracer tracer, Dictionary<int, Action<Cpu6502>> callbacks, int resetVectorAddress)
     {
         _callbacks = callbacks;
         _ram = new byte[ramSize];
@@ -36,8 +35,7 @@ public partial class Cpu6502
             _ram[address] = value;
         }
 
-        _start = start;
-        _end = end;
+        _resetVectorAddress = resetVectorAddress;
         PC = pc;
         A = a;
         X = x;
@@ -129,7 +127,7 @@ public partial class Cpu6502
 
     internal byte ReadByteFromProgram()
     {
-        var value = _ram[PC - _start];
+        var value = _ram[PC];
         _tracer.Read(PC, value);
         _cycles++;
         return value;
