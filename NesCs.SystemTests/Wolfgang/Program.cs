@@ -38,7 +38,9 @@ public class Program
             })
             .WithCallback(0xFFD2, cpu => {
                 cpu.WriteByteToMemory(0x030C, 0);
-                Console.Write($"{(char)cpu.ReadByteFromAccumulator()}");
+                var c = (char)cpu.ReadByteFromAccumulator();
+                c = c == '\r'? '\n' : c;
+                Console.Write($"{c}");
                 var low = cpu.PopFromStack();
                 var high = cpu.PopFromStack();
                 var address = (high << 8 | low) + 1;
@@ -88,6 +90,7 @@ public class Program
 
         cpu.Run();
 
+        Console.WriteLine();
         return 0;
     }
 }
