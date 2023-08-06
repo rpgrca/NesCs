@@ -10,6 +10,11 @@ public class IllegalReadIgnoreOpcode0C : IInstruction
         cpu.ReadyForNextInstruction();
         _ = cpu.ReadByteFromMemory(cpu.ReadByteFromProgramCounter());
 
+#if NESDEV
+        // TODO: Breaks Tom tests but fits golden log
+        _ = cpu.ReadByteFromMemory(cpu.ReadByteFromProgramCounter());
+#endif
+
         cpu.ReadyForNextInstruction();
     }
 }
