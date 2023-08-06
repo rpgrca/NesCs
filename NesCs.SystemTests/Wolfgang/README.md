@@ -23,7 +23,7 @@ If the test failed it will show the current and the expected output.
 
 Following is a non-exhaustive list of results obtained from running every test. _Ok_ means the test finished and the result read from screen displays "Ok". _Fail_ means the test completed, execution finished with an apparent error message (as there's no difference between quitting in error or in success). _Crash_ means the application finished by executed code that was not supposed to (usually because it failed to take the right path or reached an unimplemented instruction, in this case I mention the instruction when it's obvios, aka when the cycle counter is below 300 at the moment of crashing). _Freeze_ is similar to _Crash_ except that the application entered in an infinite loop either displaying something on screen or not and must be interrupted. A few test execute the first half correctly, then load another file and freezes when executing the loaded data.
 
-Although I don't intend to write a C64 emulator (for the time being) and thus I'm not likely to correct these mistakes I leave this as future reference of the current status of the CPU.
+Although I don't intend to write a C64 emulator (for the time being) and thus I'm not likely to correct these mistakes I leave this as future reference of the current status of the CPU. 136 tests pass and 23 others fail making it 159 tests being able to execute the final instruction correctly (regardless of result).
 
 | Instruction | Status      | Notes                                 |
 | ----------- | ----------- | ------------------------------------- |
@@ -278,7 +278,7 @@ Although I don't intend to write a C64 emulator (for the time being) and thus I'
 | cia2tb | Freeze | |
 | cia2tb123 | Freeze | |
 | cpuport3 | Freeze | |
-| irq | fail | IRQ vector not set up |
-| nmi | fail | NMI vector not set up |
+| irq | Fail | IRQ vector not set up |
+| nmi | Fail | NMI vector not set up |
 | rstrstck.s00 | Freeze | Incompatible format |
 | wtdsplys.s00 | Freeze | Incompatible format |
