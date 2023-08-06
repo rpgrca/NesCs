@@ -13,14 +13,17 @@ public partial class Cpu6502
     private byte S { get; set; }
     private int _cycles;
     private int _counter;
+    private bool _stopped;
     private readonly int _start;
     private readonly int _end;
     private readonly byte[] _ram;
     private readonly IInstruction[] _instructions;
     private readonly ITracer _tracer;
+    private readonly Dictionary<int, Action<Cpu6502>> _callbacks;
 
-    private Cpu6502(byte[] program, int programSize, int ramSize, int[] memoryOffsets, int start, int end, int pc, byte a, byte x, byte y, byte s, ProcessorStatus p, int cycles, (int Address, byte Value)[] ramPatches, IInstruction[] instructions, ITracer tracer)
+    private Cpu6502(byte[] program, int programSize, int ramSize, int[] memoryOffsets, int start, int end, int pc, byte a, byte x, byte y, byte s, ProcessorStatus p, int cycles, (int Address, byte Value)[] ramPatches, IInstruction[] instructions, ITracer tracer, Dictionary<int, Action<Cpu6502>> callbacks)
     {
+        _callbacks = callbacks;
         _ram = new byte[ramSize];
 
         foreach (var memoryOffset in memoryOffsets)
@@ -45,6 +48,7 @@ public partial class Cpu6502
         _counter = 0;
         _instructions = instructions;
         _tracer = tracer;
+        _stopped = false;
     }
 
 /*
@@ -70,25 +74,30 @@ public partial class Cpu6502
 
     public void Step()
     {
-        var opcode = ReadByteFromProgram();
+        if (_callbacks.ContainsKey(PC))
+        {
+            _callbacks[PC].Invoke(this);
+        }
 
+        var opcode = ReadByteFromProgram();
         _tracer.Display(opcode, PC, A, X, Y, P, S, _cycles);
         _instructions[opcode].Execute(this);
     }
+
+    public void Stop() => _stopped = true;
 
     public void Run()
     {
         try
         {
-            _counter = _start;
-            while (true)
+            while (! _stopped)
             {
                 Step();
             }
         }
         catch (Exception ex)
         {
-            var error = $"{ex.Message} (on cycle {_counter})";
+            var error = $"{ex.Message} (on cycle {_cycles})";
             Console.WriteLine(error);
             System.Diagnostics.Debug.Print(error);
             throw;
@@ -101,9 +110,9 @@ public partial class Cpu6502
 
     internal int ReadByteFromProgramCounter() => PC;
 
-    internal byte ReadByteFromStackPointer() => S;
+    public byte ReadByteFromStackPointer() => S;
 
-    internal byte ReadByteFromAccumulator() => A;
+    public byte ReadByteFromAccumulator() => A;
 
     internal bool IsReadCarryFlagSet() => P.HasFlag(ProcessorStatus.C);
 
@@ -126,30 +135,34 @@ public partial class Cpu6502
         return value;
     }
 
-    internal byte ReadByteFromMemory(int address)
+    public byte ReadByteFromMemory(int address)
     {
         var value = _ram[address];
         _tracer.Read(address, value);
         return value;
     }
 
-    internal void WriteByteToMemory(int address, byte value)
+    public void WriteByteToMemory(int address, byte value)
     {
-        if (address == 0x02 || address == 0x03)
-        {
-            System.Diagnostics.Debugger.Break();
-        }
-
         _ram[address] = value;
         _tracer.Write(address, value);
     }
 
     // TODO: Deberia aumentar el puntero automaticamente
-    internal byte ReadByteFromStackMemory()
+    public byte ReadByteFromStackMemory()
     {
         var address = StackMemoryBase + S;
         var value = _ram[address];
         _tracer.Read(address, value);
+        return value;
+    }
+
+    public byte PopFromStack()
+    {
+        var address = StackMemoryBase + S + 1;
+        var value = _ram[address];
+        _tracer.Read(address, value);
+        S += 1;
         return value;
     }
 
@@ -161,15 +174,15 @@ public partial class Cpu6502
         S -= 1;
     }
 
-    internal void SetValueToAccumulator(byte value) => A = value;
+    public void SetValueToAccumulator(byte value) => A = value;
 
     internal void SetValueToRegisterX(byte value) => X = value;
 
     internal void SetValueToRegisterY(byte value) => Y = value;
 
-    internal void SetValueToStackPointer(byte value) => S = value;
+    public void SetValueToStackPointer(byte value) => S = value;
 
-    internal void SetValueToProgramCounter(int value) => PC = value;
+    public void SetValueToProgramCounter(int value) => PC = value;
 
     internal ProcessorStatus GetFlags() => P;
 
