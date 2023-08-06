@@ -17,13 +17,13 @@ var cpu = new NesCs.Logic.Cpu.Cpu6502.Builder()
     .SupportingInvalidInstructions()
     .ProgramMappedAt(0x8000)
     .ProgramMappedAt(0xC000)
-    .WithCyclesAs(7)
+    .WithCyclesAs(6)
     .WithProgramCounterAs(0xC000)
     .WithProcessorStatusAs(NesCs.Logic.Cpu.ProcessorStatus.X | NesCs.Logic.Cpu.ProcessorStatus.I)
     .WithStackPointerAt(0xFD)
     .WithCallback(0xC66E, cpu => {
-        var h2 = cpu.ReadByteFromMemory(0x02);
-        var h3 = cpu.ReadByteFromMemory(0x03);
+        var h2 = cpu.PeekMemory(0x02);
+        var h3 = cpu.PeekMemory(0x03);
 
         var (P, A, PC, X, Y, S) = cpu.TakeSnapshot();
 
