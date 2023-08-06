@@ -282,3 +282,5 @@ Although I don't intend to write a C64 emulator (for the time being) and thus I'
 | nmi | Fail | NMI vector not set up |
 | rstrstck.s00 | Freeze | Incompatible format |
 | wtdsplys.s00 | Freeze | Incompatible format |
+
+Information regarding uninmplemented instructions was taken from [NMOS 6510 Unintended Opcodes - No more secrets](http://hitmen.c02.at/files/docs/c64/NoMoreSecrets-NMOS6510UnintendedOpcodes-20162412.pdf)
