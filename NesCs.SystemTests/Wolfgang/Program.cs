@@ -38,8 +38,7 @@ public class Program
             })
             .WithCallback(0xFFD2, cpu => {
                 cpu.WriteByteToMemory(0x030C, 0);
-                var c = (char)cpu.ReadByteFromAccumulator();
-                c = c == '\r'? '\n' : c;
+                var c = SimplePetsciiToAscii(cpu.ReadByteFromAccumulator());
                 Console.Write($"{c}");
                 var low = cpu.PopFromStack();
                 var high = cpu.PopFromStack();
@@ -56,7 +55,7 @@ public class Program
                 var filename = string.Empty;
                 for (var index = 0; index < length; index++)
                 {
-                    filename += (char)cpu.ReadByteFromMemory(address + index);
+                    filename += SimplePetsciiToAscii(cpu.ReadByteFromMemory(address + index));
                 }
 
                 var path = Path.Combine(directory, filename);
@@ -93,4 +92,12 @@ public class Program
         Console.WriteLine();
         return 0;
     }
+
+    private static char SimplePetsciiToAscii(byte c) =>
+        c switch {
+            13 => '\n',
+            >= 65 and <= 90 => (char)(c + 32),
+            >= 193 and <= 218 => (char)(c - 128),
+            _ => (char)c
+        };
 }
