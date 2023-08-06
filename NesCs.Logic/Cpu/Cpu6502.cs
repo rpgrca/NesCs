@@ -125,13 +125,13 @@ public partial class Cpu6502
     internal void ReadyForNextInstruction()
     {
         PC = (PC + 1) & 0xffff;
-        _cycles++;
     }
 
     internal byte ReadByteFromProgram()
     {
         var value = _ram[PC - _start];
         _tracer.Read(PC, value);
+        _cycles++;
         return value;
     }
 
@@ -139,6 +139,7 @@ public partial class Cpu6502
     {
         var value = _ram[address];
         _tracer.Read(address, value);
+        _cycles++;
         return value;
     }
 
@@ -146,6 +147,7 @@ public partial class Cpu6502
     {
         _ram[address] = value;
         _tracer.Write(address, value);
+        _cycles++;
     }
 
     // TODO: Deberia aumentar el puntero automaticamente
@@ -154,6 +156,7 @@ public partial class Cpu6502
         var address = StackMemoryBase + S;
         var value = _ram[address];
         _tracer.Read(address, value);
+        _cycles++;
         return value;
     }
 
@@ -163,6 +166,7 @@ public partial class Cpu6502
         var value = _ram[address];
         _tracer.Read(address, value);
         S += 1;
+        _cycles++;
         return value;
     }
 
@@ -171,6 +175,7 @@ public partial class Cpu6502
         var address = StackMemoryBase + S;
         _ram[address] = value;
         _tracer.Write(address, value);
+        _cycles++;
         S -= 1;
     }
 
