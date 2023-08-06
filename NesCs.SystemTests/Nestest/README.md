@@ -7,3 +7,6 @@ As by the time I wanted to run this program I didn't have visuals done I had to 
 To run the program execute _dotnet run_ with the path to the nestest.nes ROM. It should display some information regarding the ROM and then determine whether the run ended correctly or failed.
 
 ![image](https://github.com/rpgrca/NesCs/assets/15602473/e2c47300-659e-42a8-a217-01dd87ac60cf)
+
+### Current status ###
+Since I'm looking for a perfect emulation I'm increasing one cycle per memory read and write. Following this procedure I get perfect values for the first 14606 cycles (5014 instructions) but the counter needs to start with 7 (as I don't have the setup done still).
