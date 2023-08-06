@@ -19,6 +19,7 @@ public static class Utilities
             .WithProgramCounterAs(initial.PC)
             .RamPatchedAs(initial.RAM.Select(p => (p.Address, p.Value)).ToArray())
             .TracingWith(new TracerSpy(trace))
+            .SupportingInvalidInstructions()
             .Build();
 
     public static void Equal(SampleStatus final, Cpu6502 sut)
