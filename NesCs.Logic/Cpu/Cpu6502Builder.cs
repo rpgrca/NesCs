@@ -68,7 +68,7 @@ public partial class Cpu6502
             _instructions[0x29] = new AndInImmediateModeOpcode29();
             _instructions[0x2A] = new RotateLeftAccumulatorOpcode2A();
             _instructions[0x2C] = new BitTestAbsoluteOpcode2C(A.Absolute, O.BitTest);
-            _instructions[0x2D] = new AndInAbsoluteModeOpcode2D();
+            _instructions[0x2D] = new AndInAbsoluteModeOpcode2D(A.Absolute, O.And);
             _instructions[0x2E] = new RotateLeftAbsoluteOpcode2E();
             _instructions[0x30] = new BranchIfMinusOpcode30();
             _instructions[0x31] = new AndInIndirectYModeOpcode31();
