@@ -107,7 +107,7 @@ public partial class Cpu6502
             _instructions[0x6D] = new AddInAbsoluteModeOpcode6D(_addressings.Absolute, _operations.AddWithCarry);
             _instructions[0x6E] = new RotateRightAbsoluteOpcode6E();
             _instructions[0x70] = new BranchIfOverflowSetOpcode70();
-            _instructions[0x71] = new AddInIndirectYModeOpcode71();
+            _instructions[0x71] = new AddInIndirectYModeOpcode71(_addressings.IndirectYIndexed, _operations.AddWithCarry);
             _instructions[0x75] = new AddInZeroPageXModeOpcode75();
             _instructions[0x76] = new RotateRightZeroPageXOpcode76();
             _instructions[0x78] = new SetInterruptDisableOpcode78();
