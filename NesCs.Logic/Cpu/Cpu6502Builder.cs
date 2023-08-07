@@ -97,7 +97,7 @@ public partial class Cpu6502
             _instructions[0x5D] = new XorInAbsoluteXModeOpcode5D();
             _instructions[0x5E] = new ShiftRightAbsoluteXOpcode5E();
             _instructions[0x60] = new ReturnFromSubroutineOpcode60();
-            _instructions[0x61] = new AddInIndirectXModeOpcode61();
+            _instructions[0x61] = new AddInIndirectXModeOpcode61(_addressings.IndirectXIndexed, _operations.AddWithCarry);
             _instructions[0x65] = new AddInZeroPageModeOpcode65();
             _instructions[0x66] = new RotateRightZeroPageOpcode66();
             _instructions[0x68] = new PullAccumulatorOpcode68();
