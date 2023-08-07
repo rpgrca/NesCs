@@ -43,21 +43,21 @@ public partial class Cpu6502
             }
 
             _instructions[0x00] = new ForceInterruptOpcode00();
-            _instructions[0x01] = new OraInIndirectXModeOpcode01();
-            _instructions[0x05] = new OraInZeroPageModeOpcode05();
+            _instructions[0x01] = new Instruction(0x01, "ORA", A.IndirectXIndexed, O.Or);
+            _instructions[0x05] = new Instruction(0x05, "ORA", A.ZeroPage, O.Or);
             _instructions[0x06] = new ShiftLeftZeroPageOpcode06();
             _instructions[0x08] = new PushProcessorStatusOpcode08();
-            _instructions[0x09] = new OraInImmediateModeOpcode09();
+            _instructions[0x09] = new Instruction(0x09, "ORA", A.Immediate, O.Or);
             _instructions[0x0A] = new ShiftLeftAccumulatorOpcode0A();
-            _instructions[0x0D] = new OraInAbsoluteModeOpcode0D();
+            _instructions[0x0D] = new Instruction(0x0D, "ORA", A.Absolute, O.Or);
             _instructions[0x0E] = new ShiftLeftAbsoluteOpcode0E();
             _instructions[0x10] = new BranchIfPositiveOpcode10();
-            _instructions[0x11] = new OraInIndirectYModeOpcode11();
-            _instructions[0x15] = new OraInZeroPageXModeOpcode15();
+            _instructions[0x11] = new Instruction(0x11, "ORA", A.IndirectYIndexed, O.Or);
+            _instructions[0x15] = new Instruction(0x15, "ORA", A.ZeroPageXIndexed, O.Or);
             _instructions[0x16] = new ShiftLeftZeroPageXOpcode16();
             _instructions[0x18] = new ClearCarryFlagOpcode18();
-            _instructions[0x19] = new OraInAbsoluteYModeOpcode19();
-            _instructions[0x1D] = new OraInAbsoluteXModeOpcode0D();
+            _instructions[0x19] = new Instruction(0x19, "ORA", A.AbsoluteYIndexed, O.Or);
+            _instructions[0x1D] = new Instruction(0x1D, "ORA", A.AbsoluteXIndexed, O.Or);
             _instructions[0x1E] = new ShiftLeftAbsoluteXOpcode1E();
             _instructions[0x20] = new JumpToSubroutineOpcode20();
             _instructions[0x21] = new Instruction(0x21, "AND", A.IndirectXIndexed, O.And);
