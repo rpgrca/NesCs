@@ -20,7 +20,7 @@ public class Instruction : IInstruction
 
     void IInstruction.Execute(Cpu6502 cpu)
     {
-        var value = _addressing.ObtainValue(cpu);
-        _operation.Execute(cpu, value);
+        var (address, value) = _addressing.ObtainValueAndAddress(cpu);
+        _operation.Execute(cpu, value, address);
     }
 }

@@ -2,7 +2,7 @@ namespace NesCs.Logic.Cpu.Addressings;
 
 public class AbsoluteXIndexed : IAddressing
 {
-    byte IAddressing.ObtainValue(Cpu6502 cpu)
+    (int, byte) IAddressing.ObtainValueAndAddress(Cpu6502 cpu)
     {
         cpu.ReadyForNextInstruction();
         var low = cpu.ReadByteFromProgram();
@@ -14,12 +14,13 @@ public class AbsoluteXIndexed : IAddressing
         var address = high << 8 | low + cpu.ReadByteFromRegisterX() & 0xff;
         var value = cpu.ReadByteFromMemory(address);
 
-        var address2 = (high << 8 | low) + cpu.ReadByteFromRegisterX() & 0xffff;
-        if (address != address2)
+        var pageJumpAddress = (high << 8 | low) + cpu.ReadByteFromRegisterX() & 0xffff;
+        if (address != pageJumpAddress)
         {
-            value = cpu.ReadByteFromMemory(address2);
+            address = pageJumpAddress;
+            value = cpu.ReadByteFromMemory(address);
         }
 
-        return value;
+        return (address, value);
     }
 }

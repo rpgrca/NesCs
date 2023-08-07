@@ -2,7 +2,7 @@ namespace NesCs.Logic.Cpu.Operations;
 
 public class AddWithCarry : IOperation
 {
-    public void Execute(Cpu6502 cpu, byte value)
+    void IOperation.Execute(Cpu6502 cpu, byte value, int _)
     {
         var a = cpu.ReadByteFromAccumulator();
         var sum = a + value + (cpu.IsReadCarryFlagSet()? 1 : 0);

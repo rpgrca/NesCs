@@ -2,7 +2,7 @@ namespace NesCs.Logic.Cpu.Addressings;
 
 public class IndirectXIndexed : IAddressing
 {
-    byte IAddressing.ObtainValue(Cpu6502 cpu)
+    (int, byte) IAddressing.ObtainValueAndAddress(Cpu6502 cpu)
     {
         cpu.ReadyForNextInstruction();
         var address = cpu.ReadByteFromProgram();
@@ -16,6 +16,6 @@ public class IndirectXIndexed : IAddressing
         var high = cpu.ReadByteFromMemory(address);
 
         var effectiveAddress = high << 8 | low;
-        return cpu.ReadByteFromMemory(effectiveAddress);
+        return (effectiveAddress, cpu.ReadByteFromMemory(effectiveAddress));
     }
 }

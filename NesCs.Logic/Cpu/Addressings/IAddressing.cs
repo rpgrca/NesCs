@@ -1,8 +1,6 @@
-using NesCs.Logic.Cpu;
-
 namespace NesCs.Logic.Cpu.Addressings;
 
 public interface IAddressing
 {
-    byte ObtainValue(Cpu6502 cpu) => 0;
+    (int Address, byte Value) ObtainValueAndAddress(Cpu6502 cpu) => (0, 0);
 }

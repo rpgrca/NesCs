@@ -17,8 +17,8 @@ public class ShiftLeftAbsoluteXOpcode1E : IInstruction
         var address2 = (high << 8 | low) + cpu.ReadByteFromRegisterX() & 0xffff;
         if (address != address2)
         {
-            value = cpu.ReadByteFromMemory(address2);
             address = address2;
+            value = cpu.ReadByteFromMemory(address);
         }
         else
         {

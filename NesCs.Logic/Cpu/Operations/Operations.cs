@@ -6,6 +6,7 @@ public class Operations
     public IOperation BitTest { get; }
     public IOperation And { get; }
     public IOperation Or { get; }
+    public IOperation ShiftLeft { get; }
 
     public Operations()
     {
@@ -13,5 +14,6 @@ public class Operations
         BitTest = new BitTest();
         And = new And();
         Or = new Or();
+        ShiftLeft = new ShiftLeft();
     }
 }
