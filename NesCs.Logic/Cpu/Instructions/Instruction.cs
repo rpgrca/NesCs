@@ -5,10 +5,10 @@ namespace NesCs.Logic.Cpu.Instructions;
 
 public class Instruction : IInstruction
 {
-    public readonly byte _opcode;
-    private readonly string _name;
-    private readonly IAddressing _addressing;
-    private readonly IOperation _operation;
+    protected readonly byte _opcode;
+    protected readonly string _name;
+    protected readonly IAddressing _addressing;
+    protected readonly IOperation _operation;
 
     public Instruction(byte opcode, string name, IAddressing addressing, IOperation operation)
     {
@@ -18,7 +18,7 @@ public class Instruction : IInstruction
         _operation = operation;
     }
 
-    void IInstruction.Execute(Cpu6502 cpu)
+    public virtual void Execute(Cpu6502 cpu)
     {
         var (address, value) = _addressing.ObtainValueAndAddress(cpu);
         _operation.Execute(cpu, value, address);

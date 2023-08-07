@@ -7,6 +7,8 @@ public class Operations
     public IOperation And { get; }
     public IOperation Or { get; }
     public IOperation ShiftLeft { get; }
+    public IOperation ClearFlag { get; }
+    public IOperation Nop { get; }
 
     public Operations()
     {
@@ -15,5 +17,7 @@ public class Operations
         And = new And();
         Or = new Or();
         ShiftLeft = new ShiftLeft();
+        ClearFlag = new ClearFlag();
+        Nop = new Nop();
     }
 }

@@ -55,7 +55,7 @@ public partial class Cpu6502
             _instructions[0x11] = new Instruction(0x11, "ORA", A.IndirectYIndexed, O.Or);
             _instructions[0x15] = new Instruction(0x15, "ORA", A.ZeroPageXIndexed, O.Or);
             _instructions[0x16] = new Instruction(0x16, "ASL", A.ZeroPageXIndexed, O.ShiftLeft);
-            _instructions[0x18] = new ClearCarryFlagOpcode18();
+            _instructions[0x18] = new ClearFlagInstruction(0x18, "CLC", A.Implied, O.ClearFlag, ProcessorStatus.C);
             _instructions[0x19] = new Instruction(0x19, "ORA", A.AbsoluteYIndexed, O.Or);
             _instructions[0x1D] = new Instruction(0x1D, "ORA", A.AbsoluteXIndexed, O.Or);
             _instructions[0x1E] = new ShiftLeftAbsoluteXOpcode1E();
