@@ -1,4 +1,5 @@
 using NesCs.Logic.Cpu.Operations;
+using NesCs.Logic.Cpu.Addressings;
 
 namespace NesCs.Logic.Cpu.Instructions;
 

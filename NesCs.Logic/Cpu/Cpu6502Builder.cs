@@ -16,8 +16,8 @@ public partial class Cpu6502
         private readonly Dictionary<int, Action<Cpu6502>> _callbacks;
         private ITracer _tracer;
         private bool _enableInvalid;
-        private readonly Addressings _addressings;
-        private readonly Cpu.Operations.Operations _operations;
+        private readonly Addressings.Addressings _addressings;
+        private readonly Operations.Operations _operations;
 
         public Builder()
         {
@@ -33,7 +33,7 @@ public partial class Cpu6502
             _program = Array.Empty<byte>();
             _patch = Array.Empty<(int, byte)>();
             _tracer = new DummyTracer();
-            _addressings = new Addressings();
+            _addressings = new Addressings.Addressings();
             _operations = new Operations.Operations();
 
             _instructions = new IInstruction[0x100];
