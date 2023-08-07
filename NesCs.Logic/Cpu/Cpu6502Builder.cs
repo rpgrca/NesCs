@@ -16,6 +16,8 @@ public partial class Cpu6502
         private readonly Dictionary<int, Action<Cpu6502>> _callbacks;
         private ITracer _tracer;
         private bool _enableInvalid;
+        private readonly Addressings _addressings;
+        private readonly Cpu.Operations.Operations _operations;
 
         public Builder()
         {
@@ -31,6 +33,8 @@ public partial class Cpu6502
             _program = Array.Empty<byte>();
             _patch = Array.Empty<(int, byte)>();
             _tracer = new DummyTracer();
+            _addressings = new Addressings();
+            _operations = new Operations.Operations();
 
             _instructions = new IInstruction[0x100];
             for (var index = 0; index < 0x100; index++)
@@ -100,7 +104,7 @@ public partial class Cpu6502
             _instructions[0x69] = new AddInImmediateModeOpcode69();
             _instructions[0x6A] = new RotateRightAccumulatorOpcode6A();
             _instructions[0x6C] = new JumpInIndirectModeOpcode6C();
-            _instructions[0x6D] = new AddInAbsoluteModeOpcode6D();
+            _instructions[0x6D] = new AddInAbsoluteModeOpcode6D(_addressings.Absolute, _operations.AddWithCarry);
             _instructions[0x6E] = new RotateRightAbsoluteOpcode6E();
             _instructions[0x70] = new BranchIfOverflowSetOpcode70();
             _instructions[0x71] = new AddInIndirectYModeOpcode71();
