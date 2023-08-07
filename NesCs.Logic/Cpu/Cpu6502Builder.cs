@@ -92,7 +92,7 @@ public partial class Cpu6502
             _instructions[0x51] = new XorInIndirectYModeOpcode51();
             _instructions[0x55] = new XorInZeroPageXModeOpcode55();
             _instructions[0x56] = new ShiftRightZeroPageXOpcode56();
-            _instructions[0x58] = new ClearInterruptDisableOpcode58();
+            _instructions[0x58] = new ClearFlagInstruction(0x58, "CLI", A.Implied, O.ClearFlag, ProcessorStatus.I);
             _instructions[0x59] = new XorInAbsoluteYModeOpcode59();
             _instructions[0x5D] = new XorInAbsoluteXModeOpcode5D();
             _instructions[0x5E] = new ShiftRightAbsoluteXOpcode5E();
@@ -149,7 +149,7 @@ public partial class Cpu6502
             _instructions[0xB4] = new LdyInZeroPageXModeOpcodeB4();
             _instructions[0xB5] = new LdaInZeroPageXModeOpcodeB5();
             _instructions[0xB6] = new LdxInZeroPageYModeOpcodeB6();
-            _instructions[0xB8] = new ClearOverflowFlagOpcodeB8();
+            _instructions[0xB8] = new ClearFlagInstruction(0xB8, "CLV", A.Implied, O.ClearFlag, ProcessorStatus.V);
             _instructions[0xB9] = new LdaInAbsoluteYModeOpcodeB9();
             _instructions[0xBA] = new TransferStackToXOpcodeBA();
             _instructions[0xBC] = new LdyInAbsoluteXModeOpcodeBC();
@@ -170,7 +170,7 @@ public partial class Cpu6502
             _instructions[0xD1] = new CompareIndirectYModeOpcodeD1();
             _instructions[0xD5] = new CompareZeroPageXModeOpcodeD5();
             _instructions[0xD6] = new DecrementMemoryZeroPageXOpcodeD6();
-            _instructions[0xD8] = new ClearDecimalModeOpcodeD8();
+            _instructions[0xD8] = new ClearFlagInstruction(0xD8, "CLD", A.Implied, O.ClearFlag, ProcessorStatus.D);
             _instructions[0xD9] = new CompareAbsoluteYModeOpcodeD9();
             _instructions[0xDD] = new CompareAbsoluteXModeOpcodeDD();
             _instructions[0xDE] = new DecrementMemoryAbsoluteXOpcodeDE();
