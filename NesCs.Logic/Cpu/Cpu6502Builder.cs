@@ -112,7 +112,7 @@ public partial class Cpu6502
             _instructions[0x76] = new RotateRightZeroPageXOpcode76();
             _instructions[0x78] = new SetInterruptDisableOpcode78();
             _instructions[0x79] = new AddInAbsoluteYModeOpcode79();
-            _instructions[0x7D] = new AddInAbsoluteXModeOpcode7D();
+            _instructions[0x7D] = new AddInAbsoluteXModeOpcode7D(_addressings.AbsoluteXIndexed, _operations.AddWithCarry);
             _instructions[0x7E] = new RotateRightAbsoluteXOpcode7E();
             _instructions[0x81] = new StoreAccumulatorIndirectXOpcode81();
             _instructions[0x84] = new StoreRegisterYZeroPageOpcode84();

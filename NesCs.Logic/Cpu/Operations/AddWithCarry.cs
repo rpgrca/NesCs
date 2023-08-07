@@ -4,7 +4,6 @@ public class AddWithCarry : IOperation
 {
     public void Execute(Cpu6502 cpu, byte value)
     {
-        cpu.ReadyForNextInstruction();
         var a = cpu.ReadByteFromAccumulator();
         var sum = a + value + (cpu.IsReadCarryFlagSet()? 1 : 0);
         var result = (byte)(sum & 0xff);
