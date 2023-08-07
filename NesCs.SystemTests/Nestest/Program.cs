@@ -12,15 +12,21 @@ var nesFile = fsp.Load(args[0]);
 Console.WriteLine($"Loaded!");
 Console.WriteLine(nesFile.ToString());
 
-var cpu = new NesCs.Logic.Cpu.Cpu6502.Builder()
+var builder = new NesCs.Logic.Cpu.Cpu6502.Builder()
+    .ProgramMappedAt(0x8000); // NROM-256 or NROM-128
+
+if (nesFile.ProgramRomSize == 1)
+{
+    builder.ProgramMappedAt(0xC000); // NROM-128
+}
+
+var cpu = builder
     .Running(nesFile.ProgramRom)
     .SupportingInvalidInstructions()
-    .ProgramMappedAt(0x8000)
-    .ProgramMappedAt(0xC000)
     .WithCyclesAs(6)
-    .WithProgramCounterAs(0xC000)
     .WithProcessorStatusAs(NesCs.Logic.Cpu.ProcessorStatus.X | NesCs.Logic.Cpu.ProcessorStatus.I)
     .WithStackPointerAt(0xFD)
+    .TracingWith(new Vm6502DebuggerDisplay())
     .WithCallback(0xC66E, cpu => {
         var h2 = cpu.PeekMemory(0x02);
         var h3 = cpu.PeekMemory(0x03);
@@ -39,6 +45,7 @@ var cpu = new NesCs.Logic.Cpu.Cpu6502.Builder()
     })
     .Build();
 
+cpu.Reset();
 cpu.Run();
 
 return 0;
