@@ -16,8 +16,8 @@ public partial class Cpu6502
         private readonly Dictionary<int, Action<Cpu6502>> _callbacks;
         private ITracer _tracer;
         private bool _enableInvalid;
-        private readonly Addressings.Addressings _addressings;
-        private readonly Operations.Operations _operations;
+        private readonly Addressings.Addressings A;
+        private readonly Operations.Operations O;
 
         public Builder()
         {
@@ -33,8 +33,8 @@ public partial class Cpu6502
             _program = Array.Empty<byte>();
             _patch = Array.Empty<(int, byte)>();
             _tracer = new DummyTracer();
-            _addressings = new Addressings.Addressings();
-            _operations = new Operations.Operations();
+            A = new Addressings.Addressings();
+            O = new Operations.Operations();
 
             _instructions = new IInstruction[0x100];
             for (var index = 0; index < 0x100; index++)
@@ -97,22 +97,22 @@ public partial class Cpu6502
             _instructions[0x5D] = new XorInAbsoluteXModeOpcode5D();
             _instructions[0x5E] = new ShiftRightAbsoluteXOpcode5E();
             _instructions[0x60] = new ReturnFromSubroutineOpcode60();
-            _instructions[0x61] = new AddInIndirectXModeOpcode61(_addressings.IndirectXIndexed, _operations.AddWithCarry);
-            _instructions[0x65] = new AddInZeroPageModeOpcode65();
+            _instructions[0x61] = new AddInIndirectXModeOpcode61(A.IndirectXIndexed, O.AddWithCarry);
+            _instructions[0x65] = new AddInZeroPageModeOpcode65(A.ZeroPage, O.AddWithCarry);
             _instructions[0x66] = new RotateRightZeroPageOpcode66();
             _instructions[0x68] = new PullAccumulatorOpcode68();
-            _instructions[0x69] = new AddInImmediateModeOpcode69(_addressings.Immediate, _operations.AddWithCarry);
+            _instructions[0x69] = new AddInImmediateModeOpcode69(A.Immediate, O.AddWithCarry);
             _instructions[0x6A] = new RotateRightAccumulatorOpcode6A();
             _instructions[0x6C] = new JumpInIndirectModeOpcode6C();
-            _instructions[0x6D] = new AddInAbsoluteModeOpcode6D(_addressings.Absolute, _operations.AddWithCarry);
+            _instructions[0x6D] = new AddInAbsoluteModeOpcode6D(A.Absolute, O.AddWithCarry);
             _instructions[0x6E] = new RotateRightAbsoluteOpcode6E();
             _instructions[0x70] = new BranchIfOverflowSetOpcode70();
-            _instructions[0x71] = new AddInIndirectYModeOpcode71(_addressings.IndirectYIndexed, _operations.AddWithCarry);
+            _instructions[0x71] = new AddInIndirectYModeOpcode71(A.IndirectYIndexed, O.AddWithCarry);
             _instructions[0x75] = new AddInZeroPageXModeOpcode75();
             _instructions[0x76] = new RotateRightZeroPageXOpcode76();
             _instructions[0x78] = new SetInterruptDisableOpcode78();
-            _instructions[0x79] = new AddInAbsoluteYModeOpcode79(_addressings.AbsoluteYIndexed, _operations.AddWithCarry);
-            _instructions[0x7D] = new AddInAbsoluteXModeOpcode7D(_addressings.AbsoluteXIndexed, _operations.AddWithCarry);
+            _instructions[0x79] = new AddInAbsoluteYModeOpcode79(A.AbsoluteYIndexed, O.AddWithCarry);
+            _instructions[0x7D] = new AddInAbsoluteXModeOpcode7D(A.AbsoluteXIndexed, O.AddWithCarry);
             _instructions[0x7E] = new RotateRightAbsoluteXOpcode7E();
             _instructions[0x81] = new StoreAccumulatorIndirectXOpcode81();
             _instructions[0x84] = new StoreRegisterYZeroPageOpcode84();
