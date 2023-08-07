@@ -61,13 +61,13 @@ public partial class Cpu6502
             _instructions[0x1E] = new ShiftLeftAbsoluteXOpcode1E();
             _instructions[0x20] = new JumpToSubroutineOpcode20();
             _instructions[0x21] = new AndInIndirectXModeOpcode21();
-            _instructions[0x24] = new BitTestZeroPageModeOpcode24();
+            _instructions[0x24] = new BitTestZeroPageModeOpcode24(A.ZeroPage, O.BitTest);
             _instructions[0x25] = new AndInZeroPageModeOpcode25();
             _instructions[0x26] = new RotateLeftZeroPageOpcode26();
             _instructions[0x28] = new PullProcessorStatusOpcode28();
             _instructions[0x29] = new AndInImmediateModeOpcode29();
             _instructions[0x2A] = new RotateLeftAccumulatorOpcode2A();
-            _instructions[0x2C] = new BitTestAbsoluteOpcode2C();
+            _instructions[0x2C] = new BitTestAbsoluteOpcode2C(A.Absolute, O.BitTest);
             _instructions[0x2D] = new AndInAbsoluteModeOpcode2D();
             _instructions[0x2E] = new RotateLeftAbsoluteOpcode2E();
             _instructions[0x30] = new BranchIfMinusOpcode30();

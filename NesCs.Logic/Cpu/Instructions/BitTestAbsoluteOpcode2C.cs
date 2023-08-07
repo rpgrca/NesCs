@@ -1,22 +1,22 @@
+using NesCs.Logic.Cpu.Addressings;
+using NesCs.Logic.Cpu.Operations;
+
 namespace NesCs.Logic.Cpu.Instructions;
 
 public class BitTestAbsoluteOpcode2C : IInstruction
 {
+    private readonly IAddressing _addressing;
+    private readonly IOperation _operation;
+
+    public BitTestAbsoluteOpcode2C(IAddressing addressing, IOperation operation)
+    {
+        _addressing = addressing;
+        _operation = operation;
+    }
+
     public void Execute(Cpu6502 cpu)
     {
-        cpu.ReadyForNextInstruction();
-        var low = cpu.ReadByteFromProgram();
-
-        cpu.ReadyForNextInstruction();
-        var high = cpu.ReadByteFromProgram();
-
-        cpu.ReadyForNextInstruction();
-        var address = high << 8 | low;
-        var value = cpu.ReadByteFromMemory(address);
-
-        var result = (byte)(value & cpu.ReadByteFromAccumulator());
-        cpu.SetZeroFlagBasedOn(result);
-        cpu.SetNegativeFlagBasedOn(value);
-        cpu.SetOverflowFlagBasedOn(value);
+        var value = _addressing.ObtainValue(cpu);
+        _operation.Execute(cpu, value);
     }
 }
