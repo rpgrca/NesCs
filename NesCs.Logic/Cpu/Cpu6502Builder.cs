@@ -8,7 +8,7 @@ public partial class Cpu6502
     {
         private ProcessorStatus _p;
         private byte _a, _x, _y, _s;
-        private int _pc, _ramSize, _programSize, _cycles, _vectorAddress;
+        private int _pc, _ramSize, _programSize, _cycles, _nmiVector, _resetVector, _irqVector;
         private byte[] _program;
         private readonly List<int> _mappedProgramAddresses;
         private (int Address, byte Value)[] _patch;
@@ -20,11 +20,14 @@ public partial class Cpu6502
         public Builder()
         {
             _enableInvalid = false;
+            _nmiVector = 0xFFFA;
+            _resetVector = 0xFFFC;
+            _irqVector = 0xFFFE;
             _mappedProgramAddresses = new List<int>();
             _callbacks = new Dictionary<int, Action<Cpu6502>>();
             _p = ProcessorStatus.None;
             _a = _x = _y = _s = 0;
-            _ramSize = _pc = _programSize = _cycles = _vectorAddress = 0;
+            _ramSize = _pc = _programSize = _cycles = 0;
             _program = Array.Empty<byte>();
             _patch = Array.Empty<(int, byte)>();
             _tracer = new DummyTracer();
@@ -218,9 +221,21 @@ public partial class Cpu6502
             return this;
         }
 
-        public Builder WithResetVectorAt(int vectorAddress)
+        public Builder WithResetVectorAt(int resetVector)
         {
-            _vectorAddress = vectorAddress;
+            _resetVector = resetVector;
+            return this;
+        }
+
+        public Builder WithNmiVectorAt(int nmiVector)
+        {
+            _nmiVector = nmiVector;
+            return this;
+        }
+
+        public Builder WithIrqVectorAt(int irqVector)
+        {
+            _irqVector = irqVector;
             return this;
         }
 
@@ -291,7 +306,9 @@ public partial class Cpu6502
             if (_ramSize < 1) _ramSize = 0x10000;
             if (_enableInvalid) AddInvalidOpcodes();
 
-            return new Cpu6502(_program, _programSize, _ramSize, _mappedProgramAddresses.ToArray(), _pc, _a, _x, _y, _s, _p, _cycles, _patch, _instructions, _tracer, _callbacks, _vectorAddress);
+            return new Cpu6502(_program, _programSize, _ramSize, _mappedProgramAddresses.ToArray(),
+                _pc, _a, _x, _y, _s, _p, _cycles, _patch, _instructions, _tracer, _callbacks,
+                _resetVector, _nmiVector, _irqVector);
         }
 
         private void AddInvalidOpcodes()

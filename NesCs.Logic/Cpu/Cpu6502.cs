@@ -12,15 +12,16 @@ public partial class Cpu6502
     private byte Y { get; set; }
     private byte S { get; set; }
     private int _cycles;
-    private int _counter;
     private bool _stopped;
-    private readonly int _resetVectorAddress;
+    private readonly int _resetVector;
+    private readonly int _nmiVector;
+    private readonly int _irqVector;
     private readonly byte[] _ram;
     private readonly IInstruction[] _instructions;
     private readonly ITracer _tracer;
     private readonly Dictionary<int, Action<Cpu6502>> _callbacks;
 
-    private Cpu6502(byte[] program, int programSize, int ramSize, int[] memoryOffsets, int pc, byte a, byte x, byte y, byte s, ProcessorStatus p, int cycles, (int Address, byte Value)[] ramPatches, IInstruction[] instructions, ITracer tracer, Dictionary<int, Action<Cpu6502>> callbacks, int resetVectorAddress)
+    private Cpu6502(byte[] program, int programSize, int ramSize, int[] memoryOffsets, int pc, byte a, byte x, byte y, byte s, ProcessorStatus p, int cycles, (int Address, byte Value)[] ramPatches, IInstruction[] instructions, ITracer tracer, Dictionary<int, Action<Cpu6502>> callbacks, int resetVector, int nmiVector, int irqVector)
     {
         _callbacks = callbacks;
         _ram = new byte[ramSize];
@@ -35,7 +36,9 @@ public partial class Cpu6502
             _ram[address] = value;
         }
 
-        _resetVectorAddress = resetVectorAddress;
+        _resetVector = resetVector;
+        _nmiVector = nmiVector;
+        _irqVector = irqVector;
         PC = pc;
         A = a;
         X = x;
@@ -43,7 +46,6 @@ public partial class Cpu6502
         S = s;
         P = p;
         _cycles = cycles;
-        _counter = 0;
         _instructions = instructions;
         _tracer = tracer;
         _stopped = false;
@@ -100,6 +102,14 @@ public partial class Cpu6502
             System.Diagnostics.Debug.Print(error);
             throw;
         }
+    }
+
+    public void Reset()
+    {
+        var low = ReadByteFromMemory(_resetVector);
+        var high = ReadByteFromMemory(_resetVector + 1);
+        var address = high << 8 | low;
+        SetValueToProgramCounter(address);
     }
 
     internal byte ReadByteFromRegisterY() => Y;
