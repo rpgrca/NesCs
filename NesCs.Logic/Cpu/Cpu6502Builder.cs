@@ -181,7 +181,7 @@ public partial class Cpu6502
             _instructions[0xE6] = new IncrementMemoryZeroPageOpcodeE6();
             _instructions[0xE8] = new IncrementXOpcodeE8();
             _instructions[0xE9] = new SubtractInImmediateModeOpcodeE9();
-            _instructions[0xEA] = new NopOpcodeEA();
+            _instructions[0xEA] = new Instruction(0xEA, "NOP", A.Implied, O.Nop);
             _instructions[0xEC] = new Instruction(0xEC, "CMP", A.Absolute, O.Compare.X);
             _instructions[0xED] = new SubtractInAbsoluteModeOpcodeED();
             _instructions[0xEE] = new IncrementMemoryAbsoluteOpcodeEE();
@@ -328,7 +328,7 @@ public partial class Cpu6502
             _instructions[0x13] = new IllegalShiftLeftOrOpcode13();
             _instructions[0x14] = new IllegalReadIgnoreOpcode14();
             _instructions[0x17] = new IllegalShiftLeftOrOpcode17();
-            _instructions[0x1A] = new IllegalNopOpcode1A();
+            _instructions[0x1A] = new Instruction(0x1A, "NOP*", A.Implied, O.Nop);
             _instructions[0x1B] = new IllegalShiftLeftOrOpcode1B();
             _instructions[0x1C] = new IllegalReadIgnoreOpcode1C();
             _instructions[0x1F] = new IllegalShiftLeftOrOpcode1F();
@@ -341,7 +341,7 @@ public partial class Cpu6502
             _instructions[0x33] = new IllegalRotateLeftAndOpcode33();
             _instructions[0x34] = new IllegalReadIgnoreOpcode34();
             _instructions[0x37] = new IllegalRotateLeftAndOpcode37();
-            _instructions[0x3A] = new IllegalNopOpcode3A();
+            _instructions[0x3A] = new Instruction(0x3A, "NOP*", A.Implied, O.Nop);
             _instructions[0x3B] = new IllegalRotateLeftAndOpcode3B();
             _instructions[0x3C] = new IllegalReadIgnoreOpcode3C();
             _instructions[0x3F] = new IllegalRotateLeftAndOpcode3F();
@@ -355,7 +355,7 @@ public partial class Cpu6502
             _instructions[0x53] = new IllegalShiftRightXorOpcode53();
             _instructions[0x54] = new IllegalReadIgnoreOpcode54();
             _instructions[0x57] = new IllegalShiftRightXorOpcode57();
-            _instructions[0x5A] = new IllegalNopOpcode5A();
+            _instructions[0x5A] = new Instruction(0x5A, "NOP*", A.Implied, O.Nop);
             _instructions[0x5B] = new IllegalShiftRightXorOpcode5B();
             _instructions[0x5C] = new IllegalReadIgnoreOpcode5C();
             _instructions[0x5F] = new IllegalShiftRightXorOpcode5F();
@@ -369,7 +369,7 @@ public partial class Cpu6502
             _instructions[0x73] = new IllegalRotateRightAddOpcode73();
             _instructions[0x74] = new IllegalReadIgnoreOpcode74();
             _instructions[0x77] = new IllegalRotateRightAddOpcode77();
-            _instructions[0x7A] = new IllegalNopOpcode7A();
+            _instructions[0x7A] = new Instruction(0x7A, "NOP*", A.Implied, O.Nop);
             _instructions[0x7B] = new IllegalRotateRightAddOpcode7B();
             _instructions[0x7C] = new IllegalReadIgnoreOpcode7C();
             _instructions[0x7F] = new IllegalRotateRightAddOpcode7F();
@@ -405,7 +405,7 @@ public partial class Cpu6502
             _instructions[0xD3] = new IllegalDecrementCompareOpcodeD3();
             _instructions[0xD4] = new IllegalReadIgnoreOpcodeD4();
             _instructions[0xD7] = new IllegalDecrementCompareOpcodeD7();
-            _instructions[0xDA] = new IllegalNopOpcodeDA();
+            _instructions[0xDA] = new Instruction(0xDA, "NOP*", A.Implied, O.Nop);
             _instructions[0xDB] = new IllegalDecrementCompareOpcodeDB();
             _instructions[0xDC] = new IllegalReadIgnoreOpcodeDC();
             _instructions[0xDF] = new IllegalDecrementCompareOpcodeDF();
@@ -418,7 +418,7 @@ public partial class Cpu6502
             _instructions[0xF3] = new IllegalIncrementSubtractOpcodeF3();
             _instructions[0xF4] = new IllegalReadIgnoreOpcodeF4();
             _instructions[0xF7] = new IllegalIncrementSubtractOpcodeF7();
-            _instructions[0xFA] = new IllegalNopOpcodeFA();
+            _instructions[0xFA] = new Instruction(0xFA, "NOP*", A.Implied, O.Nop);
             _instructions[0xFB] = new IllegalIncrementSubtractOpcodeFB();
             _instructions[0xFC] = new IllegalReadIgnoreOpcodeFC();
             _instructions[0xFF] = new IllegalIncrementSubtractOpcodeFF();
