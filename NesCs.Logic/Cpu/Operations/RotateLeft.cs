@@ -1,19 +1,9 @@
-namespace NesCs.Logic.Cpu.Instructions;
+namespace NesCs.Logic.Cpu.Operations;
 
-public class RotateLeftAbsoluteOpcode2E : IInstruction
+public class RotateLeft : IOperation
 {
-    public void Execute(Cpu6502 cpu)
+    public void Execute(Cpu6502 cpu, byte value, int address)
     {
-        cpu.ReadyForNextInstruction();
-        var low = cpu.ReadByteFromProgram();
-
-        cpu.ReadyForNextInstruction();
-        var high = cpu.ReadByteFromProgram();
-
-        cpu.ReadyForNextInstruction();
-        var address = high << 8 | low;
-        var value = cpu.ReadByteFromMemory(address);
-
         cpu.WriteByteToMemory(address, value);
         int rotatedValue = (value << 1) | (cpu.IsReadCarryFlagSet()? 1 : 0);
 

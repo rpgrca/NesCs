@@ -6,11 +6,13 @@ public class Operations
     public IOperation BitTest { get; }
     public IOperation And { get; }
     public IOperation Or { get; }
+    public IOperation Xor { get; }
     public IOperation ShiftLeft { get; }
     public IOperation Nop { get; }
     public ICompareFactory Compare { get; }
     public IOperation SubtractWithCarry { get; }
     public IFlagOperation Flag { get; }
+    public IOperation RotateLeft { get; }
 
     public Operations()
     {
@@ -18,11 +20,12 @@ public class Operations
         BitTest = new BitTest();
         And = new And();
         Or = new Or();
+        Xor = new Xor();
         ShiftLeft = new ShiftLeft();
         Nop = new Nop();
         Compare = new CompareFactory();
         SubtractWithCarry = new SubtractWithCarry();
         Flag = new FlagOperation();
+        RotateLeft = new RotateLeft();
     }
-
 }
