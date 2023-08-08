@@ -5,7 +5,9 @@ public class IncrementMemoryZeroPageOpcodeE6 : IInstruction
     public void Execute(Cpu6502 cpu)
     {
         cpu.ReadyForNextInstruction();
-        var address = cpu.ReadByteFromMemory(cpu.ReadByteFromProgramCounter());
+        var address = cpu.ReadByteFromProgram();
+
+
 
         var value = cpu.ReadByteFromMemory(address);
 
