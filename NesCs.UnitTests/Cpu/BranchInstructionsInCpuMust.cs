@@ -66,7 +66,9 @@ public class BranchInstructionsInCpuMust
 
     public static IEnumerable<object[]> Opcode50JsonFeeder()
     {
-        /*   0  */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "50 28 c4", "initial": { "pc": 45493, "s": 30, "a": 42, "x": 168, "y": 209, "p": 108, "ram": [ [45493, 80], [45494, 40], [45495, 196]]}, "final": { "pc": 45495, "s": 30, "a": 42, "x": 168, "y": 209, "p": 108, "ram": [ [45493, 80], [45494, 40], [45495, 196]]}, "cycles": [ [45493, 80, "read"], [45494, 40, "read"]] }""") };
+        /* no branch             */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "50 28 c4", "initial": { "pc": 45493, "s": 30, "a": 42, "x": 168, "y": 209, "p": 108, "ram": [ [45493, 80], [45494, 40], [45495, 196]]}, "final": { "pc": 45495, "s": 30, "a": 42, "x": 168, "y": 209, "p": 108, "ram": [ [45493, 80], [45494, 40], [45495, 196]]}, "cycles": [ [45493, 80, "read"], [45494, 40, "read"]] }""") };
+        /* branch                */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "50 7f 8f", "initial": { "pc": 55557, "s": 53, "a": 114, "x": 94, "y": 106, "p": 46, "ram": [ [55557, 80], [55558, 127], [55559, 143], [55686, 4]]}, "final": { "pc": 55686, "s": 53, "a": 114, "x": 94, "y": 106, "p": 46, "ram": [ [55557, 80], [55558, 127], [55559, 143], [55686, 4]]}, "cycles": [ [55557, 80, "read"], [55558, 127, "read"], [55559, 143, "read"]] }""") };
+        /* branch with page jump */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "50 a0 64", "initial": { "pc": 4942, "s": 41, "a": 177, "x": 121, "y": 194, "p": 38, "ram": [ [4942, 80], [4943, 160], [4944, 100], [5104, 118], [4848, 23]]}, "final": { "pc": 4848, "s": 41, "a": 177, "x": 121, "y": 194, "p": 38, "ram": [ [4848, 23], [4942, 80], [4943, 160], [4944, 100], [5104, 118]]}, "cycles": [ [4942, 80, "read"], [4943, 160, "read"], [4944, 100, "read"], [5104, 118, "read"]] }""") };
     }
 
     public static IEnumerable<object[]> Opcode6CJsonFeeder()
