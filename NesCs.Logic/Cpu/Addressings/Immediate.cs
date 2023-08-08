@@ -5,9 +5,10 @@ public class Immediate : IAddressing
     (int, byte) IAddressing.ObtainValueAndAddress(Cpu6502 cpu)
     {
         cpu.ReadyForNextInstruction();
-        var value = cpu.ReadByteFromProgram();
+        var address = cpu.ReadByteFromProgramCounter();
+        var value = cpu.ReadByteFromMemory(address);
 
         cpu.ReadyForNextInstruction();
-        return (0, value);
+        return (address, value);
     }
 }

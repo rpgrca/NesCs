@@ -20,12 +20,3 @@ public class Decrement : IOperation
         cpu.SetNegativeFlagBasedOn(result);
     }
 }
-
-
-/*
-        cpu.WriteByteToMemory(address, value);
-        value--;
-        cpu.WriteByteToMemory(address, value);
-
-        cpu.SetZeroFlagBasedOn(value);
-        cpu.SetNegativeFlagBasedOn(value);*/

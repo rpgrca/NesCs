@@ -14,6 +14,7 @@ public class Operations
     public IFlagOperation Flag { get; }
     public IOperation RotateLeft { get; }
     public IDecrementFactory Decrement { get; internal set; }
+    public ILoadFactory Load { get; internal set; }
 
     public Operations()
     {
@@ -29,5 +30,6 @@ public class Operations
         Flag = new FlagOperation();
         RotateLeft = new RotateLeft();
         Decrement = new DecrementFactory();
+        Load = new LoadFactory();
     }
 }
