@@ -9,6 +9,7 @@ public class Operations
     public IOperation ShiftLeft { get; }
     public IOperation ClearFlag { get; }
     public IOperation Nop { get; }
+    public ICompareFactory Compare { get; }
 
     public Operations()
     {
@@ -19,5 +20,7 @@ public class Operations
         ShiftLeft = new ShiftLeft();
         ClearFlag = new ClearFlag();
         Nop = new Nop();
+        Compare = new CompareFactory();
     }
+
 }
