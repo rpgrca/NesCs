@@ -57,7 +57,7 @@ public partial class Cpu6502
             _instructions[0x16] = new Instruction(0x16, "ASL", As.ZeroPageXIndexed, Doing.ShiftLeft);
             _instructions[0x18] = new Instruction(0x18, "CLC", As.Implied, Doing.Flag.Minus.C);
             _instructions[0x19] = new Instruction(0x19, "ORA", As.AbsoluteYIndexed, Doing.Or);
-            _instructions[0x1D] = new Instruction(0x1D, "ORA", As.AbsoluteXIndexed, Doing.Or);
+            _instructions[0x1D] = new Instruction(0x1D, "ORA", As.AbsoluteXIndexed.Common, Doing.Or);
             _instructions[0x1E] = new ShiftLeftAbsoluteXOpcode1E();
             _instructions[0x20] = new JumpToSubroutineOpcode20();
             _instructions[0x21] = new Instruction(0x21, "AND", As.IndirectXIndexed, Doing.And);
@@ -76,7 +76,7 @@ public partial class Cpu6502
             _instructions[0x36] = new RotateLeftZeroPageXOpcode36();
             _instructions[0x38] = new Instruction(0x38, "SEC", As.Implied, Doing.Flag.Plus.C);
             _instructions[0x39] = new Instruction(0x39, "AND", As.AbsoluteYIndexed, Doing.And);
-            _instructions[0x3D] = new Instruction(0x3D, "AND", As.AbsoluteXIndexed, Doing.And);
+            _instructions[0x3D] = new Instruction(0x3D, "AND", As.AbsoluteXIndexed.Common, Doing.And);
             _instructions[0x3E] = new RotateLeftAbsoluteXOpcode3E();
             _instructions[0x40] = new ReturnFromInterruptOpcode40();
             _instructions[0x41] = new Instruction(0x41, "EOR", As.IndirectXIndexed, Doing.Xor);
@@ -94,7 +94,7 @@ public partial class Cpu6502
             _instructions[0x56] = new ShiftRightZeroPageXOpcode56();
             _instructions[0x58] = new Instruction(0x58, "CLI", As.Implied, Doing.Flag.Minus.I);
             _instructions[0x59] = new Instruction(0x59, "EOR", As.AbsoluteYIndexed, Doing.Xor);
-            _instructions[0x5D] = new Instruction(0x5D, "EOR", As.AbsoluteXIndexed, Doing.Xor);
+            _instructions[0x5D] = new Instruction(0x5D, "EOR", As.AbsoluteXIndexed.Common, Doing.Xor);
             _instructions[0x5E] = new ShiftRightAbsoluteXOpcode5E();
             _instructions[0x60] = new ReturnFromSubroutineOpcode60();
             _instructions[0x61] = new Instruction(0x61, "ADC", As.IndirectXIndexed, Doing.AddWithCarry);
@@ -112,13 +112,13 @@ public partial class Cpu6502
             _instructions[0x76] = new RotateRightZeroPageXOpcode76();
             _instructions[0x78] = new Instruction(0x78, "SEI", As.Implied, Doing.Flag.Plus.I);
             _instructions[0x79] = new Instruction(0x79, "ADC", As.AbsoluteYIndexed, Doing.AddWithCarry);
-            _instructions[0x7D] = new Instruction(0x7D, "ADC", As.AbsoluteXIndexed, Doing.AddWithCarry);
+            _instructions[0x7D] = new Instruction(0x7D, "ADC", As.AbsoluteXIndexed.Common, Doing.AddWithCarry);
             _instructions[0x7E] = new RotateRightAbsoluteXOpcode7E();
             _instructions[0x81] = new StoreAccumulatorIndirectXOpcode81();
             _instructions[0x84] = new StoreRegisterYZeroPageOpcode84();
             _instructions[0x85] = new StoreAccumulatorZeroPageOpcode85();
             _instructions[0x86] = new StoreRegisterXZeroPageOpcode86();
-            _instructions[0x88] = new DecrementYOpcode88();
+            _instructions[0x88] = new Instruction(0x88, "DEY", As.Implied, Doing.Decrement.Y);
             _instructions[0x8A] = new TransferXToAccumulatorOpcode8A();
             _instructions[0x8C] = new StoreRegisterYAbsoluteOpcode8C();
             _instructions[0x8D] = new StoreAccumulatorAbsoluteOpcode8D();
@@ -159,21 +159,21 @@ public partial class Cpu6502
             _instructions[0xC1] = new Instruction(0xC1, "CMP", As.IndirectXIndexed, Doing.Compare.Accumulator);
             _instructions[0xC4] = new Instruction(0xC4, "CMP", As.ZeroPage, Doing.Compare.Y);
             _instructions[0xC5] = new Instruction(0xC5, "CMP", As.ZeroPage, Doing.Compare.Accumulator);
-            _instructions[0xC6] = new DecrementMemoryZeroPageOpcodeC6();
+            _instructions[0xC6] = new Instruction(0xC6, "DEC", As.ZeroPage, Doing.Decrement.Memory);
             _instructions[0xC8] = new IncrementYOpcodeC8();
             _instructions[0xC9] = new Instruction(0xC9, "CMP", As.Immediate, Doing.Compare.Accumulator);
-            _instructions[0xCA] = new DecrementXOpcodeCA();
+            _instructions[0xCA] = new Instruction(0xCA, "DEX", As.Implied, Doing.Decrement.X);
             _instructions[0xCC] = new Instruction(0xCC, "CMP", As.Absolute, Doing.Compare.Y);
             _instructions[0xCD] = new Instruction(0xCD, "CMP", As.Absolute, Doing.Compare.Accumulator);
-            _instructions[0xCE] = new DecrementMemoryAbsoluteOpcodeCE();
+            _instructions[0xCE] = new Instruction(0xCE, "DEC", As.Absolute, Doing.Decrement.Memory);
             _instructions[0xD0] = new BranchIfNotEqualOpcodeD0();
             _instructions[0xD1] = new Instruction(0xD1, "CMP", As.IndirectYIndexed, Doing.Compare.Accumulator);
             _instructions[0xD5] = new Instruction(0xD5, "CMP", As.ZeroPageXIndexed, Doing.Compare.Accumulator);
-            _instructions[0xD6] = new DecrementMemoryZeroPageXOpcodeD6();
+            _instructions[0xD6] = new Instruction(0xD6, "DEC", As.ZeroPageXIndexed, Doing.Decrement.Memory);
             _instructions[0xD8] = new Instruction(0xD8, "CLD", As.Implied, Doing.Flag.Minus.D);
             _instructions[0xD9] = new Instruction(0xD9, "CMP", As.AbsoluteYIndexed, Doing.Compare.Accumulator);
-            _instructions[0xDD] = new Instruction(0xDD, "CMP", As.AbsoluteXIndexed, Doing.Compare.Accumulator);
-            _instructions[0xDE] = new DecrementMemoryAbsoluteXOpcodeDE();
+            _instructions[0xDD] = new Instruction(0xDD, "CMP", As.AbsoluteXIndexed.Common, Doing.Compare.Accumulator);
+            _instructions[0xDE] = new Instruction(0xDE, "DEC", As.AbsoluteXIndexed.WithExtraRead, Doing.Decrement.Memory);
             _instructions[0xE0] = new Instruction(0xE0, "CMP", As.Immediate, Doing.Compare.X);
             _instructions[0xE1] = new Instruction(0xE1, "SBC", As.IndirectXIndexed, Doing.SubtractWithCarry);
             _instructions[0xE4] = new Instruction(0xE4, "CMP", As.ZeroPage, Doing.Compare.X);
@@ -191,7 +191,7 @@ public partial class Cpu6502
             _instructions[0xF6] = new IncrementMemoryZeroPageXOpcodeF6();
             _instructions[0xF8] = new Instruction(0xF8, "SED", As.Implied, Doing.Flag.Plus.D);
             _instructions[0xF9] = new Instruction(0xF9, "SBC", As.AbsoluteYIndexed, Doing.SubtractWithCarry);
-            _instructions[0xFD] = new Instruction(0xFD, "SBC", As.AbsoluteXIndexed, Doing.SubtractWithCarry);
+            _instructions[0xFD] = new Instruction(0xFD, "SBC", As.AbsoluteXIndexed.Common, Doing.SubtractWithCarry);
             _instructions[0xFE] = new IncrementMemoryAbsoluteXOpcodeFE();
         }
 

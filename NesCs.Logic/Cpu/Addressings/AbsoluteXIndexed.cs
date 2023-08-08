@@ -2,6 +2,10 @@ namespace NesCs.Logic.Cpu.Addressings;
 
 public class AbsoluteXIndexed : IAddressing
 {
+    private readonly Action<Cpu6502, int> _extraRead;
+
+    public AbsoluteXIndexed(Action<Cpu6502, int> extraRead) => _extraRead = extraRead;
+
     (int, byte) IAddressing.ObtainValueAndAddress(Cpu6502 cpu)
     {
         cpu.ReadyForNextInstruction();
@@ -19,6 +23,10 @@ public class AbsoluteXIndexed : IAddressing
         {
             address = pageJumpAddress;
             value = cpu.ReadByteFromMemory(address);
+        }
+        else
+        {
+            _extraRead(cpu, address);
         }
 
         return (address, value);

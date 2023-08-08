@@ -4,7 +4,7 @@ public class Addressings
 {
     public IAddressing Accumulator { get; }
     public IAddressing Absolute { get; }
-    public IAddressing AbsoluteXIndexed { get; }
+    public IAbsoluteXIndexedFactory AbsoluteXIndexed { get; }
     public IAddressing AbsoluteYIndexed { get; }
     public IAddressing Immediate { get; }
     public IAddressing Implied { get; }
@@ -20,7 +20,7 @@ public class Addressings
     {
         Accumulator = new Accumulator();
         Absolute = new Absolute();
-        AbsoluteXIndexed = new AbsoluteXIndexed();
+        AbsoluteXIndexed = new AbsoluteXIndexedFactory();
         AbsoluteYIndexed = new AbsoluteYIndexed();
         Immediate = new Immediate();
         Implied = new Implied();

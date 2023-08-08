@@ -5,8 +5,9 @@ public class Implied : IAddressing
     (int, byte) IAddressing.ObtainValueAndAddress(Cpu6502 cpu)
     {
         cpu.ReadyForNextInstruction();
-        _ = cpu.ReadByteFromMemory(cpu.ReadByteFromProgramCounter());
+        var address = cpu.ReadByteFromProgramCounter();
+        var value = cpu.ReadByteFromMemory(address);
 
-        return (0, 0);
+        return (address, value);
     }
 }
