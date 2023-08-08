@@ -10,6 +10,7 @@ public class Operations
     public IOperation ClearFlag { get; }
     public IOperation Nop { get; }
     public ICompareFactory Compare { get; }
+    public IOperation SubtractWithCarry { get; }
 
     public Operations()
     {
@@ -21,6 +22,7 @@ public class Operations
         ClearFlag = new ClearFlag();
         Nop = new Nop();
         Compare = new CompareFactory();
+        SubtractWithCarry = new SubtractWithCarry();
     }
 
 }

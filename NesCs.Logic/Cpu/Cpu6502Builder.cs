@@ -175,23 +175,23 @@ public partial class Cpu6502
             _instructions[0xDD] = new Instruction(0xDD, "CMP", A.AbsoluteXIndexed, O.Compare.Accumulator);
             _instructions[0xDE] = new DecrementMemoryAbsoluteXOpcodeDE();
             _instructions[0xE0] = new Instruction(0xE0, "CMP", A.Immediate, O.Compare.X);
-            _instructions[0xE1] = new SubtractInIndirectXModeOpcodeE1();
+            _instructions[0xE1] = new Instruction(0xE1, "SBC", A.IndirectXIndexed, O.SubtractWithCarry);
             _instructions[0xE4] = new Instruction(0xE4, "CMP", A.ZeroPage, O.Compare.X);
-            _instructions[0xE5] = new SubtractInZeroPageModeOpcodeE5();
+            _instructions[0xE5] = new Instruction(0xE5, "SBC", A.ZeroPage, O.SubtractWithCarry);
             _instructions[0xE6] = new IncrementMemoryZeroPageOpcodeE6();
             _instructions[0xE8] = new IncrementXOpcodeE8();
-            _instructions[0xE9] = new SubtractInImmediateModeOpcodeE9();
+            _instructions[0xE9] = new Instruction(0xE9, "SBC", A.Immediate, O.SubtractWithCarry);
             _instructions[0xEA] = new Instruction(0xEA, "NOP", A.Implied, O.Nop);
             _instructions[0xEC] = new Instruction(0xEC, "CMP", A.Absolute, O.Compare.X);
-            _instructions[0xED] = new SubtractInAbsoluteModeOpcodeED();
+            _instructions[0xED] = new Instruction(0xED, "SBC", A.Absolute, O.SubtractWithCarry);
             _instructions[0xEE] = new IncrementMemoryAbsoluteOpcodeEE();
             _instructions[0xF0] = new BranchIfEqualOpcodeF0();
-            _instructions[0xF1] = new SubtractInIndirectYModeOpcodeF1();
-            _instructions[0xF5] = new SubtractInZeroPageXModeOpcodeF5();
+            _instructions[0xF1] = new Instruction(0xF1, "SBC", A.IndirectYIndexed, O.SubtractWithCarry);
+            _instructions[0xF5] = new Instruction(0xF5, "SBC", A.ZeroPageXIndexed, O.SubtractWithCarry);
             _instructions[0xF6] = new IncrementMemoryZeroPageXOpcodeF6();
             _instructions[0xF8] = new SetDecimalFlagOpcodeF8();
-            _instructions[0xF9] = new SubtractInAbsoluteYModeOpcodeF9();
-            _instructions[0xFD] = new SubtractInAbsoluteXModeOpcodeFD();
+            _instructions[0xF9] = new Instruction(0xF9, "SBC", A.AbsoluteYIndexed, O.SubtractWithCarry);
+            _instructions[0xFD] = new Instruction(0xFD, "SBC", A.AbsoluteXIndexed, O.SubtractWithCarry);
             _instructions[0xFE] = new IncrementMemoryAbsoluteXOpcodeFE();
         }
 

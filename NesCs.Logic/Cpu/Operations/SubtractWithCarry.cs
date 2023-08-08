@@ -1,15 +1,9 @@
-namespace NesCs.Logic.Cpu.Instructions;
+namespace NesCs.Logic.Cpu.Operations;
 
-public class SubtractInZeroPageModeOpcodeE5 : IInstruction
+public class SubtractWithCarry : IOperation
 {
-    public void Execute(Cpu6502 cpu)
+    public void Execute(Cpu6502 cpu, byte value, int address)
     {
-        cpu.ReadyForNextInstruction();
-        var address = cpu.ReadByteFromProgram();
-
-        cpu.ReadyForNextInstruction();
-        var value = cpu.ReadByteFromMemory(address);
- 
         var a = cpu.ReadByteFromAccumulator();
 
         value = (byte)~value;
