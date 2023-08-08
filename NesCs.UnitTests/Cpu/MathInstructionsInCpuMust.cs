@@ -716,6 +716,7 @@ public class MathInstructionsInCpuMust
     [MemberData(nameof(OpcodeDBJsonFeeder))]
     [MemberData(nameof(OpcodeE3JsonFeeder))]
     [MemberData(nameof(OpcodeE7JsonFeeder))]
+    [MemberData(nameof(OpcodeEBJsonFeeder))]
     [MemberData(nameof(OpcodeEFJsonFeeder))]
     [MemberData(nameof(OpcodeF3JsonFeeder))]
     [MemberData(nameof(OpcodeF7JsonFeeder))]
