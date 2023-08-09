@@ -14,7 +14,8 @@ public class Operations
     public IFlagOperation Flag { get; }
     public IRotateFactory RotateLeft { get; }
     public IRotateFactory RotateRight { get; }
-    public IDecrementFactory Decrement { get; internal set; }
+    public IAutocrementFactory Decrement { get; internal set; }
+    public IAutocrementFactory Increment { get; internal set; }
     public ILoadFactory Load { get; internal set; }
 
     public Operations()
@@ -30,8 +31,9 @@ public class Operations
         SubtractWithCarry = new SubtractWithCarry();
         Flag = new FlagOperation();
         RotateLeft = new RotateFactory((b, a) => new RotateLeft(b, a));
-        Decrement = new DecrementFactory();
-        Load = new LoadFactory();
         RotateRight = new RotateFactory((b, a) => new RotateRight(b, a));
+        Decrement = new AutocrementFactory(v => (byte)(v - 1));
+        Increment = new AutocrementFactory(v => (byte)(v + 1));
+        Load = new LoadFactory();
     }
 }

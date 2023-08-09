@@ -1,19 +1,21 @@
 namespace NesCs.Logic.Cpu.Operations;
 
-public class Decrement : IOperation
+public class Autocrement : IOperation
 {
     private readonly Func<Cpu6502, int, byte, byte> _getValue;
     private readonly Action<Cpu6502, int, byte> _setValue;
+    private readonly Func<byte, byte> _operation;
 
-    public Decrement(Func<Cpu6502, int, byte, byte> getValue, Action<Cpu6502, int, byte> setValue)
+    public Autocrement(Func<Cpu6502, int, byte, byte> getValue, Action<Cpu6502, int, byte> setValue, Func<byte, byte> operation)
     {
         _getValue = getValue;
         _setValue = setValue;
+        _operation = operation;
     }
 
     public void Execute(Cpu6502 cpu, byte value, int address)
     {
-        var result = (byte)(_getValue(cpu, address, value) - 1);
+        var result = _operation(_getValue(cpu, address, value));
         _setValue(cpu, address, result);
 
         cpu.SetZeroFlagBasedOn(result);
