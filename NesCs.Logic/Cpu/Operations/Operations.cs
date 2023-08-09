@@ -13,6 +13,7 @@ public class Operations
     public IOperation SubtractWithCarry { get; }
     public IFlagOperation Flag { get; }
     public IOperation RotateLeft { get; }
+    public IRotateRightFactory RotateRight { get; }
     public IDecrementFactory Decrement { get; internal set; }
     public ILoadFactory Load { get; internal set; }
 
@@ -31,5 +32,6 @@ public class Operations
         RotateLeft = new RotateLeft();
         Decrement = new DecrementFactory();
         Load = new LoadFactory();
+        RotateRight = new RotateRightFactory();
     }
 }
