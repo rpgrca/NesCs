@@ -160,7 +160,7 @@ public partial class Cpu6502
             _instructions[0xC4] = new Instruction(0xC4, "CMP", As.ZeroPage, Doing.Compare.Y);
             _instructions[0xC5] = new Instruction(0xC5, "CMP", As.ZeroPage, Doing.Compare.Accumulator);
             _instructions[0xC6] = new Instruction(0xC6, "DEC", As.ZeroPage, Doing.Decrement.Memory);
-            _instructions[0xC8] = new IncrementYOpcodeC8();
+            _instructions[0xC8] = new Instruction(0xC8, "INY", As.Implied, Doing.Increment.Y);
             _instructions[0xC9] = new Instruction(0xC9, "CMP", As.Immediate, Doing.Compare.Accumulator);
             _instructions[0xCA] = new Instruction(0xCA, "DEX", As.Implied, Doing.Decrement.X);
             _instructions[0xCC] = new Instruction(0xCC, "CMP", As.Absolute, Doing.Compare.Y);
@@ -178,21 +178,21 @@ public partial class Cpu6502
             _instructions[0xE1] = new Instruction(0xE1, "SBC", As.IndirectXIndexed, Doing.SubtractWithCarry);
             _instructions[0xE4] = new Instruction(0xE4, "CMP", As.ZeroPage, Doing.Compare.X);
             _instructions[0xE5] = new Instruction(0xE5, "SBC", As.ZeroPage, Doing.SubtractWithCarry);
-            _instructions[0xE6] = new IncrementMemoryZeroPageOpcodeE6();
-            _instructions[0xE8] = new IncrementXOpcodeE8();
+            _instructions[0xE6] = new Instruction(0xE6, "INC", As.ZeroPage, Doing.Increment.Memory);
+            _instructions[0xE8] = new Instruction(0xE8, "INX", As.Implied, Doing.Increment.X);
             _instructions[0xE9] = new Instruction(0xE9, "SBC", As.Immediate, Doing.SubtractWithCarry);
             _instructions[0xEA] = new Instruction(0xEA, "NOP", As.Implied, Doing.Nop);
             _instructions[0xEC] = new Instruction(0xEC, "CMP", As.Absolute, Doing.Compare.X);
             _instructions[0xED] = new Instruction(0xED, "SBC", As.Absolute, Doing.SubtractWithCarry);
-            _instructions[0xEE] = new IncrementMemoryAbsoluteOpcodeEE();
+            _instructions[0xEE] = new Instruction(0xEE, "INC", As.Absolute, Doing.Increment.Memory);
             _instructions[0xF0] = new BranchIfEqualOpcodeF0();
             _instructions[0xF1] = new Instruction(0xF1, "SBC", As.IndirectYIndexed, Doing.SubtractWithCarry);
             _instructions[0xF5] = new Instruction(0xF5, "SBC", As.ZeroPageXIndexed, Doing.SubtractWithCarry);
-            _instructions[0xF6] = new IncrementMemoryZeroPageXOpcodeF6();
+            _instructions[0xF6] = new Instruction(0xF6, "INC", As.ZeroPageXIndexed, Doing.Increment.Memory);
             _instructions[0xF8] = new Instruction(0xF8, "SED", As.Implied, Doing.Flag.Plus.D);
             _instructions[0xF9] = new Instruction(0xF9, "SBC", As.AbsoluteYIndexed, Doing.SubtractWithCarry);
             _instructions[0xFD] = new Instruction(0xFD, "SBC", As.AbsoluteXIndexed.Common, Doing.SubtractWithCarry);
-            _instructions[0xFE] = new IncrementMemoryAbsoluteXOpcodeFE();
+            _instructions[0xFE] = new Instruction(0xFE, "INC", As.AbsoluteXIndexed.WithExtraRead, Doing.Increment.Memory);
         }
 
         public Builder Running(byte[] program)
