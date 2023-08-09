@@ -373,11 +373,11 @@ public partial class Cpu6502
             _instructions[0x7B] = new IllegalRotateRightAddOpcode7B();
             _instructions[0x7C] = new IllegalReadIgnoreOpcode7C();
             _instructions[0x7F] = new IllegalRotateRightAddOpcode7F();
-            _instructions[0x80] = new IllegalReadSkipOpcode80();
-            _instructions[0x82] = new IllegalReadSkipOpcode82();
+            _instructions[0x80] = new Instruction(0x80, "SKB", As.Immediate, Doing.Nop);
+            _instructions[0x82] = new Instruction(0x82, "SKB", As.Immediate, Doing.Nop);
             _instructions[0x83] = new IllegalSaxIndirectXOpcode83();
             _instructions[0x87] = new IllegalSaxAbsoluteYOpcode87();
-            _instructions[0x89] = new IllegalReadSkipOpcode89();
+            _instructions[0x89] = new Instruction(0x89, "SKB", As.Immediate, Doing.Nop);
             //_instructions[0x8B] R XAA, ANE
             _instructions[0x8F] = new IllegalSaxAbsoluteOpcode8F();
             //_instructions[0x92] R
@@ -396,7 +396,7 @@ public partial class Cpu6502
             _instructions[0xB7] = new IllegalLaxDirectYOpcodeB7();
             //_instructions[0xBB] R
             _instructions[0xBF] = new IllegalLaxAbsoluteYOpcodeBF();
-            _instructions[0xC2] = new IllegalReadSkipOpcodeC2();
+            _instructions[0xC2] = new Instruction(0xC2, "SKB", As.Immediate, Doing.Nop);
             _instructions[0xC3] = new IllegalInstruction(0xC3, "DCP", As.IndirectXIndexed, Doing.Decrement.Memory, Doing.Compare.Accumulator);
             _instructions[0xC7] = new IllegalInstruction(0xC7, "DCP", As.ZeroPage, Doing.Decrement.Memory, Doing.Compare.Accumulator);
             //_instructions[0xCB] R AXS / SBX
@@ -409,7 +409,7 @@ public partial class Cpu6502
             _instructions[0xDB] = new IllegalDecrementCompareOpcodeDB(As.AbsoluteYIndexed, Doing.Decrement.Memory, Doing.Compare.Accumulator);
             _instructions[0xDC] = new IllegalReadIgnoreOpcodeDC();
             _instructions[0xDF] = new IllegalDecrementCompareOpcodeDF();
-            _instructions[0xE2] = new IllegalReadSkipOpcodeE2();
+            _instructions[0xE2] = new Instruction(0xE2, "NOP*", As.Immediate, Doing.Nop);
             _instructions[0xE3] = new IllegalInstruction(0xE3, "ISC", As.IndirectXIndexed, Doing.Increment.Memory, Doing.SubtractWithCarry);
             _instructions[0xE7] = new IllegalInstruction(0xE7, "ISC", As.ZeroPage, Doing.Increment.Memory, Doing.SubtractWithCarry);
             _instructions[0xEB] = new IllegalSubtractOpcodeEB();
