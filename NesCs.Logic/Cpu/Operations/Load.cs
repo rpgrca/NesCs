@@ -6,11 +6,13 @@ public class Load : IOperation
 
     public Load(Action<Cpu6502, byte> loader) => _loader = loader;
 
-    public void Execute(Cpu6502 cpu, byte value, int address)
+    (int, byte) IOperation.Execute(Cpu6502 cpu, byte value, int address)
     {
         _loader(cpu, value);
 
         cpu.SetZeroFlagBasedOn(value);
         cpu.SetNegativeFlagBasedOn(value);
+
+        return (address, value);
     }
 }

@@ -4,7 +4,12 @@ public class Flag : IOperation
 {
     private readonly Action<Cpu6502> _action;
 
-    public Flag(Action<Cpu6502> action) => _action = action;
+    public Flag(Action<Cpu6502> action) =>
+        _action = action;
 
-    public void Execute(Cpu6502 cpu, byte value, int address) => _action(cpu);
+    (int, byte) IOperation.Execute(Cpu6502 cpu, byte value, int address)
+    {
+        _action(cpu);
+        return (address, value);
+    }
 }

@@ -6,7 +6,7 @@ public class Compare : IOperation
 
     public Compare(Func<Cpu6502, byte> reader) => _reader = reader;
 
-    public void Execute(Cpu6502 cpu, byte value, int address)
+    (int, byte) IOperation.Execute(Cpu6502 cpu, byte value, int address)
     {
         var minuend = _reader(cpu);
         cpu.ClearCarryFlag();
@@ -27,5 +27,7 @@ public class Compare : IOperation
         {
             cpu.SetNegativeFlag();
         }
+
+        return (address, value);
     }
 }

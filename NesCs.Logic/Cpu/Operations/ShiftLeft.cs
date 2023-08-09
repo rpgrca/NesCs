@@ -11,7 +11,7 @@ public class ShiftLeft : IOperation
         _setValue = setValue;
     }
 
-    public void Execute(Cpu6502 cpu, byte value, int address)
+    (int, byte) IOperation.Execute(Cpu6502 cpu, byte value, int address)
     {
         _preemptiveWrite(cpu, address, value);
         int result = value << 1;
@@ -30,5 +30,7 @@ public class ShiftLeft : IOperation
 
         cpu.SetNegativeFlagBasedOn(value);
         cpu.SetZeroFlagBasedOn(value);
+
+        return (address, value);
     }
 }

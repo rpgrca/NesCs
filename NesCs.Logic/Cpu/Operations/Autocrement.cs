@@ -13,12 +13,14 @@ public class Autocrement : IOperation
         _operation = operation;
     }
 
-    public void Execute(Cpu6502 cpu, byte value, int address)
+    (int, byte) IOperation.Execute(Cpu6502 cpu, byte value, int address)
     {
         var result = _operation(_getValue(cpu, address, value));
         _setValue(cpu, address, result);
 
         cpu.SetZeroFlagBasedOn(result);
         cpu.SetNegativeFlagBasedOn(result);
+
+        return (address, result);
     }
 }

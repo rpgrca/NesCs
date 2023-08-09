@@ -2,7 +2,7 @@ namespace NesCs.Logic.Cpu.Operations;
 
 public class SubtractWithCarry : IOperation
 {
-    public void Execute(Cpu6502 cpu, byte value, int address)
+    (int, byte) IOperation.Execute(Cpu6502 cpu, byte value, int address)
     {
         var a = cpu.ReadByteFromAccumulator();
 
@@ -29,5 +29,7 @@ public class SubtractWithCarry : IOperation
 
         cpu.SetZeroFlagBasedOn(result);
         cpu.SetNegativeFlagBasedOn(result);
+
+        return (address, value);
     }
 }

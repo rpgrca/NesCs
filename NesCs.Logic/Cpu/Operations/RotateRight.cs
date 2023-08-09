@@ -11,7 +11,7 @@ public class RotateRight : IOperation
         _setValue = setValue;
     }
 
-    public void Execute(Cpu6502 cpu, byte value, int address)
+    (int, byte) IOperation.Execute(Cpu6502 cpu, byte value, int address)
     {
         _extraWrite(cpu, address, value);
         var newCarry = (value & 1) == 1;
@@ -36,5 +36,7 @@ public class RotateRight : IOperation
 
         cpu.SetZeroFlagBasedOn(result);
         cpu.SetNegativeFlagBasedOn(result);
+
+        return (address, result);
     }
 }
