@@ -411,7 +411,7 @@ public partial class Cpu6502
             _instructions[0xDF] = new IllegalDecrementCompareOpcodeDF();
             _instructions[0xE2] = new IllegalReadSkipOpcodeE2();
             _instructions[0xE3] = new IllegalIncrementSubtractOpcodeE3();
-            _instructions[0xE7] = new IllegalIncrementSubtractOpcodeE7();
+            _instructions[0xE7] = new IllegalInstruction(0xE7, "ISC", As.ZeroPage, Doing.Increment.Memory, Doing.SubtractWithCarry);
             _instructions[0xEB] = new IllegalSubtractOpcodeEB();
             _instructions[0xEF] = new IllegalIncrementSubtractOpcodeEF();
             //_instructions[0xF2] R
