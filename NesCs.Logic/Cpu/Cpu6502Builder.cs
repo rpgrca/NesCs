@@ -404,9 +404,9 @@ public partial class Cpu6502
             //_instructions[0xD2] R
             _instructions[0xD3] = new IllegalDecrementCompareOpcodeD3();
             _instructions[0xD4] = new IllegalReadIgnoreOpcodeD4();
-            _instructions[0xD7] = new IllegalDecrementCompareOpcodeD7();
+            _instructions[0xD7] = new IllegalInstruction(0xD7, "DCP", As.ZeroPageXIndexed, Doing.Decrement.Memory, Doing.Compare.Accumulator);
             _instructions[0xDA] = new Instruction(0xDA, "NOP*", As.Implied, Doing.Nop);
-            _instructions[0xDB] = new IllegalDecrementCompareOpcodeDB();
+            _instructions[0xDB] = new IllegalDecrementCompareOpcodeDB(As.AbsoluteYIndexed, Doing.Decrement.Memory, Doing.Compare.Accumulator);
             _instructions[0xDC] = new IllegalReadIgnoreOpcodeDC();
             _instructions[0xDF] = new IllegalDecrementCompareOpcodeDF();
             _instructions[0xE2] = new IllegalReadSkipOpcodeE2();

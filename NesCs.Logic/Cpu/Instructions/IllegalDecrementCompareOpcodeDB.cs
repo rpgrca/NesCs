@@ -1,7 +1,21 @@
+using NesCs.Logic.Cpu.Addressings;
+using NesCs.Logic.Cpu.Operations;
+
 namespace NesCs.Logic.Cpu.Instructions;
 
 public class IllegalDecrementCompareOpcodeDB : IInstruction
 {
+    private readonly IAddressing _addressing;
+    private readonly IOperation _first;
+    private readonly IOperation _second;
+
+    public IllegalDecrementCompareOpcodeDB(IAddressing addressing, IOperation first, IOperation second)
+    {
+        _addressing = addressing;
+        _first = first;
+        _second = second;
+    }
+
     public void Execute(Cpu6502 cpu)
     {
         cpu.ReadyForNextInstruction();
@@ -17,8 +31,8 @@ public class IllegalDecrementCompareOpcodeDB : IInstruction
         cpu.ReadyForNextInstruction();
 
         var value = cpu.ReadByteFromMemory(address);
-        cpu.WriteByteToMemory(address, value);
 
+        cpu.WriteByteToMemory(address, value);
         value = (byte)(value - 1);
         cpu.WriteByteToMemory(address, value);
 
