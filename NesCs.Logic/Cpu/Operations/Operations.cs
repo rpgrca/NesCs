@@ -12,8 +12,8 @@ public class Operations
     public ICompareFactory Compare { get; }
     public IOperation SubtractWithCarry { get; }
     public IFlagOperation Flag { get; }
-    public IOperation RotateLeft { get; }
-    public IRotateRightFactory RotateRight { get; }
+    public IRotateFactory RotateLeft { get; }
+    public IRotateFactory RotateRight { get; }
     public IDecrementFactory Decrement { get; internal set; }
     public ILoadFactory Load { get; internal set; }
 
@@ -29,9 +29,9 @@ public class Operations
         Compare = new CompareFactory();
         SubtractWithCarry = new SubtractWithCarry();
         Flag = new FlagOperation();
-        RotateLeft = new RotateLeft();
+        RotateLeft = new RotateFactory((b, a) => new RotateLeft(b, a));
         Decrement = new DecrementFactory();
         Load = new LoadFactory();
-        RotateRight = new RotateRightFactory();
+        RotateRight = new RotateFactory((b, a) => new RotateRight(b, a));
     }
 }
