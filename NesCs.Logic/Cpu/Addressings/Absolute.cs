@@ -2,6 +2,10 @@ namespace NesCs.Logic.Cpu.Addressings;
 
 public class Absolute : IAddressing
 {
+    private readonly Func<Cpu6502, int, byte> _reader;
+
+    public Absolute(Func<Cpu6502, int, byte> reader) => _reader = reader;
+
     (int, byte) IAddressing.ObtainValueAndAddress(Cpu6502 cpu)
     {
         cpu.ReadyForNextInstruction();
@@ -12,6 +16,6 @@ public class Absolute : IAddressing
 
         cpu.ReadyForNextInstruction();
         var address = high << 8 | low;
-        return (address, cpu.ReadByteFromMemory(address));
+        return (address, _reader(cpu, address));
     }
 }

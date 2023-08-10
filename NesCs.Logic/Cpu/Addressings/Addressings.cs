@@ -3,7 +3,7 @@ namespace NesCs.Logic.Cpu.Addressings;
 public class Addressings
 {
     public IAddressing Accumulator { get; }
-    public IAddressing Absolute { get; }
+    public IAbsoluteFactory Absolute { get; }
     public IAbsoluteXIndexedFactory AbsoluteXIndexed { get; }
     public IAddressing AbsoluteYIndexed { get; }
     public IAddressing Immediate { get; }
@@ -12,14 +12,14 @@ public class Addressings
     public IAddressing IndirectXIndexed { get; }
     public IAddressing IndirectYIndexed { get; }
     public IAddressing Relative { get; }
-    public IAddressing ZeroPage { get; }
-    public IAddressing ZeroPageXIndexed { get; }
-    public IAddressing ZeroPageYIndexed { get; }
+    public IZeroPageFactory ZeroPage { get; }
+    public IZeroPageXIndexedFactory ZeroPageXIndexed { get; }
+    public IZeroPageYIndexedFactory ZeroPageYIndexed { get; }
 
     public Addressings()
     {
         Accumulator = new Accumulator();
-        Absolute = new Absolute();
+        Absolute = new AbsoluteFactory();
         AbsoluteXIndexed = new AbsoluteXIndexedFactory();
         AbsoluteYIndexed = new AbsoluteYIndexed();
         Immediate = new Immediate();
@@ -28,8 +28,8 @@ public class Addressings
         IndirectXIndexed = new IndirectXIndexed();
         IndirectYIndexed = new IndirectYIndexed();
         Relative = new Relative();
-        ZeroPage = new ZeroPage();
-        ZeroPageXIndexed = new ZeroPageXIndexed();
-        ZeroPageYIndexed = new ZeroPageYIndexed();
+        ZeroPage = new ZeroPageFactory();
+        ZeroPageXIndexed = new ZeroPageXIndexedFactory();
+        ZeroPageYIndexed = new ZeroPageYIndexedFactory();
     }
 }
