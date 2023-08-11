@@ -9,7 +9,7 @@ public class Addressings
     public IAddressing Immediate { get; }
     public IAddressing Implied { get; }
     public IAddressing Indirect { get; }
-    public IAddressing IndirectXIndexed { get; }
+    public IIndirectXIndexedFactory IndirectXIndexed { get; }
     public IAddressing IndirectYIndexed { get; }
     public IAddressing Relative { get; }
     public IZeroPageFactory ZeroPage { get; }
@@ -25,7 +25,7 @@ public class Addressings
         Immediate = new Immediate();
         Implied = new Implied();
         Indirect = new Indirect();
-        IndirectXIndexed = new IndirectXIndexed();
+        IndirectXIndexed = new IndirectXIndexedFactory();
         IndirectYIndexed = new IndirectYIndexed();
         Relative = new Relative();
         ZeroPage = new ZeroPageFactory();
