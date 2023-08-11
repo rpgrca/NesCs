@@ -121,7 +121,7 @@ public partial class Cpu6502
             _instructions[0x88] = new Instruction(0x88, "DEY", As.Implied, Doing.Decrement.Y);
             _instructions[0x8A] = new TransferXToAccumulatorOpcode8A();
             _instructions[0x8C] = new Instruction(0x8C, "STY", As.Absolute.Y, Doing.Store.Memory);
-            _instructions[0x8D] = new StoreAccumulatorAbsoluteOpcode8D();
+            _instructions[0x8D] = new Instruction(0x8D, "STA", As.Absolute.Accumulator, Doing.Store.Memory);
             _instructions[0x8E] = new Instruction(0x8E, "STX", As.Absolute.X,  Doing.Store.Memory);
             _instructions[0x90] = new BranchIfCarryNotSetOpcode90();
             _instructions[0x91] = new StoreAccumulatorIndirectYOpcode91();
