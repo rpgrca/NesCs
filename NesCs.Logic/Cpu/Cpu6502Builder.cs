@@ -116,7 +116,7 @@ public partial class Cpu6502
             _instructions[0x7E] = new Instruction(0x7E, "ROR", As.AbsoluteXIndexed.WithExtraRead, Doing.RotateRight.OnMemory);
             _instructions[0x81] = new Instruction(0x81, "STA", As.IndirectXIndexed.Accumulator, Doing.Store.Memory);
             _instructions[0x84] = new Instruction(0x84, "STY", As.ZeroPage.Y, Doing.Store.Memory);
-            _instructions[0x85] = new StoreAccumulatorZeroPageOpcode85();
+            _instructions[0x85] = new Instruction(0x85, "STA", As.ZeroPage.Accumulator, Doing.Store.Memory);
             _instructions[0x86] = new Instruction(0x88, "STX", As.ZeroPage.X, Doing.Store.Memory);
             _instructions[0x88] = new Instruction(0x88, "DEY", As.Implied, Doing.Decrement.Y);
             _instructions[0x8A] = new TransferXToAccumulatorOpcode8A();
