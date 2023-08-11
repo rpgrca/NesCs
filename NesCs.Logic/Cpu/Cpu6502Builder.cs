@@ -122,7 +122,7 @@ public partial class Cpu6502
             _instructions[0x8A] = new TransferXToAccumulatorOpcode8A();
             _instructions[0x8C] = new Instruction(0x8C, "STY", As.Absolute.Y, Doing.Store.Memory);
             _instructions[0x8D] = new StoreAccumulatorAbsoluteOpcode8D();
-            _instructions[0x8E] = new Instruction(0x8E, "STX", As.Absolute.X,  Doing.Store.Memory);// StoreRegisterXAbsoluteOpcode8E();
+            _instructions[0x8E] = new Instruction(0x8E, "STX", As.Absolute.X,  Doing.Store.Memory);
             _instructions[0x90] = new BranchIfCarryNotSetOpcode90();
             _instructions[0x91] = new StoreAccumulatorIndirectYOpcode91();
             _instructions[0x94] = new Instruction(0x94,"STY", As.ZeroPageXIndexed.Y, Doing.Store.Memory);
@@ -131,7 +131,7 @@ public partial class Cpu6502
             _instructions[0x98] = new TransferYToAccumulatorOpcode98();
             _instructions[0x99] = new StoreAccumulatorAbsoluteYOpcode99();
             _instructions[0x9A] = new TransferXToStackOpcode9A();
-            _instructions[0x9D] = new StoreAccumulatorAbsoluteXOpcode9D();
+            _instructions[0x9D] = new /*Instruction(0x9D, "STA", As.AbsoluteXIndexed.Common1, Doing.Store.Memory);*/ StoreAccumulatorAbsoluteXOpcode9D();
             _instructions[0xA0] = new Instruction(0xA0, "LDY", As.Immediate, Doing.Load.Y);
             _instructions[0xA1] = new Instruction(0xA1, "LDA", As.IndirectXIndexed, Doing.Load.Accumulator);
             _instructions[0xA2] = new Instruction(0xA2, "LDX", As.Immediate, Doing.Load.X);

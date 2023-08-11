@@ -2,9 +2,14 @@ namespace NesCs.Logic.Cpu.Addressings;
 
 public class AbsoluteXIndexed : IAddressing
 {
-    private readonly Action<Cpu6502, int> _extraRead;
+    private readonly Action<Cpu6502, int> _readWhenInSamePage;
+    private readonly Func<Cpu6502, int, byte, byte> _readWhenInDifferentPage;
 
-    public AbsoluteXIndexed(Action<Cpu6502, int> extraRead) => _extraRead = extraRead;
+    public AbsoluteXIndexed(Func<Cpu6502, int, byte, byte> readWhenInDifferentPage, Action<Cpu6502, int> readWhenInSamePage)
+    {
+        _readWhenInDifferentPage = readWhenInDifferentPage;
+        _readWhenInSamePage = readWhenInSamePage;
+    }
 
     (int, byte) IAddressing.ObtainValueAndAddress(Cpu6502 cpu)
     {
@@ -22,11 +27,11 @@ public class AbsoluteXIndexed : IAddressing
         if (address != pageJumpAddress)
         {
             address = pageJumpAddress;
-            value = cpu.ReadByteFromMemory(address);
+            value = _readWhenInDifferentPage(cpu, address, value);
         }
         else
         {
-            _extraRead(cpu, address);
+            _readWhenInSamePage(cpu, address);
         }
 
         return (address, value);
