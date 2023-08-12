@@ -10,7 +10,7 @@ public class Mask
         set => _flags |= (byte)(value & 1);
     }
 
-    public byte LB
+    public byte Lm
     {
         get => (byte)((_flags >> 1) & 1);
         set => _flags |= (byte)((value & 1) << 1);
@@ -20,5 +20,11 @@ public class Mask
     {
         get => (byte)((_flags >> 2) & 1);
         set => _flags |= (byte)((value & 1) << 2);
+    }
+
+    public byte Lb
+    {
+        get => (byte)((_flags >> 3) & 1);
+        set => _flags |= (byte)((value & 1) << 3);
     }
 }

@@ -22,10 +22,10 @@ public class MaskMust
     {
         var sut = new Logic.Ppu.Mask
         {
-            LB = value
+            Lm = value
         };
 
-        Assert.Equal(value, sut.LB);
+        Assert.Equal(value, sut.Lm);
     }
 
     [Theory]
@@ -39,6 +39,19 @@ public class MaskMust
         };
 
         Assert.Equal(value, sut.M);
+    }
+
+    [Theory]
+    [InlineData(0)]
+    [InlineData(1)]
+    public void SetShowBackgroundFlagCorrectly(byte value)
+    {
+        var sut = new Logic.Ppu.Mask
+        {
+            Lb = value
+        };
+
+        Assert.Equal(value, sut.Lb);
     }
 
 }
