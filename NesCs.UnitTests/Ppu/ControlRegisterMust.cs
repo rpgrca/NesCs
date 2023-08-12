@@ -66,4 +66,28 @@ public class ControlRegisterMust
         };
         Assert.Equal(expectedAddress, sut.GetSpritePatternTableAddress());
     }
+
+    [Theory]
+    [InlineData(0)]
+    [InlineData(1)]
+    public void SetBackgroundPatternTableAddressCorrectly(byte value)
+    {
+        var sut = new Logic.Ppu.ControlRegister
+        {
+            B = value
+        };
+        Assert.Equal(value, sut.B);
+    }
+
+    [Theory]
+    [InlineData(0, 0x0000)]
+    [InlineData(1, 0x1000)]
+    public void CalculateBackgroundPatternTableAddressCorrectly(byte value, int expectedAddress)
+    {
+        var sut = new Logic.Ppu.ControlRegister
+        {
+            B = value
+        };
+        Assert.Equal(expectedAddress, sut.GetBackgroundPatternTableAddress());
+    }
 }

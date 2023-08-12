@@ -22,7 +22,15 @@ public class ControlRegister
         set => _flags |= (byte)((value & 1) << 3);
     }
 
+    public byte B
+    {
+        get => (byte)((_flags & 0b10000) >> 4);
+        set => _flags |= (byte)((value & 1) << 4);
+    }
+
     public int GetBaseNametableAddress() => 0x2000 + N * 0x400;
 
     public int GetSpritePatternTableAddress() => 0x1000 * S;
+
+    public int GetBackgroundPatternTableAddress() => 0x1000 * B;
 }
