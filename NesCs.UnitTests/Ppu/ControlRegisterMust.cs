@@ -42,4 +42,28 @@ public class ControlRegisterMust
         };
         Assert.Equal(value, sut.I);
     }
+
+    [Theory]
+    [InlineData(0)]
+    [InlineData(1)]
+    public void SetSpritePatternTableAddressCorrectly(byte value)
+    {
+        var sut = new Logic.Ppu.ControlRegister
+        {
+            S = value
+        };
+        Assert.Equal(value, sut.S);
+    }
+
+    [Theory]
+    [InlineData(0, 0x0000)]
+    [InlineData(1, 0x1000)]
+    public void CalculateSpritePatternTableAddressCorrectly(byte value, int expectedAddress)
+    {
+        var sut = new Logic.Ppu.ControlRegister
+        {
+            S = value
+        };
+        Assert.Equal(expectedAddress, sut.GetSpritePatternTableAddress());
+    }
 }
