@@ -15,4 +15,10 @@ public class Mask
         get => (byte)((_flags >> 1) & 1);
         set => _flags |= (byte)((value & 1) << 1);
     }
+
+    public byte M
+    {
+        get => (byte)((_flags >> 2) & 1);
+        set => _flags |= (byte)((value & 1) << 2);
+    }
 }
