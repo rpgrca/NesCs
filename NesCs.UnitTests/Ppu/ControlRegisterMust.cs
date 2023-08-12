@@ -102,4 +102,16 @@ public class ControlRegisterMust
         };
         Assert.Equal(value, sut.H);
     }
+
+    [Theory]
+    [InlineData(0)]
+    [InlineData(1)]
+    public void SetPpuMasterSlaveCorrectly(byte value)
+    {
+        var sut = new Logic.Ppu.ControlRegister
+        {
+            P = value
+        };
+        Assert.Equal(value, sut.P);
+    }
 }
