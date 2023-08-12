@@ -1,5 +1,7 @@
 using NesCs.Logic.Ppu;
 
+namespace NesCs.UnitTests.Ppu;
+
 public class Ppu2C02Must
 {
     [Fact]

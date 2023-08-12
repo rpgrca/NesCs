@@ -2,7 +2,7 @@ namespace NesCs.Logic.Ppu;
 
 public class Ppu2C02
 {
-    public Controller PpuCtrl { get; }
+    public ControlRegister PpuCtrl { get; }
     public Mask PpuMask { get; }
     public Status PpuStatus { get; }
     public ObjectAttributeMemory OamData { get; }
@@ -13,7 +13,7 @@ public class Ppu2C02
 
     public Ppu2C02()
     {
-        PpuCtrl = new Controller();
+        PpuCtrl = new ControlRegister();
         PpuMask = new Mask();
         PpuStatus = new Status();
         OamData = new ObjectAttributeMemory();
