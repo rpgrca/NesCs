@@ -90,4 +90,16 @@ public class ControlRegisterMust
         };
         Assert.Equal(expectedAddress, sut.GetBackgroundPatternTableAddress());
     }
+
+    [Theory]
+    [InlineData(0)]
+    [InlineData(1)]
+    public void SetSpriteSizeCorrectly(byte value)
+    {
+        var sut = new Logic.Ppu.ControlRegister
+        {
+            H = value
+        };
+        Assert.Equal(value, sut.H);
+    }
 }
