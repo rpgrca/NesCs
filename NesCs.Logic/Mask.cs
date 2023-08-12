@@ -9,4 +9,10 @@ public class Mask
         get => (byte)(_flags & 1);
         set => _flags |= (byte)(value & 1);
     }
+
+    public byte LB
+    {
+        get => (byte)((_flags >> 1) & 1);
+        set => _flags |= (byte)((value & 1) << 1);
+    }
 }
