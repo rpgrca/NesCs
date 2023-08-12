@@ -114,4 +114,16 @@ public class ControlRegisterMust
         };
         Assert.Equal(value, sut.P);
     }
+
+    [Theory]
+    [InlineData(0)]
+    [InlineData(1)]
+    public void SetNmiAtStartOfVerticalBlankingIntervalCorrectly(byte value)
+    {
+        var sut = new Logic.Ppu.ControlRegister
+        {
+            V = value
+        };
+        Assert.Equal(value, sut.V);
+    }
 }

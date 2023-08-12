@@ -40,6 +40,12 @@ public class ControlRegister
         set => _flags |= (byte)((value & 1) << 6);
     }
 
+    public byte V
+    {
+        get => (byte)((_flags & 0b10000000) >> 7);
+        set => _flags |= (byte)((value & 1) << 7);
+    }
+
     public int GetBaseNametableAddress() => 0x2000 + N * 0x400;
 
     public int GetSpritePatternTableAddress() => 0x1000 * S;
