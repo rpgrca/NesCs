@@ -11,6 +11,7 @@ public class Ppu2C02Must
         Assert.NotNull(sut.PpuCtrl);
         Assert.NotNull(sut.PpuMask);
         Assert.NotNull(sut.PpuStatus);
+        Assert.NotNull(sut.OamAddr);
         Assert.NotNull(sut.OamData);
         Assert.NotNull(sut.PpuScroll);
         Assert.NotNull(sut.PpuAddr);

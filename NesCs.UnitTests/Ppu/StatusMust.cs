@@ -27,4 +27,16 @@ public class StatusMust
         };
         Assert.Equal(value, sut.O);
     }
+
+    [Theory]
+    [InlineData(0)]
+    [InlineData(1)]
+    public void SetVerticalBlankStartCorrectly(byte value)
+    {
+        var sut = new Logic.Ppu.Status
+        {
+            V = value
+        };
+        Assert.Equal(value, sut.V);
+    }
 }

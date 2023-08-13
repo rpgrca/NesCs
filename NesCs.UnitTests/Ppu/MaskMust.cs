@@ -105,5 +105,4 @@ public class MaskMust
 
         Assert.Equal(value, sut.B);
     }
-
 }

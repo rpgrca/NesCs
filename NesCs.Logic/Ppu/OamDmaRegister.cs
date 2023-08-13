@@ -1,6 +1,5 @@
 namespace NesCs.Logic.Ppu;
 
-public class DataPort
+public class OamDmaRegister
 {
-
 }

@@ -1,6 +1,6 @@
 namespace NesCs.Logic.Ppu;
 
-public class Address
+public class AddressRegister
 {
 
 }
