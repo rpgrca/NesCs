@@ -9,10 +9,10 @@ public class MaskMust
     {
         var sut = new Logic.Ppu.Mask
         {
-            G = value
+            Grey = value
         };
 
-        Assert.Equal(value, sut.G);
+        Assert.Equal(value, sut.Grey);
     }
 
     [Theory]
@@ -78,6 +78,19 @@ public class MaskMust
         };
 
         Assert.Equal(value, sut.R);
+    }
+
+    [Theory]
+    [InlineData(0)]
+    [InlineData(1)]
+    public void SetEmphasizeGreenFlagCorrectly(byte value)
+    {
+        var sut = new Logic.Ppu.Mask
+        {
+            G = value
+        };
+
+        Assert.Equal(value, sut.G);
     }
 
 }

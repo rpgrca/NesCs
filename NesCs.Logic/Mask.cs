@@ -4,7 +4,7 @@ public class Mask
 {
     private byte _flags;
 
-    public byte G
+    public byte Grey
     {
         get => (byte)(_flags & 1);
         set => _flags |= (byte)(value & 1);
@@ -38,5 +38,11 @@ public class Mask
     {
         get => (byte)((_flags >> 5) & 1);
         set => _flags |= (byte)((value & 1) << 5);
+    }
+
+    public byte G
+    {
+        get => (byte)((_flags >> 6) & 1);
+        set => _flags |= (byte)((value & 1) << 6);
     }
 }
