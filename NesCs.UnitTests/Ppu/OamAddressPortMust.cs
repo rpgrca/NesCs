@@ -12,7 +12,6 @@ public class OamAddressPortMust
         {
             Address = value
         };
-
         Assert.Equal(value, sut.Address);
     }
 }

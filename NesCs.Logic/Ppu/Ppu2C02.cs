@@ -18,7 +18,7 @@ public class Ppu2C02
         PpuMask = new Mask();
         PpuStatus = new Status();
         OamAddr = new OamAddressPort();
-        OamData = new OamDataPort();
+        OamData = new OamDataPort(OamAddr);
         PpuScroll = new Scroll();
         PpuAddr = new AddressRegister();
         PpuData = new DataPort();
