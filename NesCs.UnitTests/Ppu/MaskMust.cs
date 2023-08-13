@@ -54,4 +54,30 @@ public class MaskMust
         Assert.Equal(value, sut.Lb);
     }
 
+    [Theory]
+    [InlineData(0)]
+    [InlineData(1)]
+    public void SetShowSpritesFlagCorrectly(byte value)
+    {
+        var sut = new Logic.Ppu.Mask
+        {
+            Ls = value
+        };
+
+        Assert.Equal(value, sut.Ls);
+    }
+
+    [Theory]
+    [InlineData(0)]
+    [InlineData(1)]
+    public void SetEmphasizeRedFlagCorrectly(byte value)
+    {
+        var sut = new Logic.Ppu.Mask
+        {
+            R = value
+        };
+
+        Assert.Equal(value, sut.R);
+    }
+
 }
