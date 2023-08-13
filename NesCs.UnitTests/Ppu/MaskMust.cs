@@ -93,4 +93,17 @@ public class MaskMust
         Assert.Equal(value, sut.G);
     }
 
+    [Theory]
+    [InlineData(0)]
+    [InlineData(1)]
+    public void SetEmphasizeBlueFlagCorrectly(byte value)
+    {
+        var sut = new Logic.Ppu.Mask
+        {
+            B = value
+        };
+
+        Assert.Equal(value, sut.B);
+    }
+
 }
