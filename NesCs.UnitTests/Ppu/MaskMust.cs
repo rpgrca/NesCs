@@ -1,3 +1,5 @@
+using Microsoft.VisualBasic;
+
 namespace NesCs.UnitTests.Ppu;
 
 public class MaskMust
