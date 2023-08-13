@@ -31,6 +31,19 @@ public class StatusMust
     [Theory]
     [InlineData(0)]
     [InlineData(1)]
+    public void SetSpriteZeroHitCorrectly(byte value)
+    {
+        var sut = new Logic.Ppu.Status
+        {
+            S = value
+        };
+        Assert.Equal(value, sut.S);
+    }
+
+
+    [Theory]
+    [InlineData(0)]
+    [InlineData(1)]
     public void SetVerticalBlankStartCorrectly(byte value)
     {
         var sut = new Logic.Ppu.Status
