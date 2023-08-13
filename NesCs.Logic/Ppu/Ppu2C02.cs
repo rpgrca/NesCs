@@ -2,6 +2,9 @@ namespace NesCs.Logic.Ppu;
 
 public class Ppu2C02
 {
+    private readonly byte[] _map;
+    private readonly OamSprite[] _oam;
+    
     public ControlRegister PpuCtrl { get; } /* 0x2000 */
     public Mask PpuMask { get; }            /* 0x2001 */
     public Status PpuStatus { get; }        /* 0x2002 */
@@ -14,6 +17,9 @@ public class Ppu2C02
 
     public Ppu2C02()
     {
+        _map = new byte[0x4000];
+        _oam = new OamSprite[64];
+
         PpuCtrl = new ControlRegister();
         PpuMask = new Mask();
         PpuStatus = new Status();
