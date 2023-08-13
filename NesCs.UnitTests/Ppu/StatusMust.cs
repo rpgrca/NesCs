@@ -1,3 +1,5 @@
+using System.Windows.Markup;
+
 namespace NesCs.UnitTests.Ppu;
 
 public class StatusMust
@@ -13,6 +15,7 @@ public class StatusMust
         {
             OpenBus = value
         };
+
         Assert.Equal(expectedValue, sut.OpenBus);
     }
 
@@ -25,6 +28,7 @@ public class StatusMust
         {
             O = value
         };
+
         Assert.Equal(value, sut.O);
     }
 
@@ -37,6 +41,7 @@ public class StatusMust
         {
             S = value
         };
+
         Assert.Equal(value, sut.S);
     }
 
@@ -50,6 +55,7 @@ public class StatusMust
         {
             V = value
         };
+
         Assert.Equal(value, sut.V);
     }
 }
