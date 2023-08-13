@@ -11,4 +11,10 @@ public class OamSprite
         get => _sprite[0];
         set => _sprite[0] = value;
     }
+
+    public byte IndexNumber
+    {
+        get => _sprite[1];
+        set => _sprite[1] = value;
+    }
 }
