@@ -57,7 +57,7 @@ public class OamSpriteMust
 
     [Theory]
     [InlineData(0, 0)]
-    [InlineData(1, 0b00100000)]
+    [InlineData(1, 0b100000)]
     public void SetPriorityCorrectly(byte value, byte expectedFlag)
     {
         byte[] array = { 0, 0, 0, 0 };
@@ -66,4 +66,17 @@ public class OamSpriteMust
         Assert.Equal(value, sut.Attributes.Priority);
         Assert.Equal(expectedFlag, array[2]);
     }
+
+    [Theory]
+    [InlineData(0, 0)]
+    [InlineData(1, 0b1000000)]
+    public void SetFlipHorizontallyCorrectly(byte value, byte expectedFlag)
+    {
+        byte[] array = { 0, 0, 0, 0 };
+        var sut = new OamSprite(ref array);
+        sut.Attributes.FlipHorizontally = value;
+        Assert.Equal(value, sut.Attributes.FlipHorizontally);
+        Assert.Equal(expectedFlag, array[2]);
+    }
+
 }
