@@ -22,4 +22,10 @@ public class OamSprite
         get => _sprite[1];
         set => _sprite[1] = value;
     }
+
+    public byte PositionX
+    {
+        get => _sprite[3];
+        set => _sprite[3] = value;
+    }
 }

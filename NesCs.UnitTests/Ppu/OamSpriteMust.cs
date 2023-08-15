@@ -91,5 +91,16 @@ public class OamSpriteMust
         Assert.Equal(expectedFlag, array[2]);
     }
 
+    [Fact]
+    public void SetSpritePositionXCorrectly()
+    {
+        byte[] array = { 0, 0, 0, 0 };
+        var sut = new OamSprite(ref array)
+        {
+            PositionX = 0x17
+        };
 
+        Assert.Equal(0x17, sut.PositionX);
+        Assert.Equal(0x17, array[3]);
+    }
 }
