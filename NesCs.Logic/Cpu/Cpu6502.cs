@@ -81,7 +81,7 @@ public partial class Cpu6502
 
         var opcode = ReadByteFromProgram();
         var instruction = _instructions[opcode];
-        _tracer.Display(instruction, PC, A, X, Y, P, S, _cycles);
+        _tracer.Display(instruction, instruction.PeekOperands(this), PC, A, X, Y, P, S, _cycles);
         _instructions[opcode].Execute(this);
     }
 
@@ -262,7 +262,7 @@ public partial class Cpu6502
 
     internal void ClearZeroFlag() => P &= ~ProcessorStatus.Z;
 
-    public byte PeekMemory(int address) => _ram[address];
+    public byte PeekMemory(int address) => _ram[address & 0xffff];
 
     public (ProcessorStatus P, byte A, int PC, byte X, byte Y, byte S) TakeSnapshot() => (P, A, PC, X, Y, S);
 }

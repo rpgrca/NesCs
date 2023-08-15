@@ -6,6 +6,8 @@ public class IllegalReadIgnoreOpcode0C : IInstruction
 
     public byte Opcode => 0x0C;
 
+    public byte[] PeekOperands(Cpu6502 cpu) => Array.Empty<byte>();
+
     public void Execute(Cpu6502 cpu)
     {
         cpu.ReadyForNextInstruction();

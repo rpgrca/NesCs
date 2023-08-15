@@ -13,6 +13,12 @@ public class IllegalDecrementCompareOpcodeDB : IInstruction
 
     public byte Opcode => 0xDB;
 
+    public byte[] PeekOperands(Cpu6502 cpu)
+    {
+        byte[] operands = { cpu.PeekMemory(cpu.ReadByteFromProgramCounter() + 1), cpu.PeekMemory(cpu.ReadByteFromProgramCounter() + 2) };
+        return operands;
+    }
+
     public IllegalDecrementCompareOpcodeDB(IAddressing addressing, IOperation first, IOperation second)
     {
         _addressing = addressing;

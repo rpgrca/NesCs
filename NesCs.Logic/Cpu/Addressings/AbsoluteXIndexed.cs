@@ -5,6 +5,12 @@ public class AbsoluteXIndexed : IAddressing
     private readonly Action<Cpu6502, int> _readWhenInSamePage;
     private readonly Func<Cpu6502, int, byte, byte> _readWhenInDifferentPage;
 
+    public byte[] PeekOperands(Cpu6502 cpu)
+    {
+        byte[] operands = { cpu.PeekMemory(cpu.ReadByteFromProgramCounter() + 1), cpu.PeekMemory(cpu.ReadByteFromProgramCounter() + 2) };
+        return operands;
+    }
+
     public AbsoluteXIndexed(Func<Cpu6502, int, byte, byte> readWhenInDifferentPage, Action<Cpu6502, int> readWhenInSamePage)
     {
         _readWhenInDifferentPage = readWhenInDifferentPage;

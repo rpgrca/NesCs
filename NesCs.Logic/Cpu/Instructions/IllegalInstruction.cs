@@ -12,6 +12,8 @@ public class IllegalInstruction : IInstruction
     public byte Opcode { get; private set; }
     public string Name { get; private set; }
 
+    public byte[] PeekOperands(Cpu6502 cpu) => _addressing.PeekOperands(cpu);
+
     public IllegalInstruction(byte opcode, string name, IAddressing addressing, IOperation first, IOperation second)
     {
         Opcode = opcode;

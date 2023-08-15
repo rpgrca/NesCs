@@ -6,6 +6,12 @@ public class ShiftRightAbsoluteXOpcode5E : IInstruction
 
     public byte Opcode => 0x5E;
 
+    public byte[] PeekOperands(Cpu6502 cpu)
+    {
+        byte[] operands = { cpu.PeekMemory(cpu.ReadByteFromProgramCounter() + 1), cpu.PeekMemory(cpu.ReadByteFromProgramCounter() + 2) };
+        return operands;
+    }
+
     public void Execute(Cpu6502 cpu)
     {
         cpu.ReadyForNextInstruction();

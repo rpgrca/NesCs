@@ -6,6 +6,12 @@ public class IllegalRotateRightAddOpcode7B : IInstruction
 
     public byte Opcode => 0x7B;
 
+    public byte[] PeekOperands(Cpu6502 cpu)
+    {
+        byte[] operands = { cpu.PeekMemory(cpu.ReadByteFromProgramCounter() + 1), cpu.PeekMemory(cpu.ReadByteFromProgramCounter() + 2) };
+        return operands;
+    }
+
     public void Execute(Cpu6502 cpu)
     {
         cpu.ReadyForNextInstruction();

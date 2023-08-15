@@ -6,6 +6,12 @@ public class ReturnFromSubroutineOpcode60 : IInstruction
 
     public byte Opcode => 0x60;
 
+    public byte[] PeekOperands(Cpu6502 cpu)
+    {
+        byte[] operands = { cpu.PeekMemory(cpu.ReadByteFromProgramCounter() + 1) };
+        return operands;
+    }
+
     // RTS
     //     #  address R/W description
     //    --- ------- --- -----------------------------------------------

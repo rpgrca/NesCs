@@ -12,6 +12,8 @@ public class Instruction : IInstruction
 
     public string Name { get; private set; }
 
+    public byte[] PeekOperands(Cpu6502 cpu) => _addressing.PeekOperands(cpu);
+
     public Instruction(byte opcode, string name, IAddressing addressing, IOperation operation)
     {
         Opcode = opcode;

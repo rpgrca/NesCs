@@ -6,6 +6,12 @@ public class IllegalShiftLeftOrOpcode17 : IInstruction
 
     public byte Opcode => 0x17;
 
+    public byte[] PeekOperands(Cpu6502 cpu)
+    {
+        byte[] operands = { cpu.PeekMemory(cpu.ReadByteFromProgramCounter() + 1) };
+        return operands;
+    }
+
     public void Execute(Cpu6502 cpu)
     {
         cpu.ReadyForNextInstruction();

@@ -2,6 +2,12 @@ namespace NesCs.Logic.Cpu.Addressings;
 
 public class IndirectYIndexed : IAddressing
 {
+    public byte[] PeekOperands(Cpu6502 cpu)
+    {
+        byte[] operands = { cpu.PeekMemory(cpu.ReadByteFromProgramCounter() + 1) };
+        return operands;
+    }
+
     (int, byte) IAddressing.ObtainValueAndAddress(Cpu6502 cpu)
     {
         cpu.ReadyForNextInstruction();

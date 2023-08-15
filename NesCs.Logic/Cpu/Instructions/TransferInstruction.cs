@@ -22,4 +22,6 @@ public abstract class TransferInstruction : IInstruction
     public abstract string Name { get; }
 
     protected abstract void StoreValueInFinalDestination(Cpu6502 cpu, byte value);
+
+    public byte[] PeekOperands(Cpu6502 cpu) => Array.Empty<byte>();
 }

@@ -8,6 +8,11 @@ public class TransferXToStackOpcode9A : IInstruction
 
     public byte Opcode => 0x9A;
 
+    public byte[] PeekOperands(Cpu6502 cpu)
+    {
+        return Array.Empty<byte>();
+    }
+
     public void Execute(Cpu6502 cpu)
     {
         var value = cpu.ReadByteFromRegisterX();

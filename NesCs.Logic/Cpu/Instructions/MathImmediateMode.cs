@@ -6,6 +6,12 @@ public abstract class MathImmediateMode : IInstruction
 
     public abstract byte Opcode { get; }
 
+    public byte[] PeekOperands(Cpu6502 cpu)
+    {
+        byte[] operands = { cpu.PeekMemory(cpu.ReadByteFromProgramCounter() + 1) };
+        return operands;
+    }
+
     public void Execute(Cpu6502 cpu)
     {
         cpu.ReadyForNextInstruction();

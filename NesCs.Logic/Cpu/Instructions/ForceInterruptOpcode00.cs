@@ -6,6 +6,8 @@ public class ForceInterruptOpcode00 : IInstruction
 
     public byte Opcode => 0x00;
 
+    public byte[] PeekOperands(Cpu6502 cpu) => Array.Empty<byte>();
+
     public void Execute(Cpu6502 cpu)
     {
         cpu.ReadyForNextInstruction();
