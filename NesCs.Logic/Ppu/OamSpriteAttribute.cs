@@ -23,4 +23,10 @@ public class OamSpriteAttribute
         get => (byte)((_flags[2] >> 6) & 1);
         set => _flags[2] |= (byte)((value & 1) << 6);
     }
+
+    public byte FlipVertically
+    {
+        get => (byte)((_flags[2] >> 7) & 1);
+        set => _flags[2] |= (byte)((value & 1) << 7);
+    }
 }

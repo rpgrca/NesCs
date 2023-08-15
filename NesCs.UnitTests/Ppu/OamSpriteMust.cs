@@ -79,4 +79,17 @@ public class OamSpriteMust
         Assert.Equal(expectedFlag, array[2]);
     }
 
+    [Theory]
+    [InlineData(0, 0)]
+    [InlineData(1, 0b10000000)]
+    public void SetFlipVerticallyCorrectly(byte value, byte expectedFlag)
+    {
+        byte[] array = { 0, 0, 0, 0 };
+        var sut = new OamSprite(ref array);
+        sut.Attributes.FlipVertically = value;
+        Assert.Equal(value, sut.Attributes.FlipVertically);
+        Assert.Equal(expectedFlag, array[2]);
+    }
+
+
 }
