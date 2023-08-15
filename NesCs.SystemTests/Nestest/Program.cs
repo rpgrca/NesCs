@@ -45,6 +45,7 @@ var cpu = builder
     })
     .Build();
 
+cpu.PowerOn();
 cpu.Reset();
 cpu.Run();
 

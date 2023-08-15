@@ -2,6 +2,10 @@ namespace NesCs.Logic.Cpu.Instructions;
 
 public class ShiftRightAbsoluteOpcode4E : IInstruction
 {
+    public string Name => "LSR";
+
+    public byte Opcode => 0x4E;
+
     public void Execute(Cpu6502 cpu)
     {
         cpu.ReadyForNextInstruction();

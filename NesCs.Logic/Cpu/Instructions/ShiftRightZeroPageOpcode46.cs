@@ -2,6 +2,10 @@ namespace NesCs.Logic.Cpu.Instructions;
 
 public class ShiftRightZeroPageOpcode46 : IInstruction
 {
+    public string Name => "LSR";
+
+    public byte Opcode => 0x46;
+
     public void Execute(Cpu6502 cpu)
     {
         cpu.ReadyForNextInstruction();

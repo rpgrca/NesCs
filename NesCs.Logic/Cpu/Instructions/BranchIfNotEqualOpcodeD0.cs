@@ -2,6 +2,10 @@ namespace NesCs.Logic.Cpu.Instructions;
 
 public class BranchIfNotEqualOpcodeD0 : IInstruction
 {
+    public string Name => "BNE";
+
+    public byte Opcode => 0xD0;
+
     public void Execute(Cpu6502 cpu)
     {
         cpu.ReadyForNextInstruction();

@@ -2,6 +2,10 @@ namespace NesCs.Logic.Cpu.Instructions;
 
 public class ShiftRightAccumulatorOpcode4A : IInstruction
 {
+    public string Name => "LSR";
+
+    public byte Opcode => 0x4A;
+
     public void Execute(Cpu6502 cpu)
     {
         cpu.ReadyForNextInstruction();

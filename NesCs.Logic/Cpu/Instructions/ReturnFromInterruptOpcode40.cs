@@ -2,6 +2,10 @@ namespace NesCs.Logic.Cpu.Instructions;
 
 public class ReturnFromInterruptOpcode40 : IInstruction
 {
+    public string Name => "RTI";
+
+    public byte Opcode => 0x40;
+
     public void Execute(Cpu6502 cpu)
     {
         cpu.ReadyForNextInstruction();

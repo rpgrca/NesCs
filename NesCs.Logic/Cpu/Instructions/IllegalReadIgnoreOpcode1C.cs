@@ -2,6 +2,10 @@ namespace NesCs.Logic.Cpu.Instructions;
 
 public class IllegalReadIgnoreOpcode1C : IInstruction
 {
+    public virtual string Name => "IGN";
+
+    public virtual byte Opcode => 0x1C;
+
     public void Execute(Cpu6502 cpu)
     {
         cpu.ReadyForNextInstruction();

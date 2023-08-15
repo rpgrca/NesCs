@@ -2,6 +2,10 @@ namespace NesCs.Logic.Cpu.Instructions;
 
 public class BranchIfCarrySetOpcodeB0 : IInstruction
 {
+    public string Name => "BCS";
+
+    public byte Opcode => 0xB0;
+
     public void Execute(Cpu6502 cpu)
     {
         cpu.ReadyForNextInstruction();

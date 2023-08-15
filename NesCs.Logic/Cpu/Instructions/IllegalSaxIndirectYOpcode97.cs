@@ -2,6 +2,10 @@ namespace NesCs.Logic.Cpu.Instructions;
 
 public class IllegalSaxIndirectYOpcode97 : IInstruction
 {
+    public string Name => "SAX";
+
+    public byte Opcode => 0x97;
+
     public void Execute(Cpu6502 cpu)
     {
         cpu.ReadyForNextInstruction();

@@ -2,6 +2,10 @@ namespace NesCs.Logic.Cpu.Instructions;
 
 public class PushProcessorStatusOpcode08 : IInstruction
 {
+    public string Name => "PHP";
+
+    public byte Opcode => 0x08;
+
     public void Execute(Cpu6502 cpu)
     {
         cpu.ReadyForNextInstruction();

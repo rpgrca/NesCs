@@ -11,6 +11,10 @@ public class NotImplementedInstruction : IInstruction
         _message = message;
     }
 
+    public string Name => "NI";
+
+    public byte Opcode => 0x00;
+
     public void Execute(Cpu6502 cpu) =>
         throw new NotImplementedException($"Not implemented opcode {_opcode:X}: {_message}");
 }

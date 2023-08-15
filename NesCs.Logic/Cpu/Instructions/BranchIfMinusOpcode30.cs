@@ -2,6 +2,10 @@ namespace NesCs.Logic.Cpu.Instructions;
 
 public class BranchIfMinusOpcode30 : IInstruction
 {
+    public string Name => "BMI";
+
+    public byte Opcode => 0x30;
+
     public void Execute(Cpu6502 cpu)
     {
         cpu.ReadyForNextInstruction();

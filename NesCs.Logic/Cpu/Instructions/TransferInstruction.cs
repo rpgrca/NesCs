@@ -17,5 +17,9 @@ public abstract class TransferInstruction : IInstruction
 
     protected abstract byte ObtainValueFromSource(Cpu6502 cpu);
 
+    public abstract byte Opcode { get; }
+
+    public abstract string Name { get; }
+
     protected abstract void StoreValueInFinalDestination(Cpu6502 cpu, byte value);
 }

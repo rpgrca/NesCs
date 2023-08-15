@@ -2,6 +2,10 @@ namespace NesCs.Logic.Cpu.Instructions;
 
 public class IllegalShiftLeftOrOpcode17 : IInstruction
 {
+    public string Name => "SLO";
+
+    public byte Opcode => 0x17;
+
     public void Execute(Cpu6502 cpu)
     {
         cpu.ReadyForNextInstruction();

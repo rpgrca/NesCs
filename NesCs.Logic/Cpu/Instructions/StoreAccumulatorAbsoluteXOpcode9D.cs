@@ -2,6 +2,10 @@ namespace NesCs.Logic.Cpu.Instructions;
 
 public class StoreAccumulatorAbsoluteXOpcode9D : IInstruction
 {
+    public string Name => "STA";
+
+    public byte Opcode => 0x9D;
+
     public void Execute(Cpu6502 cpu)
     {
         cpu.ReadyForNextInstruction();

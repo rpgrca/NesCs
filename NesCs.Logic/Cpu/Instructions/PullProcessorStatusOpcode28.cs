@@ -2,6 +2,10 @@ namespace NesCs.Logic.Cpu.Instructions;
 
 public class PullProcessorStatusOpcode28 : IInstruction
 {
+    public string Name => "PLP";
+
+    public byte Opcode => 0x28;
+
     public void Execute(Cpu6502 cpu)
     {
         cpu.ReadyForNextInstruction();

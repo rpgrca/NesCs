@@ -1,15 +1,16 @@
 using NesCs.Logic;
 using NesCs.Logic.Cpu;
+using NesCs.Logic.Cpu.Instructions;
 
 public class Vm6502DebuggerDisplay : ITracer
 {
     private string _previous = "$0000: $00 $00";
     private string _current = "$0000: $00 $00";
 
-    public void Display(byte opcode, int pc, byte a, byte x, byte y, ProcessorStatus p, byte s, int cycles)
+    public void Display(IInstruction instruction, int pc, byte a, byte x, byte y, ProcessorStatus p, byte s, int cycles)
     {
         _previous = _current;
-        _current = $"${pc:X4}: ${opcode:X2}        ";
+        _current = $"${pc:X4}: ${instruction.Opcode:X2}        ";
         System.Diagnostics.Debug.Print($"*-----------------*-----------------------*----------*----------*------------*");
         System.Diagnostics.Debug.Print($"|    PC: ${pc:X4}    |  Acc: ${a:X2} ({Convert.ToString(a, 2).PadLeft(8, '0')})  |  X: ${x:X2}  |  Y: ${y:X2}  |  {cycles:D08}  |");
         System.Diagnostics.Debug.Print("*-----------------*-----------------------*----------*----------*------------*");

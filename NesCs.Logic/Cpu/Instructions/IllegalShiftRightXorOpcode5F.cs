@@ -2,6 +2,10 @@ namespace NesCs.Logic.Cpu.Instructions;
 
 public class IllegalShiftRightXorOpcode5F : IInstruction
 {
+    public string Name => "SRE";
+
+    public byte Opcode => 0x5F;
+
     public void Execute(Cpu6502 cpu)
     {
 

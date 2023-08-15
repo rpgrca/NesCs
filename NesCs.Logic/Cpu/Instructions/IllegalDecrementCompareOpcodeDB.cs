@@ -9,6 +9,10 @@ public class IllegalDecrementCompareOpcodeDB : IInstruction
     private readonly IOperation _first;
     private readonly IOperation _second;
 
+    public string Name => "DCP";
+
+    public byte Opcode => 0xDB;
+
     public IllegalDecrementCompareOpcodeDB(IAddressing addressing, IOperation first, IOperation second)
     {
         _addressing = addressing;

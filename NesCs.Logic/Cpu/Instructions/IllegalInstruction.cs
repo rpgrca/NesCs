@@ -5,16 +5,17 @@ namespace NesCs.Logic.Cpu.Instructions;
 
 public class IllegalInstruction : IInstruction
 {
-    protected readonly byte _opcode;
-    protected readonly string _name;
     protected readonly IAddressing _addressing;
     protected readonly IOperation _first;
     protected readonly IOperation _second;
 
+    public byte Opcode { get; private set; }
+    public string Name { get; private set; }
+
     public IllegalInstruction(byte opcode, string name, IAddressing addressing, IOperation first, IOperation second)
     {
-        _opcode = opcode;
-        _name = name;
+        Opcode = opcode;
+        Name = name;
         _addressing = addressing;
         _first = first;
         _second = second;

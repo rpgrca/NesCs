@@ -2,6 +2,10 @@ namespace NesCs.Logic.Cpu.Instructions;
 
 public class JumpToSubroutineOpcode20 : IInstruction
 {
+    public string Name => "JSR";
+
+    public byte Opcode => 0x20;
+
     public void Execute(Cpu6502 cpu)
     {
         cpu.ReadyForNextInstruction();

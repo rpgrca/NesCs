@@ -2,6 +2,10 @@ namespace NesCs.Logic.Cpu.Instructions;
 
 public class IllegalRotateRightAddOpcode73 : IInstruction
 {
+    public string Name => "RRA";
+
+    public byte Opcode => 0x73;
+
     public void Execute(Cpu6502 cpu)
     {
         cpu.ReadyForNextInstruction();

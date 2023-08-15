@@ -2,6 +2,10 @@ namespace NesCs.Logic.Cpu.Instructions;
 
 public class BranchIfPositiveOpcode10 : IInstruction
 {
+    public string Name => "BPL";
+
+    public byte Opcode => 0x10;
+
     public void Execute(Cpu6502 cpu)
     {
         cpu.ReadyForNextInstruction();

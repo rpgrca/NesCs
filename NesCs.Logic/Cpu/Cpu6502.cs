@@ -51,8 +51,8 @@ public partial class Cpu6502
         _stopped = false;
     }
 
-/*
-    private void PowerOn()
+
+    public void PowerOn()
     {
         A = X = Y = 0;
         P = (ProcessorStatus)0x34;
@@ -70,7 +70,7 @@ public partial class Cpu6502
         {
             _ram[index] = 0x00;
         }
-    }*/
+    }
 
     public void Step()
     {
@@ -80,7 +80,8 @@ public partial class Cpu6502
         }
 
         var opcode = ReadByteFromProgram();
-        _tracer.Display(opcode, PC, A, X, Y, P, S, _cycles);
+        var instruction = _instructions[opcode];
+        _tracer.Display(instruction, PC, A, X, Y, P, S, _cycles);
         _instructions[opcode].Execute(this);
     }
 

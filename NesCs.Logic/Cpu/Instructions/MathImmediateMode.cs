@@ -2,6 +2,10 @@ namespace NesCs.Logic.Cpu.Instructions;
 
 public abstract class MathImmediateMode : IInstruction
 {
+    public abstract string Name { get; }
+
+    public abstract byte Opcode { get; }
+
     public void Execute(Cpu6502 cpu)
     {
         cpu.ReadyForNextInstruction();

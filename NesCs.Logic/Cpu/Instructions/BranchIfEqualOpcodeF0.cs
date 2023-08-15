@@ -2,6 +2,10 @@ namespace NesCs.Logic.Cpu.Instructions;
 
 public class BranchIfEqualOpcodeF0 : IInstruction
 {
+    public string Name => "BEQ";
+
+    public byte Opcode => 0xF0;
+
     public void Execute(Cpu6502 cpu)
     {
         cpu.ReadyForNextInstruction();

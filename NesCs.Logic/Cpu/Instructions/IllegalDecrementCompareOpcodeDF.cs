@@ -2,6 +2,10 @@ namespace NesCs.Logic.Cpu.Instructions;
 
 public class IllegalDecrementCompareOpcodeDF : IInstruction
 {
+    public string Name => "DCP";
+
+    public byte Opcode => 0xDF;
+
     public void Execute(Cpu6502 cpu)
     {
         cpu.ReadyForNextInstruction();

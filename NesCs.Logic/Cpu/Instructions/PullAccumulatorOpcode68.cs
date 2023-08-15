@@ -2,6 +2,10 @@ namespace NesCs.Logic.Cpu.Instructions;
 
 public class PullAccumulatorOpcode68 : IInstruction
 {
+    public string Name => "PLA";
+
+    public byte Opcode => 0x68;
+
     public void Execute(Cpu6502 cpu)
     {
         cpu.ReadyForNextInstruction();

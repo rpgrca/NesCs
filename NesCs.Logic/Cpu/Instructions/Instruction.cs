@@ -5,15 +5,17 @@ namespace NesCs.Logic.Cpu.Instructions;
 
 public class Instruction : IInstruction
 {
-    protected readonly byte _opcode;
-    protected readonly string _name;
     protected readonly IAddressing _addressing;
     protected readonly IOperation _operation;
 
+    public byte Opcode { get; private set; }
+
+    public string Name { get; private set; }
+
     public Instruction(byte opcode, string name, IAddressing addressing, IOperation operation)
     {
-        _opcode = opcode;
-        _name = name;
+        Opcode = opcode;
+        Name = name;
         _addressing = addressing;
         _operation = operation;
     }

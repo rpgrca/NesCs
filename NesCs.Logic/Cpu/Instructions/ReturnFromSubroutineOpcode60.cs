@@ -2,6 +2,10 @@ namespace NesCs.Logic.Cpu.Instructions;
 
 public class ReturnFromSubroutineOpcode60 : IInstruction
 {
+    public string Name => "RTS";
+
+    public byte Opcode => 0x60;
+
     // RTS
     //     #  address R/W description
     //    --- ------- --- -----------------------------------------------

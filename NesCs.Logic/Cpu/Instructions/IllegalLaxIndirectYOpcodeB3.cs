@@ -2,6 +2,10 @@ namespace NesCs.Logic.Cpu.Instructions;
 
 public class IllegalLaxIndirectYOpcodeB3 : IInstruction
 {
+    public string Name => "LAX";
+
+    public byte Opcode => 0xB3;
+
     public void Execute(Cpu6502 cpu)
     {
         cpu.ReadyForNextInstruction();

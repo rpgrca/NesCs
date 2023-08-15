@@ -1,5 +1,6 @@
 using NesCs.Logic;
 using NesCs.Logic.Cpu;
+using NesCs.Logic.Cpu.Instructions;
 
 public class TracerSpy : ITracer
 {
@@ -11,7 +12,7 @@ public class TracerSpy : ITracer
 
     public void Read(int address, byte value) => _trace.Add((address, value, "read"));
 
-    public void Display(byte opcode, int pc, byte a, byte x, byte y, ProcessorStatus p, byte s, int cycles)
+    public void Display(IInstruction instruction, int pc, byte a, byte x, byte y, ProcessorStatus p, byte s, int cycles)
     {
     }
 }

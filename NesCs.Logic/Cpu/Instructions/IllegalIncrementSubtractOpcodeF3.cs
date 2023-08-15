@@ -2,6 +2,10 @@ namespace NesCs.Logic.Cpu.Instructions;
 
 public class IllegalIncrementSubtractOpcodeF3 : IInstruction
 {
+    public string Name => "ISC";
+
+    public byte Opcode => 0xF3;
+
     public void Execute(Cpu6502 cpu)
     {
         cpu.ReadyForNextInstruction();

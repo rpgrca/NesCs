@@ -2,6 +2,10 @@ namespace NesCs.Logic.Cpu.Instructions;
 
 public class BranchIfOverflowNotSetOpcode50 : IInstruction
 {
+    public string Name => "BVC";
+
+    public byte Opcode => 0x50;
+
     public void Execute(Cpu6502 cpu)
     {
         cpu.ReadyForNextInstruction();

@@ -2,6 +2,10 @@ namespace NesCs.Logic.Cpu.Instructions;
 
 public class ForceInterruptOpcode00 : IInstruction
 {
+    public string Name => "BRK";
+
+    public byte Opcode => 0x00;
+
     public void Execute(Cpu6502 cpu)
     {
         cpu.ReadyForNextInstruction();
