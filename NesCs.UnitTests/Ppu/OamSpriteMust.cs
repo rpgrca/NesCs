@@ -1,3 +1,4 @@
+using Microsoft.VisualBasic;
 using NesCs.Logic.Ppu;
 
 namespace NesCs.UnitTests.Ppu;
@@ -11,6 +12,7 @@ public class OamSpriteMust
         var sut = new OamSprite(ref array);
         Assert.Equal(0, sut.PositionY);
         Assert.Equal(0, sut.IndexNumber);
+        Assert.Equal(0, sut.Attributes.Palette);
     }
 
     [Fact]
@@ -37,5 +39,19 @@ public class OamSpriteMust
 
         Assert.Equal(0x18, sut.IndexNumber);
         Assert.Equal(0x18, array[1]);
+    }
+
+    [Theory]
+    [InlineData(0)]
+    [InlineData(1)]
+    [InlineData(2)]
+    [InlineData(3)]
+    public void SetPaletteCorrectly(byte value)
+    {
+        byte[] array = { 0, 0, 0, 0 };
+        var sut = new OamSprite(ref array);
+        sut.Attributes.Palette = value;
+        Assert.Equal(value, sut.Attributes.Palette);
+        Assert.Equal(value, array[2]);
     }
 }

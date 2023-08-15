@@ -3,8 +3,13 @@ namespace NesCs.Logic.Ppu;
 public class OamSprite
 {
     private readonly byte[] _sprite;
+    public OamSpriteAttribute Attributes { get; private set; }
 
-    public OamSprite(ref byte[] sprite) => _sprite = sprite;
+    public OamSprite(ref byte[] sprite)
+    {
+        _sprite = sprite;
+        Attributes = new OamSpriteAttribute(ref _sprite);
+    }
 
     public byte PositionY
     {
