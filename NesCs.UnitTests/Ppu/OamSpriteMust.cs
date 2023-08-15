@@ -54,4 +54,16 @@ public class OamSpriteMust
         Assert.Equal(value, sut.Attributes.Palette);
         Assert.Equal(value, array[2]);
     }
+
+    [Theory]
+    [InlineData(0, 0)]
+    [InlineData(1, 0b00100000)]
+    public void SetPriorityCorrectly(byte value, byte expectedFlag)
+    {
+        byte[] array = { 0, 0, 0, 0 };
+        var sut = new OamSprite(ref array);
+        sut.Attributes.Priority = value;
+        Assert.Equal(value, sut.Attributes.Priority);
+        Assert.Equal(expectedFlag, array[2]);
+    }
 }
