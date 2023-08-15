@@ -1,4 +1,3 @@
-using Microsoft.VisualBasic;
 using NesCs.Logic.Ppu;
 
 namespace NesCs.UnitTests.Ppu;
@@ -13,6 +12,7 @@ public class OamSpriteMust
         Assert.Equal(0, sut.PositionY);
         Assert.Equal(0, sut.IndexNumber);
         Assert.Equal(0, sut.Attributes.Palette);
+        Assert.Equal(0, sut.PositionX);
     }
 
     [Fact]
