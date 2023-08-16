@@ -4,7 +4,7 @@ public class Operations
 {
     public IOperation AddWithCarry { get; }
     public IOperation BitTest { get; }
-    public IOperation And { get; }
+    public IAndFactory And { get; }
     public IOperation Or { get; }
     public IOperation Xor { get; }
     public IShiftLeftFactory ShiftLeft { get; }
@@ -24,7 +24,7 @@ public class Operations
     {
         AddWithCarry = new AddWithCarry();
         BitTest = new BitTest();
-        And = new And();
+        And = new AndFactory();
         Or = new Or();
         Xor = new Xor();
         ShiftLeft = new ShiftLeftFactory();
