@@ -86,10 +86,10 @@ public partial class Cpu6502
             _instructions[0x46] = new ShiftRightZeroPageOpcode46();
             _instructions[0x48] = new PushAccumulatorOpcode48();
             _instructions[0x49] = new Instruction(0x49, "EOR", As.Immediate, Doing.Xor);
-            _instructions[0x4A] = new ShiftRightAccumulatorOpcode4A();
+            _instructions[0x4A] = new Instruction(0x4A, "LSR", As.Accumulator, Doing.ShiftRight.Accumulator);
             _instructions[0x4C] = new JumpInAbsoluteModeOpcode4C();
             _instructions[0x4D] = new Instruction(0x4D, "EOR", As.Absolute.Memory, Doing.Xor);
-            _instructions[0x4E] = new Instruction(0x4E, "LSR", As.Absolute.Memory, Doing.ShiftRight.Memory); //ShiftRightAbsoluteOpcode4E();
+            _instructions[0x4E] = new Instruction(0x4E, "LSR", As.Absolute.Memory, Doing.ShiftRight.Memory);
             _instructions[0x50] = new BranchIfOverflowNotSetOpcode50();
             _instructions[0x51] = new Instruction(0x51, "EOR", As.IndirectYIndexed.Memory, Doing.Xor);
             _instructions[0x55] = new Instruction(0x55, "EOR", As.ZeroPageXIndexed.Memory, Doing.Xor);
