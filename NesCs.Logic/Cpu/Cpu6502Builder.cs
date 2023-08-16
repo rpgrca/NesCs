@@ -390,7 +390,7 @@ public partial class Cpu6502
             //_instructions[0x9C] W
             //_instructions[0x9E] W
             //_instructions[0x9F] W
-            _instructions[0xA3] = new IllegalLaxIndirectYOpcodeA3();
+            _instructions[0xA3] = new IllegalInstruction(0xA3, "LAX", As.IndirectXIndexed.Memory, Doing.Load.Accumulator, Doing.Load.X);
             _instructions[0xA7] = new IllegalLaxIndirectOpcodeA7();
             //_instructions[0xAB] R
             _instructions[0xAF] = new IllegalLaxAbsoluteOpcodeAF();
