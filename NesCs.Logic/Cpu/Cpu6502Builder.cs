@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using NesCs.Logic.Cpu.Instructions;
 using NesCs.Logic.Ram;
 
@@ -394,8 +395,8 @@ public partial class Cpu6502
             //_instructions[0xAB] R
             _instructions[0xAF] = new IllegalLaxAbsoluteOpcodeAF();
             //_instructions[0xB2] R
-            _instructions[0xB3] = new IllegalLaxIndirectYOpcodeB3();
-            _instructions[0xB7] = new IllegalLaxDirectYOpcodeB7();
+            _instructions[0xB3] = new IllegalInstruction(0xB3, "LAX", As.IndirectYIndexed.Memory, Doing.Load.Accumulator, Doing.Load.X);
+            _instructions[0xB7] = new IllegalInstruction(0xB7, "LAX", As.ZeroPageYIndexed.Memory, Doing.Load.Accumulator, Doing.Load.X);
             //_instructions[0xBB] R
             _instructions[0xBF] = new IllegalInstruction(0xBF, "LAX", As.AbsoluteYIndexed.Common, Doing.Load.Accumulator, Doing.Load.X);
             _instructions[0xC2] = new Instruction(0xC2, "SKB", As.Immediate, Doing.Nop);
