@@ -378,7 +378,7 @@ public partial class Cpu6502
             _instructions[0x7F] = new IllegalInstruction(0x7F, "RRA", As.AbsoluteXIndexed.DoubleMemoryRead, Doing.RotateRight.OnMemory, Doing.AddWithCarry);
             _instructions[0x80] = new Instruction(0x80, "SKB", As.Immediate, Doing.Nop);
             _instructions[0x82] = new Instruction(0x82, "SKB", As.Immediate, Doing.Nop);
-            _instructions[0x83] = new IllegalSaxIndirectXOpcode83();
+            _instructions[0x83] = new Instruction(0x83, "SAX", As.IndirectXIndexed.X, Doing.And.Memory);
             _instructions[0x87] = new Instruction(0x87, "SAX", As.ZeroPage.X, Doing.And.Memory);
             _instructions[0x89] = new Instruction(0x89, "SKB", As.Immediate, Doing.Nop);
             //_instructions[0x8B] R XAA, ANE
