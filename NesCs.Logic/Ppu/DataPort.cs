@@ -12,4 +12,6 @@ public class DataPort
             _data = value;
         }
     }
+
+    public void Write(byte value) => Data = value;
 }

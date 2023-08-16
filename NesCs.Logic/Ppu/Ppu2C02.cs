@@ -1,6 +1,8 @@
+using NesCs.Logic.Ram;
+
 namespace NesCs.Logic.Ppu;
 
-public class Ppu2C02
+public class Ppu2C02 : IRamHook
 {
     private readonly byte[] _map;
     private readonly OamSprite[] _oam;
@@ -32,4 +34,21 @@ public class Ppu2C02
         PpuData = new DataPort();
         OamDma = new OamDmaRegister();
     }
+
+    public void Call(int index, byte value, byte[] ram)
+    {
+        switch (index)
+        {
+            case 0x2000: PpuCtrl.Write(value); break;
+            case 0x2001: PpuMask.Write(value); break;
+            case 0x2002: PpuStatus.Write(value); break;
+            case 0x2003: OamAddr.Write(value); break;
+            case 0x2004: OamData.Write(value); break;
+            case 0x2005: PpuScroll.Write(value); break;
+            case 0x2006: PpuAddr.Write(value); break;
+            case 0x2007: PpuData.Write(value); break;
+        }
+    }
+
+    public bool CanHandle(int index) => index >= 0x2000 && index <= 0x2007;
 }

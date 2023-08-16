@@ -17,4 +17,6 @@ public class OamDataPort
             _address.IncrementAddress();
         }
     }
+
+    public void Write(byte value) => _address.Write(value);
 }

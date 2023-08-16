@@ -79,10 +79,9 @@ public partial class Cpu6502
             _callbacks[PC].Invoke(this);
         }
 
-        var opcode = ReadByteFromProgram();
-        var instruction = _instructions[opcode];
+        var instruction = _instructions[ReadByteFromProgram()];
         _tracer.Display(instruction, instruction.PeekOperands(this), PC, A, X, Y, P, S, _cycles);
-        _instructions[opcode].Execute(this);
+        instruction.Execute(this);
     }
 
     public void Stop() => _stopped = true;
@@ -95,6 +94,10 @@ public partial class Cpu6502
             {
                 Step();
             }
+
+            // TODO: VSC bug makes application run in background when stopping while debugging
+            // filling /var/log/syslog, putting an early exit just in case.
+            if (_cycles > 50000) Stop();
         }
         catch (Exception ex)
         {

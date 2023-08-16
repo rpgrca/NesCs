@@ -51,4 +51,6 @@ public class Mask
         get => (byte)((_flags >> 7) & 1);
         set => _flags |= (byte)((value & 1) << 7);
     }
+
+    public void Write(byte value) => _flags = value;
 }

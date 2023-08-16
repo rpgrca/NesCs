@@ -6,8 +6,8 @@ public class ScrollingPositionRegister
     private byte[] _cameraPosition = { 0, 0 };
 
     public byte CameraPositionX => _cameraPosition[0];
-    public byte CameraPositionY => _cameraPosition[1];
 
+    public byte CameraPositionY => _cameraPosition[1];
 
     public byte Position {
         private get => 0;
@@ -17,4 +17,6 @@ public class ScrollingPositionRegister
             _index = (byte)((_index + 1) & 1);
         }
     }
+
+    public void Write(byte value) => Position = value;
 }

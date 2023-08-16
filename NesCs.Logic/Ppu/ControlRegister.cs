@@ -46,6 +46,8 @@ public class ControlRegister
         set => _flags |= (byte)((value & 1) << 7);
     }
 
+    public void Write(byte value) => _flags = value;
+
     public int GetBaseNametableAddress() => 0x2000 + N * 0x400;
 
     public int GetSpritePatternTableAddress() => 0x1000 * S;

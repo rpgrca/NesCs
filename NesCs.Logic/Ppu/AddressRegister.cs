@@ -17,4 +17,6 @@ public class AddressRegister
             _index = (byte)((_index + 1) & 1);
         }
     }
+
+    public void Write(byte value) => Address = value;
 }
