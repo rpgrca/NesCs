@@ -143,7 +143,7 @@ public partial class Cpu6502
             _instructions[0xA6] = new Instruction(0xA6, "LDX", As.ZeroPage.Memory, Doing.Load.X);
             _instructions[0xA8] = new TransferAccumulatorToYOpcodeA8();
             _instructions[0xA9] = new Instruction(0xA9, "LDA", As.Immediate, Doing.Load.Accumulator);
-            _instructions[0xAA] = new TransferAccumulatorToXOpcodeAA();
+            _instructions[0xAA] = new Instruction(0xAA, "TAX", As.Accumulator, Doing.Load.X);
             _instructions[0xAC] = new Instruction(0xAC, "LDY", As.Absolute.Memory, Doing.Load.Y);
             _instructions[0xAD] = new Instruction(0xAD, "LDA", As.Absolute.Memory, Doing.Load.Accumulator);
             _instructions[0xAE] = new Instruction(0xAE, "LDX", As.Absolute.Memory, Doing.Load.X);
