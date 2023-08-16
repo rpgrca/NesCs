@@ -422,7 +422,7 @@ public partial class Cpu6502
             _instructions[0xF4] = new IllegalInstruction(0x54, "IGN", As.ZeroPageXIndexed.Memory, Doing.Nop, Doing.Nop);
             _instructions[0xF7] = new IllegalInstruction(0xF7, "ISC", As.ZeroPageXIndexed.Memory, Doing.Increment.Memory, Doing.SubtractWithCarry);
             _instructions[0xFA] = new Instruction(0xFA, "NOP*", As.Implied, Doing.Nop);
-            _instructions[0xFB] = new IllegalIncrementSubtractOpcodeFB();
+            _instructions[0xFB] = new IllegalInstruction(0xFB, "ISC", As.AbsoluteYIndexed.DoubleMemoryRead, Doing.Increment.Memory, Doing.SubtractWithCarry);
             _instructions[0xFC] = new IllegalReadIgnoreOpcodeFC();
             _instructions[0xFF] = new IllegalIncrementSubtractOpcodeFF();
         }
