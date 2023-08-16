@@ -97,7 +97,7 @@ public partial class Cpu6502
             _instructions[0x58] = new Instruction(0x58, "CLI", As.Implied, Doing.Flag.Minus.I);
             _instructions[0x59] = new Instruction(0x59, "EOR", As.AbsoluteYIndexed.Common, Doing.Xor);
             _instructions[0x5D] = new Instruction(0x5D, "EOR", As.AbsoluteXIndexed.Common, Doing.Xor);
-            _instructions[0x5E] = new ShiftRightAbsoluteXOpcode5E();
+            _instructions[0x5E] = new Instruction(0x5E, "LSR", As.AbsoluteXIndexed.DoubleMemoryRead, Doing.ShiftRight.Memory);
             _instructions[0x60] = new ReturnFromSubroutineOpcode60();
             _instructions[0x61] = new Instruction(0x61, "ADC", As.IndirectXIndexed.Memory, Doing.AddWithCarry);
             _instructions[0x65] = new Instruction(0x65, "ADC", As.ZeroPage.Memory, Doing.AddWithCarry);
