@@ -382,7 +382,7 @@ public partial class Cpu6502
             _instructions[0x87] = new Instruction(0x87, "SAX", As.ZeroPage.X, Doing.And.Memory);
             _instructions[0x89] = new Instruction(0x89, "SKB", As.Immediate, Doing.Nop);
             //_instructions[0x8B] R XAA, ANE
-            _instructions[0x8F] = new IllegalSaxAbsoluteOpcode8F();
+            _instructions[0x8F] = new Instruction(0x8F, "SAX", As.Absolute.X, Doing.And.Memory);
             //_instructions[0x92] R
             //_instructions[0x93] W
             _instructions[0x97] = new Instruction(0x97, "SAX", As.ZeroPageYIndexed.X, Doing.And.Memory);
