@@ -1,4 +1,5 @@
 using NesCs.Logic.Cpu.Instructions;
+using NesCs.Logic.Ram;
 
 namespace NesCs.Logic.Cpu;
 
@@ -8,7 +9,7 @@ public partial class Cpu6502
     {
         private ProcessorStatus _p;
         private byte _a, _x, _y, _s;
-        private int _pc, _ramSize, _programSize, _cycles, _nmiVector, _resetVector, _irqVector;
+        private int _pc, _programSize, _cycles, _nmiVector, _resetVector, _irqVector;
         private byte[] _program;
         private readonly List<int> _mappedProgramAddresses;
         private (int Address, byte Value)[] _patch;
@@ -18,6 +19,7 @@ public partial class Cpu6502
         private bool _enableInvalid;
         private readonly Addressings.Addressings As;
         private readonly Operations.Operations Doing;
+        private IRamController _ramController;
 
         public Builder()
         {
@@ -29,10 +31,11 @@ public partial class Cpu6502
             _callbacks = new Dictionary<int, Action<Cpu6502>>();
             _p = ProcessorStatus.None;
             _a = _x = _y = _s = 0;
-            _ramSize = _pc = _programSize = _cycles = 0;
+            _pc = _programSize = _cycles = 0;
             _program = Array.Empty<byte>();
             _patch = Array.Empty<(int, byte)>();
             _tracer = new DummyTracer();
+            _ramController = new DummyRamController();
             As = new Addressings.Addressings();
             Doing = new Operations.Operations();
 
@@ -243,9 +246,9 @@ public partial class Cpu6502
             return this;
         }
 
-        public Builder WithRamSizeOf(int size)
+        public Builder WithRamController(IRamController ramController)
         {
-            _ramSize = size;
+            _ramController = ramController;
             return this;
         }
 
@@ -307,10 +310,9 @@ public partial class Cpu6502
         {
             _patch ??= Array.Empty<(int, byte)>();
             if (_programSize < 1) _programSize = _program.Length;
-            if (_ramSize < 1) _ramSize = 0x10000;
             if (_enableInvalid) AddInvalidOpcodes();
 
-            return new Cpu6502(_program, _programSize, _ramSize, _mappedProgramAddresses.ToArray(),
+            return new Cpu6502(_program, _programSize, _ramController, _mappedProgramAddresses.ToArray(),
                 _pc, _a, _x, _y, _s, _p, _cycles, _patch, _instructions, _tracer, _callbacks,
                 _resetVector, _nmiVector, _irqVector);
         }

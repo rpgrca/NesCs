@@ -1,6 +1,6 @@
 namespace NesCs.Logic.Ram;
 
-public class RamController
+public class RamController : IRamController
 {
     public class Builder
     {
@@ -48,4 +48,7 @@ public class RamController
             }
         }
     }
+
+    public void Copy(byte[] program, int startIndex, int memoryOffset, int programSize) =>
+        Array.Copy(program, 0, _ram, memoryOffset, programSize);
 }

@@ -1,4 +1,5 @@
 using NesCs.Logic.Cpu.Instructions;
+using NesCs.Logic.Ram;
 
 namespace NesCs.Logic.Cpu;
 
@@ -16,19 +17,18 @@ public partial class Cpu6502
     private readonly int _resetVector;
     private readonly int _nmiVector;
     private readonly int _irqVector;
-    private readonly byte[] _ram;
+    private readonly IRamController _ram;
     private readonly IInstruction[] _instructions;
     private readonly ITracer _tracer;
     private readonly Dictionary<int, Action<Cpu6502>> _callbacks;
 
-    private Cpu6502(byte[] program, int programSize, int ramSize, int[] memoryOffsets, int pc, byte a, byte x, byte y, byte s, ProcessorStatus p, int cycles, (int Address, byte Value)[] ramPatches, IInstruction[] instructions, ITracer tracer, Dictionary<int, Action<Cpu6502>> callbacks, int resetVector, int nmiVector, int irqVector)
+    private Cpu6502(byte[] program, int programSize, IRamController ramController, int[] memoryOffsets, int pc, byte a, byte x, byte y, byte s, ProcessorStatus p, int cycles, (int Address, byte Value)[] ramPatches, IInstruction[] instructions, ITracer tracer, Dictionary<int, Action<Cpu6502>> callbacks, int resetVector, int nmiVector, int irqVector)
     {
         _callbacks = callbacks;
-        _ram = new byte[ramSize];
-
+        _ram = ramController;
         foreach (var memoryOffset in memoryOffsets)
         {
-            Array.Copy(program, 0, _ram, memoryOffset, programSize);
+            _ram.Copy(program, 0, memoryOffset, programSize);
         }
 
         foreach (var (address, value) in ramPatches)

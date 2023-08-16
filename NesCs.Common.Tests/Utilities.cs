@@ -1,5 +1,6 @@
 using Xunit;
 using NesCs.Logic.Cpu;
+using NesCs.Logic.Ram;
 
 namespace NesCs.Common.Tests;
 
@@ -8,7 +9,7 @@ public static class Utilities
     public static Cpu6502 CreateSubjectUnderTestFromSample(SampleStatus initial, List<(int, byte, string)> trace) =>
         new Cpu6502.Builder()
             .ProgramMappedAt(initial.PC)
-            .WithRamSizeOf(0x10000)
+            .WithRamController(new RamController.Builder().WithRamSizeOf(0x10000).Build())
             .WithStackPointerAt(initial.S)
             .WithProcessorStatusAs(initial.P)
             .WithXAs(initial.X)
