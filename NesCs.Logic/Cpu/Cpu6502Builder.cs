@@ -362,7 +362,7 @@ public partial class Cpu6502
             _instructions[0x5C] = new IllegalReadIgnoreOpcode5C();
             _instructions[0x5F] = new IllegalShiftRightXorOpcode5F();
             //_instructions[0x62] R
-            _instructions[0x63] = new IllegalRotateRightAddOpcode63();
+            _instructions[0x63] = new IllegalInstruction(0x63, "RRA", As.IndirectXIndexed.Memory, Doing.RotateRight.OnMemory, Doing.AddWithCarry);
             _instructions[0x64] = new IllegalReadIgnoreOpcode64();
             _instructions[0x67] = new IllegalInstruction(0x67, "RRA", As.ZeroPage.Memory, Doing.RotateRight.OnMemory, Doing.AddWithCarry);
             //_instructions[0x6B] R
