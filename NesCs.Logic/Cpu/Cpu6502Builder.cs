@@ -404,7 +404,7 @@ public partial class Cpu6502
             //_instructions[0xCB] R AXS / SBX
             _instructions[0xCF] = new IllegalInstruction(0xCF, "DCP", As.Absolute.Memory, Doing.Decrement.Memory, Doing.Compare.Accumulator);
             //_instructions[0xD2] R
-            _instructions[0xD3] = new IllegalDecrementCompareOpcodeD3();
+            _instructions[0xD3] = new IllegalInstruction(0xD3, "DCP", As.IndirectYIndexed.DoubleMemoryRead, Doing.Decrement.Memory, Doing.Compare.Accumulator);
             _instructions[0xD4] = new IllegalInstruction(0x54, "IGN", As.ZeroPageXIndexed.Memory, Doing.Nop, Doing.Nop);
             _instructions[0xD7] = new IllegalInstruction(0xD7, "DCP", As.ZeroPageXIndexed.Memory, Doing.Decrement.Memory, Doing.Compare.Accumulator);
             _instructions[0xDA] = new Instruction(0xDA, "NOP*", As.Implied, Doing.Nop);
