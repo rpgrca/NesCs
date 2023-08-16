@@ -51,7 +51,6 @@ public partial class Cpu6502
         _stopped = false;
     }
 
-
     public void PowerOn()
     {
         A = X = Y = 0;
@@ -93,11 +92,12 @@ public partial class Cpu6502
             while (! _stopped)
             {
                 Step();
+
+                // TODO: VSC bug makes application run in background when stopping while debugging
+                // filling /var/log/syslog, putting an early exit just in case.
+                if (_cycles > 500000) Stop();
             }
 
-            // TODO: VSC bug makes application run in background when stopping while debugging
-            // filling /var/log/syslog, putting an early exit just in case.
-            if (_cycles > 50000) Stop();
         }
         catch (Exception ex)
         {

@@ -19,7 +19,7 @@ public partial class Cpu6502
         private bool _enableInvalid;
         private readonly Addressings.Addressings As;
         private readonly Operations.Operations Doing;
-        private IRamController _ramController;
+        private IRamController? _ramController;
 
         public Builder()
         {
@@ -35,7 +35,6 @@ public partial class Cpu6502
             _program = Array.Empty<byte>();
             _patch = Array.Empty<(int, byte)>();
             _tracer = new DummyTracer();
-            _ramController = new DummyRamController();
             As = new Addressings.Addressings();
             Doing = new Operations.Operations();
 
@@ -311,6 +310,7 @@ public partial class Cpu6502
             _patch ??= Array.Empty<(int, byte)>();
             if (_programSize < 1) _programSize = _program.Length;
             if (_enableInvalid) AddInvalidOpcodes();
+            _ramController ??= new RamController.Builder().Build();
 
             return new Cpu6502(_program, _programSize, _ramController, _mappedProgramAddresses.ToArray(),
                 _pc, _a, _x, _y, _s, _p, _cycles, _patch, _instructions, _tracer, _callbacks,

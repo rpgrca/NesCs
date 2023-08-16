@@ -7,7 +7,8 @@ public class Ppu2C02Must
     [Fact]
     public void BeInitializedCorrectly()
     {
-        var sut = new Ppu2C02();
+        var ramController = new RamControllerSpy();
+        var sut = new Ppu2C02(ramController);
         Assert.NotNull(sut.PpuCtrl);
         Assert.NotNull(sut.PpuMask);
         Assert.NotNull(sut.PpuStatus);

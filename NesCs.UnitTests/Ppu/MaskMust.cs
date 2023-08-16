@@ -1,4 +1,5 @@
-using Microsoft.VisualBasic;
+using NesCs.Logic.Ppu;
+using NesCs.Logic.Ram;
 
 namespace NesCs.UnitTests.Ppu;
 
@@ -9,24 +10,21 @@ public class MaskMust
     [InlineData(1)]
     public void SetGrayscaleCorrectly(byte value)
     {
-        var sut = new Logic.Ppu.Mask
-        {
-            Grey = value
-        };
-
+        var sut = CreateSubjectUnderTest();
+        sut.Grey = value;
         Assert.Equal(value, sut.Grey);
     }
+
+    private static Mask CreateSubjectUnderTest() =>
+        new(new RamControllerSpy { Ram = new byte[0x2100] });
 
     [Theory]
     [InlineData(0)]
     [InlineData(1)]
     public void SetBackgroundInLeftmostPixelsCorrectly(byte value)
     {
-        var sut = new Logic.Ppu.Mask
-        {
-            Lm = value
-        };
-
+        var sut = CreateSubjectUnderTest();
+        sut.Lm = value;
         Assert.Equal(value, sut.Lm);
     }
 
@@ -35,11 +33,8 @@ public class MaskMust
     [InlineData(1)]
     public void SetSpritesFlagCorrectly(byte value)
     {
-        var sut = new Logic.Ppu.Mask
-        {
-            M = value
-        };
-
+        var sut = CreateSubjectUnderTest();
+        sut.M = value;
         Assert.Equal(value, sut.M);
     }
 
@@ -48,11 +43,8 @@ public class MaskMust
     [InlineData(1)]
     public void SetShowBackgroundFlagCorrectly(byte value)
     {
-        var sut = new Logic.Ppu.Mask
-        {
-            Lb = value
-        };
-
+        var sut = CreateSubjectUnderTest();
+        sut.Lb = value;
         Assert.Equal(value, sut.Lb);
     }
 
@@ -61,11 +53,8 @@ public class MaskMust
     [InlineData(1)]
     public void SetShowSpritesFlagCorrectly(byte value)
     {
-        var sut = new Logic.Ppu.Mask
-        {
-            Ls = value
-        };
-
+        var sut = CreateSubjectUnderTest();
+        sut.Ls = value;
         Assert.Equal(value, sut.Ls);
     }
 
@@ -74,11 +63,8 @@ public class MaskMust
     [InlineData(1)]
     public void SetEmphasizeRedFlagCorrectly(byte value)
     {
-        var sut = new Logic.Ppu.Mask
-        {
-            R = value
-        };
-
+        var sut = CreateSubjectUnderTest();
+        sut.R = value;
         Assert.Equal(value, sut.R);
     }
 
@@ -87,11 +73,8 @@ public class MaskMust
     [InlineData(1)]
     public void SetEmphasizeGreenFlagCorrectly(byte value)
     {
-        var sut = new Logic.Ppu.Mask
-        {
-            G = value
-        };
-
+        var sut = CreateSubjectUnderTest();
+        sut.G = value;
         Assert.Equal(value, sut.G);
     }
 
@@ -100,11 +83,8 @@ public class MaskMust
     [InlineData(1)]
     public void SetEmphasizeBlueFlagCorrectly(byte value)
     {
-        var sut = new Logic.Ppu.Mask
-        {
-            B = value
-        };
-
+        var sut = CreateSubjectUnderTest();
+        sut.B = value;
         Assert.Equal(value, sut.B);
     }
 }

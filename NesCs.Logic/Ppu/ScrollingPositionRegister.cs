@@ -2,6 +2,7 @@ namespace NesCs.Logic.Ppu;
 
 public class ScrollingPositionRegister
 {
+    private const int ScrollIndex = 0x2005;
     private byte _index = 0;
     private byte[] _cameraPosition = { 0, 0 };
 
@@ -18,5 +19,9 @@ public class ScrollingPositionRegister
         }
     }
 
-    public void Write(byte value) => Position = value;
+    public void Write(byte value, byte[] ram)
+    {
+        Position = value;
+        ram[ScrollIndex] = value;
+    }
 }

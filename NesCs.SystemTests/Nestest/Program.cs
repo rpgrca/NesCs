@@ -1,4 +1,7 @@
-﻿if (args.Length < 1)
+﻿using NesCs.Logic.Ppu;
+using NesCs.Logic.Ram;
+
+if (args.Length < 1)
 {
     Console.WriteLine($"Usage: program path/to/nestest.nes");
     return 1;
@@ -19,6 +22,9 @@ var nesFile = fsp.Load(args[0]);
 Console.WriteLine($"Loaded!");
 Console.WriteLine(nesFile.ToString());
 
+var ramController = new RamController.Builder().Build();
+var ppu = new Ppu2C02(ramController);
+
 var builder = new NesCs.Logic.Cpu.Cpu6502.Builder()
     .ProgramMappedAt(0x8000); // NROM-256 or NROM-128
 
@@ -33,6 +39,7 @@ var cpu = builder
     .WithCyclesAs(6)
     .WithProcessorStatusAs(NesCs.Logic.Cpu.ProcessorStatus.X | NesCs.Logic.Cpu.ProcessorStatus.I)
     .WithStackPointerAt(0xFD)
+    .WithRamController(ramController)
     .TracingWith(new Vm6502DebuggerDisplay())
     .WithCallback(0xC66E, cpu => {
         var h2 = cpu.PeekMemory(0x02);

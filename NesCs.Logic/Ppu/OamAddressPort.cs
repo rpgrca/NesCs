@@ -6,5 +6,9 @@ public class OamAddressPort
 
     internal void IncrementAddress() => Address++;
 
-    public void Write(byte value) => Address = value;
+    public void Write(byte value, byte[] ram)
+    {
+        Address = value;
+        ram[0x2003] = Address;
+    }
 }

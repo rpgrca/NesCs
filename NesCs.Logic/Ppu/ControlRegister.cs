@@ -1,52 +1,63 @@
+using NesCs.Logic.Ram;
+
 namespace NesCs.Logic.Ppu;
 
 public class ControlRegister
 {
-    private byte _flags;
+    private const int ControlRegisterIndex = 0x2000;
+    private readonly IRamController _ram;
+
+    public ControlRegister(IRamController ram) => _ram = ram;
+
+    private byte Flag
+    {
+        get => _ram[ControlRegisterIndex];
+        set => _ram[ControlRegisterIndex] = value;
+    }
 
     public byte N
     {
-        get => (byte)(_flags & 0b11);
-        set => _flags |= (byte)(value & 0b11);
+        get => (byte)(Flag & 0b11);
+        set => Flag |= (byte)(value & 0b11);
     }
 
     public byte I
     {
-        get => (byte)((_flags & 0b100) >> 2);
-        set => _flags |= (byte)((value & 1) << 2);
+        get => (byte)((Flag & 0b100) >> 2);
+        set => Flag |= (byte)((value & 1) << 2);
     }
 
     public byte S
     {
-        get => (byte)((_flags & 0b1000) >> 3);
-        set => _flags |= (byte)((value & 1) << 3);
+        get => (byte)((Flag & 0b1000) >> 3);
+        set => Flag |= (byte)((value & 1) << 3);
     }
 
     public byte B
     {
-        get => (byte)((_flags & 0b10000) >> 4);
-        set => _flags |= (byte)((value & 1) << 4);
+        get => (byte)((Flag & 0b10000) >> 4);
+        set => Flag |= (byte)((value & 1) << 4);
     }
 
     public byte H
     {
-        get => (byte)((_flags & 0b100000) >> 5);
-        set => _flags |= (byte)((value & 1) << 5);
+        get => (byte)((Flag & 0b100000) >> 5);
+        set => Flag |= (byte)((value & 1) << 5);
     }
 
     public byte P
     {
-        get => (byte)((_flags & 0b1000000) >> 6);
-        set => _flags |= (byte)((value & 1) << 6);
+        get => (byte)((Flag & 0b1000000) >> 6);
+        set => Flag |= (byte)((value & 1) << 6);
     }
 
     public byte V
     {
-        get => (byte)((_flags & 0b10000000) >> 7);
-        set => _flags |= (byte)((value & 1) << 7);
+        get => (byte)((Flag & 0b10000000) >> 7);
+        set => Flag |= (byte)((value & 1) << 7);
     }
 
-    public void Write(byte value) => _flags = value;
+    public void Write(byte value, byte[] ram) => ram[ControlRegisterIndex] = value;
 
     public int GetBaseNametableAddress() => 0x2000 + N * 0x400;
 

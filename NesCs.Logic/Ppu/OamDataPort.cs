@@ -18,5 +18,5 @@ public class OamDataPort
         }
     }
 
-    public void Write(byte value) => _address.Write(value);
+    public void Write(byte value, byte[] ram) => _address.Write(value, ram);
 }

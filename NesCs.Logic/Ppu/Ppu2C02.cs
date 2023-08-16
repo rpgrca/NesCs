@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using NesCs.Logic.Ram;
 
 namespace NesCs.Logic.Ppu;
@@ -18,17 +19,17 @@ public class Ppu2C02 : IRamHook
     public DataPort PpuData { get; }        /* 0x2007 */
     public OamDmaRegister OamDma { get; }   /* 0x4014 */
 
-    public Ppu2C02()
+    public Ppu2C02(IRamController ram)
     {
         _map = new byte[0x4000];
         _oam = new OamSprite[64];
         _secondaryOam = new OamSprite[8];
 
-        PpuCtrl = new ControlRegister();
-        PpuMask = new Mask();
-        PpuStatus = new Status();
+        PpuCtrl = new ControlRegister(ram);
+        PpuMask = new Mask(ram);
+        PpuStatus = new Status(ram);
         OamAddr = new OamAddressPort();
-        OamData = new OamDataPort(OamAddr);
+        OamData = new OamDataPort(OamAddr );
         PpuScroll = new ScrollingPositionRegister();
         PpuAddr = new AddressRegister();
         PpuData = new DataPort();
@@ -39,14 +40,14 @@ public class Ppu2C02 : IRamHook
     {
         switch (index)
         {
-            case 0x2000: PpuCtrl.Write(value); break;
-            case 0x2001: PpuMask.Write(value); break;
-            case 0x2002: PpuStatus.Write(value); break;
-            case 0x2003: OamAddr.Write(value); break;
-            case 0x2004: OamData.Write(value); break;
-            case 0x2005: PpuScroll.Write(value); break;
-            case 0x2006: PpuAddr.Write(value); break;
-            case 0x2007: PpuData.Write(value); break;
+            case 0x2000: PpuCtrl.Write(value, ram); break;
+            case 0x2001: PpuMask.Write(value, ram); break;
+            case 0x2002: PpuStatus.Write(value, ram); break;
+            case 0x2003: OamAddr.Write(value, ram); break;
+            case 0x2004: OamData.Write(value, ram); break;
+            case 0x2005: PpuScroll.Write(value, ram); break;
+            case 0x2006: PpuAddr.Write(value, ram); break;
+            case 0x2007: PpuData.Write(value, ram); break;
         }
     }
 

@@ -2,6 +2,7 @@ namespace NesCs.Logic.Ppu;
 
 public class AddressRegister
 {
+    private const int AddressIndex = 0x2006;
     private byte _index = 0;
     private byte[] _address = { 0, 0 };
 
@@ -18,5 +19,9 @@ public class AddressRegister
         }
     }
 
-    public void Write(byte value) => Address = value;
+    public void Write(byte value, byte[] ram)
+    {
+        Address = value;
+        ram[AddressIndex] = value;
+    }
 }

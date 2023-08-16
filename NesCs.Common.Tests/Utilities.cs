@@ -1,15 +1,21 @@
 using Xunit;
 using NesCs.Logic.Cpu;
 using NesCs.Logic.Ram;
+using NesCs.Logic.Ppu;
 
 namespace NesCs.Common.Tests;
 
 public static class Utilities
 {
-    public static Cpu6502 CreateSubjectUnderTestFromSample(SampleStatus initial, List<(int, byte, string)> trace) =>
-        new Cpu6502.Builder()
+    public static Cpu6502 CreateSubjectUnderTestFromSample(SampleStatus initial, List<(int, byte, string)> trace)
+    {
+        var ramController = new RamController.Builder().WithRamSizeOf(0x10000).Build();
+        var ppu = new Ppu2C02(ramController);
+        ramController.RegisterHook(ppu);
+
+        var cpu = new Cpu6502.Builder()
             .ProgramMappedAt(initial.PC)
-            .WithRamController(new RamController.Builder().WithRamSizeOf(0x10000).Build())
+            .WithRamController(ramController)
             .WithStackPointerAt(initial.S)
             .WithProcessorStatusAs(initial.P)
             .WithXAs(initial.X)
@@ -20,6 +26,9 @@ public static class Utilities
             .TracingWith(new TracerSpy(trace))
             .SupportingInvalidInstructions()
             .Build();
+
+        return cpu;
+    }
 
     public static void Equal(SampleStatus final, Cpu6502 sut)
     {

@@ -1,3 +1,5 @@
+using NesCs.Logic.Ppu;
+
 namespace NesCs.Logic.Ram;
 
 public class RamController : IRamController
@@ -5,7 +7,6 @@ public class RamController : IRamController
     public class Builder
     {
         private int _ramSize;
-        private IRamHook? _ppuHook;
 
         public Builder WithRamSizeOf(int size)
         {
@@ -13,28 +14,22 @@ public class RamController : IRamController
             return this;
         }
 
-        public Builder HookingPpuAt(IRamHook hook)
-        {
-            _ppuHook = hook;
-            return this;
-        }
-
         public RamController Build()
         {
             _ramSize = _ramSize > 0? _ramSize : 0x10000;
-            _ppuHook ??= new Ppu.Ppu2C02();
-            return new RamController(_ramSize, _ppuHook);
+            return new RamController(_ramSize);
         }
     }
 
     private readonly byte[] _ram;
-    private readonly IRamHook _ppuHook;
+    private IRamHook? _ppuHook;
 
-    public RamController(int ramSize, IRamHook ppuHook)
+    public RamController(int ramSize)
     {
         _ram = new byte[ramSize];
-        _ppuHook = ppuHook;
     }
+
+    public void RegisterHook(IRamHook hook) => _ppuHook = hook;
 
     public byte this[int index]
     {
@@ -42,7 +37,7 @@ public class RamController : IRamController
         set
         {
             _ram[index] = value;
-            if (_ppuHook.CanHandle(index))
+            if (_ppuHook?.CanHandle(index) ?? false)
             {
                 _ppuHook.Call(index, value, _ram);
             }

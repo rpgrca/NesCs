@@ -1,4 +1,4 @@
-using System.Windows.Markup;
+using NesCs.Logic.Ppu;
 
 namespace NesCs.UnitTests.Ppu;
 
@@ -11,24 +11,21 @@ public class StatusMust
     [InlineData(0b11110000, 0b10000)]
     public void SetOpenBusCorrectly(byte value, byte expectedValue)
     {
-        var sut = new Logic.Ppu.Status
-        {
-            OpenBus = value
-        };
-
+        var sut = CreateSubjectUnderTest();
+        sut.OpenBus = value;
         Assert.Equal(expectedValue, sut.OpenBus);
     }
+
+    private static Status CreateSubjectUnderTest() =>
+        new(new RamControllerSpy { Ram = new byte[0x2100] });
 
     [Theory]
     [InlineData(0)]
     [InlineData(1)]
     public void SetSpriteOverflowCorrectly(byte value)
     {
-        var sut = new Logic.Ppu.Status
-        {
-            O = value
-        };
-
+        var sut = CreateSubjectUnderTest();
+        sut.O = value;
         Assert.Equal(value, sut.O);
     }
 
@@ -37,11 +34,8 @@ public class StatusMust
     [InlineData(1)]
     public void SetSpriteZeroHitCorrectly(byte value)
     {
-        var sut = new Logic.Ppu.Status
-        {
-            S = value
-        };
-
+        var sut = CreateSubjectUnderTest();
+        sut.S = value;
         Assert.Equal(value, sut.S);
     }
 
@@ -51,11 +45,8 @@ public class StatusMust
     [InlineData(1)]
     public void SetVerticalBlankStartCorrectly(byte value)
     {
-        var sut = new Logic.Ppu.Status
-        {
-            V = value
-        };
-
+        var sut = CreateSubjectUnderTest();
+        sut.V = value;
         Assert.Equal(value, sut.V);
     }
 }

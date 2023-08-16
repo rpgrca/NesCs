@@ -1,32 +1,43 @@
+using NesCs.Logic.Ram;
+
 namespace NesCs.Logic.Ppu;
 
 public class Status
 {
-    private byte _flags;
+    private const int StatusIndex = 0x2002;
+    private readonly IRamController _ramController;
+
+    private byte Flag
+    {
+        get => _ramController[StatusIndex];
+        set => _ramController[StatusIndex] = value;
+    }
+
+    public Status(IRamController ramController) => _ramController = ramController;
 
     public byte OpenBus
     {
-        get => (byte)(_flags & 0b11111);
-        set => _flags |= (byte)(value & 0b11111);
+        get => (byte)(Flag & 0b11111);
+        set => Flag |= (byte)(value & 0b11111);
     }
 
     public byte O
     {
-        get => (byte)((_flags >> 5) & 1);
-        set => _flags |= (byte)((value & 1) << 5);
+        get => (byte)((Flag >> 5) & 1);
+        set => Flag |= (byte)((value & 1) << 5);
     }
 
     public byte S
     {
-        get => (byte)((_flags >> 6) & 1);
-        set => _flags |= (byte)((value & 1) << 6);
+        get => (byte)((Flag >> 6) & 1);
+        set => Flag |= (byte)((value & 1) << 6);
     }
 
     public byte V
     {
-        get => (byte)((_flags >> 7) & 1);
-        set => _flags |= (byte)((value & 1) << 7);
+        get => (byte)((Flag >> 7) & 1);
+        set => Flag |= (byte)((value & 1) << 7);
     }
 
-    public void Write(byte value) => _flags = value;
+    public void Write(byte value, byte[] ram) => ram[StatusIndex] = value;
 }
