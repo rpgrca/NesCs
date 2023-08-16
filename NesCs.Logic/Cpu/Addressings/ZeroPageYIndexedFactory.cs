@@ -10,4 +10,6 @@ public class ZeroPageYIndexedFactory : IZeroPageYIndexedFactory
 
     public IAddressing X =>
         new ZeroPageYIndexed((c, _) => c.ReadByteFromRegisterX());
+
+    public IAddressing DoubleMemoryRead => new ZeroPageYIndexedDouble();
 }
