@@ -342,7 +342,7 @@ public partial class Cpu6502
             //_instructions[0x32] R
             _instructions[0x33] = new IllegalInstruction(0x33, "RLA", As.IndirectYIndexed.DoubleMemoryRead, Doing.RotateLeft.OnMemory, Doing.And);
             _instructions[0x34] = new IllegalInstruction(0x34, "IGN", As.ZeroPageXIndexed.Memory, Doing.Nop, Doing.Nop);
-            _instructions[0x37] = new IllegalRotateLeftAndOpcode37();
+            _instructions[0x37] = new IllegalInstruction(0x37, "RLA", As.ZeroPageXIndexed.Memory, Doing.RotateLeft.OnMemory, Doing.And);
             _instructions[0x3A] = new Instruction(0x3A, "NOP*", As.Implied, Doing.Nop);
             _instructions[0x3B] = new IllegalRotateLeftAndOpcode3B();
             _instructions[0x3C] = new IllegalReadIgnoreOpcode3C();
