@@ -24,6 +24,7 @@ public class Instruction : IInstruction
 
     public virtual void Execute(Cpu6502 cpu)
     {
+        if (Opcode == 0x4E) System.Diagnostics.Debugger.Break();
         var (address, value) = _addressing.ObtainValueAndAddress(cpu);
         _operation.Execute(cpu, value, address);
     }

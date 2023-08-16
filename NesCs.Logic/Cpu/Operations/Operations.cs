@@ -8,6 +8,7 @@ public class Operations
     public IOperation Or { get; }
     public IOperation Xor { get; }
     public IShiftLeftFactory ShiftLeft { get; }
+    public IShiftRightFactory ShiftRight { get; }
     public IOperation Nop { get; }
     public ICompareFactory Compare { get; }
     public IOperation SubtractWithCarry { get; }
@@ -27,6 +28,7 @@ public class Operations
         Or = new Or();
         Xor = new Xor();
         ShiftLeft = new ShiftLeftFactory();
+        ShiftRight = new ShiftRightFactory();
         Nop = new Nop();
         Compare = new CompareFactory();
         SubtractWithCarry = new SubtractWithCarry();

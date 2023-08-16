@@ -23,7 +23,6 @@ public class IndirectYIndexedDouble : IAddressing
 
         effectiveAddress = ((high << 8 | low) + cpu.ReadByteFromRegisterY()) & 0xffff;
         var value = cpu.ReadByteFromMemory(effectiveAddress);
-        //cpu.WriteByteToMemory(effectiveAddress, value);
 
         return (effectiveAddress, value);
     }
