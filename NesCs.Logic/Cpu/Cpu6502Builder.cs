@@ -83,7 +83,7 @@ public partial class Cpu6502
             _instructions[0x40] = new ReturnFromInterruptOpcode40();
             _instructions[0x41] = new Instruction(0x41, "EOR", As.IndirectXIndexed.Memory, Doing.Xor);
             _instructions[0x45] = new Instruction(0x45, "EOR", As.ZeroPage.Memory, Doing.Xor);
-            _instructions[0x46] = new ShiftRightZeroPageOpcode46();
+            _instructions[0x46] = new Instruction(0x45, "LSR", As.ZeroPage.Memory, Doing.ShiftRight.Memory);
             _instructions[0x48] = new PushAccumulatorOpcode48();
             _instructions[0x49] = new Instruction(0x49, "EOR", As.Immediate, Doing.Xor);
             _instructions[0x4A] = new Instruction(0x4A, "LSR", As.Accumulator, Doing.ShiftRight.Accumulator);
