@@ -93,7 +93,7 @@ public partial class Cpu6502
             _instructions[0x50] = new BranchIfOverflowNotSetOpcode50();
             _instructions[0x51] = new Instruction(0x51, "EOR", As.IndirectYIndexed.Memory, Doing.Xor);
             _instructions[0x55] = new Instruction(0x55, "EOR", As.ZeroPageXIndexed.Memory, Doing.Xor);
-            _instructions[0x56] = new ShiftRightZeroPageXOpcode56();
+            _instructions[0x56] = new Instruction(0x56, "LSR", As.ZeroPageXIndexed.Memory, Doing.ShiftRight.Memory);
             _instructions[0x58] = new Instruction(0x58, "CLI", As.Implied, Doing.Flag.Minus.I);
             _instructions[0x59] = new Instruction(0x59, "EOR", As.AbsoluteYIndexed.Common, Doing.Xor);
             _instructions[0x5D] = new Instruction(0x5D, "EOR", As.AbsoluteXIndexed.Common, Doing.Xor);
