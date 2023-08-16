@@ -358,7 +358,7 @@ public partial class Cpu6502
             _instructions[0x54] = new IllegalInstruction(0x54, "IGN", As.ZeroPageXIndexed.Memory, Doing.Nop, Doing.Nop);
             _instructions[0x57] = new IllegalInstruction(0x57, "SRE", As.ZeroPageXIndexed.Memory, Doing.ShiftRight.Memory, Doing.Xor);
             _instructions[0x5A] = new Instruction(0x5A, "NOP*", As.Implied, Doing.Nop);
-            _instructions[0x5B] = new IllegalShiftRightXorOpcode5B();
+            _instructions[0x5B] = new IllegalInstruction(0x5B, "SRE", As.AbsoluteYIndexed.DoubleMemoryRead, Doing.ShiftRight.Memory, Doing.Xor);
             _instructions[0x5C] = new IllegalReadIgnoreOpcode5C();
             _instructions[0x5F] = new IllegalShiftRightXorOpcode5F();
             //_instructions[0x62] R
