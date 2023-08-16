@@ -4,4 +4,5 @@ public interface IIndirectXIndexedFactory
 {
     IAddressing Accumulator { get; }
     IAddressing Memory { get; }
+    IAddressing DoubleMemoryRead { get; }
 }
