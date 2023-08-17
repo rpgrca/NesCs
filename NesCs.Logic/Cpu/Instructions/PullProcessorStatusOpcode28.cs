@@ -12,10 +12,13 @@ public class PullProcessorStatusOpcode28 : IInstruction
     {
         cpu.ReadyForNextInstruction();
         _ = cpu.ReadByteFromMemory(cpu.ReadByteFromProgramCounter());
-
         _ = cpu.ReadByteFromStackMemory();
-        var flags = (ProcessorStatus)cpu.PopFromStack();
-        var pc = flags & ~ProcessorStatus.B | ProcessorStatus.X;
+
+        var sp = cpu.ReadByteFromStackPointer();
+        sp += 1;
+        cpu.SetValueToStackPointer(sp);
+
+        var pc = (ProcessorStatus)cpu.ReadByteFromStackMemory() & ~ProcessorStatus.B | ProcessorStatus.X;
         cpu.OverwriteFlags(pc);
     }
 }
