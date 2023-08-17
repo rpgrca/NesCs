@@ -7,4 +7,7 @@ public class ZeroPageXIndexedFactory : IZeroPageXIndexedFactory
 
     public IAddressing Y { get; } =
         new ZeroPageXIndexed((c, _) => c.ReadByteFromRegisterY());
+
+    public IAddressing Accumulator { get; } =
+        new ZeroPageXIndexed((c, _) => c.ReadByteFromAccumulator());
 }
