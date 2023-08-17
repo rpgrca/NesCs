@@ -4,4 +4,5 @@ public interface ITransferFactory
 {
     IOperation Accumulator { get; }
     IOperation X { get; }
+    IOperation Y { get; }
 }
