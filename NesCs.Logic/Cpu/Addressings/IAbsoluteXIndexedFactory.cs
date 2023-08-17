@@ -4,5 +4,4 @@ public interface IAbsoluteXIndexedFactory
 {
     IAddressing DoubleMemoryRead { get; }
     IAddressing Common { get; }
-    IAddressing Common1 { get; }
 }

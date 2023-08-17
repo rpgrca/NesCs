@@ -1,5 +1,5 @@
 namespace NesCs.Logic.Cpu.Addressings;
-
+/*
 public class Relative : IAddressing
 {
     public byte[] PeekOperands(Cpu6502 cpu)
@@ -8,3 +8,4 @@ public class Relative : IAddressing
         return operands;
     }
 }
+*/

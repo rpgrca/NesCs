@@ -8,10 +8,10 @@ public class Addressings
     public IAbsoluteYIndexedFactory AbsoluteYIndexed { get; }
     public IAddressing Immediate { get; }
     public IAddressing Implied { get; }
-    public IAddressing Indirect { get; }
+    //public IAddressing Indirect { get; }
     public IIndirectXIndexedFactory IndirectXIndexed { get; }
     public IIndirectYIndexedFactory IndirectYIndexed { get; }
-    public IAddressing Relative { get; }
+    //public IAddressing Relative { get; }
     public IZeroPageFactory ZeroPage { get; }
     public IZeroPageXIndexedFactory ZeroPageXIndexed { get; }
     public IZeroPageYIndexedFactory ZeroPageYIndexed { get; }
@@ -24,10 +24,10 @@ public class Addressings
         AbsoluteYIndexed = new AbsoluteYIndexedFactory();
         Immediate = new Immediate();
         Implied = new Implied();
-        Indirect = new Indirect();
+        //Indirect = new Indirect();
         IndirectXIndexed = new IndirectXIndexedFactory();
         IndirectYIndexed = new IndirectYIndexedFactory();
-        Relative = new Relative();
+        //Relative = new Relative();
         ZeroPage = new ZeroPageFactory();
         ZeroPageXIndexed = new ZeroPageXIndexedFactory();
         ZeroPageYIndexed = new ZeroPageYIndexedFactory();
