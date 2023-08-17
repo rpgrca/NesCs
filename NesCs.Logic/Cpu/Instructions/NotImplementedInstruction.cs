@@ -18,5 +18,5 @@ public class NotImplementedInstruction : IInstruction
     public byte[] PeekOperands(Cpu6502 cpu) => Array.Empty<byte>();
 
     public void Execute(Cpu6502 cpu) =>
-        throw new NotImplementedException($"Not implemented opcode {_opcode:X}: {_message}");
+        throw new NotImplementedException($"Not implemented opcode {_opcode:X2}: {_message}");
 }
