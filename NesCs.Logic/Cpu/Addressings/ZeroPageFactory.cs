@@ -2,11 +2,11 @@ namespace NesCs.Logic.Cpu.Addressings;
 
 public class ZeroPageFactory : IZeroPageFactory
 {
-    public IAddressing Memory => new ZeroPage((c, a) => c.ReadByteFromMemory(a));
+    public IAddressing Memory { get; } = new ZeroPage((c, a) => c.ReadByteFromMemory(a));
 
-    public IAddressing Y => new ZeroPage((c, _) => c.ReadByteFromRegisterY());
+    public IAddressing Y { get; } = new ZeroPage((c, _) => c.ReadByteFromRegisterY());
 
-    public IAddressing X => new ZeroPage((c, _) => c.ReadByteFromRegisterX());
+    public IAddressing X { get; } = new ZeroPage((c, _) => c.ReadByteFromRegisterX());
 
-    public IAddressing Accumulator => new ZeroPage((c, _) => c.ReadByteFromAccumulator());
+    public IAddressing Accumulator { get; } = new ZeroPage((c, _) => c.ReadByteFromAccumulator());
 }
