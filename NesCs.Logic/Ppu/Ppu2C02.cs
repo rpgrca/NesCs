@@ -1,9 +1,8 @@
-using System.Text.RegularExpressions;
 using NesCs.Logic.Ram;
 
 namespace NesCs.Logic.Ppu;
 
-public class Ppu2C02 : IRamHook
+public class Ppu2C02 : IPpu
 {
     private readonly byte[] _map;
     private readonly OamSprite[] _oam;

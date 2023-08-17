@@ -1,7 +1,6 @@
 using Xunit;
 using NesCs.Logic.Cpu;
 using NesCs.Logic.Ram;
-using NesCs.Logic.Ppu;
 
 namespace NesCs.Common.Tests;
 
@@ -10,7 +9,7 @@ public static class Utilities
     public static Cpu6502 CreateSubjectUnderTestFromSample(SampleStatus initial, List<(int, byte, string)> trace)
     {
         var ramController = new RamController.Builder().WithRamSizeOf(0x10000).Build();
-        var ppu = new Ppu2C02(ramController);
+        var ppu = new DummyPpu();
         ramController.RegisterHook(ppu);
 
         var cpu = new Cpu6502.Builder()
