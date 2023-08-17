@@ -1,18 +1,14 @@
-namespace NesCs.Logic.Cpu.Instructions;
+namespace NesCs.Logic.Cpu.Addressings;
 
-public class StoreAccumulatorIndirectYOpcode91 : IInstruction
+public class IndirectYIndexedAccumulator : IAddressing
 {
-    public string Name => "STA";
-
-    public byte Opcode => 0x91;
-
     public byte[] PeekOperands(Cpu6502 cpu)
     {
         byte[] operands = { cpu.PeekMemory(cpu.ReadByteFromProgramCounter() + 1) };
         return operands;
     }
 
-    public void Execute(Cpu6502 cpu)
+    (int, byte) IAddressing.ObtainValueAndAddress(Cpu6502 cpu)
     {
         cpu.ReadyForNextInstruction();
         var address = cpu.ReadByteFromProgram();
@@ -31,6 +27,6 @@ public class StoreAccumulatorIndirectYOpcode91 : IInstruction
             effectiveAddress = effectiveAddress2;
         }
 
-        cpu.WriteByteToMemory(effectiveAddress, cpu.ReadByteFromAccumulator());
+        return (effectiveAddress, cpu.ReadByteFromAccumulator());
     }
 }

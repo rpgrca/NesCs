@@ -7,7 +7,7 @@ public class Addressings
     public IAbsoluteXIndexedFactory AbsoluteXIndexed { get; }
     public IAbsoluteYIndexedFactory AbsoluteYIndexed { get; }
     public IAddressing Immediate { get; }
-    public IAddressing Implied { get; }
+    public IImpliedFactory Implied { get; }
     //public IAddressing Indirect { get; }
     public IIndirectXIndexedFactory IndirectXIndexed { get; }
     public IIndirectYIndexedFactory IndirectYIndexed { get; }
@@ -23,7 +23,7 @@ public class Addressings
         AbsoluteXIndexed = new AbsoluteXIndexedFactory();
         AbsoluteYIndexed = new AbsoluteYIndexedFactory();
         Immediate = new Immediate();
-        Implied = new Implied();
+        Implied = new ImpliedFactory();
         //Indirect = new Indirect();
         IndirectXIndexed = new IndirectXIndexedFactory();
         IndirectYIndexed = new IndirectYIndexedFactory();

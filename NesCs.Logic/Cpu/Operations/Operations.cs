@@ -19,6 +19,7 @@ public class Operations
     public IAutocrementFactory Increment { get; internal set; }
     public ILoadFactory Load { get; internal set; }
     public IStoreFactory Store { get; }
+    public ITransferFactory Transfer { get; }
 
     public Operations()
     {
@@ -39,5 +40,6 @@ public class Operations
         Increment = new AutocrementFactory(v => (byte)(v + 1));
         Load = new LoadFactory();
         Store = new StoreFactory();
+        Transfer = new TransferFactory();
     }
 }

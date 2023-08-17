@@ -57,7 +57,7 @@ public partial class Cpu6502
             _instructions[0x11] = new Instruction(0x11, "ORA", As.IndirectYIndexed.Memory, Doing.Or);
             _instructions[0x15] = new Instruction(0x15, "ORA", As.ZeroPageXIndexed.Memory, Doing.Or);
             _instructions[0x16] = new Instruction(0x16, "ASL", As.ZeroPageXIndexed.Memory, Doing.ShiftLeft.Memory);
-            _instructions[0x18] = new Instruction(0x18, "CLC", As.Implied, Doing.Flag.Minus.C);
+            _instructions[0x18] = new Instruction(0x18, "CLC", As.Implied.Memory, Doing.Flag.Minus.C);
             _instructions[0x19] = new Instruction(0x19, "ORA", As.AbsoluteYIndexed.Common, Doing.Or);
             _instructions[0x1D] = new Instruction(0x1D, "ORA", As.AbsoluteXIndexed.Common, Doing.Or);
             _instructions[0x1E] = new Instruction(0x1E, "ASL", As.AbsoluteXIndexed.DoubleMemoryRead, Doing.ShiftLeft.Memory);
@@ -76,7 +76,7 @@ public partial class Cpu6502
             _instructions[0x31] = new Instruction(0x31, "AND", As.IndirectYIndexed.Memory, Doing.And.Accumulator);
             _instructions[0x35] = new Instruction(0x35, "AND", As.ZeroPageXIndexed.Memory, Doing.And.Accumulator);
             _instructions[0x36] = new Instruction(0x36, "ROL", As.ZeroPageXIndexed.Memory, Doing.RotateLeft.OnMemory);
-            _instructions[0x38] = new Instruction(0x38, "SEC", As.Implied, Doing.Flag.Plus.C);
+            _instructions[0x38] = new Instruction(0x38, "SEC", As.Implied.Memory, Doing.Flag.Plus.C);
             _instructions[0x39] = new Instruction(0x39, "AND", As.AbsoluteYIndexed.Common, Doing.And.Accumulator);
             _instructions[0x3D] = new Instruction(0x3D, "AND", As.AbsoluteXIndexed.Common, Doing.And.Accumulator);
             _instructions[0x3E] = new Instruction(0x3E, "ROL", As.AbsoluteXIndexed.DoubleMemoryRead, Doing.RotateLeft.OnMemory);
@@ -94,7 +94,7 @@ public partial class Cpu6502
             _instructions[0x51] = new Instruction(0x51, "EOR", As.IndirectYIndexed.Memory, Doing.Xor);
             _instructions[0x55] = new Instruction(0x55, "EOR", As.ZeroPageXIndexed.Memory, Doing.Xor);
             _instructions[0x56] = new Instruction(0x56, "LSR", As.ZeroPageXIndexed.Memory, Doing.ShiftRight.Memory);
-            _instructions[0x58] = new Instruction(0x58, "CLI", As.Implied, Doing.Flag.Minus.I);
+            _instructions[0x58] = new Instruction(0x58, "CLI", As.Implied.Memory, Doing.Flag.Minus.I);
             _instructions[0x59] = new Instruction(0x59, "EOR", As.AbsoluteYIndexed.Common, Doing.Xor);
             _instructions[0x5D] = new Instruction(0x5D, "EOR", As.AbsoluteXIndexed.Common, Doing.Xor);
             _instructions[0x5E] = new Instruction(0x5E, "LSR", As.AbsoluteXIndexed.DoubleMemoryRead, Doing.ShiftRight.Memory);
@@ -112,7 +112,7 @@ public partial class Cpu6502
             _instructions[0x71] = new Instruction(0x71, "ADC", As.IndirectYIndexed.Memory, Doing.AddWithCarry);
             _instructions[0x75] = new Instruction(0x75, "ADC", As.ZeroPageXIndexed.Memory, Doing.AddWithCarry);
             _instructions[0x76] = new Instruction(0x76, "ROR", As.ZeroPageXIndexed.Memory, Doing.RotateRight.OnMemory);
-            _instructions[0x78] = new Instruction(0x78, "SEI", As.Implied, Doing.Flag.Plus.I);
+            _instructions[0x78] = new Instruction(0x78, "SEI", As.Implied.Memory, Doing.Flag.Plus.I);
             _instructions[0x79] = new Instruction(0x79, "ADC", As.AbsoluteYIndexed.Common, Doing.AddWithCarry);
             _instructions[0x7D] = new Instruction(0x7D, "ADC", As.AbsoluteXIndexed.Common, Doing.AddWithCarry);
             _instructions[0x7E] = new Instruction(0x7E, "ROR", As.AbsoluteXIndexed.DoubleMemoryRead, Doing.RotateRight.OnMemory);
@@ -120,13 +120,13 @@ public partial class Cpu6502
             _instructions[0x84] = new Instruction(0x84, "STY", As.ZeroPage.Y, Doing.Store.Memory);
             _instructions[0x85] = new Instruction(0x85, "STA", As.ZeroPage.Accumulator, Doing.Store.Memory);
             _instructions[0x86] = new Instruction(0x86, "STX", As.ZeroPage.X, Doing.Store.Memory);
-            _instructions[0x88] = new Instruction(0x88, "DEY", As.Implied, Doing.Decrement.Y);
-            _instructions[0x8A] = new TransferXToAccumulatorOpcode8A();
+            _instructions[0x88] = new Instruction(0x88, "DEY", As.Implied.Memory, Doing.Decrement.Y);
+            _instructions[0x8A] = new Instruction(0x8A, "TXA", As.Implied.X, Doing.Transfer.Accumulator);
             _instructions[0x8C] = new Instruction(0x8C, "STY", As.Absolute.Y, Doing.Store.Memory);
             _instructions[0x8D] = new Instruction(0x8D, "STA", As.Absolute.Accumulator, Doing.Store.Memory);
             _instructions[0x8E] = new Instruction(0x8E, "STX", As.Absolute.X,  Doing.Store.Memory);
             _instructions[0x90] = new BranchIfCarryNotSetOpcode90();
-            _instructions[0x91] = new StoreAccumulatorIndirectYOpcode91();
+            _instructions[0x91] = new Instruction(0x91, "STA", As.IndirectYIndexed.Accumulator, Doing.Store.Memory);
             _instructions[0x94] = new Instruction(0x94, "STY", As.ZeroPageXIndexed.Y, Doing.Store.Memory);
             _instructions[0x95] = new Instruction(0x95, "STA", As.ZeroPageXIndexed.Accumulator, Doing.Store.Memory);
             _instructions[0x96] = new Instruction(0x96, "STX", As.ZeroPageYIndexed.X, Doing.Store.Memory);
@@ -151,7 +151,7 @@ public partial class Cpu6502
             _instructions[0xB4] = new Instruction(0xB4, "LDY", As.ZeroPageXIndexed.Memory, Doing.Load.Y);
             _instructions[0xB5] = new Instruction(0xB5, "LDA", As.ZeroPageXIndexed.Memory, Doing.Load.Accumulator);
             _instructions[0xB6] = new Instruction(0xB6, "LDX", As.ZeroPageYIndexed.Memory, Doing.Load.X);
-            _instructions[0xB8] = new Instruction(0xB8, "CLV", As.Implied, Doing.Flag.Minus.V);
+            _instructions[0xB8] = new Instruction(0xB8, "CLV", As.Implied.Memory, Doing.Flag.Minus.V);
             _instructions[0xB9] = new Instruction(0xB9, "LDA", As.AbsoluteYIndexed.Common, Doing.Load.Accumulator);
             _instructions[0xBA] = new TransferStackToXOpcodeBA();
             _instructions[0xBC] = new Instruction(0xBC, "LDY", As.AbsoluteXIndexed.Common, Doing.Load.Y);
@@ -162,9 +162,9 @@ public partial class Cpu6502
             _instructions[0xC4] = new Instruction(0xC4, "CMP", As.ZeroPage.Memory, Doing.Compare.Y);
             _instructions[0xC5] = new Instruction(0xC5, "CMP", As.ZeroPage.Memory, Doing.Compare.Accumulator);
             _instructions[0xC6] = new Instruction(0xC6, "DEC", As.ZeroPage.Memory, Doing.Decrement.Memory);
-            _instructions[0xC8] = new Instruction(0xC8, "INY", As.Implied, Doing.Increment.Y);
+            _instructions[0xC8] = new Instruction(0xC8, "INY", As.Implied.Memory, Doing.Increment.Y);
             _instructions[0xC9] = new Instruction(0xC9, "CMP", As.Immediate, Doing.Compare.Accumulator);
-            _instructions[0xCA] = new Instruction(0xCA, "DEX", As.Implied, Doing.Decrement.X);
+            _instructions[0xCA] = new Instruction(0xCA, "DEX", As.Implied.Memory, Doing.Decrement.X);
             _instructions[0xCC] = new Instruction(0xCC, "CMP", As.Absolute.Memory, Doing.Compare.Y);
             _instructions[0xCD] = new Instruction(0xCD, "CMP", As.Absolute.Memory, Doing.Compare.Accumulator);
             _instructions[0xCE] = new Instruction(0xCE, "DEC", As.Absolute.Memory, Doing.Decrement.Memory);
@@ -172,7 +172,7 @@ public partial class Cpu6502
             _instructions[0xD1] = new Instruction(0xD1, "CMP", As.IndirectYIndexed.Memory, Doing.Compare.Accumulator);
             _instructions[0xD5] = new Instruction(0xD5, "CMP", As.ZeroPageXIndexed.Memory, Doing.Compare.Accumulator);
             _instructions[0xD6] = new Instruction(0xD6, "DEC", As.ZeroPageXIndexed.Memory, Doing.Decrement.Memory);
-            _instructions[0xD8] = new Instruction(0xD8, "CLD", As.Implied, Doing.Flag.Minus.D);
+            _instructions[0xD8] = new Instruction(0xD8, "CLD", As.Implied.Memory, Doing.Flag.Minus.D);
             _instructions[0xD9] = new Instruction(0xD9, "CMP", As.AbsoluteYIndexed.Common, Doing.Compare.Accumulator);
             _instructions[0xDD] = new Instruction(0xDD, "CMP", As.AbsoluteXIndexed.Common, Doing.Compare.Accumulator);
             _instructions[0xDE] = new Instruction(0xDE, "DEC", As.AbsoluteXIndexed.DoubleMemoryRead, Doing.Decrement.Memory);
@@ -181,9 +181,9 @@ public partial class Cpu6502
             _instructions[0xE4] = new Instruction(0xE4, "CMP", As.ZeroPage.Memory, Doing.Compare.X);
             _instructions[0xE5] = new Instruction(0xE5, "SBC", As.ZeroPage.Memory, Doing.SubtractWithCarry);
             _instructions[0xE6] = new Instruction(0xE6, "INC", As.ZeroPage.Memory, Doing.Increment.Memory);
-            _instructions[0xE8] = new Instruction(0xE8, "INX", As.Implied, Doing.Increment.X);
+            _instructions[0xE8] = new Instruction(0xE8, "INX", As.Implied.Memory, Doing.Increment.X);
             _instructions[0xE9] = new Instruction(0xE9, "SBC", As.Immediate, Doing.SubtractWithCarry);
-            _instructions[0xEA] = new Instruction(0xEA, "NOP", As.Implied, Doing.Nop);
+            _instructions[0xEA] = new Instruction(0xEA, "NOP", As.Implied.Memory, Doing.Nop);
             _instructions[0xEC] = new Instruction(0xEC, "CMP", As.Absolute.Memory, Doing.Compare.X);
             _instructions[0xED] = new Instruction(0xED, "SBC", As.Absolute.Memory, Doing.SubtractWithCarry);
             _instructions[0xEE] = new Instruction(0xEE, "INC", As.Absolute.Memory, Doing.Increment.Memory);
@@ -191,7 +191,7 @@ public partial class Cpu6502
             _instructions[0xF1] = new Instruction(0xF1, "SBC", As.IndirectYIndexed.Memory, Doing.SubtractWithCarry);
             _instructions[0xF5] = new Instruction(0xF5, "SBC", As.ZeroPageXIndexed.Memory, Doing.SubtractWithCarry);
             _instructions[0xF6] = new Instruction(0xF6, "INC", As.ZeroPageXIndexed.Memory, Doing.Increment.Memory);
-            _instructions[0xF8] = new Instruction(0xF8, "SED", As.Implied, Doing.Flag.Plus.D);
+            _instructions[0xF8] = new Instruction(0xF8, "SED", As.Implied.Memory, Doing.Flag.Plus.D);
             _instructions[0xF9] = new Instruction(0xF9, "SBC", As.AbsoluteYIndexed.Common, Doing.SubtractWithCarry);
             _instructions[0xFD] = new Instruction(0xFD, "SBC", As.AbsoluteXIndexed.Common, Doing.SubtractWithCarry);
             _instructions[0xFE] = new Instruction(0xFE, "INC", As.AbsoluteXIndexed.DoubleMemoryRead, Doing.Increment.Memory);
@@ -330,7 +330,7 @@ public partial class Cpu6502
             _instructions[0x13] = new IllegalInstruction(0x13, "SLO", As.IndirectYIndexed.DoubleMemoryRead, Doing.ShiftLeft.Memory, Doing.Or);
             _instructions[0x14] = new IllegalInstruction(0x14, "IGN", As.ZeroPageXIndexed.Memory, Doing.Nop, Doing.Nop);
             _instructions[0x17] = new IllegalInstruction(0x17, "SLO", As.ZeroPageXIndexed.Memory, Doing.ShiftLeft.Memory, Doing.Or);
-            _instructions[0x1A] = new Instruction(0x1A, "NOP*", As.Implied, Doing.Nop);
+            _instructions[0x1A] = new Instruction(0x1A, "NOP*", As.Implied.Memory, Doing.Nop);
             _instructions[0x1B] = new IllegalInstruction(0x1B, "SLO", As.AbsoluteYIndexed.DoubleMemoryRead, Doing.ShiftLeft.Memory, Doing.Or);
             _instructions[0x1C] = new IllegalReadIgnoreOpcode1C();
             _instructions[0x1F] = new IllegalInstruction(0x1F, "SLO", As.AbsoluteXIndexed.DoubleMemoryRead, Doing.ShiftLeft.Memory, Doing.Or);
@@ -343,7 +343,7 @@ public partial class Cpu6502
             _instructions[0x33] = new IllegalInstruction(0x33, "RLA", As.IndirectYIndexed.DoubleMemoryRead, Doing.RotateLeft.OnMemory, Doing.And.Accumulator);
             _instructions[0x34] = new IllegalInstruction(0x34, "IGN", As.ZeroPageXIndexed.Memory, Doing.Nop, Doing.Nop);
             _instructions[0x37] = new IllegalInstruction(0x37, "RLA", As.ZeroPageXIndexed.Memory, Doing.RotateLeft.OnMemory, Doing.And.Accumulator);
-            _instructions[0x3A] = new Instruction(0x3A, "NOP*", As.Implied, Doing.Nop);
+            _instructions[0x3A] = new Instruction(0x3A, "NOP*", As.Implied.Memory, Doing.Nop);
             _instructions[0x3B] = new IllegalInstruction(0x3B, "RLA", As.AbsoluteYIndexed.DoubleMemoryRead, Doing.RotateLeft.OnMemory, Doing.And.Accumulator);
             _instructions[0x3C] = new IllegalReadIgnoreOpcode3C();
             _instructions[0x3F] = new IllegalInstruction(0x3F, "RLA", As.AbsoluteXIndexed.DoubleMemoryRead, Doing.RotateLeft.OnMemory, Doing.And.Accumulator);
@@ -357,7 +357,7 @@ public partial class Cpu6502
             _instructions[0x53] = new IllegalInstruction(0x53, "SRE", As.IndirectYIndexed.DoubleMemoryRead, Doing.ShiftRight.Memory, Doing.Xor);
             _instructions[0x54] = new IllegalInstruction(0x54, "IGN", As.ZeroPageXIndexed.Memory, Doing.Nop, Doing.Nop);
             _instructions[0x57] = new IllegalInstruction(0x57, "SRE", As.ZeroPageXIndexed.Memory, Doing.ShiftRight.Memory, Doing.Xor);
-            _instructions[0x5A] = new Instruction(0x5A, "NOP*", As.Implied, Doing.Nop);
+            _instructions[0x5A] = new Instruction(0x5A, "NOP*", As.Implied.Memory, Doing.Nop);
             _instructions[0x5B] = new IllegalInstruction(0x5B, "SRE", As.AbsoluteYIndexed.DoubleMemoryRead, Doing.ShiftRight.Memory, Doing.Xor);
             _instructions[0x5C] = new IllegalReadIgnoreOpcode5C();
             _instructions[0x5F] = new IllegalInstruction(0x5F, "SRE", As.AbsoluteXIndexed.DoubleMemoryRead, Doing.ShiftRight.Memory, Doing.Xor);
@@ -371,7 +371,7 @@ public partial class Cpu6502
             _instructions[0x73] = new IllegalInstruction(0x73, "RRA", As.ZeroPageYIndexed.DoubleMemoryRead, Doing.RotateRight.OnMemory, Doing.AddWithCarry);
             _instructions[0x74] = new IllegalInstruction(0x74, "IGN", As.ZeroPageXIndexed.Memory, Doing.Nop, Doing.Nop);
             _instructions[0x77] = new IllegalInstruction(0x77, "RRA", As.ZeroPageXIndexed.Memory, Doing.RotateRight.OnMemory, Doing.AddWithCarry);
-            _instructions[0x7A] = new Instruction(0x7A, "NOP*", As.Implied, Doing.Nop);
+            _instructions[0x7A] = new Instruction(0x7A, "NOP*", As.Implied.Memory, Doing.Nop);
             _instructions[0x7B] = new IllegalInstruction(0x7B, "RRA", As.AbsoluteYIndexed.DoubleMemoryRead, Doing.RotateRight.OnMemory, Doing.AddWithCarry);
             _instructions[0x7C] = new IllegalReadIgnoreOpcode7C();
             _instructions[0x7F] = new IllegalInstruction(0x7F, "RRA", As.AbsoluteXIndexed.DoubleMemoryRead, Doing.RotateRight.OnMemory, Doing.AddWithCarry);
@@ -407,7 +407,7 @@ public partial class Cpu6502
             _instructions[0xD3] = new IllegalInstruction(0xD3, "DCP", As.IndirectYIndexed.DoubleMemoryRead, Doing.Decrement.Memory, Doing.Compare.Accumulator);
             _instructions[0xD4] = new IllegalInstruction(0xD4, "IGN", As.ZeroPageXIndexed.Memory, Doing.Nop, Doing.Nop);
             _instructions[0xD7] = new IllegalInstruction(0xD7, "DCP", As.ZeroPageXIndexed.Memory, Doing.Decrement.Memory, Doing.Compare.Accumulator);
-            _instructions[0xDA] = new Instruction(0xDA, "NOP*", As.Implied, Doing.Nop);
+            _instructions[0xDA] = new Instruction(0xDA, "NOP*", As.Implied.Memory, Doing.Nop);
             _instructions[0xDB] = new IllegalInstruction(0xDB, "DCP", As.AbsoluteYIndexed.DoubleMemoryRead, Doing.Decrement.Memory, Doing.Compare.Accumulator);
             _instructions[0xDC] = new IllegalReadIgnoreOpcodeDC();
             _instructions[0xDF] = new IllegalInstruction(0xDF, "DCP", As.AbsoluteXIndexed.DoubleMemoryRead, Doing.Decrement.Memory, Doing.Compare.Accumulator);
@@ -420,7 +420,7 @@ public partial class Cpu6502
             _instructions[0xF3] = new IllegalInstruction(0xF3, "DCP", As.IndirectXIndexed.DoubleMemoryRead, Doing.Increment.Memory, Doing.SubtractWithCarry);
             _instructions[0xF4] = new IllegalInstruction(0xF4, "IGN", As.ZeroPageXIndexed.Memory, Doing.Nop, Doing.Nop);
             _instructions[0xF7] = new IllegalInstruction(0xF7, "ISC", As.ZeroPageXIndexed.Memory, Doing.Increment.Memory, Doing.SubtractWithCarry);
-            _instructions[0xFA] = new Instruction(0xFA, "NOP*", As.Implied, Doing.Nop);
+            _instructions[0xFA] = new Instruction(0xFA, "NOP*", As.Implied.Memory, Doing.Nop);
             _instructions[0xFB] = new IllegalInstruction(0xFB, "ISC", As.AbsoluteYIndexed.DoubleMemoryRead, Doing.Increment.Memory, Doing.SubtractWithCarry);
             _instructions[0xFC] = new IllegalReadIgnoreOpcodeFC();
             _instructions[0xFF] = new IllegalInstruction(0xFF, "ISC", As.AbsoluteXIndexed.DoubleMemoryRead, Doing.Increment.Memory, Doing.SubtractWithCarry);
