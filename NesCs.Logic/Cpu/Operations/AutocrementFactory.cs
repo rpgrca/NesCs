@@ -14,7 +14,4 @@ public class AutocrementFactory : IAutocrementFactory
 
     public IOperation Memory => new Autocrement((c, a, v) =>
         { c.WriteByteToMemory(a, v); return v; }, (c, a, v) => c.WriteByteToMemory(a, v), _modifier);
-
-    public IOperation Accumulator => new Autocrement((c, a, _) =>
-        c.ReadByteFromAccumulator(), (c, _, v) => c.SetValueToAccumulator(v), _modifier);
 }
