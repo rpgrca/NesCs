@@ -132,7 +132,7 @@ public partial class Cpu6502
             _instructions[0x96] = new Instruction(0x96, "STX", As.ZeroPageYIndexed.X, Doing.Store.Memory);
             _instructions[0x98] = new Instruction(0x98, "TXS", As.Implied.Y, Doing.Transfer.Accumulator);
             _instructions[0x99] = new Instruction(0x99, "STA", As.AbsoluteYIndexed.Accumulator, Doing.Store.Memory);
-            _instructions[0x9A] = new TransferXToStackOpcode9A();
+            _instructions[0x9A] = new Instruction(0x9A, "TXS", As.Implied.X, Doing.Store.Stack);
             _instructions[0x9D] = new Instruction(0x9D, "STA", As.AbsoluteXIndexed.Accumulator, Doing.Store.Memory);
             _instructions[0xA0] = new Instruction(0xA0, "LDY", As.Immediate, Doing.Load.Y);
             _instructions[0xA1] = new Instruction(0xA1, "LDA", As.IndirectXIndexed.Memory, Doing.Load.Accumulator);

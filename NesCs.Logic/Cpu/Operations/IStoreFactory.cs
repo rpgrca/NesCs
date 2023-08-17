@@ -6,4 +6,5 @@ public interface IStoreFactory
     IOperation Y { get; }
     IOperation Accumulator { get; }
     IOperation Memory { get; }
+    IOperation Stack { get; }
 }
