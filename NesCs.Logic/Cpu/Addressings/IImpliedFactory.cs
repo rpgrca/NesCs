@@ -6,4 +6,5 @@ public interface IImpliedFactory
     IAddressing Y { get; }
     IAddressing Accumulator { get; }
     IAddressing Memory { get; }
+    IAddressing Stack { get; }
 }

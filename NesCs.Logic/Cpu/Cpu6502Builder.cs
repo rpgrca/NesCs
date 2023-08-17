@@ -153,7 +153,7 @@ public partial class Cpu6502
             _instructions[0xB6] = new Instruction(0xB6, "LDX", As.ZeroPageYIndexed.Memory, Doing.Load.X);
             _instructions[0xB8] = new Instruction(0xB8, "CLV", As.Implied.Memory, Doing.Flag.Minus.V);
             _instructions[0xB9] = new Instruction(0xB9, "LDA", As.AbsoluteYIndexed.Common, Doing.Load.Accumulator);
-            _instructions[0xBA] = new TransferStackToXOpcodeBA();
+            _instructions[0xBA] = new Instruction(0xBA, "TSX", As.Implied.Stack, Doing.Transfer.X);
             _instructions[0xBC] = new Instruction(0xBC, "LDY", As.AbsoluteXIndexed.Common, Doing.Load.Y);
             _instructions[0xBD] = new Instruction(0xBD, "LDA", As.AbsoluteXIndexed.Common, Doing.Load.Accumulator);
             _instructions[0xBE] = new Instruction(0xBE, "LDX", As.AbsoluteYIndexed.Common, Doing.Load.X);
