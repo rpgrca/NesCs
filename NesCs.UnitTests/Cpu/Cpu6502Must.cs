@@ -41,4 +41,5 @@ public class Cpu6502Must
         stream.Read(array, 0, (int)file.Length);
         return array;
     }
+
 }

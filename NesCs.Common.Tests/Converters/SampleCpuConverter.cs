@@ -9,6 +9,7 @@ public class SampleCpuConverter : JsonConverter<SampleCpu>
     {
         if (reader.TokenType != JsonTokenType.StartObject) throw new JsonException();
 
+        byte opcode = 0;
         var name = string.Empty;
         var initial = new SampleStatus();
         var final = new SampleStatus();
@@ -23,6 +24,7 @@ public class SampleCpuConverter : JsonConverter<SampleCpu>
             {
                 case "name":
                     name = JsonSerializer.Deserialize<string>(ref reader, options)!;
+                    opcode = Convert.FromHexString(name[0..2])[0];
                     break;
 
                 case "initial":
@@ -39,7 +41,7 @@ public class SampleCpuConverter : JsonConverter<SampleCpu>
             }
         }
 
-        return new SampleCpu { Name = name, Initial = initial, Final = final, Cycles = cycles };
+        return new SampleCpu { Opcode = opcode, Name = name, Initial = initial, Final = final, Cycles = cycles };
     }
 
     public override void Write(Utf8JsonWriter writer, SampleCpu value, JsonSerializerOptions options) =>

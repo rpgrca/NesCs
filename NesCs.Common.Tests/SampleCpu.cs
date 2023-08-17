@@ -9,6 +9,7 @@ namespace NesCs.Common.Tests;
 public readonly struct SampleCpu
 {
     public string Name { get; init; }
+    public byte Opcode { get; init; }
     public SampleStatus Initial { get; init; }
     public SampleStatus Final { get; init; }
     [JsonConverter(typeof(SampleCycleArrayConverter))]
