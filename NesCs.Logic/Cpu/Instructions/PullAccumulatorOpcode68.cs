@@ -14,9 +14,13 @@ public class PullAccumulatorOpcode68 : IInstruction
         _ = cpu.ReadByteFromMemory(cpu.ReadByteFromProgramCounter());
 
         _ = cpu.ReadByteFromStackMemory();
-        var a = cpu.PopFromStack();
+        var sp = cpu.ReadByteFromStackPointer();
+        sp += 1;
+        cpu.SetValueToStackPointer(sp);
 
+        var a = cpu.ReadByteFromStackMemory();
         cpu.SetValueToAccumulator(a);
+
         cpu.SetZeroFlagBasedOn(a);
         cpu.SetNegativeFlagBasedOn(a);
     }

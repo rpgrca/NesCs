@@ -31,6 +31,7 @@ public class LogicalInclusiveOrInCpuMust
     public static IEnumerable<object[]> Opcode05JsonFeeder()
     {
         yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "05 65 9c", "initial": { "pc": 3097, "s": 200, "a": 209, "x": 135, "y": 48, "p": 232, "ram": [ [3097, 5], [3098, 101], [3099, 156], [101, 45]]}, "final": { "pc": 3099, "s": 200, "a": 253, "x": 135, "y": 48, "p": 232, "ram": [ [101, 45], [3097, 5], [3098, 101], [3099, 156]]}, "cycles": [ [3097, 5, "read"], [3098, 101, "read"], [101, 45, "read"]] }""") };
+        yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "05 c1 26", "initial": { "pc": 8194, "s": 33, "a": 138, "x": 76, "y": 61, "p": 174, "ram": [ [8194, 5], [8195, 193], [8196, 38], [193, 113]]}, "final": { "pc": 8196, "s": 33, "a": 251, "x": 76, "y": 61, "p": 172, "ram": [ [193, 113], [8194, 5], [8195, 193], [8196, 38]]}, "cycles": [ [8194, 5, "read"], [8195, 193, "read"], [193, 113, "read"]] }""") };
     }
 
     public static IEnumerable<object[]> Opcode09JsonFeeder()
