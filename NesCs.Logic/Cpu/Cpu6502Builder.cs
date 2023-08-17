@@ -1,4 +1,3 @@
-using System.Linq.Expressions;
 using NesCs.Logic.Cpu.Instructions;
 using NesCs.Logic.Ram;
 
