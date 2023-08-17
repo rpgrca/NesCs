@@ -1,4 +1,5 @@
-﻿using NesCs.Logic.Ppu;
+﻿using NesCs.Logic.Cpu;
+using NesCs.Logic.Ppu;
 using NesCs.Logic.Ram;
 
 if (args.Length < 1)
@@ -37,7 +38,7 @@ var cpu = builder
     .Running(nesFile.ProgramRom)
     .SupportingInvalidInstructions()
     .WithCyclesAs(6)
-    .WithProcessorStatusAs(NesCs.Logic.Cpu.ProcessorStatus.X | NesCs.Logic.Cpu.ProcessorStatus.I)
+    .WithProcessorStatusAs(ProcessorStatus.X | ProcessorStatus.I)
     .WithStackPointerAt(0xFD)
     .WithRamController(ramController)
     .TracingWith(new Vm6502DebuggerDisplay())
@@ -57,10 +58,38 @@ var cpu = builder
         }
         cpu.Stop();
     })
+    .WithCallback(0xE7E9, cpu => {
+        var c = (char)cpu.ReadByteFromAccumulator();
+        Console.Write($"{c}");
+        System.Diagnostics.Debug.Print($"{c}");
+    })
     .Build();
+
+ramController.AddHook(0x6000, (a, v) => {
+    if (v == 0x81)
+    {
+        cpu.Reset();
+    }
+});
 
 cpu.PowerOn();
 cpu.Reset();
 cpu.Run();
 
 return 0;
+
+
+class RamHook : IRamHook
+{
+    public Cpu6502 Cpu { get; set; }
+
+    public void Call(int index, byte value, byte[] ram)
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool CanHandle(int index)
+    {
+        throw new NotImplementedException();
+    }
+}

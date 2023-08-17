@@ -95,7 +95,7 @@ public partial class Cpu6502
 
                 // TODO: VSC bug makes application run in background when stopping while debugging
                 // filling /var/log/syslog, putting an early exit just in case.
-                if (_cycles > 500000) Stop();
+                //if (_cycles > 100000000) Stop();
             }
 
         }
