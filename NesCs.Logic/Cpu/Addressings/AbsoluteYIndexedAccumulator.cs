@@ -1,18 +1,14 @@
-namespace NesCs.Logic.Cpu.Instructions;
+namespace NesCs.Logic.Cpu.Addressings;
 
-public class StoreAccumulatorAbsoluteXOpcode9D : IInstruction
+public class AbsoluteYIndexedAccumulator : IAddressing
 {
-    public string Name => "STA";
-
-    public byte Opcode => 0x9D;
-
     public byte[] PeekOperands(Cpu6502 cpu)
     {
         byte[] operands = { cpu.PeekMemory(cpu.ReadByteFromProgramCounter() + 1), cpu.PeekMemory(cpu.ReadByteFromProgramCounter() + 2) };
         return operands;
     }
 
-    public void Execute(Cpu6502 cpu)
+    (int, byte) IAddressing.ObtainValueAndAddress(Cpu6502 cpu)
     {
         cpu.ReadyForNextInstruction();
         var low = cpu.ReadByteFromProgram();
@@ -21,15 +17,15 @@ public class StoreAccumulatorAbsoluteXOpcode9D : IInstruction
         var high = cpu.ReadByteFromProgram();
 
         cpu.ReadyForNextInstruction();
-        var address = high << 8 | low + cpu.ReadByteFromRegisterX() & 0xff;
+        var address = high << 8 | low + cpu.ReadByteFromRegisterY() & 0xff;
         _ = cpu.ReadByteFromMemory(address);
 
-        var address2 = (high << 8 | low) + cpu.ReadByteFromRegisterX() & 0xffff;
+        var address2 = (high << 8 | low) + cpu.ReadByteFromRegisterY() & 0xffff;
         if (address != address2)
         {
             address = address2;
         }
 
-        cpu.WriteByteToMemory(address, cpu.ReadByteFromAccumulator());
+        return (address, cpu.ReadByteFromAccumulator());
     }
 }
