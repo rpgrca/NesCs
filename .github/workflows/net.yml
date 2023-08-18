@@ -35,6 +35,12 @@ jobs:
       run: |
            dotnet build --configuration Debug --no-restore /p:DefineConstants="CI_CONTEXT"
 
+    - name: Localizate
+      run: |
+           pwd
+           ls
+           find
+
     - name: Unit testing
       run: |
            coverlet NesCs.UnitTests/bin/Debug/net7.0/NesCs.UnitTests.dll --target "dotnet" --targetargs "test NesCs.UnitTests/NesCs.UnitTests.csproj --no-build --verbosity quiet" --format OpenCover --output nescs.coverage.xml
@@ -51,9 +57,3 @@ jobs:
       with:
         name: code-coverage-report
         path: ./*.coverage.xml
-
-    - name: Localizate
-      run: |
-           pwd
-           ls
-           find
