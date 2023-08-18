@@ -8,14 +8,11 @@ namespace NesCs.Roms.IntegrationTests;
 public class CpuResetMust
 {
     [Theory]
-    [InlineData("../../../../../nes-test-roms/cpu_reset/ram_after_reset.nes", "\n\nPress reset AFTER this message\ndisappears\n\n\n\nram_after_reset\n\nPassed\n")]
-    [InlineData("../../../../../nes-test-roms/cpu_reset/registers.nes", "A  X  Y  P  S\n00 00 00 34 FD \n\n\nPress reset AFTER this message\ndisappears\n\n\nA  X  Y  P  S\n34 56 78 FF 0F \n\nregisters\n\nPassed\n")]
-    public void ReturnPassed(string romName, string expectedResult)
+    [InlineData("cpu_reset/ram_after_reset.nes", 0xE7E9, 0xE29C, 0xE9D5, "\n\nPress reset AFTER this message\ndisappears\n\n\n\nram_after_reset\n\nPassed\n")]
+    [InlineData("cpu_reset/registers.nes", 0xE7E9, 0xE29C, 0xE9D5, "A  X  Y  P  S\n00 00 00 34 FD \n\n\nPress reset AFTER this message\ndisappears\n\n\nA  X  Y  P  S\n34 56 78 FF 0F \n\nregisters\n\nPassed\n")]
+    [InlineData("instr_misc/rom_singles/01-abs_x_wrap.nes", 0xE463, 0x0000, 0xE7B5, "\n01-abs_x_wrap\n\nPassed\n")]
+    public void ReturnPassed(string romName, int printAddress, int resetAddress, int poweroffAddress, string expectedResult)
     {
-        const int PrintAddress = 0xE7E9;
-        const int ResetAddress = 0xE29C;
-        const int PowerOffAddress = 0xE9D5;
-
         var message = string.Empty;
         var fsp = new FileSystemProxy.Builder().Loading(new NesFileOptions
         {
@@ -25,7 +22,7 @@ public class CpuResetMust
             LoadCharacterRom = true
         }).Build();
 
-        var nesFile = fsp.Load(romName);
+        var nesFile = fsp.Load("../../../../../nes-test-roms/" + romName);
         var ramController = new RamController.Builder().Build();
         var ppu = new Ppu2C02(ramController);
 
@@ -34,9 +31,9 @@ public class CpuResetMust
             .Running(nesFile.ProgramRom)
             .SupportingInvalidInstructions()
             .WithRamController(ramController)
-            .WithCallback(PrintAddress, cpu => message += (char)cpu.ReadByteFromAccumulator())
-            .WithCallback(ResetAddress, cpu => cpu.Reset())
-            .WithCallback(PowerOffAddress, cpu => cpu.Stop())
+            .WithCallback(printAddress, cpu => message += (char)cpu.ReadByteFromAccumulator())
+            .WithCallback(resetAddress, cpu => cpu.Reset())
+            .WithCallback(poweroffAddress, cpu => cpu.Stop())
             .Build();
 
         cpu.PowerOn();
