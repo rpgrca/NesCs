@@ -15,6 +15,7 @@ jobs:
     - uses: actions/checkout@v3
       with:
         repository: christopherpow/nes-test-roms
+        path: ./nes-test-roms
 
     - uses: actions/checkout@v3
 
@@ -50,3 +51,9 @@ jobs:
       with:
         name: code-coverage-report
         path: ./*.coverage.xml
+
+    - name: Localizate
+      run: |
+           pwd
+           ls
+           find
