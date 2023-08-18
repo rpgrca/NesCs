@@ -29,13 +29,16 @@ jobs:
         dotnet-version: 7.0.x
 
     - name: Restore packages
+      working-directory: NesCs
       run: |
            dotnet restore
 
     - name: Install Coverlet
+      working-directory: NesCs
       run: dotnet tool install --global coverlet.console
 
     - name: Build
+      working-directory: NesCs
       run: |
            dotnet build --configuration Debug --no-restore /p:DefineConstants="CI_CONTEXT"
 
@@ -46,14 +49,17 @@ jobs:
            find
 
     - name: Unit testing
+      working-directory: NesCs
       run: |
            coverlet NesCs.UnitTests/bin/Debug/net7.0/NesCs.UnitTests.dll --target "dotnet" --targetargs "test NesCs.UnitTests/NesCs.UnitTests.csproj --no-build --verbosity quiet" --format OpenCover --output nescs.coverage.xml
 
     - name: Integration testing
+      working-directory: NesCs
       run: |
            coverlet NesCs.Roms.IntegrationTests/bin/Debug/net7.0/NesCs.Roms.IntegrationTests.dll --target "dotnet" --targetargs "test NesCs.Roms.IntegrationTests/NesCs.Roms.IntegrationTests.csproj --no-build --verbosity quiet" --format OpenCover --output nescs.roms.coverage.xml
 
     - name: Upload coverage to CodeCov
+      working-directory: NesCs
       run: bash <(curl -s https://codecov.io/bash)
 
     - name: Archive code coverage results
