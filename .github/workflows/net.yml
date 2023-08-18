@@ -12,12 +12,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout NesCs
+      uses: actions/checkout@v3
+      with:
+        path: NesCs
+
+    - name: Checkout nes-test-roms
+      uses: actions/checkout@v3
       with:
         repository: christopherpow/nes-test-roms
-        path: ./nes-test-roms
-
-    - uses: actions/checkout@v3
+        path: nes-test-roms
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
