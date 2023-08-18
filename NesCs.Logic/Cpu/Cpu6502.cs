@@ -117,6 +117,9 @@ public partial class Cpu6502
     public void Reset()
     {
         SetInterruptDisable();
+        var sp = ReadByteFromStackPointer();
+        sp -= 3;
+        SetValueToStackPointer(sp);
         var low = ReadByteFromMemory(_resetVector);
         var high = ReadByteFromMemory(_resetVector + 1);
         var address = high << 8 | low;
