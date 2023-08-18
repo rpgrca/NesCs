@@ -41,4 +41,35 @@ public class CpuResetMust
 
         Assert.Equal(expectedResult, message);
     }
+
+    [Theory]
+    [InlineData("instr_misc/rom_singles/03-dummy_reads.nes", 0xE7AB)]
+    public void ReturnZeroInAccumulator_WhenTestIsSuccessful(string romName, int poweroffAddress)
+    {
+        var fsp = new FileSystemProxy.Builder().Loading(new NesFileOptions
+        {
+            LoadHeader = true,
+            LoadTrainer = true,
+            LoadProgramRom = true,
+            LoadCharacterRom = true
+        }).Build();
+
+        var nesFile = fsp.Load("../../../../../nes-test-roms/" + romName);
+        var ramController = new RamController.Builder().Build();
+        var ppu = new Ppu2C02(ramController);
+
+        var builder = new Cpu6502.Builder().ProgramMappedAt(0x8000);
+        var cpu = builder
+            .Running(nesFile.ProgramRom)
+            .SupportingInvalidInstructions()
+            .WithRamController(ramController)
+            .WithCallback(poweroffAddress, cpu => cpu.Stop())
+            .Build();
+
+        cpu.PowerOn();
+        cpu.Run();
+
+        Assert.Equal(0, cpu.ReadByteFromAccumulator());
+    }
+
 }
