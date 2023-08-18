@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NesCs.SystemTests.Nestest",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NesCs.SystemTests.C64TestSuite", "NesCs.SystemTests\Wolfgang\NesCs.SystemTests.C64TestSuite.csproj", "{EFF915A7-9F36-42F5-91E5-B72F448354A0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NesCs.Roms.IntegrationTests", "NesCs.Roms.IntegrationTests\NesCs.Roms.IntegrationTests.csproj", "{4F719497-6764-4B42-BCA3-523444F60E71}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -62,6 +64,10 @@ Global
 		{EFF915A7-9F36-42F5-91E5-B72F448354A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EFF915A7-9F36-42F5-91E5-B72F448354A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EFF915A7-9F36-42F5-91E5-B72F448354A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F719497-6764-4B42-BCA3-523444F60E71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F719497-6764-4B42-BCA3-523444F60E71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F719497-6764-4B42-BCA3-523444F60E71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F719497-6764-4B42-BCA3-523444F60E71}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{51C84832-4F38-41E1-8C3F-CCCEDA70D5F3} = {A09FC5F8-E35D-4624-890A-8FF2692DC522}
