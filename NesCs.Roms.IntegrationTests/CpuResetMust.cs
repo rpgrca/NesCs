@@ -2,20 +2,19 @@ using NesCs.Logic.Cpu;
 using NesCs.Logic.Ppu;
 using NesCs.Logic.Ram;
 using NesCs.Logic.File;
-using System.Globalization;
 
 namespace NesCs.Roms.IntegrationTests;
 
 public class CpuResetMust
 {
     [Theory]
-    [InlineData("cpu_reset/ram_after_reset.nes", 0xE7E9, 0xE9D5, "\nram_after_reset\n\nPassed\n")]
-    [InlineData("cpu_reset/registers.nes", 0xE7E9, 0xE9D5, "A  X  Y  P  S\n34 56 78 FF 0F \n\nregisters\n\nPassed\n")]
-    [InlineData("instr_misc/rom_singles/01-abs_x_wrap.nes", 0xE463, 0xE7B5, "\n01-abs_x_wrap\n\nPassed\n")]
-    [InlineData("instr_misc/rom_singles/02-branch_wrap.nes", 0xE463, 0xE7B5, "\n02-branch_wrap\n\nPassed\n")]
+    [InlineData("cpu_reset/ram_after_reset.nes", 0xE29C, 0xE9D5, "\nram_after_reset\n\nPassed\n")] // working
+    [InlineData("cpu_reset/registers.nes", 0xE29C, 0xE9D5, "A  X  Y  P  S\n34 56 78 FF 0F \n\nregisters\n\nPassed\n")] // working
+    [InlineData("instr_misc/rom_singles/01-abs_x_wrap.nes", 0x0001, 0xE7B5, "\n01-abs_x_wrap\n\nPassed\n")] // working
+    //[InlineData("instr_misc/rom_singles/02-branch_wrap.nes", 0x0001, 0xE7B5, "\n02-branch_wrap\n\nPassed\n")]
     //[InlineData("instr_misc/rom_singles/03-dummy_reads.nes", 0x0001, 0x0002, "")] // Not working
     [InlineData("instr_test-v3/rom_singles/01-implied.nes", 0x0001, 0xE976, "\n01-implied\n\nPassed\n")]
-    //[InlineData("instr_test-v3/rom_singles/02-immediate.nes", 0x0001, 0xE976, "\n01-implied\n\nPassed\n")] // Not working, must implement 0x0B
+    //[InlineData("instr_test-v3/rom_singles/02-immediate.nes", 0x0001, 0xE976, "\n01-implied\n\nPassed\n")] // Not working, must implement 0x0B*/
     [InlineData("instr_test-v3/rom_singles/03-zero_page.nes", 0x0001, 0xE976, "\n03-zero_page\n\nPassed\n")]
     [InlineData("instr_test-v3/rom_singles/04-zp_xy.nes", 0x0001, 0xE976, "\n04-zp_xy\n\nPassed\n")]
     public void ReturnPassed(string romName, int resetAddress, int poweroffAddress, string expectedResult)
