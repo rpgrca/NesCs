@@ -19,7 +19,7 @@ public class ScrollingPositionRegister
         }
     }
 
-    public void Write(byte value, byte[] ram)
+    public void Write(byte value, byte[] ram, IPpu ppu)
     {
         Position = value;
         ram[ScrollIndex] = value;

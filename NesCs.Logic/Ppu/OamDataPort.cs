@@ -18,5 +18,5 @@ public class OamDataPort
         }
     }
 
-    public void Write(byte value, byte[] ram) => _address.Write(value, ram);
+    public void Write(byte value, byte[] ram, IPpu ppu) => _address.Write(value, ram, ppu);
 }

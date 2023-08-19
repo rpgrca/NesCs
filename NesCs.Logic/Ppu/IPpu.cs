@@ -2,7 +2,7 @@ using NesCs.Logic.Ram;
 
 namespace NesCs.Logic.Ppu;
 
-public interface IPpu : IRamHook
+public interface IPpu : IRamHook, IPpuVram
 {
     ControlRegister PpuCtrl { get; }
     Mask PpuMask { get; }
@@ -13,4 +13,12 @@ public interface IPpu : IRamHook
     AddressRegister PpuAddr { get; }
     DataPort PpuData { get; }
     OamDmaRegister OamDma { get; }
+
+}
+
+public interface IPpuVram
+{
+    void Write(byte value);
+    byte Read();
+    void IncrementAddress();
 }

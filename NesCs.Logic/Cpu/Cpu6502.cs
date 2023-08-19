@@ -70,10 +70,13 @@ public partial class Cpu6502
             _ram[index] = 0x00;
         }
 
-        var low = ReadByteFromMemory(_resetVector);
-        var high = ReadByteFromMemory(_resetVector + 1);
-        var address = high << 8 | low;
-        SetValueToProgramCounter(address);
+        if (PC == 0)
+        {
+            var low = ReadByteFromMemory(_resetVector);
+            var high = ReadByteFromMemory(_resetVector + 1);
+            var address = high << 8 | low;
+            SetValueToProgramCounter(address);
+        }
     }
 
     public void Step()
@@ -100,7 +103,10 @@ public partial class Cpu6502
 
                 // TODO: VSC bug makes application run in background when stopping while debugging
                 // filling /var/log/syslog, putting an early exit just in case.
-                if (_cycles > 10000000) Stop();
+                if (_cycles > 30000000)
+                {
+                    Stop();
+                }
             }
         }
         catch (Exception ex)

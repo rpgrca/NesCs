@@ -23,20 +23,27 @@ var nesFile = fsp.Load(args[0]);
 Console.WriteLine($"Loaded!");
 Console.WriteLine(nesFile.ToString());
 
-var ramController = new RamController.Builder().Build();
-var ppu = new Ppu2C02(ramController);
+var memory = new byte[0x10000];
+var ramController = new RamController.Builder().WithRamOf(memory).Build();
+var ppu = new Ppu2C02.Builder().WithRamController(ramController).Build();
 
 var builder = new NesCs.Logic.Cpu.Cpu6502.Builder()
     .ProgramMappedAt(0x8000); // NROM-256 or NROM-128
+
 
 if (nesFile.ProgramRomSize == 1)
 {
     builder.ProgramMappedAt(0xC000); // NROM-128
 }
 
+        const int PrintAddress = 0xE463; // 0xE558;
+        const int PowerOffAddress = 0xE7B5; // 0xE7E9;
+        var message = string.Empty;
+
 var cpu = builder
     .Running(nesFile.ProgramRom)
     .SupportingInvalidInstructions()
+    .WithProgramCounterAs(0xC000)
     .WithCyclesAs(6)
     .WithProcessorStatusAs(ProcessorStatus.X | ProcessorStatus.I)
     .WithStackPointerAt(0xFD)
@@ -58,22 +65,34 @@ var cpu = builder
         }
         cpu.Stop();
     })
-    .WithCallback(0xE7E9, cpu => {
+    .WithCallback(PrintAddress, cpu => {
         var c = (char)cpu.ReadByteFromAccumulator();
         Console.Write($"{c}");
         System.Diagnostics.Debug.Print($"{c}");
+        message += c;
     })
     .Build();
 
-ramController.AddHook(0x6000, (a, v) => {
-    if (v == 0x81)
+    var lowByte = 0;
+    var highByte = 0;
+    var firstWrite = true;
+
+ramController.AddHook(0x2006, (a, v) => {
+    if (firstWrite)
     {
-        cpu.Reset();
+        lowByte = v;
+        firstWrite = false;
     }
+    else
+    {
+        highByte = v;
+        firstWrite = true;
+    }
+
+    message += (char)v;
 });
 
 cpu.PowerOn();
-cpu.Reset();
 cpu.Run();
 
 return 0;

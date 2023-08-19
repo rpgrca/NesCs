@@ -24,7 +24,7 @@ public class InstrMiscMust
 
         var nesFile = fsp.Load("../../../../../nes-test-roms/" + romName);
         var ramController = new RamController.Builder().WithRamOf(ram).Build();
-        var ppu = new Ppu2C02(ramController);
+        var ppu = new Ppu2C02.Builder().WithRamController(ramController).Build();
 
         var builder = new Cpu6502.Builder().ProgramMappedAt(0x8000);
         var cpu = builder

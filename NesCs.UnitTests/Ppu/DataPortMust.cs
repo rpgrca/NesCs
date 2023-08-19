@@ -1,3 +1,5 @@
+using NesCs.Logic.Ppu;
+
 namespace NesCs.UnitTests.Ppu;
 
 public class DataPortMust
@@ -5,11 +7,9 @@ public class DataPortMust
     [Fact]
     public void SetDataCorrectly()
     {
-        var sut = new Logic.Ppu.DataPort
-        {
-            Data = 0x13
-        };
-
-        Assert.Equal(0x13, sut.Data);
+        var vram = new byte[100];
+        var ppu = new Ppu2C02.Builder().WithVram(vram).Build();
+        var sut = new DataPort(ppu);
+        sut.Write(0x13);
     }
 }

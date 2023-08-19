@@ -25,4 +25,10 @@ public class DummyPpu : IPpu
     public void Call(int index, byte value, byte[] ram) => throw new NotImplementedException();
 
     public bool CanHandle(int index) => false;
+
+    public void IncrementAddress() => throw new NotImplementedException();
+
+    public byte Read() => throw new NotImplementedException();
+
+    public void Write(byte value) => throw new NotImplementedException();
 }

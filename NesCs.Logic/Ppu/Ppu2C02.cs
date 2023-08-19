@@ -4,7 +4,33 @@ namespace NesCs.Logic.Ppu;
 
 public class Ppu2C02 : IPpu
 {
-    private readonly byte[] _map;
+    public class Builder
+    {
+        private byte[]? _vram;
+        private IRamController? _ramController;
+
+        public Builder WithVram(byte[] vram)
+        {
+            _vram = vram;
+            return this;
+        }
+
+        public Builder WithRamController(IRamController ramController)
+        {
+            _ramController = ramController;
+            return this;
+        }
+
+        public IPpu Build()
+        {
+            _vram ??= new byte[0x4000];
+            _ramController ??= new RamController.Builder().Build();
+
+            return new Ppu2C02(_ramController, _vram);
+        }
+    }
+
+    private readonly byte[] _vram;
     private readonly OamSprite[] _oam;
     private readonly OamSprite[] _secondaryOam;
     
@@ -18,9 +44,9 @@ public class Ppu2C02 : IPpu
     public DataPort PpuData { get; }        /* 0x2007 */
     public OamDmaRegister OamDma { get; }   /* 0x4014 */
 
-    public Ppu2C02(IRamController ram)
+    private Ppu2C02(IRamController ram, byte[] vram)
     {
-        _map = new byte[0x4000];
+        _vram = vram;
         _oam = new OamSprite[64];
         _secondaryOam = new OamSprite[8];
 
@@ -31,7 +57,7 @@ public class Ppu2C02 : IPpu
         OamData = new OamDataPort(OamAddr );
         PpuScroll = new ScrollingPositionRegister();
         PpuAddr = new AddressRegister();
-        PpuData = new DataPort();
+        PpuData = new DataPort(this);
         OamDma = new OamDmaRegister();
     }
 
@@ -39,16 +65,32 @@ public class Ppu2C02 : IPpu
     {
         switch (index)
         {
-            case 0x2000: PpuCtrl.Write(value, ram); break;
-            case 0x2001: PpuMask.Write(value, ram); break;
-            case 0x2002: PpuStatus.Write(value, ram); break;
-            case 0x2003: OamAddr.Write(value, ram); break;
-            case 0x2004: OamData.Write(value, ram); break;
-            case 0x2005: PpuScroll.Write(value, ram); break;
-            case 0x2006: PpuAddr.Write(value, ram); break;
-            case 0x2007: PpuData.Write(value, ram); break;
+            case 0x2000: PpuCtrl.Write(value, ram, this); break;
+            case 0x2001: PpuMask.Write(value, ram, this); break;
+            case 0x2002: PpuStatus.Write(value, ram, this); break;
+            case 0x2003: OamAddr.Write(value, ram, this); break;
+            case 0x2004: OamData.Write(value, ram, this); break;
+            case 0x2005: PpuScroll.Write(value, ram, this); break;
+            case 0x2006: PpuAddr.Write(value, ram, this); break;
+            case 0x2007: PpuData.Write(value); break;
         }
     }
 
     public bool CanHandle(int index) => index >= 0x2000 && index <= 0x2007;
+
+    public void Write(byte value) => _vram[PpuAddr.CurrentAddress] = value;
+
+    public byte Read() => _vram[PpuAddr.CurrentAddress];
+
+    public void IncrementAddress()
+    {
+        if (PpuCtrl.I == 0)
+        {
+            PpuAddr.IncrementBy(1);
+        }
+        else
+        {
+            PpuAddr.IncrementBy(0x20);
+        }
+    }
 }

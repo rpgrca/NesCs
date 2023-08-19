@@ -64,5 +64,5 @@ public class Mask
         set => Flags |= (byte)((value & 1) << 7);
     }
 
-    public void Write(byte value, byte[] ram) => ram[MaskIndex] = value;
+    public void Write(byte value, byte[] ram, IPpu ppu) => ram[MaskIndex] = value;
 }

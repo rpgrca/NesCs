@@ -57,7 +57,7 @@ public class ControlRegister
         set => Flag |= (byte)((value & 1) << 7);
     }
 
-    public void Write(byte value, byte[] ram) => ram[ControlRegisterIndex] = value;
+    public void Write(byte value, byte[] ram, IPpu ppu) => ram[ControlRegisterIndex] = value;
 
     public int GetBaseNametableAddress() => 0x2000 + N * 0x400;
 

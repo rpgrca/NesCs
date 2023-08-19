@@ -6,7 +6,7 @@ public class OamAddressPort
 
     internal void IncrementAddress() => Address++;
 
-    public void Write(byte value, byte[] ram)
+    public void Write(byte value, byte[] ram, IPpu ppu)
     {
         Address = value;
         ram[0x2003] = Address;

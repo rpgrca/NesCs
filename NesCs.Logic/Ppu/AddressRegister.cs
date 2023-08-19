@@ -19,9 +19,22 @@ public class AddressRegister
         }
     }
 
-    public void Write(byte value, byte[] ram)
+    public void IncrementBy(byte value)
+    {
+        if (LowerByte + value > 0xff)
+        {
+            _address[0] = (byte)(_address[0] + 1);
+        }
+
+        _address[1] = (byte)(_address[1] + value);
+    }
+
+    public void Write(byte value, byte[] ram, IPpu ppu)
     {
         Address = value;
         ram[AddressIndex] = value;
     }
+
+    public int CurrentAddress => UpperByte << 8 | LowerByte;
+
 }

@@ -39,5 +39,5 @@ public class Status
         set => Flag |= (byte)((value & 1) << 7);
     }
 
-    public void Write(byte value, byte[] ram) => ram[StatusIndex] = value;
+    public void Write(byte value, byte[] ram, IPpu ppu) => ram[StatusIndex] = value;
 }

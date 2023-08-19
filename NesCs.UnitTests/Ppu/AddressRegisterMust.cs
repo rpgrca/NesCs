@@ -1,3 +1,6 @@
+using NesCs.Logic.Ppu;
+using NesCs.Logic.Ram;
+
 namespace NesCs.UnitTests.Ppu;
 
 public class AddressRegisterMust
@@ -48,5 +51,19 @@ public class AddressRegisterMust
         sut.Address = 0x00;
         Assert.Equal(expectedValue, sut.UpperByte);
         Assert.Equal(0, sut.LowerByte);
+    }
+
+    [Fact]
+    public void IncrementAddressByOne_WhenBitInPpuControlIsNotSet()
+    {
+        var ramController = new RamController.Builder().Build();
+        var sut = new Ppu2C02.Builder().WithRamController(ramController).Build();
+        sut.PpuCtrl.I = 0;
+        sut.PpuAddr.Address = 0x01;
+        sut.PpuAddr.Address = 0x20;
+        sut.PpuData.Write(0xff);
+
+        Assert.Equal(0x21, sut.PpuAddr.LowerByte);
+        Assert.Equal(0x01, sut.PpuAddr.UpperByte);
     }
 }

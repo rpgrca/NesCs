@@ -2,21 +2,18 @@ namespace NesCs.Logic.Ppu;
 
 public class DataPort
 {
-    private const int DataPortIndex = 0x2007;
-    private byte _data;
+    private readonly IPpuVram _ppuVram;
 
-    public byte Data
+    public DataPort(IPpuVram ppuVram)
     {
-        get => _data;
-        set
-        {
-            _data = value;
-        }
+        _ppuVram = ppuVram;
     }
 
-    public void Write(byte value, byte[] ram)
+    public void Write(byte value)
     {
-        ram[DataPortIndex] = value;
-        Data = value;
+        _ppuVram.Write(value);
+        _ppuVram.IncrementAddress();
     }
+
+    public byte Read() => _ppuVram.Read();
 }
