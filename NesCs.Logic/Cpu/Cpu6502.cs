@@ -1,4 +1,3 @@
-using System.Reflection.Metadata;
 using NesCs.Logic.Cpu.Instructions;
 using NesCs.Logic.Ram;
 
@@ -103,7 +102,6 @@ public partial class Cpu6502
                 // filling /var/log/syslog, putting an early exit just in case.
                 if (_cycles > 10000000) Stop();
             }
-
         }
         catch (Exception ex)
         {

@@ -5,9 +5,14 @@ public class RamController : IRamController
     public class Builder
     {
         private int _ramSize;
+        private byte[] _ram;
         private Dictionary<int, Action<int, byte>> _callbacks;
 
-        public Builder() => _callbacks = new();
+        public Builder()
+        {
+            _callbacks = new();
+            _ram = Array.Empty<byte>();
+        }
 
         public Builder WithRamSizeOf(int size)
         {
@@ -15,10 +20,17 @@ public class RamController : IRamController
             return this;
         }
 
+        public Builder WithRamOf(byte[] ram)
+        {
+            _ram = ram;
+            return this;
+        }
+
         public RamController Build()
         {
             _ramSize = _ramSize > 0? _ramSize : 0x10000;
-            return new RamController(_ramSize, _callbacks);
+            _ram = _ram.Length > 0? _ram : new byte[_ramSize];
+            return new RamController(_ram, _callbacks);
         }
     }
 
@@ -26,9 +38,9 @@ public class RamController : IRamController
     private readonly Dictionary<int, Action<int, byte>> _callbacks;
     private IRamHook? _ppuHook;
 
-    public RamController(int ramSize, Dictionary<int, Action<int, byte>> callbacks)
+    public RamController(byte[] ram, Dictionary<int, Action<int, byte>> callbacks)
     {
-        _ram = new byte[ramSize];
+        _ram = ram;
         _callbacks = callbacks;
     }
 
