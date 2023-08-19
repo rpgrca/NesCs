@@ -53,17 +53,21 @@ public class AddressRegisterMust
         Assert.Equal(0, sut.LowerByte);
     }
 
-    [Fact]
-    public void IncrementAddressByOne_WhenBitInPpuControlIsNotSet()
+    [Theory]
+    [InlineData(0x01, 0x20, 0, 0x01, 0x21)]
+    [InlineData(0x01, 0x20, 1, 0x01, 0x40)]
+    [InlineData(0x01, 0xff, 0, 0x02, 0x00)]
+    [InlineData(0x01, 0xff, 1, 0x02, 0x1f)]
+    public void IncrementAddressCorrectly(byte high, byte low, byte flag, byte expectedHigh, byte expectedLow)
     {
         var ramController = new RamController.Builder().Build();
         var sut = new Ppu2C02.Builder().WithRamController(ramController).Build();
-        sut.PpuCtrl.I = 0;
-        sut.PpuAddr.Address = 0x01;
-        sut.PpuAddr.Address = 0x20;
+        sut.PpuCtrl.I = flag;
+        sut.PpuAddr.Address = high;
+        sut.PpuAddr.Address = low;
         sut.PpuData.Write(0xff);
 
-        Assert.Equal(0x21, sut.PpuAddr.LowerByte);
-        Assert.Equal(0x01, sut.PpuAddr.UpperByte);
+        Assert.Equal(expectedHigh, sut.PpuAddr.UpperByte);
+        Assert.Equal(expectedLow, sut.PpuAddr.LowerByte);
     }
 }
