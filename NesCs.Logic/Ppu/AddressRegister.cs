@@ -35,15 +35,19 @@ public class AddressRegister
     }
 
     private void CalculateCurrentAddress() =>
-        CurrentAddress = (_address[0] << 8 | _address[1]) & 0x3fff;
+        CurrentAddress = _address[0] << 8 | _address[1];
 
     public void Write(byte value)
     {
-        _address[_index] = value;
-        _index = (byte)((_index + 1) & 1);
-
         if (_index == 0)
         {
+            _address[0] = (byte)(value & 0b00111111);
+            _index = 1;
+        }
+        else
+        {
+            _address[1] = value;
+            _index = 0;
             CalculateCurrentAddress();
         }
 
