@@ -96,19 +96,3 @@ cpu.PowerOn();
 cpu.Run();
 
 return 0;
-
-
-class RamHook : IRamHook
-{
-    public Cpu6502 Cpu { get; set; }
-
-    public void Call(int index, byte value, byte[] ram)
-    {
-        throw new NotImplementedException();
-    }
-
-    public bool CanHandle(int index)
-    {
-        throw new NotImplementedException();
-    }
-}

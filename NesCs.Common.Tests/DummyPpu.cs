@@ -30,5 +30,7 @@ public class DummyPpu : IPpu
 
     public byte Read() => throw new NotImplementedException();
 
+    public byte Read(int index) => throw new NotImplementedException();
+
     public void Write(byte value) => throw new NotImplementedException();
 }

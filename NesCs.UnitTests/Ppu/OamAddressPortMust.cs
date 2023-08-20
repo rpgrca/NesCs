@@ -1,3 +1,5 @@
+using NesCs.Logic.Ram;
+
 namespace NesCs.UnitTests.Ppu;
 
 public class OamAddressPortMust
@@ -8,10 +10,10 @@ public class OamAddressPortMust
     [InlineData(0xff)]
     public void SetAddressCorrectly(byte value)
     {
-        var sut = new Logic.Ppu.OamAddressPort
-        {
-            Address = value
-        };
-        Assert.Equal(value, sut.Address);
+        var ram = new byte[0x3000];
+        var ramController = new RamController.Builder().WithRamOf(ram).Build();
+        var sut = new Logic.Ppu.OamAddressPort(ramController);
+        sut.Write(value);
+        Assert.Equal(value, sut.Read());
     }
 }

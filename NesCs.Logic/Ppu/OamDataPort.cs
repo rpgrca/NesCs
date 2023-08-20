@@ -8,15 +8,11 @@ public class OamDataPort
     public OamDataPort(OamAddressPort address) =>
         _address = address;
 
-    public byte Data
+    public void Write(byte value)
     {
-        get => _data;
-        set
-        {
-            _data = value;
-            _address.IncrementAddress();
-        }
+        _data = value;
+        _address.IncrementAddress();
     }
 
-    public void Write(byte value, byte[] ram, IPpu ppu) => _address.Write(value, ram, ppu);
+    public byte Read() => _data;
 }

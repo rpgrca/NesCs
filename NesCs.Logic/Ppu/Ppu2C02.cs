@@ -53,27 +53,42 @@ public class Ppu2C02 : IPpu
         PpuCtrl = new ControlRegister(ram);
         PpuMask = new Mask(ram);
         PpuStatus = new Status(ram);
-        OamAddr = new OamAddressPort();
-        OamData = new OamDataPort(OamAddr );
-        PpuScroll = new ScrollingPositionRegister();
-        PpuAddr = new AddressRegister();
+        OamAddr = new OamAddressPort(ram);
+        OamData = new OamDataPort(OamAddr);
+        PpuScroll = new ScrollingPositionRegister(ram);
+        PpuAddr = new AddressRegister(ram);
         PpuData = new DataPort(this);
         OamDma = new OamDmaRegister();
     }
 
-    public void Call(int index, byte value, byte[] ram)
+    public void Write(int index, byte value, byte[] ram)
     {
         switch (index)
         {
-            case 0x2000: PpuCtrl.Write(value, ram, this); break;
-            case 0x2001: PpuMask.Write(value, ram, this); break;
-            case 0x2002: PpuStatus.Write(value, ram, this); break;
-            case 0x2003: OamAddr.Write(value, ram, this); break;
-            case 0x2004: OamData.Write(value, ram, this); break;
-            case 0x2005: PpuScroll.Write(value, ram, this); break;
-            case 0x2006: PpuAddr.Write(value, ram, this); break;
-            case 0x2007: PpuData.Write(value); break;
+            case 0x2000: PpuCtrl.Write(value, this); break;
+            case 0x2001: PpuMask.Write(value, this); break;
+            case 0x2002: PpuStatus.Write(value, this); break;
+            case 0x2003: OamAddr.Write(value); break;
+            case 0x2004: OamData.Write(value); break;
+            case 0x2005: PpuScroll.Write(value); break;
+            case 0x2006: PpuAddr.Write(value); break;
+            default: PpuData.Write(value); break;
         }
+    }
+
+    public byte Read(int index)
+    {
+        return index switch
+        {
+            0x2000 => PpuCtrl.Read(),
+            0x2001 => PpuMask.Read(),
+            0x2002 => PpuStatus.Read(),
+            0x2003 => OamAddr.Read(),
+            0x2004 => OamData.Read(),
+            0x2005 => PpuScroll.Read(),
+            0x2006 => PpuAddr.Read(),
+            _ => PpuData.Read()
+        };
     }
 
     public bool CanHandle(int index) => index >= 0x2000 && index <= 0x2007;

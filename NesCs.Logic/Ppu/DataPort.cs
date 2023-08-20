@@ -4,10 +4,7 @@ public class DataPort
 {
     private readonly IPpuVram _ppuVram;
 
-    public DataPort(IPpuVram ppuVram)
-    {
-        _ppuVram = ppuVram;
-    }
+    public DataPort(IPpuVram ppuVram) => _ppuVram = ppuVram;
 
     public void Write(byte value)
     {
@@ -15,5 +12,10 @@ public class DataPort
         _ppuVram.IncrementAddress();
     }
 
-    public byte Read() => _ppuVram.Read();
+    public byte Read()
+    {
+        var value = _ppuVram.Read();
+        _ppuVram.IncrementAddress();
+        return value;
+    }
 }

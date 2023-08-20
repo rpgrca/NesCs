@@ -1,14 +1,26 @@
+using NesCs.Logic.Ram;
+
 namespace NesCs.Logic.Ppu;
 
 public class OamAddressPort
 {
-    public byte Address { get; set; }
+    private const int OamAddressIndex = 0x2003;
+    private readonly IRamController _ram;
+
+    private byte Address
+    {
+        get => _ram.DirectReadFrom(OamAddressIndex);
+        set => _ram.DirectWriteTo(OamAddressIndex, value);
+    }
+
+    public OamAddressPort(IRamController ram) => _ram = ram;
 
     internal void IncrementAddress() => Address++;
 
-    public void Write(byte value, byte[] ram, IPpu ppu)
+    public void Write(byte value)
     {
         Address = value;
-        ram[0x2003] = Address;
     }
+
+    public byte Read() => Address;
 }

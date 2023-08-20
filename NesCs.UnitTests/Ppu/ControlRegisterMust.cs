@@ -19,7 +19,7 @@ public class ControlRegisterMust
     }
 
     private static ControlRegister CreateSubjectUnderTest() =>
-        new(new RamControllerSpy { Ram = new byte[0x2100] });
+        new(new RamController.Builder().WithRamOf(new byte[0x2100]).Build());
 
     [Theory]
     [InlineData(0, 0x2000)]
@@ -112,16 +112,5 @@ public class ControlRegisterMust
         sut.V = value;
 
         Assert.Equal(value, sut.V);
-    }
-}
-
-public class RamControllerSpy : IRamController
-{
-    public byte[] Ram { get; set; }
-
-    public byte this[int index] { get => Ram[index]; set => Ram[index] = value; }
-
-    public void Copy(byte[] program, int startIndex, int memoryOffset, int programSize)
-    {
     }
 }

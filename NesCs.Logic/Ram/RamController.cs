@@ -48,13 +48,15 @@ public class RamController : IRamController
 
     public byte this[int index]
     {
-        get => _ram[index];
+        get => _ppuHook?.CanHandle(index) ?? false
+                ? _ppuHook.Read(index)
+                : _ram[index];
         set
         {
             _ram[index] = value;
             if (_ppuHook?.CanHandle(index) ?? false)
             {
-                _ppuHook.Call(index, value, _ram);
+                _ppuHook.Write(value);
             }
 
             if (_callbacks.ContainsKey(index))
@@ -69,4 +71,8 @@ public class RamController : IRamController
 
     public void AddHook(int address, Action<int, byte> callback) =>
         _callbacks.Add(address, callback);
+
+    public byte DirectReadFrom(int index) => _ram[index];
+
+    public void DirectWriteTo(int index, byte value) => _ram[index] = value;
 }

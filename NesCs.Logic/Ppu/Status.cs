@@ -7,7 +7,7 @@ public class Status
     private const int StatusIndex = 0x2002;
     private readonly IRamController _ramController;
 
-    private byte Flag
+    private byte Flags
     {
         get => _ramController[StatusIndex];
         set => _ramController[StatusIndex] = value;
@@ -17,27 +17,29 @@ public class Status
 
     public byte OpenBus
     {
-        get => (byte)(Flag & 0b11111);
-        set => Flag |= (byte)(value & 0b11111);
+        get => (byte)(Flags & 0b11111);
+        set => Flags |= (byte)(value & 0b11111);
     }
 
     public byte O
     {
-        get => (byte)((Flag >> 5) & 1);
-        set => Flag |= (byte)((value & 1) << 5);
+        get => (byte)((Flags >> 5) & 1);
+        set => Flags |= (byte)((value & 1) << 5);
     }
 
     public byte S
     {
-        get => (byte)((Flag >> 6) & 1);
-        set => Flag |= (byte)((value & 1) << 6);
+        get => (byte)((Flags >> 6) & 1);
+        set => Flags |= (byte)((value & 1) << 6);
     }
 
     public byte V
     {
-        get => (byte)((Flag >> 7) & 1);
-        set => Flag |= (byte)((value & 1) << 7);
+        get => (byte)((Flags >> 7) & 1);
+        set => Flags |= (byte)((value & 1) << 7);
     }
 
-    public void Write(byte value, byte[] ram, IPpu ppu) => ram[StatusIndex] = value;
+    public void Write(byte value, IPpu ppu) => Flags = value;
+
+    public byte Read() => Flags;
 }

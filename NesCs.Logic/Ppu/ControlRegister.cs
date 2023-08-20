@@ -11,8 +11,8 @@ public class ControlRegister
 
     private byte Flag
     {
-        get => _ram[ControlRegisterIndex];
-        set => _ram[ControlRegisterIndex] = value;
+        get => _ram.DirectReadFrom(ControlRegisterIndex);
+        set => _ram.DirectWriteTo(ControlRegisterIndex, value);
     }
 
     public byte N
@@ -57,7 +57,9 @@ public class ControlRegister
         set => Flag |= (byte)((value & 1) << 7);
     }
 
-    public void Write(byte value, byte[] ram, IPpu ppu) => ram[ControlRegisterIndex] = value;
+    public void Write(byte value, IPpu ppu) => Flag = value;
+
+    public byte Read() => Flag;
 
     public int GetBaseNametableAddress() => 0x2000 + N * 0x400;
 
