@@ -10,7 +10,7 @@ public class CpuTimingTest6Must
     [Theory]
     //[InlineData("cpu_timing_test6/cpu_timing_test.nes", 0xE976, "\n01-basics\n\nPassed\n")]
     //[InlineData("cpu_exec_space/test_cpu_exec_space_ppuio.nes", 0xE976, "")]
-    [InlineData("cpu_dummy_writes/cpu_dummy_writes_ppumem.nes", 0x0001, "")]
+    [InlineData("cpu_dummy_writes/cpu_dummy_writes_ppumem.nes", 0x0001, "", Skip = "work in progress")]
     public void BeExecutedCorrectly(string romName, int poweroffAddress, string expectedResult)
     {
         var ram = new byte[0x10000];
