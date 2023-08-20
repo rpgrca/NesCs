@@ -61,7 +61,7 @@ public class Ppu2C02 : IPpu
         OamDma = new OamDmaRegister();
     }
 
-    public void Write(int index, byte value, byte[] ram)
+    void IRamHook.Write(int index, byte value)
     {
         switch (index)
         {
@@ -76,7 +76,7 @@ public class Ppu2C02 : IPpu
         }
     }
 
-    public byte Read(int index)
+    byte IRamHook.Read(int index)
     {
         return index switch
         {
@@ -93,10 +93,6 @@ public class Ppu2C02 : IPpu
 
     public bool CanHandle(int index) => index >= 0x2000 && index <= 0x2007;
 
-    public void Write(byte value) => _vram[PpuAddr.CurrentAddress] = value;
-
-    public byte Read() => _vram[PpuAddr.CurrentAddress];
-
     public void IncrementAddress()
     {
         if (PpuCtrl.I == 0)
@@ -108,6 +104,10 @@ public class Ppu2C02 : IPpu
             PpuAddr.IncrementBy(0x20);
         }
     }
+
+    void IPpuVram.Write(byte value) => _vram[CurrentAddress] = value;
+
+    byte IPpuVram.Read() => _vram[CurrentAddress];
 
     public int CurrentAddress => PpuAddr.CurrentAddress;
 }

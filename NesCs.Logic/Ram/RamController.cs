@@ -56,7 +56,7 @@ public class RamController : IRamController
             _ram[index] = value;
             if (_ppuHook?.CanHandle(index) ?? false)
             {
-                _ppuHook.Write(value);
+                _ppuHook.Write(index, value);
             }
 
             if (_callbacks.ContainsKey(index))

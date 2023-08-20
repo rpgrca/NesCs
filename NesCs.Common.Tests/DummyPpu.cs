@@ -30,9 +30,11 @@ public class DummyPpu : IPpu
 
     public void IncrementAddress() => throw new NotImplementedException();
 
-    public byte Read() => throw new NotImplementedException();
+    void IPpuVram.Write(byte value) => throw new NotImplementedException();
 
-    public byte Read(int index) => throw new NotImplementedException();
+    byte IPpuVram.Read() => throw new NotImplementedException();
 
-    public void Write(byte value) => throw new NotImplementedException();
+    byte Logic.Ram.IRamHook.Read(int index) => throw new NotImplementedException();
+
+    void Logic.Ram.IRamHook.Write(int index, byte value) => throw new NotImplementedException();
 }
