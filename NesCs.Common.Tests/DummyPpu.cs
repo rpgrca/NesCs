@@ -22,6 +22,8 @@ public class DummyPpu : IPpu
 
     public OamDmaRegister OamDma => throw new NotImplementedException();
 
+    public int CurrentAddress => throw new NotImplementedException();
+
     public void Call(int index, byte value, byte[] ram) => throw new NotImplementedException();
 
     public bool CanHandle(int index) => false;

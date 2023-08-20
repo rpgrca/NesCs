@@ -3,6 +3,7 @@ namespace NesCs.Logic.Ppu;
 public class DataPort
 {
     private readonly IPpuVram _ppuVram;
+    private byte _cache;
 
     public DataPort(IPpuVram ppuVram) => _ppuVram = ppuVram;
 
@@ -14,8 +15,17 @@ public class DataPort
 
     public byte Read()
     {
-        var value = _ppuVram.Read();
+        var result = _cache;
+        if (_ppuVram.CurrentAddress <= 0x3EFF)
+        {
+            _cache = _ppuVram.Read();
+        }
+        else
+        {
+            result = _cache = _ppuVram.Read();
+        }
+
         _ppuVram.IncrementAddress();
-        return value;
+        return result;
     }
 }

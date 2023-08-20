@@ -108,4 +108,6 @@ public class Ppu2C02 : IPpu
             PpuAddr.IncrementBy(0x20);
         }
     }
+
+    public int CurrentAddress => PpuAddr.CurrentAddress;
 }
