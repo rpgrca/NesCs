@@ -1,4 +1,5 @@
 using NesCs.Logic.Ppu;
+using NesCs.Logic.Ram;
 
 namespace NesCs.UnitTests.Ppu;
 
@@ -17,7 +18,7 @@ public class StatusMust
     }
 
     private static Status CreateSubjectUnderTest() =>
-        new(new RamControllerSpy { Ram = new byte[0x2100] });
+        new(new RamController.Builder().WithRamOf(new byte[0x2100]).Build());
 
     [Theory]
     [InlineData(0)]

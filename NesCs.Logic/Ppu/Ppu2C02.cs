@@ -67,7 +67,7 @@ public class Ppu2C02 : IPpu
         {
             case 0x2000: PpuCtrl.Write(value, this); break;
             case 0x2001: PpuMask.Write(value, this); break;
-            case 0x2002: PpuStatus.Write(value, this); break;
+            case 0x2002: PpuStatus.Write(value); break;
             case 0x2003: OamAddr.Write(value); break;
             case 0x2004: OamData.Write(value); break;
             case 0x2005: PpuScroll.Write(value); break;

@@ -16,7 +16,7 @@ public class MaskMust
     }
 
     private static Mask CreateSubjectUnderTest() =>
-        new(new RamControllerSpy { Ram = new byte[0x2100] });
+        new(new RamController.Builder().WithRamOf(new byte[0x2100]).Build());
 
     [Theory]
     [InlineData(0)]

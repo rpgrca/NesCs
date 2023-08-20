@@ -12,8 +12,8 @@ public class Mask
 
     private byte Flags
     {
-        get => _ramController[MaskIndex];
-        set => _ramController[MaskIndex] = value;
+        get => _ramController.DirectReadFrom(MaskIndex);
+        set => _ramController.DirectWriteTo(MaskIndex, value);
     }
 
     public byte Grey

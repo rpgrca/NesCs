@@ -9,8 +9,8 @@ public class Status
 
     private byte Flags
     {
-        get => _ramController[StatusIndex];
-        set => _ramController[StatusIndex] = value;
+        get => _ramController.DirectReadFrom(StatusIndex);
+        set => _ramController.DirectWriteTo(StatusIndex, value);
     }
 
     public Status(IRamController ramController) => _ramController = ramController;
@@ -39,7 +39,7 @@ public class Status
         set => Flags |= (byte)((value & 1) << 7);
     }
 
-    public void Write(byte value, IPpu ppu) => Flags = value;
+    public void Write(byte value) => Flags = value;
 
     public byte Read() => Flags;
 }
