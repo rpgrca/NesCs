@@ -86,11 +86,6 @@ public partial class Cpu6502
             _callbacks[PC].Invoke(this);
         }
 
-        if (_cycles > 346150)
-        {
-            System.Diagnostics.Debugger.Break();
-        }
-
         var instruction = _instructions[ReadByteFromProgram()];
         _tracer.Display(instruction, instruction.PeekOperands(this), PC, A, X, Y, P, S, _cycles);
         instruction.Execute(this);

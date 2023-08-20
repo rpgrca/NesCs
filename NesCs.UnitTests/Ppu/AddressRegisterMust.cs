@@ -22,6 +22,7 @@ public class AddressRegisterMust
         var ramController = new RamControllerSpy();
         var sut = new AddressRegister(ramController);
         sut.Write(value);
+        sut.Write(0x00);
         Assert.Equal(expectedValue, sut.CurrentAddress);
     }
 
@@ -65,5 +66,15 @@ public class AddressRegisterMust
         sut.PpuData.Write(0xff);
 
         Assert.Equal(expectedAddress, sut.PpuAddr.CurrentAddress);
+    }
+
+    [Fact]
+    public void KeepCurrentAddress_WhenWritingSingleByteToAddress()
+    {
+        var ramController = new RamController.Builder(). Build();
+        var sut = new Ppu2C02.Builder().WithRamController(ramController).Build();
+        sut.PpuAddr.Write(0x10);
+
+        Assert.Equal(0, sut.PpuAddr.CurrentAddress);
     }
 }

@@ -9,7 +9,7 @@ public class AddressRegister
     private readonly IRamController _ram;
     private byte _index;
 
-    public int CurrentAddress => (_address[0] << 8 | _address[1]) & 0x3fff;
+    public int CurrentAddress { get; private set; }
 
     public AddressRegister(IRamController ram)
     {
@@ -31,12 +31,22 @@ public class AddressRegister
         }
 
         _address[1] = (byte)(_address[1] + value);
+        CalculateCurrentAddress();
     }
+
+    private void CalculateCurrentAddress() =>
+        CurrentAddress = (_address[0] << 8 | _address[1]) & 0x3fff;
 
     public void Write(byte value)
     {
         _address[_index] = value;
         _index = (byte)((_index + 1) & 1);
+
+        if (_index == 0)
+        {
+            CalculateCurrentAddress();
+        }
+
         Address = value;
     }
 
