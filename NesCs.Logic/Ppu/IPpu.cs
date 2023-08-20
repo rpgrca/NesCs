@@ -23,3 +23,8 @@ public interface IPpuVram
     byte Read();
     void IncrementAddress();
 }
+
+public interface IByteToggle
+{
+    int GetIndex();
+}

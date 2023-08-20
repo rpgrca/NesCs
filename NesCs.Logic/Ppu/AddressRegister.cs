@@ -7,14 +7,14 @@ public class AddressRegister
     private const int AddressIndex = 0x2006;
     private readonly byte[] _address = { 0, 0 };
     private readonly IRamController _ram;
-    private byte _index;
+    private readonly IByteToggle _toggle;
 
     public int CurrentAddress { get; private set; }
 
-    public AddressRegister(IRamController ram)
+    public AddressRegister(IRamController ram, IByteToggle toggle)
     {
         _ram = ram;
-        _index = 0;
+        _toggle = toggle;
     }
 
     private byte Address
@@ -39,15 +39,14 @@ public class AddressRegister
 
     public void Write(byte value)
     {
-        if (_index == 0)
+        var index = _toggle.GetIndex();
+        if (index == 0)
         {
             _address[0] = (byte)(value & 0b00111111);
-            _index = 1;
         }
         else
         {
             _address[1] = value;
-            _index = 0;
             CalculateCurrentAddress();
         }
 

@@ -37,4 +37,6 @@ public class DummyPpu : IPpu
     byte Logic.Ram.IRamHook.Read(int index) => throw new NotImplementedException();
 
     void Logic.Ram.IRamHook.Write(int index, byte value) => throw new NotImplementedException();
+
+    public int GetIndex() => throw new NotImplementedException();
 }

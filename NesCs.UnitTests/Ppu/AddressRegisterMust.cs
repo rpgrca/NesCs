@@ -9,7 +9,8 @@ public class AddressRegisterMust
     public void InitializeAddressCorrectly()
     {
         var ramController = new RamControllerSpy();
-        var sut = new AddressRegister(ramController);
+        var toggle = new ByteToggle();
+        var sut = new AddressRegister(ramController, toggle);
         Assert.Equal(0, sut.CurrentAddress);
     }
 
@@ -20,7 +21,8 @@ public class AddressRegisterMust
     public void SetAddressUpperByteCorrectly(byte value, int expectedValue)
     {
         var ramController = new RamControllerSpy();
-        var sut = new AddressRegister(ramController);
+        var toggle = new ByteToggle();
+        var sut = new AddressRegister(ramController, toggle);
         sut.Write(value);
         sut.Write(0x00);
         Assert.Equal(expectedValue, sut.CurrentAddress);
@@ -33,7 +35,8 @@ public class AddressRegisterMust
     public void SetAddressLowerByteCorrectly(byte value, int expectedValue)
     {
         var ramController = new RamControllerSpy();
-        var sut = new AddressRegister(ramController);
+        var toggle = new ByteToggle();
+        var sut = new AddressRegister(ramController, toggle);
         sut.Write(0x4);
         sut.Write(value);
         Assert.Equal(expectedValue, sut.CurrentAddress);
@@ -45,7 +48,8 @@ public class AddressRegisterMust
     public void MirrorDownValue_WhenAddressGoesAbove3fff(byte value, int expectedValue)
     {
         var ramController = new RamController.Builder().Build();
-        var sut = new AddressRegister(ramController);
+        var toggle = new ByteToggle();
+        var sut = new AddressRegister(ramController, toggle);
         sut.Write(value);
         sut.Write(0x00);
         Assert.Equal(expectedValue, sut.CurrentAddress);
@@ -69,6 +73,7 @@ public class AddressRegisterMust
     }
 
     [Fact]
+    //	#2: Non-palette PPU memory reads should have one-byte buffer (cpu_dummy_writes.nes)
     public void KeepCurrentAddress_WhenWritingSingleByteToAddress()
     {
         var ramController = new RamController.Builder(). Build();
@@ -76,5 +81,14 @@ public class AddressRegisterMust
         sut.PpuAddr.Write(0x10);
 
         Assert.Equal(0, sut.PpuAddr.CurrentAddress);
+    }
+
+    [Fact]
+    public void ClearTopTwoBitsOfHighByte()
+    {
+        var sut = new Ppu2C02.Builder().Build();
+        sut.PpuAddr.Write(0b11000000);
+        sut.PpuAddr.Write(0x50);
+        Assert.Equal(0x50, sut.PpuAddr.CurrentAddress);
     }
 }

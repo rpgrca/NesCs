@@ -33,6 +33,7 @@ public class Ppu2C02 : IPpu
     private readonly byte[] _vram;
     private readonly OamSprite[] _oam;
     private readonly OamSprite[] _secondaryOam;
+    private readonly IByteToggle _toggle;
     
     public ControlRegister PpuCtrl { get; } /* 0x2000 */
     public Mask PpuMask { get; }            /* 0x2001 */
@@ -49,6 +50,7 @@ public class Ppu2C02 : IPpu
         _vram = vram;
         _oam = new OamSprite[64];
         _secondaryOam = new OamSprite[8];
+        _toggle = new ByteToggle();
 
         PpuCtrl = new ControlRegister(ram);
         PpuMask = new Mask(ram);
@@ -56,7 +58,7 @@ public class Ppu2C02 : IPpu
         OamAddr = new OamAddressPort(ram);
         OamData = new OamDataPort(OamAddr);
         PpuScroll = new ScrollingPositionRegister(ram);
-        PpuAddr = new AddressRegister(ram);
+        PpuAddr = new AddressRegister(ram, _toggle);
         PpuData = new DataPort(this);
         OamDma = new OamDmaRegister();
     }
@@ -110,4 +112,16 @@ public class Ppu2C02 : IPpu
     byte IPpuVram.Read() => _vram[CurrentAddress];
 
     public int CurrentAddress => PpuAddr.CurrentAddress;
+}
+
+public class ByteToggle : IByteToggle
+{
+    private int _toggle;
+
+    public int GetIndex()
+    {
+        var result = _toggle;
+        _toggle = (_toggle + 1) & 1;
+        return result;
+    }
 }
