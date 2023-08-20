@@ -57,7 +57,7 @@ public class Ppu2C02 : IPpu
         PpuStatus = new Status(ram);
         OamAddr = new OamAddressPort(ram);
         OamData = new OamDataPort(OamAddr);
-        PpuScroll = new ScrollingPositionRegister(ram);
+        PpuScroll = new ScrollingPositionRegister(ram, _toggle);
         PpuAddr = new AddressRegister(ram, _toggle);
         PpuData = new DataPort(this);
         OamDma = new OamDmaRegister();
