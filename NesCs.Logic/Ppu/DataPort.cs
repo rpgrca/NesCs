@@ -3,9 +3,13 @@ namespace NesCs.Logic.Ppu;
 public class DataPort
 {
     private readonly IPpuVram _ppuVram;
-    private byte _cache;
+    private readonly IPpuIOBus _ioBus;
 
-    public DataPort(IPpuVram ppuVram) => _ppuVram = ppuVram;
+    public DataPort(IPpuVram ppuVram, IPpuIOBus ioBus)
+    {
+        _ppuVram = ppuVram;
+        _ioBus = ioBus;
+    }
 
     public void Write(byte value)
     {
@@ -15,14 +19,15 @@ public class DataPort
 
     public byte Read()
     {
-        var result = _cache;
+        var result = _ioBus.Read();
         if (_ppuVram.CurrentAddress <= 0x3EFF)
         {
-            _cache = _ppuVram.Read();
+            _ioBus.Write(_ppuVram.Read());
         }
         else
         {
-            result = _cache = _ppuVram.Read();
+            result = _ppuVram.Read();
+            _ioBus.Write(result);
         }
 
         _ppuVram.IncrementAddress();

@@ -23,7 +23,7 @@ public class CpuTimingTest6Must
         }).Build();
 
         var nesFile = fsp.Load("../../../../../nes-test-roms/" + romName);
-        var ramController = new RamController.Builder().WithRamOf(ram).Build();
+        var ramController = new RamController.Builder().WithRamOf(ram).PreventRomRewriting().Build();
         var ppu = new Ppu2C02.Builder().WithRamController(ramController).Build();
         ramController.RegisterHook(ppu);
 

@@ -34,6 +34,7 @@ public class Ppu2C02 : IPpu
     private readonly OamSprite[] _oam;
     private readonly OamSprite[] _secondaryOam;
     private readonly IByteToggle _toggle;
+    private readonly IPpuIOBus _ioBus;
     
     public ControlRegister PpuCtrl { get; } /* 0x2000 */
     public Mask PpuMask { get; }            /* 0x2001 */
@@ -51,15 +52,16 @@ public class Ppu2C02 : IPpu
         _oam = new OamSprite[64];
         _secondaryOam = new OamSprite[8];
         _toggle = new ByteToggle();
+        _ioBus = new PpuIOBus();
 
-        PpuCtrl = new ControlRegister(ram);
-        PpuMask = new Mask(ram);
+        PpuCtrl = new ControlRegister(ram, _ioBus);
+        PpuMask = new Mask(ram, _ioBus);
         PpuStatus = new Status(ram, _toggle);
-        OamAddr = new OamAddressPort(ram);
-        OamData = new OamDataPort(OamAddr);
-        PpuScroll = new ScrollingPositionRegister(ram, _toggle);
-        PpuAddr = new AddressRegister(ram, _toggle);
-        PpuData = new DataPort(this);
+        OamAddr = new OamAddressPort(ram, _ioBus);
+        OamData = new OamDataPort(OamAddr, _ioBus);
+        PpuScroll = new ScrollingPositionRegister(ram, _toggle, _ioBus);
+        PpuAddr = new AddressRegister(ram, _toggle, _ioBus);
+        PpuData = new DataPort(this, _ioBus);
         OamDma = new OamDmaRegister();
     }
 
@@ -67,8 +69,8 @@ public class Ppu2C02 : IPpu
     {
         switch (index)
         {
-            case 0x2000: PpuCtrl.Write(value, this); break;
-            case 0x2001: PpuMask.Write(value, this); break;
+            case 0x2000: PpuCtrl.Write(value); break;
+            case 0x2001: PpuMask.Write(value); break;
             case 0x2002: PpuStatus.Write(value); break;
             case 0x2003: OamAddr.Write(value); break;
             case 0x2004: OamData.Write(value); break;
