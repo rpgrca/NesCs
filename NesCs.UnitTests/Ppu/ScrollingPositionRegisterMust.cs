@@ -73,15 +73,33 @@ public class ScrollingPositionRegisterMust
     [Fact]
     public void NotChangeAddressUsedByAddress_WhenWritingToScrollTwice()
     {
-        var vram = Enumerable.Range(0, 0xff).Select(p => (byte)p).ToArray();
+        var vram = PopulateVram();
         var ramController = new RamController.Builder().Build();
         var sut = new Ppu2C02.Builder().WithVram(vram).WithRamController(ramController).Build();
-        sut.PpuAddr.Write(0x00);
-        sut.PpuAddr.Write(0x01);
+        sut.PpuAddr.Write(0x25);
+        sut.PpuAddr.Write(0x6A);
         sut.PpuScroll.Write(0x55);
-        sut.PpuScroll.Write(0x8C);
+        sut.PpuScroll.Write(0x55);
         _ = sut.PpuData.Read();
         var value = sut.PpuData.Read();
-        Assert.Equal(1, value);
+        Assert.Equal(0xEA, value);
+    }
+
+    private byte[] PopulateVram()
+    {
+        var vram = new byte[0x4000];
+        for (var index = 0; index < 0x4000; index++)
+        {
+            vram[index] = index switch
+            {
+                >= 0x2400 and <= 0x24FF => (byte)(index - 0x2400 + 0x40),
+                >= 0x2500 and <= 0x25FF => (byte)(index - 0x2500 + 0x80),
+                >= 0x2600 and <= 0x26FF => (byte)(index - 0x2600 + 0xC0),
+                >= 0x2700 and <= 0x2BFF => (byte)(index - 0x2700 + 0x00),
+                _ => 0
+            };
+        }
+
+        return vram;
     }
 }

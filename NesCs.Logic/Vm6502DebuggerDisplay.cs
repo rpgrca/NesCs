@@ -8,6 +8,8 @@ public class Vm6502DebuggerDisplay : ITracer
     private string _current = string.Empty;
     private bool _display = false;
 
+    public Vm6502DebuggerDisplay(bool display = false) => _display = display;
+
     public void Display(IInstruction instruction, byte[] operands, int pc, byte a, byte x, byte y, ProcessorStatus p, byte s, int cycles)
     {
         if (_display)

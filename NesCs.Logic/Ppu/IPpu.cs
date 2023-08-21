@@ -15,16 +15,3 @@ public interface IPpu : IRamHook, IPpuVram
     OamDmaRegister OamDma { get; }                  /* 0x4014 */
 
 }
-
-public interface IPpuVram
-{
-    int CurrentAddress { get; }
-    void Write(byte value);
-    byte Read();
-    void IncrementAddress();
-}
-
-public interface IByteToggle
-{
-    int GetIndex();
-}

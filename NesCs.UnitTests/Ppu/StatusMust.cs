@@ -18,7 +18,7 @@ public class StatusMust
     }
 
     private static Status CreateSubjectUnderTest() =>
-        new(new RamController.Builder().WithRamOf(new byte[0x2100]).Build());
+        new(new RamController.Builder().WithRamOf(new byte[0x2100]).Build(), new ByteToggle());
 
     [Theory]
     [InlineData(0)]

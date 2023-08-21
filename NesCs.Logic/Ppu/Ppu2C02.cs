@@ -54,7 +54,7 @@ public class Ppu2C02 : IPpu
 
         PpuCtrl = new ControlRegister(ram);
         PpuMask = new Mask(ram);
-        PpuStatus = new Status(ram);
+        PpuStatus = new Status(ram, _toggle);
         OamAddr = new OamAddressPort(ram);
         OamData = new OamDataPort(OamAddr);
         PpuScroll = new ScrollingPositionRegister(ram, _toggle);
@@ -112,16 +112,4 @@ public class Ppu2C02 : IPpu
     byte IPpuVram.Read() => _vram[CurrentAddress];
 
     public int CurrentAddress => PpuAddr.CurrentAddress;
-}
-
-public class ByteToggle : IByteToggle
-{
-    private int _toggle;
-
-    public int GetIndex()
-    {
-        var result = _toggle;
-        _toggle = (_toggle + 1) & 1;
-        return result;
-    }
 }
