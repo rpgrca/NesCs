@@ -50,4 +50,43 @@ public class StatusMust
         sut.V = value;
         Assert.Equal(value, sut.V);
     }
+
+    [Fact]
+    public void ResetToggler_WhenFlagVsyncIsRead()
+    {
+        var spy = new ByteToggleSpy();
+        var sut = CreateSubjectUnderTest(spy);
+        _ = sut.V;
+        Assert.True(spy.Toggled);
+    }
+
+    private static Status CreateSubjectUnderTest(IByteToggle spy) =>
+        new(new RamController.Builder().WithRamOf(new byte[0x2100]).Build(), spy);
+
+    [Fact]
+    public void ResetToggler_WhenOpenBusIsRead()
+    {
+        var spy = new ByteToggleSpy();
+        var sut = CreateSubjectUnderTest(spy);
+        _ = sut.O;
+        Assert.True(spy.Toggled);
+    }
+
+    [Fact]
+    public void ResetToggler_WhenFlagSIsRead()
+    {
+        var spy = new ByteToggleSpy();
+        var sut = CreateSubjectUnderTest(spy);
+        _ = sut.S;
+        Assert.True(spy.Toggled);
+    }
+
+    [Fact]
+    public void ResetToggler_WhenFlagIsRead()
+    {
+        var spy = new ByteToggleSpy();
+        var sut = CreateSubjectUnderTest(spy);
+        _ = sut.Read();
+        Assert.True(spy.Toggled);
+    }
 }

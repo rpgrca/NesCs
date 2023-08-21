@@ -23,41 +23,40 @@ public class Status
     public byte OpenBus
     {
         get => (byte)(Flags & 0b11111);
-        set
-        {
-            _toggle.Reset();
-            Flags |= (byte)(value & 0b11111);
-        }
+        set => Flags |= (byte)(value & 0b11111);
     }
 
     public byte O
     {
-        get => (byte)((Flags >> 5) & 1);
-        set
+        get
         {
             _toggle.Reset();
-            Flags |= (byte)((value & 1) << 5);
+            return (byte)((Flags >> 5) & 1);
         }
+
+        set => Flags |= (byte)((value & 1) << 5);
     }
 
     public byte S
     {
-        get => (byte)((Flags >> 6) & 1);
-        set
+        get
         {
             _toggle.Reset();
-            Flags |= (byte)((value & 1) << 6);
+            return (byte)((Flags >> 6) & 1);
         }
+
+        set => Flags |= (byte)((value & 1) << 6);
     }
 
     public byte V
     {
-        get => (byte)((Flags >> 7) & 1);
-        set
+        get
         {
             _toggle.Reset();
-            Flags |= (byte)((value & 1) << 7);
+            return (byte)((Flags >> 7) & 1);
         }
+
+        set => Flags |= (byte)((value & 1) << 7);
     }
 
     public void Write(byte value) => Flags = value;
