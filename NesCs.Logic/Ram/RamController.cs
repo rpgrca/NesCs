@@ -6,12 +6,14 @@ public class RamController : IRamController
     {
         private int _ramSize;
         private byte[] _ram;
+        private bool _makeRomReadWrite;
         private Dictionary<int, Action<int, byte>> _callbacks;
 
         public Builder()
         {
             _callbacks = new();
             _ram = Array.Empty<byte>();
+            _makeRomReadWrite = true;
         }
 
         public Builder WithRamSizeOf(int size)
@@ -26,21 +28,29 @@ public class RamController : IRamController
             return this;
         }
 
+        public Builder PreventRomRewriting()
+        {
+            _makeRomReadWrite = false;
+            return this;
+        }
+
         public RamController Build()
         {
             _ramSize = _ramSize > 0? _ramSize : 0x10000;
             _ram = _ram.Length > 0? _ram : new byte[_ramSize];
-            return new RamController(_ram, _callbacks);
+            return new RamController(_ram, _makeRomReadWrite, _callbacks);
         }
     }
 
     private readonly byte[] _ram;
+    private readonly bool _makeRomReadWrite;
     private readonly Dictionary<int, Action<int, byte>> _callbacks;
     private IRamHook? _ppuHook;
 
-    public RamController(byte[] ram, Dictionary<int, Action<int, byte>> callbacks)
+    public RamController(byte[] ram, bool makeRomReadWrite, Dictionary<int, Action<int, byte>> callbacks)
     {
         _ram = ram;
+        _makeRomReadWrite = makeRomReadWrite;
         _callbacks = callbacks;
     }
 
@@ -53,15 +63,19 @@ public class RamController : IRamController
                 : _ram[index];
         set
         {
-            _ram[index] = value;
-            if (_ppuHook?.CanHandle(index) ?? false)
-            {
-                _ppuHook.Write(index, value);
-            }
-
             if (_callbacks.ContainsKey(index))
             {
                 _callbacks[index](index, value);
+            }
+
+            if (_makeRomReadWrite || index < 0x8000)
+            {
+                _ram[index] = value;
+            }
+
+            if (_ppuHook?.CanHandle(index) ?? false)
+            {
+                _ppuHook.Write(index, value);
             }
         }
     }
