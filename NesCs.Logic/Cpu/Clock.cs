@@ -1,5 +1,8 @@
+using System.Diagnostics;
+
 namespace NesCs.Logic.Cpu;
 
+[DebuggerDisplay("{_cycles}")]
 public class Clock : IClock
 {
     private int _cycles;
