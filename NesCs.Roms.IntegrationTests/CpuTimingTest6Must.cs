@@ -10,7 +10,7 @@ public class CpuTimingTest6Must
     [Theory]
     //[InlineData("cpu_timing_test6/cpu_timing_test.nes", 0xE976, "\n01-basics\n\nPassed\n")]
     //[InlineData("cpu_exec_space/test_cpu_exec_space_ppuio.nes", 0xE976, "")]
-    [InlineData("cpu_dummy_writes/cpu_dummy_writes_ppumem.nes", 0x0001, "", Skip = "wip")]
+    [InlineData("cpu_dummy_writes/cpu_dummy_writes_ppumem.nes", 0x0001, "")]
     public void BeExecutedCorrectly(string romName, int poweroffAddress, string expectedResult)
     {
         var ram = new byte[0x10000];
@@ -46,4 +46,27 @@ public class CpuTimingTest6Must
 
     private static string GetString(byte[] ram) =>
         System.Text.Encoding.ASCII.GetString(ram[0x6004..].TakeWhile(p => !p.Equals(0)).ToArray());
+
+    [Fact]
+    public void Test1()
+    {
+        var ram = new byte[0x10000];
+        ram[0xC000] = 0xEE;
+        ram[0xC001] = 0x06;
+        ram[0xC002] = 0x20;
+        var ramController = new RamController.Builder().WithRamOf(ram).PreventRomRewriting().Build();
+        var ppu = new Ppu2C02.Builder().WithRamController(ramController).Build();
+        ramController.RegisterHook(ppu);
+
+        var cpu = new Cpu6502.Builder()
+            .SupportingInvalidInstructions()
+            .WithRamController(ramController)
+            .WithXAs(0x00)
+            .WithProgramCounterAs(0xC000)
+            .Build();
+
+        ppu.PpuAddr.Write(0x25);
+        ppu.PpuAddr.Write(0xFA);
+        cpu.Step();
+    }
 }

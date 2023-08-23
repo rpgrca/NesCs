@@ -7,6 +7,7 @@ public class Status
     private const int StatusIndex = 0x2002;
     private readonly IRamController _ramController;
     private readonly IByteToggle _toggle;
+    private readonly IPpuIOBus _ioBus;
 
     private byte Flags
     {
@@ -14,16 +15,16 @@ public class Status
         set => _ramController.DirectWriteTo(StatusIndex, value);
     }
 
-    public Status(IRamController ramController, IByteToggle toggle)
+    public Status(IRamController ramController, IByteToggle toggle, IPpuIOBus ioBus)
     {
         _ramController = ramController;
         _toggle = toggle;
+        _ioBus = ioBus;
     }
 
     public byte OpenBus
     {
-        get => (byte)(Flags & 0b11111);
-        set => Flags |= (byte)(value & 0b11111);
+        get => (byte)(_ioBus.Read() & 0b11111);
     }
 
     public byte O
@@ -59,7 +60,11 @@ public class Status
         set => Flags |= (byte)((value & 1) << 7);
     }
 
-    public void Write(byte value) => Flags = value;
+    public void Write(byte value)
+    {
+        _ioBus.Write(value);
+        Flags = value;
+    }
 
     public byte Read()
     {

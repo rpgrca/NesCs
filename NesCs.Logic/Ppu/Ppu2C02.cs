@@ -36,15 +36,15 @@ public class Ppu2C02 : IPpu
     private readonly IByteToggle _toggle;
     private readonly IPpuIOBus _ioBus;
     
-    public ControlRegister PpuCtrl { get; } /* 0x2000 */
-    public Mask PpuMask { get; }            /* 0x2001 */
-    public Status PpuStatus { get; }        /* 0x2002 */
-    public OamAddressPort OamAddr { get; }  /* 0x2003 */
-    public OamDataPort OamData { get; }     /* 0x2004 */
-    public ScrollingPositionRegister PpuScroll { get; }        /* 0x2005 */
-    public AddressRegister PpuAddr { get; } /* 0x2006 */
-    public DataPort PpuData { get; }        /* 0x2007 */
-    public OamDmaRegister OamDma { get; }   /* 0x4014 */
+    public ControlRegister PpuCtrl { get; }                 /* 0x2000 W  */
+    public Mask PpuMask { get; }                            /* 0x2001 W  */
+    public Status PpuStatus { get; }                        /* 0x2002  R */
+    public OamAddressPort OamAddr { get; }                  /* 0x2003 W  */
+    public OamDataPort OamData { get; }                     /* 0x2004 WR */
+    public ScrollingPositionRegister PpuScroll { get; }     /* 0x2005 W  */
+    public AddressRegister PpuAddr { get; }                 /* 0x2006 W  */
+    public DataPort PpuData { get; }                        /* 0x2007 WR */
+    public OamDmaRegister OamDma { get; }                   /* 0x4014 W  */
 
     private Ppu2C02(IRamController ram, byte[] vram)
     {
@@ -56,7 +56,7 @@ public class Ppu2C02 : IPpu
 
         PpuCtrl = new ControlRegister(ram, _ioBus);
         PpuMask = new Mask(ram, _ioBus);
-        PpuStatus = new Status(ram, _toggle);
+        PpuStatus = new Status(ram, _toggle, _ioBus);
         OamAddr = new OamAddressPort(ram, _ioBus);
         OamData = new OamDataPort(OamAddr, _ioBus);
         PpuScroll = new ScrollingPositionRegister(ram, _toggle, _ioBus);

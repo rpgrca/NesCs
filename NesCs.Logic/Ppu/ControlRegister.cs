@@ -62,7 +62,11 @@ public class ControlRegister
         set => Flag |= (byte)((value & 1) << 7);
     }
 
-    public void Write(byte value) => Flag = value;
+    public void Write(byte value)
+    {
+        _ioBus.Write(value);
+        Flag = value;
+    }
 
     public byte Read() => _ioBus.Read();
 

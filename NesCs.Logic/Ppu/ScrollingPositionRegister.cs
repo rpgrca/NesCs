@@ -29,6 +29,7 @@ public class ScrollingPositionRegister
 
     public void Write(byte value)
     {
+        _ioBus.Write(value);
         _cameraPosition[_toggle.GetIndex()] = value;
         Address = value;
     }

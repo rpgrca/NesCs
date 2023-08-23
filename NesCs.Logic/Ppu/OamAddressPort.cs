@@ -24,6 +24,7 @@ public class OamAddressPort
 
     public void Write(byte value)
     {
+        _ioBus.Write(value);
         Address = value;
     }
 

@@ -41,6 +41,7 @@ public class AddressRegister
 
     public void Write(byte value)
     {
+        _ioBus.Write(value);
         var index = _toggle.GetIndex();
         if (index == 0)
         {

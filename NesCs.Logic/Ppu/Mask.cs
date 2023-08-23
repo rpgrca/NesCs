@@ -69,7 +69,11 @@ public class Mask
         set => Flags |= (byte)((value & 1) << 7);
     }
 
-    public void Write(byte value) => Flags = value;
+    public void Write(byte value)
+    {
+        _ioBus.Write(value);
+        Flags = value;
+    }
 
     public byte Read() => _ioBus.Read();
 }

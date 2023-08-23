@@ -14,6 +14,7 @@ public class OamDataPort
 
     public void Write(byte value)
     {
+        _ioBus.Write(value);
         _data = value;
         _address.IncrementAddress();
     }
