@@ -1,3 +1,4 @@
+using NesCs.Logic.Cpu;
 using NesCs.Logic.Ppu;
 using NesCs.Logic.Ram;
 
@@ -16,7 +17,7 @@ public class MaskMust
     }
 
     private static Mask CreateSubjectUnderTest() =>
-        new(new RamController.Builder().WithRamOf(new byte[0x2100]).Build(), new PpuIOBus());
+        new(new RamController.Builder().WithRamOf(new byte[0x2100]).Build(), new PpuIOBus(new Clock(0)));
 
     [Theory]
     [InlineData(0)]

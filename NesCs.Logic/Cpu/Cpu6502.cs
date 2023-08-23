@@ -12,7 +12,6 @@ public partial class Cpu6502
     private byte X { get; set; }
     private byte Y { get; set; }
     private byte S { get; set; }
-    private int _cycles;
     private bool _stopped;
     private readonly int _resetVector;
     private readonly int _nmiVector;
@@ -20,9 +19,10 @@ public partial class Cpu6502
     private readonly IRamController _ram;
     private readonly IInstruction[] _instructions;
     private readonly ITracer _tracer;
+    private readonly IClock _clock;
     private readonly Dictionary<int, Action<Cpu6502>> _callbacks;
 
-    private Cpu6502(byte[] program, int programSize, IRamController ramController, int[] memoryOffsets, int pc, byte a, byte x, byte y, byte s, ProcessorStatus p, int cycles, (int Address, byte Value)[] ramPatches, IInstruction[] instructions, ITracer tracer, Dictionary<int, Action<Cpu6502>> callbacks, int resetVector, int nmiVector, int irqVector)
+    private Cpu6502(byte[] program, int programSize, IRamController ramController, int[] memoryOffsets, int pc, byte a, byte x, byte y, byte s, ProcessorStatus p, IClock clock, (int Address, byte Value)[] ramPatches, IInstruction[] instructions, ITracer tracer, Dictionary<int, Action<Cpu6502>> callbacks, int resetVector, int nmiVector, int irqVector)
     {
         _callbacks = callbacks;
         _ram = ramController;
@@ -45,7 +45,7 @@ public partial class Cpu6502
         Y = y;
         S = s;
         P = p;
-        _cycles = cycles;
+        _clock = clock;
         _instructions = instructions;
         _tracer = tracer;
         _stopped = false;
@@ -87,7 +87,7 @@ public partial class Cpu6502
         }
 
         var instruction = _instructions[ReadByteFromProgram()];
-        _tracer.Display(instruction, instruction.PeekOperands(this), PC, A, X, Y, P, S, _cycles);
+        _tracer.Display(instruction, instruction.PeekOperands(this), PC, A, X, Y, P, S, _clock.GetCycles());
         instruction.Execute(this);
     }
 
@@ -103,15 +103,16 @@ public partial class Cpu6502
 
                 // TODO: VSC bug makes application run in background when stopping while debugging
                 // filling /var/log/syslog, putting an early exit just in case.
-                if (_cycles > 30000000)
+                if (_clock.HangUp())
                 {
-                    Stop();
+                    System.Diagnostics.Debugger.Break();
+                    //Stop();
                 }
             }
         }
         catch (Exception ex)
         {
-            var error = $"{ex.Message} (on cycle {_cycles})";
+            var error = $"{ex.Message} (on cycle {_clock.GetCycles()})";
             Console.WriteLine(error);
             System.Diagnostics.Debug.Print(error);
             throw;
@@ -157,7 +158,7 @@ public partial class Cpu6502
     {
         var value = _ram[PC];
         _tracer.Read(PC, value);
-        _cycles++;
+        _clock.Tick();
         return value;
     }
 
@@ -165,7 +166,7 @@ public partial class Cpu6502
     {
         var value = _ram[address];
         _tracer.Read(address, value);
-        _cycles++;
+        _clock.Tick();
         return value;
     }
 
@@ -173,7 +174,7 @@ public partial class Cpu6502
     {
         _ram[address] = value;
         _tracer.Write(address, value);
-        _cycles++;
+        _clock.Tick();
     }
 
     // TODO: Deberia aumentar el puntero automaticamente
@@ -182,7 +183,7 @@ public partial class Cpu6502
         var address = StackMemoryBase + S;
         var value = _ram[address];
         _tracer.Read(address, value);
-        _cycles++;
+        _clock.Tick();
         return value;
     }
 
@@ -192,7 +193,7 @@ public partial class Cpu6502
         var value = _ram[address];
         _tracer.Read(address, value);
         S += 1;
-        _cycles++;
+        _clock.Tick();
         return value;
     }
 
@@ -201,7 +202,7 @@ public partial class Cpu6502
         var address = StackMemoryBase + S;
         _ram[address] = value;
         _tracer.Write(address, value);
-        _cycles++;
+        _clock.Tick();
         S -= 1;
     }
 

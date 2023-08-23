@@ -1,10 +1,28 @@
+using NesCs.Logic.Cpu;
+
 namespace NesCs.Logic.Ppu;
 
 public class PpuIOBus : IPpuIOBus
 {
+    private readonly IClock _clock;
     private byte _bus;
+    private int _cycle = 0;
 
-    public byte Read() => _bus;
+    public PpuIOBus(IClock clock) => _clock = clock;
 
-    public void Write(byte value) => _bus = value;
+    public byte Read()
+    {
+        if (_clock.GetCycles() - _cycle > 1790000)
+        {
+            _bus = 0;
+        }
+
+        return _bus;
+    }
+
+    public void Write(byte value)
+    {
+        _cycle = _clock.GetCycles();
+        _bus = value;
+    }
 }

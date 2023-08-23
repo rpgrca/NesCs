@@ -1,3 +1,4 @@
+using NesCs.Logic.Cpu;
 using NesCs.Logic.Ppu;
 using NesCs.Logic.Ram;
 
@@ -19,7 +20,7 @@ public class ControlRegisterMust
     }
 
     private static ControlRegister CreateSubjectUnderTest() =>
-        new(new RamController.Builder().WithRamOf(new byte[0x2100]).Build(), new PpuIOBus());
+        new(new RamController.Builder().WithRamOf(new byte[0x2100]).Build(), new PpuIOBus(new Clock(0)));
 
     [Theory]
     [InlineData(0, 0x2000)]

@@ -16,6 +16,7 @@ public partial class Cpu6502
         private readonly IInstruction[] _instructions;
         private readonly Dictionary<int, Action<Cpu6502>> _callbacks;
         private ITracer _tracer;
+        private IClock? _clock;
         private bool _enableInvalid;
         private readonly Addressings.Addressings As;
         private readonly Operations.Operations Doing;
@@ -203,6 +204,12 @@ public partial class Cpu6502
             return this;
         }
 
+        public Builder WithClock(IClock clock)
+        {
+            _clock = clock;
+            return this;
+        }
+
         public Builder SupportingInvalidInstructions()
         {
             _enableInvalid = true;
@@ -310,10 +317,11 @@ public partial class Cpu6502
             _patch ??= Array.Empty<(int, byte)>();
             if (_programSize < 1) _programSize = _program.Length;
             if (_enableInvalid) AddInvalidOpcodes();
+            _clock ??= new Clock(_cycles);
             _ramController ??= new RamController.Builder().Build();
 
             return new Cpu6502(_program, _programSize, _ramController, _mappedProgramAddresses.ToArray(),
-                _pc, _a, _x, _y, _s, _p, _cycles, _patch, _instructions, _tracer, _callbacks,
+                _pc, _a, _x, _y, _s, _p, _clock, _patch, _instructions, _tracer, _callbacks,
                 _resetVector, _nmiVector, _irqVector);
         }
 

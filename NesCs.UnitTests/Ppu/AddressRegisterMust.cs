@@ -1,3 +1,4 @@
+using NesCs.Logic.Cpu;
 using NesCs.Logic.Ppu;
 using NesCs.Logic.Ram;
 
@@ -10,9 +11,11 @@ public class AddressRegisterMust
     {
         var ramController = new RamControllerSpy();
         var toggle = new ByteToggle();
-        var sut = new AddressRegister(ramController, toggle, new PpuIOBus());
+        var sut = new AddressRegister(ramController, toggle, CreatePpuBus());
         Assert.Equal(0, sut.CurrentAddress);
     }
+
+    private IPpuIOBus CreatePpuBus() => new PpuIOBus(new Clock(0));
 
     [Theory]
     [InlineData(0, 0)]
@@ -22,7 +25,7 @@ public class AddressRegisterMust
     {
         var ramController = new RamControllerSpy();
         var toggle = new ByteToggle();
-        var sut = new AddressRegister(ramController, toggle, new PpuIOBus());
+        var sut = new AddressRegister(ramController, toggle, CreatePpuBus());
         sut.Write(value);
         sut.Write(0x00);
         Assert.Equal(expectedValue, sut.CurrentAddress);
@@ -36,7 +39,7 @@ public class AddressRegisterMust
     {
         var ramController = new RamControllerSpy();
         var toggle = new ByteToggle();
-        var sut = new AddressRegister(ramController, toggle, new PpuIOBus());
+        var sut = new AddressRegister(ramController, toggle, CreatePpuBus());
         sut.Write(0x4);
         sut.Write(value);
         Assert.Equal(expectedValue, sut.CurrentAddress);
@@ -49,7 +52,7 @@ public class AddressRegisterMust
     {
         var ramController = new RamController.Builder().Build();
         var toggle = new ByteToggle();
-        var sut = new AddressRegister(ramController, toggle, new PpuIOBus());
+        var sut = new AddressRegister(ramController, toggle, CreatePpuBus());
         sut.Write(value);
         sut.Write(0x00);
         Assert.Equal(expectedValue, sut.CurrentAddress);
