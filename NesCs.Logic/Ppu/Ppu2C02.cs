@@ -1,4 +1,3 @@
-using System.Net.WebSockets;
 using NesCs.Logic.Cpu;
 using NesCs.Logic.Ram;
 
