@@ -2,6 +2,8 @@ using NesCs.Logic.Cpu;
 using NesCs.Logic.Ppu;
 using NesCs.Logic.Ram;
 using NesCs.Logic.File;
+using System.Security.Cryptography;
+using NesCs.Logic.Cpu.Instructions;
 
 namespace NesCs.Roms.IntegrationTests;
 
@@ -58,17 +60,26 @@ public class CpuTimingTest6Must
         var ppu = new Ppu2C02.Builder().WithRamController(ramController).Build();
         ramController.RegisterHook(ppu);
 
-        //var trace = new List<(int, byte, string)>();
+        var trace = new List<(int, byte, string)>();
         var cpu = new Cpu6502.Builder()
             .SupportingInvalidInstructions()
             .WithRamController(ramController)
             .WithXAs(0x00)
             .WithProgramCounterAs(0xC000)
-            //.TracingWith(new TracerSpy(trace))
+            .TracingWith(new TracerSpy(trace))
             .Build();
 
         ppu.PpuAddr.Write(0x25);
         ppu.PpuAddr.Write(0xFA);
         cpu.Step();
+
+        Assert.Collection(trace,
+            p1 => { Assert.Equal((0xC000, 0xEE, "read"), p1); },
+            p2 => { Assert.Equal((0xC001, 0x06, "read"), p2); },
+            p3 => { Assert.Equal((0xC002, 0x20, "read"), p3); },
+            p4 => { Assert.Equal((0x2006, 0xFA, "read"), p4); },
+            p5 => { Assert.Equal((0x2006, 0xFA, "write"), p5); },
+            p6 => { Assert.Equal((0x2006, 0xFB, "write"), p6); }
+        );
     }
 }
