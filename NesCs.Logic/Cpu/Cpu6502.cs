@@ -3,26 +3,6 @@ using NesCs.Logic.Ram;
 
 namespace NesCs.Logic.Cpu;
 
-public interface IClock
-{
-    void Tick();
-    int GetCycles();
-    bool HangUp();
-}
-
-public class Clock : IClock
-{
-    private int _cycles;
-
-    public Clock(int cycles) => _cycles = cycles;
-
-    public int GetCycles() => _cycles;
-
-    public bool HangUp() => _cycles > 30_000_000;
-
-    public void Tick() => _cycles++;
-}
-
 public partial class Cpu6502
 {
     private const int StackMemoryBase = 0x0100;
@@ -125,7 +105,8 @@ public partial class Cpu6502
                 // filling /var/log/syslog, putting an early exit just in case.
                 if (_clock.HangUp())
                 {
-                    Stop();
+                    System.Diagnostics.Debugger.Break();
+                    //Stop();
                 }
             }
         }

@@ -8,7 +8,7 @@ namespace NesCs.Roms.IntegrationTests;
 public class PpuOpenBusMust
 {
     [Theory]
-    [InlineData("ppu_open_bus/ppu_open_bus.nes", 0x1, "")]
+    [InlineData("ppu_open_bus/ppu_open_bus.nes", 0xE755, "\nppu_open_bus\n\nPassed\n")]
     public void BeExecutedCorrectly(string romName, int poweroffAddress, string expectedResult)
     {
         var ram = new byte[0x10000];

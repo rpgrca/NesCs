@@ -12,7 +12,7 @@ public class PpuIOBus : IPpuIOBus
 
     public byte Read()
     {
-        if (_clock.GetCycles() - _cycle > 1000)
+        if (_clock.GetCycles() - _cycle > 1790000)
         {
             _bus = 0;
         }
