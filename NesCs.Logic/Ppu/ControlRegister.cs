@@ -6,8 +6,13 @@ public class ControlRegister
 {
     private const int ControlRegisterIndex = 0x2000;
     private readonly IRamController _ram;
+    private readonly IPpuIOBus _ioBus;
 
-    public ControlRegister(IRamController ram) => _ram = ram;
+    public ControlRegister(IRamController ram, IPpuIOBus ioBus)
+    {
+        _ram = ram;
+        _ioBus = ioBus;
+    }
 
     private byte Flag
     {
@@ -57,9 +62,13 @@ public class ControlRegister
         set => Flag |= (byte)((value & 1) << 7);
     }
 
-    public void Write(byte value, IPpu ppu) => Flag = value;
+    public void Write(byte value)
+    {
+        _ioBus.Write(value);
+        Flag = value;
+    }
 
-    public byte Read() => Flag;
+    public byte Read() => _ioBus.Read();
 
     public int GetBaseNametableAddress() => 0x2000 + N * 0x400;
 

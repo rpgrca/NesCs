@@ -23,7 +23,7 @@ public class CpuTimingTest6Must
         }).Build();
 
         var nesFile = fsp.Load("../../../../../nes-test-roms/" + romName);
-        var ramController = new RamController.Builder().WithRamOf(ram).Build();
+        var ramController = new RamController.Builder().WithRamOf(ram).PreventRomRewriting().Build();
         var ppu = new Ppu2C02.Builder().WithRamController(ramController).Build();
         ramController.RegisterHook(ppu);
 
@@ -46,4 +46,29 @@ public class CpuTimingTest6Must
 
     private static string GetString(byte[] ram) =>
         System.Text.Encoding.ASCII.GetString(ram[0x6004..].TakeWhile(p => !p.Equals(0)).ToArray());
+
+    [Fact]
+    public void Test1()
+    {
+        var ram = new byte[0x10000];
+        ram[0xC000] = 0xEE;
+        ram[0xC001] = 0x06;
+        ram[0xC002] = 0x20;
+        var ramController = new RamController.Builder().WithRamOf(ram).PreventRomRewriting().Build();
+        var ppu = new Ppu2C02.Builder().WithRamController(ramController).Build();
+        ramController.RegisterHook(ppu);
+
+        //var trace = new List<(int, byte, string)>();
+        var cpu = new Cpu6502.Builder()
+            .SupportingInvalidInstructions()
+            .WithRamController(ramController)
+            .WithXAs(0x00)
+            .WithProgramCounterAs(0xC000)
+            //.TracingWith(new TracerSpy(trace))
+            .Build();
+
+        ppu.PpuAddr.Write(0x25);
+        ppu.PpuAddr.Write(0xFA);
+        cpu.Step();
+    }
 }

@@ -10,7 +10,7 @@ public class AddressRegisterMust
     {
         var ramController = new RamControllerSpy();
         var toggle = new ByteToggle();
-        var sut = new AddressRegister(ramController, toggle);
+        var sut = new AddressRegister(ramController, toggle, new PpuIOBus());
         Assert.Equal(0, sut.CurrentAddress);
     }
 
@@ -22,7 +22,7 @@ public class AddressRegisterMust
     {
         var ramController = new RamControllerSpy();
         var toggle = new ByteToggle();
-        var sut = new AddressRegister(ramController, toggle);
+        var sut = new AddressRegister(ramController, toggle, new PpuIOBus());
         sut.Write(value);
         sut.Write(0x00);
         Assert.Equal(expectedValue, sut.CurrentAddress);
@@ -36,7 +36,7 @@ public class AddressRegisterMust
     {
         var ramController = new RamControllerSpy();
         var toggle = new ByteToggle();
-        var sut = new AddressRegister(ramController, toggle);
+        var sut = new AddressRegister(ramController, toggle, new PpuIOBus());
         sut.Write(0x4);
         sut.Write(value);
         Assert.Equal(expectedValue, sut.CurrentAddress);
@@ -49,7 +49,7 @@ public class AddressRegisterMust
     {
         var ramController = new RamController.Builder().Build();
         var toggle = new ByteToggle();
-        var sut = new AddressRegister(ramController, toggle);
+        var sut = new AddressRegister(ramController, toggle, new PpuIOBus());
         sut.Write(value);
         sut.Write(0x00);
         Assert.Equal(expectedValue, sut.CurrentAddress);

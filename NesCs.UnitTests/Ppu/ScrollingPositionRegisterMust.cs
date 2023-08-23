@@ -10,7 +10,7 @@ public class ScrollingPositionRegisterMust
     {
         var ramController = new RamControllerSpy();
         var toggle = new ByteToggle();
-        var sut = new ScrollingPositionRegister(ramController, toggle);
+        var sut = new ScrollingPositionRegister(ramController, toggle, new PpuIOBus());
         Assert.Equal(0, sut.CameraPositionX);
         Assert.Equal(0, sut.CameraPositionY);
     }
@@ -23,7 +23,7 @@ public class ScrollingPositionRegisterMust
     {
         var ramController = new RamControllerSpy();
         var toggle = new ByteToggle();
-        var sut = new ScrollingPositionRegister(ramController, toggle);
+        var sut = new ScrollingPositionRegister(ramController, toggle, new PpuIOBus());
         sut.Write(value);
         Assert.Equal(value, sut.CameraPositionX);
         Assert.Equal(0, sut.CameraPositionY);
@@ -37,7 +37,7 @@ public class ScrollingPositionRegisterMust
     {
         var ramController = new RamControllerSpy();
         var toggle = new ByteToggle();
-        var sut = new ScrollingPositionRegister(ramController, toggle);
+        var sut = new ScrollingPositionRegister(ramController, toggle, new PpuIOBus());
         sut.Write(0x4);
         sut.Write(value);
         Assert.Equal(4, sut.CameraPositionX);
@@ -48,13 +48,13 @@ public class ScrollingPositionRegisterMust
     public void NotChangeAddressUsedByAddress_WhenWritingScroll()
     {
         var vram = Enumerable.Range(1, 0x2100).Select(p => (byte)(p / 35)).ToArray();
-        var ramController = new RamController.Builder().Build();
-        var sut = new Logic.Ppu.Ppu2C02.Builder().WithVram(vram).WithRamController(ramController).Build();
+        var ram = new byte[0x10000];
+        var ramController = new RamController.Builder().WithRamOf(ram).Build();
+        var sut = new Ppu2C02.Builder().WithVram(vram).WithRamController(ramController).Build();
         sut.PpuAddr.Write(0x25);
         sut.PpuAddr.Write(0x4B);
         sut.PpuScroll.Write(0x55);
-        var value = sut.PpuAddr.Read();
-        Assert.Equal(75, value);
+        Assert.Equal(75, ram[AddressRegister.AddressIndex]);
     }
 
     [Fact]

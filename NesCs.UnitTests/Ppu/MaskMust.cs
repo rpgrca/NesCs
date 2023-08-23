@@ -16,7 +16,7 @@ public class MaskMust
     }
 
     private static Mask CreateSubjectUnderTest() =>
-        new(new RamController.Builder().WithRamOf(new byte[0x2100]).Build());
+        new(new RamController.Builder().WithRamOf(new byte[0x2100]).Build(), new PpuIOBus());
 
     [Theory]
     [InlineData(0)]

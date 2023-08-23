@@ -5,20 +5,8 @@ namespace NesCs.UnitTests.Ppu;
 
 public class StatusMust
 {
-    [Theory]
-    [InlineData(0, 0)]
-    [InlineData(1, 1)]
-    [InlineData(0b11111100, 0b11100)]
-    [InlineData(0b11110000, 0b10000)]
-    public void SetOpenBusCorrectly(byte value, byte expectedValue)
-    {
-        var sut = CreateSubjectUnderTest();
-        sut.OpenBus = value;
-        Assert.Equal(expectedValue, sut.OpenBus);
-    }
-
     private static Status CreateSubjectUnderTest() =>
-        new(new RamController.Builder().WithRamOf(new byte[0x2100]).Build(), new ByteToggle());
+        new(new RamController.Builder().WithRamOf(new byte[0x2100]).Build(), new ByteToggle(), new PpuIOBus());
 
     [Theory]
     [InlineData(0)]
@@ -61,7 +49,7 @@ public class StatusMust
     }
 
     private static Status CreateSubjectUnderTest(IByteToggle spy) =>
-        new(new RamController.Builder().WithRamOf(new byte[0x2100]).Build(), spy);
+        new(new RamController.Builder().WithRamOf(new byte[0x2100]).Build(), spy, new PpuIOBus());
 
     [Fact]
     public void ResetToggler_WhenOpenBusIsRead()

@@ -4,17 +4,19 @@ namespace NesCs.Logic.Ppu;
 
 public class AddressRegister
 {
-    private const int AddressIndex = 0x2006;
+    public const int AddressIndex = 0x2006;
     private readonly byte[] _address = { 0, 0 };
     private readonly IRamController _ram;
     private readonly IByteToggle _toggle;
+    private readonly IPpuIOBus _ioBus;
 
     public int CurrentAddress { get; private set; }
 
-    public AddressRegister(IRamController ram, IByteToggle toggle)
+    public AddressRegister(IRamController ram, IByteToggle toggle, IPpuIOBus ioBus)
     {
         _ram = ram;
         _toggle = toggle;
+        _ioBus = ioBus;
     }
 
     private byte Address
@@ -39,6 +41,7 @@ public class AddressRegister
 
     public void Write(byte value)
     {
+        _ioBus.Write(value);
         var index = _toggle.GetIndex();
         if (index == 0)
         {
@@ -53,5 +56,5 @@ public class AddressRegister
         Address = value;
     }
 
-    public byte Read() => Address;
+    public byte Read() => _ioBus.Read();
 }

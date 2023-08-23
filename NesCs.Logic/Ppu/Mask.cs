@@ -7,8 +7,13 @@ public class Mask
     private const int MaskIndex = 0x2001;
 
     private readonly IRamController _ramController;
+    private readonly IPpuIOBus _ioBus;
 
-    public Mask(IRamController ramController) => _ramController = ramController;
+    public Mask(IRamController ramController, IPpuIOBus ioBus)
+    {
+        _ramController = ramController;
+        _ioBus = ioBus;
+    }
 
     private byte Flags
     {
@@ -64,7 +69,11 @@ public class Mask
         set => Flags |= (byte)((value & 1) << 7);
     }
 
-    public void Write(byte value, IPpu ppu) => Flags = value;
+    public void Write(byte value)
+    {
+        _ioBus.Write(value);
+        Flags = value;
+    }
 
-    public byte Read() => Flags;
+    public byte Read() => _ioBus.Read();
 }

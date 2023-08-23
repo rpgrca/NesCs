@@ -8,6 +8,7 @@ public class ScrollingPositionRegister
     private readonly byte[] _cameraPosition = { 0, 0 };
     private readonly IRamController _ram;
     private readonly IByteToggle _toggle;
+    private readonly IPpuIOBus _ioBus;
 
     public byte CameraPositionX => _cameraPosition[0];
 
@@ -19,17 +20,19 @@ public class ScrollingPositionRegister
         set => _ram.DirectWriteTo(ScrollIndex, value);
     }
 
-    public ScrollingPositionRegister(IRamController ram, IByteToggle toggle)
+    public ScrollingPositionRegister(IRamController ram, IByteToggle toggle, IPpuIOBus ioBus)
     {
         _ram = ram;
         _toggle = toggle;
+        _ioBus = ioBus;
     }
 
     public void Write(byte value)
     {
+        _ioBus.Write(value);
         _cameraPosition[_toggle.GetIndex()] = value;
         Address = value;
     }
 
-    public byte Read() => Address;
+    public byte Read() => _ioBus.Read();
 }
