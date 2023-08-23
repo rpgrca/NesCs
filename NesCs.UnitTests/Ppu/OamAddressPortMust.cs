@@ -1,3 +1,4 @@
+using NesCs.Logic.Cpu;
 using NesCs.Logic.Ppu;
 using NesCs.Logic.Ram;
 
@@ -13,8 +14,10 @@ public class OamAddressPortMust
     {
         var ram = new byte[0x3000];
         var ramController = new RamController.Builder().WithRamOf(ram).Build();
-        var sut = new OamAddressPort(ramController, new PpuIOBus());
+        var sut = new OamAddressPort(ramController, CreatePpuBus());
         sut.Write(value);
         Assert.Equal(value, ram[OamAddressPort.OamAddressIndex]);
     }
+
+    private static IPpuIOBus CreatePpuBus() => new PpuIOBus(new Clock(0));
 }

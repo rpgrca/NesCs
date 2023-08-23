@@ -1,3 +1,5 @@
+using System.Net.WebSockets;
+using NesCs.Logic.Cpu;
 using NesCs.Logic.Ram;
 
 namespace NesCs.Logic.Ppu;
@@ -8,10 +10,17 @@ public class Ppu2C02 : IPpu
     {
         private byte[]? _vram;
         private IRamController? _ramController;
+        private IClock? _clock;
 
         public Builder WithVram(byte[] vram)
         {
             _vram = vram;
+            return this;
+        }
+
+        public Builder WithClock(IClock clock)
+        {
+            _clock = clock;
             return this;
         }
 
@@ -24,9 +33,10 @@ public class Ppu2C02 : IPpu
         public IPpu Build()
         {
             _vram ??= new byte[0x4000];
+            _clock ??= new Clock(0);
             _ramController ??= new RamController.Builder().Build();
 
-            return new Ppu2C02(_ramController, _vram);
+            return new Ppu2C02(_ramController, _vram, _clock);
         }
     }
 
@@ -46,13 +56,13 @@ public class Ppu2C02 : IPpu
     public DataPort PpuData { get; }                        /* 0x2007 WR */
     public OamDmaRegister OamDma { get; }                   /* 0x4014 W  */
 
-    private Ppu2C02(IRamController ram, byte[] vram)
+    private Ppu2C02(IRamController ram, byte[] vram, IClock clock)
     {
         _vram = vram;
         _oam = new OamSprite[64];
         _secondaryOam = new OamSprite[8];
         _toggle = new ByteToggle();
-        _ioBus = new PpuIOBus();
+        _ioBus = new PpuIOBus(clock);
 
         PpuCtrl = new ControlRegister(ram, _ioBus);
         PpuMask = new Mask(ram, _ioBus);

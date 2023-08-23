@@ -1,3 +1,4 @@
+using NesCs.Logic.Cpu;
 using NesCs.Logic.Ppu;
 using NesCs.Logic.Ram;
 
@@ -10,10 +11,12 @@ public class ScrollingPositionRegisterMust
     {
         var ramController = new RamControllerSpy();
         var toggle = new ByteToggle();
-        var sut = new ScrollingPositionRegister(ramController, toggle, new PpuIOBus());
+        var sut = new ScrollingPositionRegister(ramController, toggle, CreatePpuBus());
         Assert.Equal(0, sut.CameraPositionX);
         Assert.Equal(0, sut.CameraPositionY);
     }
+
+    private static IPpuIOBus CreatePpuBus() => new PpuIOBus(new Clock(1));
 
     [Theory]
     [InlineData(0)]
@@ -23,7 +26,7 @@ public class ScrollingPositionRegisterMust
     {
         var ramController = new RamControllerSpy();
         var toggle = new ByteToggle();
-        var sut = new ScrollingPositionRegister(ramController, toggle, new PpuIOBus());
+        var sut = new ScrollingPositionRegister(ramController, toggle, CreatePpuBus());
         sut.Write(value);
         Assert.Equal(value, sut.CameraPositionX);
         Assert.Equal(0, sut.CameraPositionY);
@@ -37,7 +40,7 @@ public class ScrollingPositionRegisterMust
     {
         var ramController = new RamControllerSpy();
         var toggle = new ByteToggle();
-        var sut = new ScrollingPositionRegister(ramController, toggle, new PpuIOBus());
+        var sut = new ScrollingPositionRegister(ramController, toggle, CreatePpuBus());
         sut.Write(0x4);
         sut.Write(value);
         Assert.Equal(4, sut.CameraPositionX);

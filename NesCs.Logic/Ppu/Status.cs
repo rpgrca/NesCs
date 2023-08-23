@@ -11,7 +11,12 @@ public class Status
 
     private byte Flags
     {
-        get => _ramController.DirectReadFrom(StatusIndex);
+        get
+        {
+            var value = _ramController.DirectReadFrom(StatusIndex);
+            var openBus = _ioBus.Read();
+            return (byte)((value & 0b11100000) | (openBus & 0b11111));
+        }
         set => _ramController.DirectWriteTo(StatusIndex, value);
     }
 

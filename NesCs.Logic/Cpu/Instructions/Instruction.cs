@@ -25,7 +25,7 @@ public class Instruction : IInstruction
     public virtual void Execute(Cpu6502 cpu)
     {
         var (address, value) = _addressing.ObtainValueAndAddress(cpu);
-        if (Opcode == 0xA2 && value == 0x6A) System.Diagnostics.Debugger.Break();
+        //if (Opcode == 0xA2 && value == 0x6A) System.Diagnostics.Debugger.Break();
         _operation.Execute(cpu, value, address);
     }
 }
