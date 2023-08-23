@@ -1,8 +1,10 @@
+using System.Diagnostics;
 using NesCs.Logic.Cpu.Instructions;
 using NesCs.Logic.Ram;
 
 namespace NesCs.Logic.Cpu;
 
+[DebuggerDisplay("{DebuggerDisplay,nq}")]
 public partial class Cpu6502
 {
     private const int StackMemoryBase = 0x0100;
@@ -105,8 +107,7 @@ public partial class Cpu6502
                 // filling /var/log/syslog, putting an early exit just in case.
                 if (_clock.HangUp())
                 {
-                    System.Diagnostics.Debugger.Break();
-                    //Stop();
+                    Stop();
                 }
             }
         }
@@ -283,4 +284,7 @@ public partial class Cpu6502
     public byte PeekMemory(int address) => _ram[address & 0xffff];
 
     public (ProcessorStatus P, byte A, int PC, byte X, byte Y, byte S) TakeSnapshot() => (P, A, PC, X, Y, S);
+
+    [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+    private string DebuggerDisplay => $"{PC:X4} A:{A:X2} X:{X:X2} Y:{Y:X2} P:{(byte)P:X2} S:{S:X2} CYC:{_clock.GetCycles()}";
 }
