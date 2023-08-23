@@ -26,15 +26,15 @@ public class DataPort
         if (_ppuVram.CurrentAddress <= 0x3EFF)
         {
             _cache = _ppuVram.Read();
-            _ioBus.Write(_cache);
         }
         else
         {
             result = _cache = _ppuVram.Read();
-            _ioBus.Write(result);
         }
 
         _ppuVram.IncrementAddress();
+
+        _ioBus.Write(result);
         return result;
     }
 }
