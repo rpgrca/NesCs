@@ -19,5 +19,10 @@ public class OamDataPort
         _address.IncrementAddress();
     }
 
-    public byte Read() => (byte)(_data & 0b11100011);
+    public byte Read()
+    {
+        var result = (byte)(_data & 0b11100011);
+        _ioBus.Write(result);
+        return result;
+    }
 }
