@@ -29,7 +29,7 @@ public class DataPort
         }
         else
         {
-            result = _cache = _ppuVram.Read();
+            result = _cache = (byte)((_ioBus.Read() & 0b11000000) | (_ppuVram.Read() & 0b111111));
         }
 
         _ppuVram.IncrementAddress();
