@@ -2,6 +2,7 @@ namespace NesCs.Logic.Ppu;
 
 public class DataPort
 {
+    public const int DataIndex = 0x2007;
     private readonly IPpuVram _ppuVram;
     private readonly IPpuIOBus _ioBus;
     private byte _cache;
