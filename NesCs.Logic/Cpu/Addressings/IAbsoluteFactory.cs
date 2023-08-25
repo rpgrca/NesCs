@@ -6,4 +6,5 @@ public interface IAbsoluteFactory
     IAddressing X { get; }
     IAddressing Memory { get; }
     IAddressing Accumulator { get; }
+    IAddressing Direct { get; }
 }

@@ -88,7 +88,7 @@ public partial class Cpu6502
             _instructions[0x48] = new PushAccumulatorOpcode48();
             _instructions[0x49] = new Instruction(0x49, "EOR", As.Immediate, Doing.Xor);
             _instructions[0x4A] = new Instruction(0x4A, "LSR", As.Accumulator, Doing.ShiftRight.Accumulator);
-            _instructions[0x4C] = new JumpInAbsoluteModeOpcode4C();
+            _instructions[0x4C] = new Instruction(0x4C, "JMP", As.Absolute.Direct, Doing.Jump);
             _instructions[0x4D] = new Instruction(0x4D, "EOR", As.Absolute.Memory, Doing.Xor);
             _instructions[0x4E] = new Instruction(0x4E, "LSR", As.Absolute.Memory, Doing.ShiftRight.Memory);
             _instructions[0x50] = new BranchIfOverflowNotSetOpcode50();
@@ -106,7 +106,7 @@ public partial class Cpu6502
             _instructions[0x68] = new PullAccumulatorOpcode68();
             _instructions[0x69] = new Instruction(0x69, "ADC", As.Immediate, Doing.AddWithCarry);
             _instructions[0x6A] = new Instruction(0x6A, "ROR", As.Accumulator, Doing.RotateRight.OnAccumulator);
-            _instructions[0x6C] = new JumpInIndirectModeOpcode6C();
+            _instructions[0x6C] = new Instruction(0x6C, "JMP", As.Indirect, Doing.Jump);
             _instructions[0x6D] = new Instruction(0x6D, "ADC", As.Absolute.Memory, Doing.AddWithCarry);
             _instructions[0x6E] = new Instruction(0x6E, "ROR", As.Absolute.Memory, Doing.RotateRight.OnMemory);
             _instructions[0x70] = new BranchIfOverflowSetOpcode70();

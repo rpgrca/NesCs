@@ -8,5 +8,7 @@ public class AbsoluteFactory : IAbsoluteFactory
 
     public IAddressing Memory { get; } = new Absolute((c, a) => c.ReadByteFromMemory(a));
 
+    public IAddressing Direct { get; } = new Absolute((c, a) => 0);
+
     public IAddressing Accumulator { get; } = new Absolute((c, _) => c.ReadByteFromAccumulator());
 }

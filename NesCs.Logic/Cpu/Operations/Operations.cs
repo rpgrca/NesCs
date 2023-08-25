@@ -1,3 +1,5 @@
+using NesCs.Logic.Cpu.Instructions;
+
 namespace NesCs.Logic.Cpu.Operations;
 
 public class Operations
@@ -20,6 +22,7 @@ public class Operations
     public ILoadFactory Load { get; internal set; }
     public IStoreFactory Store { get; }
     public ITransferFactory Transfer { get; }
+    public IOperation Jump { get; }
 
     public Operations()
     {
@@ -41,5 +44,6 @@ public class Operations
         Load = new LoadFactory();
         Store = new StoreFactory();
         Transfer = new TransferFactory();
+        Jump = new Jump();
     }
 }
