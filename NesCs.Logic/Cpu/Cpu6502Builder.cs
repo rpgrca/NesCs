@@ -91,7 +91,7 @@ public partial class Cpu6502
             _instructions[0x4C] = new Instruction(0x4C, "JMP", As.Absolute.Direct, Doing.Jump);
             _instructions[0x4D] = new Instruction(0x4D, "EOR", As.Absolute.Memory, Doing.Xor);
             _instructions[0x4E] = new Instruction(0x4E, "LSR", As.Absolute.Memory, Doing.ShiftRight.Memory);
-            _instructions[0x50] = new BranchIfOverflowNotSetOpcode50();
+            _instructions[0x50] = new Instruction(0x50, "BVC", As.Relative, Doing.Branch.WhenNotOverflow);
             _instructions[0x51] = new Instruction(0x51, "EOR", As.IndirectYIndexed.Memory, Doing.Xor);
             _instructions[0x55] = new Instruction(0x55, "EOR", As.ZeroPageXIndexed.Memory, Doing.Xor);
             _instructions[0x56] = new Instruction(0x56, "LSR", As.ZeroPageXIndexed.Memory, Doing.ShiftRight.Memory);
