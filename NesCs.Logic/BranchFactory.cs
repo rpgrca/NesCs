@@ -11,4 +11,6 @@ public class BranchFactory : IBranchFactory
     public IOperation WhenOverflow => new Branch(c => c.IsOverflowFlagSet());
 
     public IOperation WhenNotCarry => new Branch(c => !c.IsCarryFlagSet());
+
+    public IOperation WhenCarry => new Branch(c => c.IsCarryFlagSet());
 }

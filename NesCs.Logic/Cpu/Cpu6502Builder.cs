@@ -147,7 +147,7 @@ public partial class Cpu6502
             _instructions[0xAC] = new Instruction(0xAC, "LDY", As.Absolute.Memory, Doing.Load.Y);
             _instructions[0xAD] = new Instruction(0xAD, "LDA", As.Absolute.Memory, Doing.Load.Accumulator);
             _instructions[0xAE] = new Instruction(0xAE, "LDX", As.Absolute.Memory, Doing.Load.X);
-            _instructions[0xB0] = new BranchIfCarrySetOpcodeB0();
+            _instructions[0xB0] = new Instruction(0xB0, "BCS", As.Relative, Doing.Branch.WhenCarry);
             _instructions[0xB1] = new Instruction(0xB1, "LDA", As.IndirectYIndexed.Memory, Doing.Load.Accumulator);
             _instructions[0xB4] = new Instruction(0xB4, "LDY", As.ZeroPageXIndexed.Memory, Doing.Load.Y);
             _instructions[0xB5] = new Instruction(0xB5, "LDA", As.ZeroPageXIndexed.Memory, Doing.Load.Accumulator);
