@@ -7,4 +7,6 @@ public class BranchFactory : IBranchFactory
     public IOperation WhenPositive => new Branch(c => !c.IsNegativeFlagSet());
 
     public IOperation WhenNotOverflow => new Branch(c => !c.IsOverflowFlagSet());
+
+    public IOperation WhenOverflow => new Branch(c => c.IsOverflowFlagSet());
 }

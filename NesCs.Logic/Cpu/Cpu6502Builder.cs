@@ -109,7 +109,7 @@ public partial class Cpu6502
             _instructions[0x6C] = new Instruction(0x6C, "JMP", As.Indirect, Doing.Jump);
             _instructions[0x6D] = new Instruction(0x6D, "ADC", As.Absolute.Memory, Doing.AddWithCarry);
             _instructions[0x6E] = new Instruction(0x6E, "ROR", As.Absolute.Memory, Doing.RotateRight.OnMemory);
-            _instructions[0x70] = new BranchIfOverflowSetOpcode70();
+            _instructions[0x70] = new Instruction(0x70, "BVS", As.Relative, Doing.Branch.WhenOverflow);
             _instructions[0x71] = new Instruction(0x71, "ADC", As.IndirectYIndexed.Memory, Doing.AddWithCarry);
             _instructions[0x75] = new Instruction(0x75, "ADC", As.ZeroPageXIndexed.Memory, Doing.AddWithCarry);
             _instructions[0x76] = new Instruction(0x76, "ROR", As.ZeroPageXIndexed.Memory, Doing.RotateRight.OnMemory);
