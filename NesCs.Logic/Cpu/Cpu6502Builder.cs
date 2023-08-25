@@ -73,7 +73,7 @@ public partial class Cpu6502
             _instructions[0x2C] = new Instruction(0x2C, "BIT", As.Absolute.Memory, Doing.BitTest);
             _instructions[0x2D] = new Instruction(0x2D, "AND", As.Absolute.Memory, Doing.And.Accumulator);
             _instructions[0x2E] = new Instruction(0x2E, "ROL", As.Absolute.Memory, Doing.RotateLeft.OnMemory);
-            _instructions[0x30] = new BranchIfMinusOpcode30();
+            _instructions[0x30] = new Instruction(0x30, "BMI", As.Relative, Doing.Branch.WhenNegative);
             _instructions[0x31] = new Instruction(0x31, "AND", As.IndirectYIndexed.Memory, Doing.And.Accumulator);
             _instructions[0x35] = new Instruction(0x35, "AND", As.ZeroPageXIndexed.Memory, Doing.And.Accumulator);
             _instructions[0x36] = new Instruction(0x36, "ROL", As.ZeroPageXIndexed.Memory, Doing.RotateLeft.OnMemory);

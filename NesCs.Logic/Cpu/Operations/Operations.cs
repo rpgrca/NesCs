@@ -23,6 +23,7 @@ public class Operations
     public IStoreFactory Store { get; }
     public ITransferFactory Transfer { get; }
     public IOperation Jump { get; }
+    public IBranchFactory Branch { get; }
 
     public Operations()
     {
@@ -45,5 +46,6 @@ public class Operations
         Store = new StoreFactory();
         Transfer = new TransferFactory();
         Jump = new Jump();
+        Branch = new BranchFactory();
     }
 }
