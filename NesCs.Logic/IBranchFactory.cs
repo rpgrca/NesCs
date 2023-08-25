@@ -9,4 +9,5 @@ public interface IBranchFactory
     IOperation WhenNotCarry { get; }
     IOperation WhenCarry { get; }
     IOperation WhenNotZero { get; }
+    IOperation WhenZero { get; }
 }

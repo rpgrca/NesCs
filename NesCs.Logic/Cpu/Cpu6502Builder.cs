@@ -188,7 +188,7 @@ public partial class Cpu6502
             _instructions[0xEC] = new Instruction(0xEC, "CMP", As.Absolute.Memory, Doing.Compare.X);
             _instructions[0xED] = new Instruction(0xED, "SBC", As.Absolute.Memory, Doing.SubtractWithCarry);
             _instructions[0xEE] = new Instruction(0xEE, "INC", As.Absolute.Memory, Doing.Increment.Memory);
-            _instructions[0xF0] = new BranchIfEqualOpcodeF0();
+            _instructions[0xF0] = new Instruction(0xF0, "BEQ", As.Relative, Doing.Branch.WhenZero);
             _instructions[0xF1] = new Instruction(0xF1, "SBC", As.IndirectYIndexed.Memory, Doing.SubtractWithCarry);
             _instructions[0xF5] = new Instruction(0xF5, "SBC", As.ZeroPageXIndexed.Memory, Doing.SubtractWithCarry);
             _instructions[0xF6] = new Instruction(0xF6, "INC", As.ZeroPageXIndexed.Memory, Doing.Increment.Memory);
