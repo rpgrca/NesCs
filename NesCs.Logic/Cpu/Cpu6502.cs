@@ -144,7 +144,7 @@ public partial class Cpu6502
 
     internal bool IsCarryFlagSet() => P.HasFlag(ProcessorStatus.C);
 
-    internal bool IsReadZeroFlagSet() => P.HasFlag(ProcessorStatus.Z);
+    internal bool IsZeroFlagSet() => P.HasFlag(ProcessorStatus.Z);
 
     internal bool IsNegativeFlagSet() => P.HasFlag(ProcessorStatus.N);
 

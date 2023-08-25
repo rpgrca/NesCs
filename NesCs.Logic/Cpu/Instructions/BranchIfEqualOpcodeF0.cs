@@ -20,7 +20,7 @@ public class BranchIfEqualOpcodeF0 : IInstruction
         cpu.ReadyForNextInstruction();
         _ = cpu.ReadByteFromProgramCounter();
 
-        if (cpu.IsReadZeroFlagSet())
+        if (cpu.IsZeroFlagSet())
         {
             var pc = cpu.ReadByteFromProgramCounter();
             _ = cpu.ReadByteFromMemory(pc);

@@ -169,7 +169,7 @@ public partial class Cpu6502
             _instructions[0xCC] = new Instruction(0xCC, "CMP", As.Absolute.Memory, Doing.Compare.Y);
             _instructions[0xCD] = new Instruction(0xCD, "CMP", As.Absolute.Memory, Doing.Compare.Accumulator);
             _instructions[0xCE] = new Instruction(0xCE, "DEC", As.Absolute.Memory, Doing.Decrement.Memory);
-            _instructions[0xD0] = new BranchIfNotEqualOpcodeD0();
+            _instructions[0xD0] = new Instruction(0xD0, "BNE", As.Relative, Doing.Branch.WhenNotZero);
             _instructions[0xD1] = new Instruction(0xD1, "CMP", As.IndirectYIndexed.Memory, Doing.Compare.Accumulator);
             _instructions[0xD5] = new Instruction(0xD5, "CMP", As.ZeroPageXIndexed.Memory, Doing.Compare.Accumulator);
             _instructions[0xD6] = new Instruction(0xD6, "DEC", As.ZeroPageXIndexed.Memory, Doing.Decrement.Memory);

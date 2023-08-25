@@ -8,4 +8,5 @@ public interface IBranchFactory
     IOperation WhenOverflow { get; }
     IOperation WhenNotCarry { get; }
     IOperation WhenCarry { get; }
+    IOperation WhenNotZero { get; }
 }

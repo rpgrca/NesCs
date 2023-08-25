@@ -13,4 +13,6 @@ public class BranchFactory : IBranchFactory
     public IOperation WhenNotCarry => new Branch(c => !c.IsCarryFlagSet());
 
     public IOperation WhenCarry => new Branch(c => c.IsCarryFlagSet());
+
+    public IOperation WhenNotZero => new Branch(c => !c.IsZeroFlagSet());
 }
