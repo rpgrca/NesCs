@@ -54,7 +54,7 @@ public partial class Cpu6502
             _instructions[0x0A] = new Instruction(0x0A, "ASL", As.Accumulator, Doing.ShiftLeft.Accumulator);
             _instructions[0x0D] = new Instruction(0x0D, "ORA", As.Absolute.Memory, Doing.Or);
             _instructions[0x0E] = new Instruction(0x0E, "ASL", As.Absolute.Memory, Doing.ShiftLeft.Memory);
-            _instructions[0x10] = new BranchIfPositiveOpcode10();
+            _instructions[0x10] = new Instruction(0x10, "BPL", As.Relative, Doing.Branch.WhenPositive);
             _instructions[0x11] = new Instruction(0x11, "ORA", As.IndirectYIndexed.Memory, Doing.Or);
             _instructions[0x15] = new Instruction(0x15, "ORA", As.ZeroPageXIndexed.Memory, Doing.Or);
             _instructions[0x16] = new Instruction(0x16, "ASL", As.ZeroPageXIndexed.Memory, Doing.ShiftLeft.Memory);
