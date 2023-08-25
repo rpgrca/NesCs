@@ -20,7 +20,7 @@ public class BranchIfCarrySetOpcodeB0 : IInstruction
         cpu.ReadyForNextInstruction();
         _ = cpu.ReadByteFromProgramCounter();
 
-        if (cpu.IsReadCarryFlagSet())
+        if (cpu.IsCarryFlagSet())
         {
             var pc = cpu.ReadByteFromProgramCounter();
             _ = cpu.ReadByteFromMemory(pc);

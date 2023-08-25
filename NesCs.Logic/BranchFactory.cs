@@ -9,4 +9,6 @@ public class BranchFactory : IBranchFactory
     public IOperation WhenNotOverflow => new Branch(c => !c.IsOverflowFlagSet());
 
     public IOperation WhenOverflow => new Branch(c => c.IsOverflowFlagSet());
+
+    public IOperation WhenNotCarry => new Branch(c => !c.IsCarryFlagSet());
 }

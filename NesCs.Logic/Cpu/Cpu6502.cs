@@ -142,7 +142,7 @@ public partial class Cpu6502
 
     public byte ReadByteFromAccumulator() => A;
 
-    internal bool IsReadCarryFlagSet() => P.HasFlag(ProcessorStatus.C);
+    internal bool IsCarryFlagSet() => P.HasFlag(ProcessorStatus.C);
 
     internal bool IsReadZeroFlagSet() => P.HasFlag(ProcessorStatus.Z);
 

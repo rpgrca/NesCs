@@ -7,7 +7,7 @@ public class SubtractWithCarry : IOperation
         var a = cpu.ReadByteFromAccumulator();
 
         value = (byte)~value;
-        var sum = a + value + (cpu.IsReadCarryFlagSet()? 1 : 0);
+        var sum = a + value + (cpu.IsCarryFlagSet()? 1 : 0);
         var result = (byte)(sum & 0xff);
 
         cpu.SetValueToAccumulator(result);

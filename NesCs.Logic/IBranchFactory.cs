@@ -6,4 +6,5 @@ public interface IBranchFactory
     IOperation WhenPositive { get; }
     IOperation WhenNotOverflow { get; }
     IOperation WhenOverflow { get; }
+    IOperation WhenNotCarry { get; }
 }

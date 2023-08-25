@@ -14,7 +14,7 @@ public class RotateLeft : IOperation
     (int, byte) IOperation.Execute(Cpu6502 cpu, byte value, int address)
     {
         _extraWrite(cpu, address, value);
-        int rotatedValue = (value << 1) | (cpu.IsReadCarryFlagSet()? 1 : 0);
+        int rotatedValue = (value << 1) | (cpu.IsCarryFlagSet()? 1 : 0);
 
         if ((rotatedValue >> 8) != 0)
         {

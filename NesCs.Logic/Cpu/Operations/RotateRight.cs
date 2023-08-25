@@ -17,7 +17,7 @@ public class RotateRight : IOperation
         var newCarry = (value & 1) == 1;
 
         var rotatedValue = (byte)(value >> 1);
-        if (cpu.IsReadCarryFlagSet())
+        if (cpu.IsCarryFlagSet())
         {
             rotatedValue |= 1 << 7;
         }
