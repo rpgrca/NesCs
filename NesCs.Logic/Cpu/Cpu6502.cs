@@ -15,6 +15,7 @@ public partial class Cpu6502 : IClockHook
     private byte Y { get; set; }
     private byte S { get; set; }
     private bool _stopped;
+    private int _previousCycles;
     private int _cycles;
     private readonly int _resetVector;
     private readonly int _nmiVector;
@@ -50,10 +51,9 @@ public partial class Cpu6502 : IClockHook
         P = p;
         _clock = clock;
         _clock.AddCallback(this);
-        _cycles = 0;
+        _cycles = _previousCycles = 0;
         _instructions = instructions;
         _tracer = tracer;
-        _stopped = false;
     }
 
     public void PowerOn()
@@ -86,6 +86,8 @@ public partial class Cpu6502 : IClockHook
 
     public void Step()
     {
+        _previousCycles = _cycles;
+
         if (_callbacks.ContainsKey(PC))
         {
             _callbacks[PC].Invoke(this);
@@ -262,7 +264,17 @@ public partial class Cpu6502 : IClockHook
 
     public (ProcessorStatus P, byte A, int PC, byte X, byte Y, byte S) TakeSnapshot() => (P, A, PC, X, Y, S);
 
-    public void Trigger(int tick) => Step();
+    public void Trigger(int tick)
+    {
+        if (_previousCycles != _cycles)
+        {
+            _previousCycles++;
+        }
+        else
+        {
+            Step();
+        }
+    }
 
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private string DebuggerDisplay => $"{PC:X4} A:{A:X2} X:{X:X2} Y:{Y:X2} P:{(byte)P:X2} S:{S:X2} CYC:{_clock.GetCycles()}";

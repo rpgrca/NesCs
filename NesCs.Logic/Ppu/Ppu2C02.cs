@@ -5,6 +5,11 @@ namespace NesCs.Logic.Ppu;
 
 public class Ppu2C02 : IPpu
 {
+    private const int EvenCycle = 341;
+    private const int OddCycle = 340;
+    private const int LinesPerSync = 262;
+    private static readonly int[] _cyclesPerLine = { EvenCycle, OddCycle };
+
     public class Builder
     {
         private byte[]? _vram;
@@ -44,7 +49,8 @@ public class Ppu2C02 : IPpu
     private readonly OamSprite[] _secondaryOam;
     private readonly IByteToggle _toggle;
     private readonly IPpuIOBus _ioBus;
-    private bool _evenCycle;
+    private int _rasterX, _rasterY;
+    private int _currentCycle;
     
     public ControlRegister PpuCtrl { get; }                 /* 0x2000 W  */
     public Mask PpuMask { get; }                            /* 0x2001 W  */
@@ -64,7 +70,8 @@ public class Ppu2C02 : IPpu
         _toggle = new ByteToggle();
         _ioBus = new PpuIOBus(clock);
         clock.AddCallback(this);
-        _evenCycle = true;
+        _currentCycle = 0;
+        _rasterX = _rasterY = 0;
 
         PpuCtrl = new ControlRegister(ram, _ioBus);
         PpuMask = new Mask(ram, _ioBus);
@@ -127,10 +134,21 @@ public class Ppu2C02 : IPpu
 
     public void Trigger(int tick)
     {
-        MasterClockDivisor = 4;
+        _rasterX += 1;
+
+        if (_rasterX >= _cyclesPerLine[_currentCycle])
+        {
+            _currentCycle = (_currentCycle + 1) % 2;
+            _rasterX = 0;
+            _rasterY += 1;
+            if (_rasterY >= LinesPerSync)
+            {
+                _rasterY = 0;
+            }
+        }
     }
 
     public int CurrentAddress => PpuAddr.CurrentAddress;
 
-    public int MasterClockDivisor { get; set; }
+    public int MasterClockDivisor => 4;
 }
