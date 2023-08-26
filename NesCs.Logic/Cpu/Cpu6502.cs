@@ -150,10 +150,7 @@ public partial class Cpu6502
 
     internal bool IsOverflowFlagSet() => P.HasFlag(ProcessorStatus.V);
 
-    internal void ReadyForNextInstruction()
-    {
-        PC = (PC + 1) & 0xffff;
-    }
+    internal void ReadyForNextInstruction() => PC = (PC + 1) & 0xffff;
 
     internal byte ReadByteFromProgram()
     {
