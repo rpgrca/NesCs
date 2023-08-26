@@ -28,6 +28,7 @@ public class Program
             .WithProgramCounterAs(0x0801)
             .WithStackPointerAt(0xFD)
             .SupportingInvalidInstructions()
+            .TracingWith(new Vm6502DebuggerDisplay(true))
             .RamPatchedAs(new (int, byte)[]
             {
                 (0xA003, 0x80), (0xFFFE, 0x48), (0xFFFF, 0xFF), (0x01FE, 0xFF), (0x01FF, 0x7F), // memory locations

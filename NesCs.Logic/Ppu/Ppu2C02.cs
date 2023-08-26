@@ -44,6 +44,7 @@ public class Ppu2C02 : IPpu
     private readonly OamSprite[] _secondaryOam;
     private readonly IByteToggle _toggle;
     private readonly IPpuIOBus _ioBus;
+    private bool _evenCycle;
     
     public ControlRegister PpuCtrl { get; }                 /* 0x2000 W  */
     public Mask PpuMask { get; }                            /* 0x2001 W  */
@@ -62,6 +63,8 @@ public class Ppu2C02 : IPpu
         _secondaryOam = new OamSprite[8];
         _toggle = new ByteToggle();
         _ioBus = new PpuIOBus(clock);
+        clock.AddCallback(this);
+        _evenCycle = true;
 
         PpuCtrl = new ControlRegister(ram, _ioBus);
         PpuMask = new Mask(ram, _ioBus);
@@ -122,5 +125,12 @@ public class Ppu2C02 : IPpu
 
     byte IPpuVram.Read() => _vram[CurrentAddress];
 
+    public void Trigger(int tick)
+    {
+        MasterClockDivisor = 4;
+    }
+
     public int CurrentAddress => PpuAddr.CurrentAddress;
+
+    public int MasterClockDivisor { get; set; }
 }

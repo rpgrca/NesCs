@@ -1,8 +1,10 @@
+using NesCs.Logic.Ram;
+
 namespace NesCs.Logic.Cpu;
 
 public interface IClock
 {
-    void Tick();
     int GetCycles();
-    bool HangUp();
+    void AddCallback(IClockHook hook);
+    void Run();
 }
