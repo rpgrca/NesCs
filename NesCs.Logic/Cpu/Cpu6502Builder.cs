@@ -228,12 +228,6 @@ public partial class Cpu6502
             return this;
         }
 
-        public Builder WithCyclesAs(int cycles)
-        {
-            _cycles = cycles;
-            return this;
-        }
-
         public Builder WithResetVectorAt(int resetVector)
         {
             _resetVector = resetVector;

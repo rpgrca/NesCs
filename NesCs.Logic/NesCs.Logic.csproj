@@ -10,4 +10,8 @@
     <PackageReference Include="System.IO.Abstractions" Version="19.2.64" />
   </ItemGroup>
 
+  <PropertyGroup>
+    <DefineConstants>NESDEV</DefineConstants>
+  </PropertyGroup>
+
 </Project>

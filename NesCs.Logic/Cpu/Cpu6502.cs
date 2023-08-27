@@ -5,7 +5,7 @@ using NesCs.Logic.Ram;
 namespace NesCs.Logic.Cpu;
 
 [DebuggerDisplay("{DebuggerDisplay,nq}")]
-public partial class Cpu6502
+public partial class Cpu6502 : IClockHook
 {
     private const int StackMemoryBase = 0x0100;
     private ProcessorStatus P { get; set; }
@@ -15,6 +15,9 @@ public partial class Cpu6502
     private byte Y { get; set; }
     private byte S { get; set; }
     private bool _stopped;
+    private int _previousCycles;
+    private int _cycles;
+    private bool _initialized;
     private readonly int _resetVector;
     private readonly int _nmiVector;
     private readonly int _irqVector;
@@ -48,9 +51,10 @@ public partial class Cpu6502
         S = s;
         P = p;
         _clock = clock;
+        _clock.AddCpu(this);
+        _cycles = _previousCycles = _clock.GetCycles() % MasterClockDivisor;
         _instructions = instructions;
         _tracer = tracer;
-        _stopped = false;
     }
 
     public void PowerOn()
@@ -83,51 +87,33 @@ public partial class Cpu6502
 
     public void Step()
     {
+        _previousCycles = _cycles;
+
         if (_callbacks.ContainsKey(PC))
         {
             _callbacks[PC].Invoke(this);
         }
 
         var instruction = _instructions[ReadByteFromProgram()];
-        _tracer.Display(instruction, instruction.PeekOperands(this), PC, A, X, Y, P, S, _clock.GetCycles());
+        _tracer.Display(instruction, instruction.PeekOperands(this), PC, A, X, Y, P, S, _previousCycles);
         instruction.Execute(this);
     }
 
     public void Stop() => _stopped = true;
 
-    public void Run()
-    {
-        try
-        {
-            while (! _stopped)
-            {
-                Step();
-
-                // TODO: VSC bug makes application run in background when stopping while debugging
-                // filling /var/log/syslog, putting an early exit just in case.
-                if (_clock.HangUp())
-                {
-                    Stop();
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            var error = $"{ex.Message} (on cycle {_clock.GetCycles()})";
-            Console.WriteLine(error);
-            System.Diagnostics.Debug.Print(error);
-            throw;
-        }
-    }
+    public void Run() => _clock.Run();
 
     public void Reset()
     {
         SetInterruptDisable();
+
         var sp = ReadByteFromStackPointer();
         sp -= 3;
         SetValueToStackPointer(sp);
+
         var low = ReadByteFromMemory(_resetVector);
         var high = ReadByteFromMemory(_resetVector + 1);
+
         var address = high << 8 | low;
         SetValueToProgramCounter(address);
     }
@@ -156,7 +142,7 @@ public partial class Cpu6502
     {
         var value = _ram[PC];
         _tracer.Read(PC, value);
-        _clock.Tick();
+        _cycles++;
         return value;
     }
 
@@ -164,7 +150,7 @@ public partial class Cpu6502
     {
         var value = _ram[address];
         _tracer.Read(address, value);
-        _clock.Tick();
+        _cycles++;
         return value;
     }
 
@@ -172,7 +158,7 @@ public partial class Cpu6502
     {
         _ram[address] = value;
         _tracer.Write(address, value);
-        _clock.Tick();
+        _cycles++;
     }
 
     // TODO: Deberia aumentar el puntero automaticamente
@@ -181,7 +167,7 @@ public partial class Cpu6502
         var address = StackMemoryBase + S;
         var value = _ram[address];
         _tracer.Read(address, value);
-        _clock.Tick();
+        _cycles++;
         return value;
     }
 
@@ -191,7 +177,7 @@ public partial class Cpu6502
         var value = _ram[address];
         _tracer.Read(address, value);
         S += 1;
-        _clock.Tick();
+        _cycles++;
         return value;
     }
 
@@ -200,7 +186,7 @@ public partial class Cpu6502
         var address = StackMemoryBase + S;
         _ram[address] = value;
         _tracer.Write(address, value);
-        _clock.Tick();
+        _cycles++;
         S -= 1;
     }
 
@@ -282,6 +268,36 @@ public partial class Cpu6502
 
     public (ProcessorStatus P, byte A, int PC, byte X, byte Y, byte S) TakeSnapshot() => (P, A, PC, X, Y, S);
 
+    public bool Trigger(int tick)
+    {
+        if (! _initialized)
+        {
+            _cycles = 7;
+            _previousCycles = 0;
+            _initialized = true;
+            return false;
+        }
+        else
+        {
+            if (tick % 12 == 0)
+            {
+                _previousCycles++;
+
+                if (_previousCycles == _cycles)
+                {
+                    Step();
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public string GetStatus() => DebuggerDisplay;
+
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-    private string DebuggerDisplay => $"{PC:X4} A:{A:X2} X:{X:X2} Y:{Y:X2} P:{(byte)P:X2} S:{S:X2} CYC:{_clock.GetCycles()}";
+    private string DebuggerDisplay => $"{PC:X4} A:{A:X2} X:{X:X2} Y:{Y:X2} P:{(byte)P:X2} S:{S:X2} CYC:{_cycles}";
+
+    public int MasterClockDivisor => 12;
 }

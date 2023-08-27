@@ -24,7 +24,7 @@ public class IllegalReadIgnoreOpcode1C : IInstruction
 
 #if NESDEV
         // TODO: Breaks Tom's tests
-        var address = high << 8 | low + cpu.ReadByteFromRegisterX();
+        address = high << 8 | low + cpu.ReadByteFromRegisterX();
         _ = cpu.ReadByteFromMemory(address);
 
         if (low + cpu.ReadByteFromRegisterX() > 255)

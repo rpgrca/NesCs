@@ -1,4 +1,5 @@
 using NesCs.Logic.Ppu;
+using NesCs.Logic.Ram;
 
 namespace NesCs.Common.Tests;
 
@@ -24,6 +25,8 @@ public class DummyPpu : IPpu
 
     public int CurrentAddress => throw new NotImplementedException();
 
+    public int MasterClockDivisor { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
     public void Call(int index, byte value, byte[] ram) => throw new NotImplementedException();
 
     public bool CanHandle(int index) => false;
@@ -39,4 +42,13 @@ public class DummyPpu : IPpu
     void Logic.Ram.IRamHook.Write(int index, byte value) => throw new NotImplementedException();
 
     public int GetIndex() => throw new NotImplementedException();
+
+    public void Trigger(int tick) => throw new NotImplementedException();
+
+    public string GetStatus() => throw new NotImplementedException();
+
+    bool IClockHook.Trigger(int tick)
+    {
+        throw new NotImplementedException();
+    }
 }
