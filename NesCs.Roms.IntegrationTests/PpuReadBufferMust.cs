@@ -8,8 +8,7 @@ namespace NesCs.Roms.IntegrationTests;
 public class PpuReadBufferMust
 {
     [Theory]
-    [InlineData("ppu_read_buffer/test_ppu_read_buffer.nes", 0x1, "\nppu_open_bus\n\nPassed\n", Skip = "never passes 1st test")]
-    [InlineData("oam_read/oam_read.nes", 0x1, "", Skip = "never passes second test?")]
+    [InlineData("ppu_read_buffer/test_ppu_read_buffer.nes", 0x1, "", Skip = "never passes 1st test")]
     public void BeExecutedCorrectly(string romName, int poweroffAddress, string expectedResult)
     {
         var ram = new byte[0x10000];

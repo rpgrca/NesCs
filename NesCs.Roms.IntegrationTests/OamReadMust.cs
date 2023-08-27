@@ -5,10 +5,10 @@ using NesCs.Logic.File;
 
 namespace NesCs.Roms.IntegrationTests;
 
-public class PpuOpenBusMust
+public class OamReadMust
 {
     [Theory]
-    [InlineData("ppu_open_bus/ppu_open_bus.nes", 0xE755, "\nppu_open_bus\n\nPassed\n")] // ticks 86793085
+    [InlineData("oam_read/oam_read.nes", 0xE755, "----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n\noam_read\n\nPassed\n")] // ticks 2809549
     public void BeExecutedCorrectly(string romName, int poweroffAddress, string expectedResult)
     {
         var ram = new byte[0x10000];
@@ -27,11 +27,6 @@ public class PpuOpenBusMust
         ramController.RegisterHook(ppu);
 
         var builder = new Cpu6502.Builder().ProgramMappedAt(0x8000);
-        if (nesFile.ProgramRomSize == 1)
-        {
-            builder.ProgramMappedAt(0xC000);
-        }
-
         var cpu = builder
             .Running(nesFile.ProgramRom)
             .WithClock(clock)
