@@ -8,13 +8,13 @@ public class Clock : IClock
 {
     private int _ticks;
     private bool _stopped;
-    private readonly List<IClockHook> _callbacks;
+    private IClockHook[] _callbacks;
 
     public Clock(int ticks)
     {
         _ticks = ticks;
         _stopped = false;
-        _callbacks = new List<IClockHook>();
+        _callbacks = new IClockHook[2] { null, null };
     }
 
     public int GetCycles() => _ticks;
@@ -23,17 +23,23 @@ public class Clock : IClock
 
     private void Tick()
     {
-        _ticks++;
-        foreach (var callback in _callbacks)
+        var cpuText = _callbacks[0].GetStatus();
+        var ppuText = _callbacks[1].GetStatus();
+
+        var canRefresh = _callbacks[0].Trigger(_ticks);
+        _callbacks[1].Trigger(_ticks);
+
+        if (canRefresh)
         {
-            if (_ticks % callback.MasterClockDivisor == 0)
-            {
-                callback.Trigger(_ticks);
-            }
+            Debug.Print($"{cpuText} {ppuText}");
         }
+
+        _ticks++;
     }
 
-    public void AddCallback(IClockHook hook) => _callbacks.Add(hook);
+    public void AddCpu(IClockHook cpu) => _callbacks[0] = cpu;
+
+    public void AddPpu(IClockHook ppu) => _callbacks[1] = ppu;
 
     public void Run()
     {

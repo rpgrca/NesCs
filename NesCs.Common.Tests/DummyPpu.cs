@@ -1,4 +1,5 @@
 using NesCs.Logic.Ppu;
+using NesCs.Logic.Ram;
 
 namespace NesCs.Common.Tests;
 
@@ -43,4 +44,11 @@ public class DummyPpu : IPpu
     public int GetIndex() => throw new NotImplementedException();
 
     public void Trigger(int tick) => throw new NotImplementedException();
+
+    public string GetStatus() => throw new NotImplementedException();
+
+    bool IClockHook.Trigger(int tick)
+    {
+        throw new NotImplementedException();
+    }
 }

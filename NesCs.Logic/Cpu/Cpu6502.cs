@@ -17,6 +17,7 @@ public partial class Cpu6502 : IClockHook
     private bool _stopped;
     private int _previousCycles;
     private int _cycles;
+    private bool _initialized;
     private readonly int _resetVector;
     private readonly int _nmiVector;
     private readonly int _irqVector;
@@ -50,8 +51,8 @@ public partial class Cpu6502 : IClockHook
         S = s;
         P = p;
         _clock = clock;
-        _clock.AddCallback(this);
-        _cycles = _previousCycles = 0;
+        _clock.AddCpu(this);
+        _cycles = _previousCycles = _clock.GetCycles() % MasterClockDivisor;
         _instructions = instructions;
         _tracer = tracer;
     }
@@ -94,7 +95,7 @@ public partial class Cpu6502 : IClockHook
         }
 
         var instruction = _instructions[ReadByteFromProgram()];
-        _tracer.Display(instruction, instruction.PeekOperands(this), PC, A, X, Y, P, S, _clock.GetCycles());
+        _tracer.Display(instruction, instruction.PeekOperands(this), PC, A, X, Y, P, S, _previousCycles);
         instruction.Execute(this);
     }
 
@@ -105,11 +106,14 @@ public partial class Cpu6502 : IClockHook
     public void Reset()
     {
         SetInterruptDisable();
+
         var sp = ReadByteFromStackPointer();
         sp -= 3;
         SetValueToStackPointer(sp);
+
         var low = ReadByteFromMemory(_resetVector);
         var high = ReadByteFromMemory(_resetVector + 1);
+
         var address = high << 8 | low;
         SetValueToProgramCounter(address);
     }
@@ -264,20 +268,36 @@ public partial class Cpu6502 : IClockHook
 
     public (ProcessorStatus P, byte A, int PC, byte X, byte Y, byte S) TakeSnapshot() => (P, A, PC, X, Y, S);
 
-    public void Trigger(int tick)
+    public bool Trigger(int tick)
     {
-        if (_previousCycles != _cycles)
+        if (! _initialized)
         {
-            _previousCycles++;
+            _cycles = 7;
+            _previousCycles = 0;
+            _initialized = true;
+            return false;
         }
         else
         {
-            Step();
+            if (tick % 12 == 0)
+            {
+                _previousCycles++;
+
+                if (_previousCycles == _cycles)
+                {
+                    Step();
+                    return true;
+                }
+            }
         }
+
+        return false;
     }
 
+    public string GetStatus() => DebuggerDisplay;
+
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-    private string DebuggerDisplay => $"{PC:X4} A:{A:X2} X:{X:X2} Y:{Y:X2} P:{(byte)P:X2} S:{S:X2} CYC:{_clock.GetCycles()}";
+    private string DebuggerDisplay => $"{PC:X4} A:{A:X2} X:{X:X2} Y:{Y:X2} P:{(byte)P:X2} S:{S:X2} CYC:{_cycles}";
 
     public int MasterClockDivisor => 12;
 }

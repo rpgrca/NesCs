@@ -50,12 +50,10 @@ var cpu = builder
     .Running(nesFile.ProgramRom)
     .SupportingInvalidInstructions()
     .WithProgramCounterAs(0xC000) // 0xC000 -> normal game, 0xC004 nestest batch
-    .WithCyclesAs(6)
-    .WithProcessorStatusAs(ProcessorStatus.X | ProcessorStatus.I)
+    //.WithProcessorStatusAs(ProcessorStatus.X | ProcessorStatus.I) -> Not for nestest
     .WithStackPointerAt(0xFD)
     .WithClock(clock)
     .WithRamController(ramController)
-    .TracingWith(new Vm6502DebuggerDisplay(true))
     .WithCallback(0xC66E, cpu => {
         var h2 = cpu.PeekMemory(0x02);
         var h3 = cpu.PeekMemory(0x03);
@@ -100,6 +98,6 @@ ramController.AddHook(0x2006, (a, v) => {
 });
 
 cpu.PowerOn();
-cpu.Run();
+clock.Run();
 
 return 0;

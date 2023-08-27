@@ -1,8 +1,10 @@
+using System.Diagnostics;
 using NesCs.Logic.Cpu;
 using NesCs.Logic.Ram;
 
 namespace NesCs.Logic.Ppu;
 
+[DebuggerDisplay("{DebuggerDisplay,nq}")]
 public class Ppu2C02 : IPpu
 {
     private const int EvenCycle = 341;
@@ -69,7 +71,7 @@ public class Ppu2C02 : IPpu
         _secondaryOam = new OamSprite[8];
         _toggle = new ByteToggle();
         _ioBus = new PpuIOBus(clock);
-        clock.AddCallback(this);
+        clock.AddPpu(this);
         _currentCycle = 0;
         _rasterX = _rasterY = 0;
 
@@ -132,23 +134,35 @@ public class Ppu2C02 : IPpu
 
     byte IPpuVram.Read() => _vram[CurrentAddress];
 
-    public void Trigger(int tick)
+    public bool Trigger(int tick)
     {
-        _rasterX += 1;
-
-        if (_rasterX >= _cyclesPerLine[_currentCycle])
+        if ((tick) % 4 == 0)
         {
-            _currentCycle = (_currentCycle + 1) % 2;
-            _rasterX = 0;
-            _rasterY += 1;
-            if (_rasterY >= LinesPerSync)
+            _rasterX += 1;
+
+            if (_rasterX >= _cyclesPerLine[_currentCycle])
             {
-                _rasterY = 0;
+                _rasterX = 0;
+                _rasterY += 1;
+                if (_rasterY >= LinesPerSync)
+                {
+                    _rasterY = 0;
+                    _currentCycle = (_currentCycle + 1) % 2;
+                }
             }
+
+            return true;
         }
+
+        return false;
     }
+
+    public string GetStatus() => DebuggerDisplay;
 
     public int CurrentAddress => PpuAddr.CurrentAddress;
 
     public int MasterClockDivisor => 4;
+
+    [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+    private string DebuggerDisplay => $"PPU: {_rasterY,3},{_rasterX,3}";
 }

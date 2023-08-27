@@ -5,6 +5,7 @@ namespace NesCs.Logic.Cpu;
 public interface IClock
 {
     int GetCycles();
-    void AddCallback(IClockHook hook);
+    void AddCpu(IClockHook hook);
+    void AddPpu(IClockHook hook);
     void Run();
 }
