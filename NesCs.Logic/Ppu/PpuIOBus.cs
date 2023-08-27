@@ -2,6 +2,7 @@ using NesCs.Logic.Cpu;
 
 namespace NesCs.Logic.Ppu;
 
+// TODO: Implement IClockHook?
 public class PpuIOBus : IPpuIOBus
 {
     private readonly IClock _clock;
@@ -9,6 +10,8 @@ public class PpuIOBus : IPpuIOBus
     private int _cycle = 0;
 
     public PpuIOBus(IClock clock) => _clock = clock;
+
+    public void Clear() => _bus = 0;
 
     public byte Read()
     {

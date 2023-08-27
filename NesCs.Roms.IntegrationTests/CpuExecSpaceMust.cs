@@ -5,10 +5,11 @@ using NesCs.Logic.File;
 
 namespace NesCs.Roms.IntegrationTests;
 
-public class PpuOpenBusMust
+public class CpuExecSpaceMust
 {
     [Theory]
-    [InlineData("ppu_open_bus/ppu_open_bus.nes", 0xE755, "\nppu_open_bus\n\nPassed\n")]
+    [InlineData("cpu_exec_space/test_cpu_exec_space_ppuio.nes", 0xE7F5, "\u001b[0;37mTEST:test_cpu_exec_space_ppuio\n\u001b[0;33mThis program verifies that the\nCPU can execute code from any\npossible location that it can\naddress, including I/O space.\n\nIn addition, it will be tested\nthat an RTS instruction does a\ndummy read of the byte that\nimmediately follows the\ninstructions.\n\n\u001b[0;37m\u001b[1;34mJSR+RTS TEST OK\nJMP+RTS TEST OK\nRTS+RTS TEST OK\nJMP+RTI TEST OK\nJMP+BRK TEST OK\n\u001b[0;37m\nPassed\n")]
+    [InlineData("cpu_exec_space/test_cpu_exec_space_apu.nes", 0xE976, "", Skip = "need to implement apu")]
     public void BeExecutedCorrectly(string romName, int poweroffAddress, string expectedResult)
     {
         var ram = new byte[0x10000];
@@ -27,18 +28,12 @@ public class PpuOpenBusMust
         ramController.RegisterHook(ppu);
 
         var builder = new Cpu6502.Builder().ProgramMappedAt(0x8000);
-        if (nesFile.ProgramRomSize == 1)
-        {
-            builder.ProgramMappedAt(0xC000);
-        }
-
         var cpu = builder
             .Running(nesFile.ProgramRom)
             .WithClock(clock)
             .SupportingInvalidInstructions()
             .WithRamController(ramController)
             .WithCallback(poweroffAddress, cpu => cpu.Stop())
-            .TracingWith(new Vm6502DebuggerDisplay())
             .Build();
 
         cpu.PowerOn();

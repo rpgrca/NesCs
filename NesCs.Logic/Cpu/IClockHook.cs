@@ -1,8 +1,10 @@
+using NesCs.Logic.Cpu;
+
 namespace NesCs.Logic.Ram;
 
 public interface IClockHook
 {
     int MasterClockDivisor { get; }
-    bool Trigger(int tick);
+    bool Trigger(IClock clock);
     string GetStatus();
 }

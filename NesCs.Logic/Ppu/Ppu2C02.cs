@@ -134,9 +134,9 @@ public class Ppu2C02 : IPpu
 
     byte IPpuVram.Read() => _vram[CurrentAddress];
 
-    public bool Trigger(int tick)
+    public bool Trigger(IClock clock)
     {
-        if ((tick) % 4 == 0)
+        if (clock.GetCycles() % 4 == 0)
         {
             _rasterX += 1;
 
@@ -147,6 +147,7 @@ public class Ppu2C02 : IPpu
                 if (_rasterY >= LinesPerSync)
                 {
                     _rasterY = 0;
+                    PpuStatus.V = 1;
                     _currentCycle = (_currentCycle + 1) % 2;
                 }
             }

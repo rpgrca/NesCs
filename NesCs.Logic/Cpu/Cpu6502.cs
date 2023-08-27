@@ -14,7 +14,6 @@ public partial class Cpu6502 : IClockHook
     private byte X { get; set; }
     private byte Y { get; set; }
     private byte S { get; set; }
-    private bool _stopped;
     private int _previousCycles;
     private int _cycles;
     private bool _initialized;
@@ -94,12 +93,15 @@ public partial class Cpu6502 : IClockHook
             _callbacks[PC].Invoke(this);
         }
 
-        var instruction = _instructions[ReadByteFromProgram()];
-        _tracer.Display(instruction, instruction.PeekOperands(this), PC, A, X, Y, P, S, _previousCycles);
-        instruction.Execute(this);
+        if (! _clock.Aborted)
+        {
+            var instruction = _instructions[ReadByteFromProgram()];
+            _tracer.Display(instruction, instruction.PeekOperands(this), PC, A, X, Y, P, S, _previousCycles);
+            instruction.Execute(this);
+        }
     }
 
-    public void Stop() => _stopped = true;
+    public void Stop() => _clock.Abort();
 
     public void Run() => _clock.Run();
 
@@ -268,7 +270,7 @@ public partial class Cpu6502 : IClockHook
 
     public (ProcessorStatus P, byte A, int PC, byte X, byte Y, byte S) TakeSnapshot() => (P, A, PC, X, Y, S);
 
-    public bool Trigger(int tick)
+    public bool Trigger(IClock clock)
     {
         if (! _initialized)
         {
@@ -279,7 +281,7 @@ public partial class Cpu6502 : IClockHook
         }
         else
         {
-            if (tick % 12 == 0)
+            if (clock.GetCycles() % 12 == 0)
             {
                 _previousCycles++;
 
