@@ -6,7 +6,6 @@ public class NopOperationsInCpuMust
 {
     [Theory]
     [MemberData(nameof(Opcode04JsonFeeder))]
-    [MemberData(nameof(Opcode0CJsonFeeder))]
     [MemberData(nameof(Opcode14JsonFeeder))]
     [MemberData(nameof(Opcode1AJsonFeeder))]
     [MemberData(nameof(Opcode1CJsonFeeder))]
@@ -16,7 +15,6 @@ public class NopOperationsInCpuMust
     [MemberData(nameof(Opcode44JsonFeeder))]
     [MemberData(nameof(Opcode54JsonFeeder))]
     [MemberData(nameof(Opcode5AJsonFeeder))]
-    [MemberData(nameof(Opcode5CJsonFeeder))]
     [MemberData(nameof(Opcode64JsonFeeder))]
     [MemberData(nameof(Opcode74JsonFeeder))]
     [MemberData(nameof(Opcode7AJsonFeeder))]
@@ -27,12 +25,16 @@ public class NopOperationsInCpuMust
     [MemberData(nameof(OpcodeC2JsonFeeder))]
     [MemberData(nameof(OpcodeD4JsonFeeder))]
     [MemberData(nameof(OpcodeDAJsonFeeder))]
-    [MemberData(nameof(OpcodeDCJsonFeeder))]
     [MemberData(nameof(OpcodeE2JsonFeeder))]
     [MemberData(nameof(OpcodeEAJsonFeeder))]
     [MemberData(nameof(OpcodeF4JsonFeeder))]
     [MemberData(nameof(OpcodeFAJsonFeeder))]
     [MemberData(nameof(OpcodeFCJsonFeeder))]
+    #if !NESDEV
+    [MemberData(nameof(Opcode0CJsonFeeder))]
+    [MemberData(nameof(Opcode5CJsonFeeder))]
+    [MemberData(nameof(OpcodeDCJsonFeeder))]
+    #endif
     public void BeExecutedCorrectly(SampleCpu sampleCpu)
     {
         var trace = new List<(int, byte, string)>();
@@ -66,7 +68,9 @@ public class NopOperationsInCpuMust
     public static IEnumerable<object[]> Opcode1CJsonFeeder()
     {
         /* common    */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "1c c7 dc", "initial": { "pc": 3457, "s": 46, "a": 178, "x": 53, "y": 153, "p": 103, "ram": [ [3457, 28], [3458, 199], [3459, 220], [56572, 166], [3460, 57]]}, "final": { "pc": 3460, "s": 46, "a": 178, "x": 53, "y": 153, "p": 103, "ram": [ [3457, 28], [3458, 199], [3459, 220], [3460, 57], [56572, 166]]}, "cycles": [ [3457, 28, "read"], [3458, 199, "read"], [3459, 220, "read"], [56572, 166, "read"]] }""") };
+#if !NESDEV
         /* page jump */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "1c a0 fc", "initial": { "pc": 52873, "s": 168, "a": 169, "x": 245, "y": 31, "p": 98, "ram": [ [52873, 28], [52874, 160], [52875, 252], [64661, 108], [52876, 246]]}, "final": { "pc": 52876, "s": 168, "a": 169, "x": 245, "y": 31, "p": 98, "ram": [ [52873, 28], [52874, 160], [52875, 252], [52876, 246], [64661, 108]]}, "cycles": [ [52873, 28, "read"], [52874, 160, "read"], [52875, 252, "read"], [64661, 108, "read"]] }""") };
+#endif
     }
 
     public static IEnumerable<object[]> Opcode34JsonFeeder()
