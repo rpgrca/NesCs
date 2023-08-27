@@ -3,7 +3,7 @@ using NesCs.Logic.Ram;
 
 namespace NesCs.Logic.Cpu;
 
-[DebuggerDisplay("{_cycles}")]
+[DebuggerDisplay("{_ticks}")]
 public class Clock : IClock
 {
     private int _ticks;
