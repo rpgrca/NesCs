@@ -24,9 +24,9 @@ public partial class Cpu6502 : IClockHook
     private readonly IInstruction[] _instructions;
     private readonly ITracer _tracer;
     private readonly IClock _clock;
-    private readonly Dictionary<int, Action<Cpu6502>> _callbacks;
+    private readonly Dictionary<int, Action<Cpu6502, IInstruction>> _callbacks;
 
-    private Cpu6502(byte[] program, int programSize, IRamController ramController, int[] memoryOffsets, int pc, byte a, byte x, byte y, byte s, ProcessorStatus p, IClock clock, (int Address, byte Value)[] ramPatches, IInstruction[] instructions, ITracer tracer, Dictionary<int, Action<Cpu6502>> callbacks, int resetVector, int nmiVector, int irqVector)
+    private Cpu6502(byte[] program, int programSize, IRamController ramController, int[] memoryOffsets, int pc, byte a, byte x, byte y, byte s, ProcessorStatus p, IClock clock, (int Address, byte Value)[] ramPatches, IInstruction[] instructions, ITracer tracer, Dictionary<int, Action<Cpu6502, IInstruction>> callbacks, int resetVector, int nmiVector, int irqVector)
     {
         _callbacks = callbacks;
         _ram = ramController;
@@ -88,14 +88,15 @@ public partial class Cpu6502 : IClockHook
     {
         _previousCycles = _cycles;
 
-        if (_callbacks.ContainsKey(PC))
-        {
-            _callbacks[PC].Invoke(this);
-        }
-
         if (! _clock.Aborted)
         {
             var instruction = _instructions[ReadByteFromProgram()];
+
+            if (_callbacks.ContainsKey(PC))
+            {
+                _callbacks[PC].Invoke(this, instruction);
+            }
+
             _tracer.Display(instruction, instruction.PeekOperands(this), PC, A, X, Y, P, S, _previousCycles);
             instruction.Execute(this);
         }

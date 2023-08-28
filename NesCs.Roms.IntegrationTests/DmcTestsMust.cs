@@ -40,7 +40,7 @@ public class DmcTestsMust
             .WithClock(clock)
             .SupportingInvalidInstructions()
             .WithRamController(ramController)
-            .WithCallback(poweroffAddress, cpu => cpu.Stop())
+            .WithCallback(poweroffAddress, (cpu, _) => cpu.Stop())
             .TracingWith(new Vm6502DebuggerDisplay())
             .Build();
 

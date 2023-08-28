@@ -37,7 +37,7 @@ public class Program
                 (0xFF52, 0x10), (0xFF53, 0xF0), (0xFF54, 0x03), (0xFF55, 0x6C), (0xFF56, 0x16),
                 (0xFF57, 0x03), (0xFF58, 0x6C), (0xFF59, 0x14), (0xFF5A, 0x03) // kernal IRQ handler
             })
-            .WithCallback(0xFFD2, cpu => {
+            .WithCallback(0xFFD2, (cpu, _) => {
                 cpu.WriteByteToMemory(0x030C, 0);
                 var c = SimplePetsciiToAscii(cpu.ReadByteFromAccumulator());
                 Console.Write($"{c}");
@@ -47,7 +47,7 @@ public class Program
 
                 cpu.SetValueToProgramCounter(address);
             })
-            .WithCallback(0xE16F, cpu => {
+            .WithCallback(0xE16F, (cpu, _) => {
                 var low = cpu.ReadByteFromMemory(0xBB);
                 var high = cpu.ReadByteFromMemory(0xBC);
                 var length = cpu.ReadByteFromMemory(0xB7);
@@ -73,19 +73,15 @@ public class Program
 
                 cpu.SetValueToProgramCounter(0x0816);
             })
-            .WithCallback(0xFFE4, cpu => {
+            .WithCallback(0xFFE4, (cpu, _) => {
                 cpu.SetValueToAccumulator(0x03);
                 var low = cpu.PopFromStack();
                 var high = cpu.PopFromStack();
                 var address = (high << 8 | low) + 1;
                 cpu.SetValueToProgramCounter(address);
             })
-            .WithCallback(0x8000, cpu => {
-                cpu.Stop();
-            })
-            .WithCallback(0xA474, cpu => {
-                cpu.Stop();
-            })
+            .WithCallback(0x8000, (cpu, _) => cpu.Stop())
+            .WithCallback(0xA474, (cpu, _) => cpu.Stop())
             .Build();
 
         cpu.Run();

@@ -38,7 +38,7 @@ public class CpuDummyWritesMust
             .WithClock(clock)
             .SupportingInvalidInstructions()
             .WithRamController(ramController)
-            .WithCallback(poweroffAddress, cpu => cpu.Stop())
+            .WithCallback(poweroffAddress, (cpu, _) => cpu.Stop())
             .Build();
 
         cpu.PowerOn();

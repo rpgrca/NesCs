@@ -32,8 +32,8 @@ public class CpuResetMust
             .SupportingInvalidInstructions()
             .WithRamController(ramController)
             .WithClock(clock)
-            .WithCallback(resetAddress, cpu => cpu.Reset())
-            .WithCallback(poweroffAddress, cpu => cpu.Stop())
+            .WithCallback(resetAddress, (cpu, _) => cpu.Reset())
+            .WithCallback(poweroffAddress, (cpu, _) => cpu.Stop())
             .Build();
 
         cpu.PowerOn();
