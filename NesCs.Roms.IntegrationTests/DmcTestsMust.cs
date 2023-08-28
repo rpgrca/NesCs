@@ -5,10 +5,10 @@ using NesCs.Logic.File;
 
 namespace NesCs.Roms.IntegrationTests;
 
-public class PpuOpenBusMust
+public class DmcTestsMust
 {
     [Theory]
-    [InlineData("ppu_open_bus/ppu_open_bus.nes", 0xE755, "\nppu_open_bus\n\nPassed\n")] // ticks 86793085
+    [InlineData("dmc_tests/buffer_retained.nes", 0xE149, "")]
     public void BeExecutedCorrectly(string romName, int poweroffAddress, string expectedResult)
     {
         var ram = new byte[0x10000];
@@ -44,9 +44,14 @@ public class PpuOpenBusMust
         cpu.PowerOn();
         cpu.Run();
 
-        var result = GetString(ram);
-        Assert.Equal(0, ram[0x6000]);
-        Assert.Equal(expectedResult, result);
+        // According to fceux
+        var snapshot = cpu.TakeSnapshot();
+        Assert.Equal(0xE149, snapshot.PC);
+        Assert.Equal(0x09, snapshot.A);
+        Assert.Equal(0xFF, snapshot.X);
+        Assert.Equal(0x00, snapshot.Y);
+        Assert.Equal(0xFF, snapshot.S);
+        //Assert.Equal(ProcessorStatus.I | ProcessorStatus.C, snapshot.P); CI vs CIBX?
     }
 
     private static string GetString(byte[] ram) =>

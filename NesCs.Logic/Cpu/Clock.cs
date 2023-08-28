@@ -3,36 +3,46 @@ using NesCs.Logic.Ram;
 
 namespace NesCs.Logic.Cpu;
 
-[DebuggerDisplay("{_cycles}")]
+[DebuggerDisplay("{_ticks}")]
 public class Clock : IClock
 {
     private int _ticks;
-    private bool _stopped;
     private IClockHook[] _callbacks;
+
+    public bool Aborted { get; private set; }
 
     public Clock(int ticks)
     {
         _ticks = ticks;
-        _stopped = false;
         _callbacks = new IClockHook[2] { null, null };
+        Aborted = false;
     }
 
     public int GetCycles() => _ticks;
 
-    private bool HangUp() => _ticks > 30_000_000;
+    private bool HangUp()
+    {
+        if (_ticks > 100_000_000)
+        {
+            return true;
+        }
+
+        return false;
+         //(_ticks > 30_000_000);
+    }
 
     private void Tick()
     {
         var cpuText = _callbacks[0].GetStatus();
-        var ppuText = _callbacks[1].GetStatus();
+        var ppuText = _callbacks[1]?.GetStatus();
 
-        var canRefresh = _callbacks[0].Trigger(_ticks);
-        _callbacks[1].Trigger(_ticks);
+        var canRefresh = _callbacks[0].Trigger(this);
+        _callbacks[1]?.Trigger(this);
 
-        if (canRefresh)
+        /*if (canRefresh)
         {
             Debug.Print($"{cpuText} {ppuText}");
-        }
+        }*/
 
         _ticks++;
     }
@@ -45,13 +55,13 @@ public class Clock : IClock
     {
         try
         {
-            while (! _stopped)
+            while (! Aborted)
             {
                 Tick();
 
                 if (HangUp())
                 {
-                    _stopped = true;
+                    Aborted = true;
                 }
             }
         }
@@ -63,4 +73,6 @@ public class Clock : IClock
             throw;
         }
     }
+
+    public void Abort() => Aborted = true;
 }

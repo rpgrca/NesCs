@@ -74,6 +74,8 @@ public class Status
     public byte Read()
     {
         _toggle.Reset();
-        return Flags;
+        var result = Flags;
+        V = 0;
+        return result;
     }
 }

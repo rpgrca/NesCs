@@ -8,10 +8,11 @@ namespace NesCs.Roms.IntegrationTests;
 public class CpuResetMust
 {
     [Theory]
-    [InlineData("cpu_reset/ram_after_reset.nes", 0xE29C, 0xE9D5, "\nram_after_reset\n\nPassed\n")]
-    [InlineData("cpu_reset/registers.nes", 0xE29C, 0xE9D5, "A  X  Y  P  S\n34 56 78 FF 0F \n\nregisters\n\nPassed\n")]
+    [InlineData("cpu_reset/ram_after_reset.nes", 0xE29C, 0xE9D5, "\nram_after_reset\n\nPassed\n")] // ticks: 57819145
+    [InlineData("cpu_reset/registers.nes", 0xE29C, 0xE9D5, "A  X  Y  P  S\n34 56 78 FF 0F \n\nregisters\n\nPassed\n")] // ticks: 57487249
     public void ReturnPassed(string romName, int resetAddress, int poweroffAddress, string expectedResult)
     {
+        var clock = new Clock(0);
         var ram = new byte[0x10000];
         var fsp = new FileSystemProxy.Builder().Loading(new NesFileOptions
         {
@@ -23,13 +24,14 @@ public class CpuResetMust
 
         var nesFile = fsp.Load("../../../../../nes-test-roms/" + romName);
         var ramController = new RamController.Builder().WithRamOf(ram).Build();
-        var ppu = new Ppu2C02.Builder().WithRamController(ramController).Build();
+        var ppu = new Ppu2C02.Builder().WithRamController(ramController).WithClock(clock).Build();
 
         var builder = new Cpu6502.Builder().ProgramMappedAt(0x8000);
         var cpu = builder
             .Running(nesFile.ProgramRom)
             .SupportingInvalidInstructions()
             .WithRamController(ramController)
+            .WithClock(clock)
             .WithCallback(resetAddress, cpu => cpu.Reset())
             .WithCallback(poweroffAddress, cpu => cpu.Stop())
             .Build();

@@ -8,4 +8,6 @@ public interface IClock
     void AddCpu(IClockHook hook);
     void AddPpu(IClockHook hook);
     void Run();
+    void Abort();
+    bool Aborted { get; }
 }
