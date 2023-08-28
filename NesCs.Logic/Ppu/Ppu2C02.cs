@@ -7,6 +7,7 @@ namespace NesCs.Logic.Ppu;
 [DebuggerDisplay("{DebuggerDisplay,nq}")]
 public class Ppu2C02 : IPpu
 {
+    // TODO: Should only skip, not change cycle amount
     private const int EvenCycle = 341;
     private const int OddCycle = 340;
     private const int LinesPerSync = 262;
@@ -145,6 +146,12 @@ public class Ppu2C02 : IPpu
                 _rasterX = 0;
                 _rasterY += 1;
 
+                // On an NTSC machine, the VBL flag is cleared 6820 ppu cycles or exactly 20 scanlines after it is set.
+                if (_rasterY == 20 && _rasterX == 0)
+                {
+                    PpuStatus.V = 0;
+                }
+                else
                 /* V set at 240?
                 if (_rasterY == 240)
                 {
