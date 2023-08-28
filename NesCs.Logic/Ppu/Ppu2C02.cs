@@ -144,11 +144,21 @@ public class Ppu2C02 : IPpu
             {
                 _rasterX = 0;
                 _rasterY += 1;
-                if (_rasterY >= LinesPerSync)
+
+                /* V set at 240?
+                if (_rasterY == 240)
                 {
-                    _rasterY = 0;
-                    PpuStatus.V = 1;
-                    _currentCycle = (_currentCycle + 1) % 2;
+                    // CPU should be at around 29658
+                    //PpuStatus.V = 1;
+                }
+                else*/
+                {
+                    if (_rasterY >= LinesPerSync)
+                    {
+                        PpuStatus.V = 1;
+                        _rasterY = 0;
+                        _currentCycle = (_currentCycle + 1) % 2;
+                    }
                 }
             }
 
