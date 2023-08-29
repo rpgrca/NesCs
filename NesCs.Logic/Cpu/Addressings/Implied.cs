@@ -1,8 +1,13 @@
+using System.Diagnostics;
+
 namespace NesCs.Logic.Cpu.Addressings;
 
+[DebuggerDisplay("{((IDebuggerDisplay)this).Display}")]
 public class Implied : IAddressing
 {
     private readonly Func<Cpu6502, int, byte, byte> _reader;
+
+    string IDebuggerDisplay.Display => string.Empty;
 
     public byte[] PeekOperands(Cpu6502 cpu) => Array.Empty<byte>();
 

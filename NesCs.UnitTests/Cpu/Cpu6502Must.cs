@@ -42,4 +42,14 @@ public class Cpu6502Must
         return array;
     }
 
+    [Fact]
+    public void Test1()
+    {
+        var sut = new Cpu6502.Builder()
+            .Running(new byte[] { 0x00 })
+            .SupportingInvalidInstructions()
+            .Build();
+
+        sut.Step();
+    }
 }

@@ -1,7 +1,12 @@
+using System.Diagnostics;
+
 namespace NesCs.Logic.Cpu.Addressings;
 
+[DebuggerDisplay("{((IDebuggerDisplay)this).Display}")]
 public class ZeroPageYIndexedDouble : IAddressing
 {
+    string IDebuggerDisplay.Display => "zpy";
+
     public byte[] PeekOperands(Cpu6502 cpu)
     {
         byte[] operands = { cpu.PeekMemory(cpu.ReadByteFromProgramCounter() + 1) };

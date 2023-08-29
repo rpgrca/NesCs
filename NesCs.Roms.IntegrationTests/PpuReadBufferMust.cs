@@ -8,7 +8,8 @@ namespace NesCs.Roms.IntegrationTests;
 public class PpuReadBufferMust
 {
     [Theory]
-    [InlineData("ppu_read_buffer/test_ppu_read_buffer.nes", 0x1, "", Skip = "Should implement graphics \u001b[0;37mTEST:test_ppu_read_buffer\n-----------------------------\nTesting basic PPU memory I/O.\n")]
+    [InlineData("ppu_read_buffer/test_ppu_read_buffer.nes", 0x1, "", Skip = "Should implement graphics, hangs after \u001b[0;37mTEST:test_ppu_read_buffer\n-----------------------------\nTesting basic PPU memory I/O.\n")]
+    [InlineData("ppu_vbl_nmi/rom_singles/01-vbl_basics.nes", 0x1, "")]
     public void BeExecutedCorrectly(string romName, int poweroffAddress, string expectedResult)
     {
         var ram = new byte[0x10000];

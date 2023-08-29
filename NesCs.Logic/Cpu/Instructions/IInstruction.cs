@@ -1,6 +1,6 @@
 namespace NesCs.Logic.Cpu.Instructions;
 
-public interface IInstruction
+public interface IInstruction : IDebuggerDisplay
 {
     string Name { get; }
     byte Opcode { get; }
