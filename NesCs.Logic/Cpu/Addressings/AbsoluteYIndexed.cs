@@ -5,7 +5,7 @@ namespace NesCs.Logic.Cpu.Addressings;
 [DebuggerDisplay("{((IDebuggerDisplay)this).Display}")]
 public class AbsoluteYIndexed : IAddressing
 {
-    string IDebuggerDisplay.Display => "aby";
+    string IDebuggerDisplay.Display => "(aby)";
 
     public byte[] PeekOperands(Cpu6502 cpu)
     {

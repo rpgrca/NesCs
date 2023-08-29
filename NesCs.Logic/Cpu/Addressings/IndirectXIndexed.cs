@@ -9,7 +9,7 @@ public class IndirectXIndexed : IAddressing
 
     public IndirectXIndexed(Func<Cpu6502, int, byte> reader) => _reader = reader;
 
-    string IDebuggerDisplay.Display => "izx";
+    string IDebuggerDisplay.Display => "(izx)";
 
     public byte[] PeekOperands(Cpu6502 cpu)
     {

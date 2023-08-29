@@ -5,7 +5,7 @@ namespace NesCs.Logic.Cpu.Addressings;
 [DebuggerDisplay("{((IDebuggerDisplay)this).Display}")]
 public class Immediate : IAddressing
 {
-    string IDebuggerDisplay.Display => "imm";
+    string IDebuggerDisplay.Display => "(imm)";
 
     public byte[] PeekOperands(Cpu6502 cpu)
     {

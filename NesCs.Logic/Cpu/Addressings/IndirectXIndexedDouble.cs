@@ -5,7 +5,7 @@ namespace NesCs.Logic.Cpu.Addressings;
 [DebuggerDisplay("{((IDebuggerDisplay).Display) (dbl)}")]
 public class IndirectXIndexedDouble : IAddressing
 {
-    string IDebuggerDisplay.Display => "izx";
+    string IDebuggerDisplay.Display => "(izx)";
 
     public byte[] PeekOperands(Cpu6502 cpu)
     {

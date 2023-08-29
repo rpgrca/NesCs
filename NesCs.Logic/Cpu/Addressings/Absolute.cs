@@ -10,7 +10,7 @@ public class Absolute : IAddressing
     public Absolute(Func<Cpu6502, int, byte> reader) =>
         _reader = reader;
 
-    string IDebuggerDisplay.Display => "abs";
+    string IDebuggerDisplay.Display => "(abs)";
 
     public byte[] PeekOperands(Cpu6502 cpu)
     {

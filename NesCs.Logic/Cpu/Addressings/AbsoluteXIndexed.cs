@@ -8,7 +8,7 @@ public class AbsoluteXIndexed : IAddressing
     private readonly Action<Cpu6502, int> _readWhenInSamePage;
     private readonly Func<Cpu6502, int, byte, byte> _readWhenInDifferentPage;
 
-    string IDebuggerDisplay.Display => "abx";
+    string IDebuggerDisplay.Display => "(abx)";
 
     public byte[] PeekOperands(Cpu6502 cpu)
     {

@@ -30,5 +30,5 @@ public class Instruction : IInstruction
         _operation.Execute(cpu, value, address);
     }
 
-    string IDebuggerDisplay.Display => $"{Opcode:X2} {Name} {((IDebuggerDisplay)_addressing).Display}";
+    string IDebuggerDisplay.Display => $"{Opcode:X2} {Name} {_addressing.Display}";
 }
