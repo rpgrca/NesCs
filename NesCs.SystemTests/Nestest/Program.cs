@@ -54,7 +54,7 @@ var cpu = builder
     .WithStackPointerAt(0xFD)
     .WithClock(clock)
     .WithRamController(ramController)
-    .WithCallback(0xC66E, cpu => {
+    .WithCallback(0xC66E, (cpu, _) => {
         var h2 = cpu.PeekMemory(0x02);
         var h3 = cpu.PeekMemory(0x03);
 
@@ -70,7 +70,7 @@ var cpu = builder
         }
         cpu.Stop();
     })
-    .WithCallback(PrintAddress, cpu => {
+    .WithCallback(PrintAddress, (cpu, _) => {
         var c = (char)cpu.ReadByteFromAccumulator();
         Console.Write($"{c}");
         System.Diagnostics.Debug.Print($"{c}");

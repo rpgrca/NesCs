@@ -1,8 +1,10 @@
+using System.Diagnostics;
 using NesCs.Logic.Cpu.Addressings;
 using NesCs.Logic.Cpu.Operations;
 
 namespace NesCs.Logic.Cpu.Instructions;
 
+[DebuggerDisplay("{((IDebuggerDisplay)this).Display}")]
 public class Instruction : IInstruction
 {
     protected readonly IAddressing _addressing;
@@ -27,4 +29,6 @@ public class Instruction : IInstruction
         var (address, value) = _addressing.ObtainValueAndAddress(cpu);
         _operation.Execute(cpu, value, address);
     }
+
+    string IDebuggerDisplay.Display => $"{Opcode:X2} {Name} {_addressing.Display}";
 }

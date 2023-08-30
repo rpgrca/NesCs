@@ -14,7 +14,7 @@ public partial class Cpu6502
         private readonly List<int> _mappedProgramAddresses;
         private (int Address, byte Value)[] _patch;
         private readonly IInstruction[] _instructions;
-        private readonly Dictionary<int, Action<Cpu6502>> _callbacks;
+        private readonly Dictionary<int, Action<Cpu6502, IInstruction>> _callbacks;
         private ITracer _tracer;
         private IClock? _clock;
         private bool _enableInvalid;
@@ -29,7 +29,7 @@ public partial class Cpu6502
             _resetVector = 0xFFFC;
             _irqVector = 0xFFFE;
             _mappedProgramAddresses = new List<int>();
-            _callbacks = new Dictionary<int, Action<Cpu6502>>();
+            _callbacks = new Dictionary<int, Action<Cpu6502, IInstruction>>();
             _p = ProcessorStatus.None;
             _a = _x = _y = _s = 0;
             _pc = _programSize = _cycles = 0;
@@ -300,7 +300,7 @@ public partial class Cpu6502
             return this;
         }
 
-        public Builder WithCallback(int address, Action<Cpu6502> callback)
+        public Builder WithCallback(int address, Action<Cpu6502, IInstruction> callback)
         {
             _callbacks.Add(address, callback);
             return this;

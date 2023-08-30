@@ -1,10 +1,16 @@
+using System.Diagnostics;
+
 namespace NesCs.Logic.Cpu.Addressings;
 
+[DebuggerDisplay("{((IDebuggerDisplay)this).Display}")]
 public class Absolute : IAddressing
 {
     private readonly Func<Cpu6502, int, byte> _reader;
 
-    public Absolute(Func<Cpu6502, int, byte> reader) => _reader = reader;
+    public Absolute(Func<Cpu6502, int, byte> reader) =>
+        _reader = reader;
+
+    string IDebuggerDisplay.Display => "(abs)";
 
     public byte[] PeekOperands(Cpu6502 cpu)
     {

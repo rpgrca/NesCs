@@ -3,9 +3,9 @@ using System.Diagnostics;
 namespace NesCs.Logic.Cpu.Addressings;
 
 [DebuggerDisplay("{((IDebuggerDisplay)this).Display}")]
-public class AbsoluteYIndexedAccumulator : IAddressing
+public class AbsoluteXIndexedAccumulator : IAddressing
 {
-    string IDebuggerDisplay.Display => "(aby)";
+    string IDebuggerDisplay.Display => "abx (acc)";
 
     public byte[] PeekOperands(Cpu6502 cpu)
     {
@@ -22,13 +22,13 @@ public class AbsoluteYIndexedAccumulator : IAddressing
         var high = cpu.ReadByteFromProgram();
 
         cpu.ReadyForNextInstruction();
-        var address = high << 8 | low + cpu.ReadByteFromRegisterY() & 0xff;
-        _ = cpu.ReadByteFromMemory(address);
+        var address = high << 8 | low + cpu.ReadByteFromRegisterX() & 0xff;
+        var value = cpu.ReadByteFromMemory(address);
 
-        var address2 = (high << 8 | low) + cpu.ReadByteFromRegisterY() & 0xffff;
-        if (address != address2)
+        var pageJumpAddress = (high << 8 | low) + cpu.ReadByteFromRegisterX() & 0xffff;
+        if (address != pageJumpAddress)
         {
-            address = address2;
+            address = pageJumpAddress;
         }
 
         return (address, cpu.ReadByteFromAccumulator());

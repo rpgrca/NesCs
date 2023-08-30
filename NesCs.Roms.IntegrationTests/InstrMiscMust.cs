@@ -33,7 +33,7 @@ public class InstrMiscMust
             .SupportingInvalidInstructions()
             .WithRamController(ramController)
             .WithClock(clock)
-            .WithCallback(poweroffAddress, cpu => cpu.Stop())
+            .WithCallback(poweroffAddress, (cpu, _) => cpu.Stop())
             .Build();
 
         cpu.PowerOn();

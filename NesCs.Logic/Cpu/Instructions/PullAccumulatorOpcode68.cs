@@ -1,10 +1,15 @@
+using System.Diagnostics;
+
 namespace NesCs.Logic.Cpu.Instructions;
 
+[DebuggerDisplay("{((IDebuggerDisplay)this).Display}")]
 public class PullAccumulatorOpcode68 : IInstruction
 {
     public string Name => "PLA";
 
     public byte Opcode => 0x68;
+
+    string IDebuggerDisplay.Display => $"{Opcode:X2} {Name}";
 
     public byte[] PeekOperands(Cpu6502 cpu) => Array.Empty<byte>();
 

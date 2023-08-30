@@ -8,8 +8,11 @@ namespace NesCs.Roms.IntegrationTests;
 public class DmcTestsMust
 {
     [Theory]
-    [InlineData("dmc_tests/buffer_retained.nes", 0xE149, "")]
-    public void BeExecutedCorrectly(string romName, int poweroffAddress, string expectedResult)
+    [InlineData("dmc_tests/buffer_retained.nes", 0xE149, 0x09, 0xFF, 0x00, 0xFF)]
+    [InlineData("dmc_tests/latency.nes", 0xE162, 0x09, 0xFF, 0x00, 0xFF)]
+    [InlineData("dmc_tests/status.nes", 0xE12A, 0x09, 0xFF, 0x00, 0xFF, Skip = "0xE14E expected")]
+    [InlineData("dmc_tests/status_irq.nes", 0xE154, 0x09, 0xFF, 0x00, 0xFF)]
+    public void BeExecutedCorrectly(string romName, int poweroffAddress, int a, int x, int y, int s)
     {
         var ram = new byte[0x10000];
         var fsp = new FileSystemProxy.Builder().Loading(new NesFileOptions
@@ -37,7 +40,7 @@ public class DmcTestsMust
             .WithClock(clock)
             .SupportingInvalidInstructions()
             .WithRamController(ramController)
-            .WithCallback(poweroffAddress, cpu => cpu.Stop())
+            .WithCallback(poweroffAddress, (cpu, _) => cpu.Stop())
             .TracingWith(new Vm6502DebuggerDisplay())
             .Build();
 
@@ -46,11 +49,11 @@ public class DmcTestsMust
 
         // According to fceux
         var snapshot = cpu.TakeSnapshot();
-        Assert.Equal(0xE149, snapshot.PC);
-        Assert.Equal(0x09, snapshot.A);
-        Assert.Equal(0xFF, snapshot.X);
-        Assert.Equal(0x00, snapshot.Y);
-        Assert.Equal(0xFF, snapshot.S);
+        Assert.Equal(poweroffAddress, snapshot.PC);
+        Assert.Equal(a, snapshot.A);
+        Assert.Equal(x, snapshot.X);
+        Assert.Equal(y, snapshot.Y);
+        Assert.Equal(s, snapshot.S);
         //Assert.Equal(ProcessorStatus.I | ProcessorStatus.C, snapshot.P); CI vs CIBX?
     }
 

@@ -41,6 +41,15 @@ public class StatusMust
     }
 
     [Fact]
+    public void ResetVerticalBlankStart_WhenRead()
+    {
+        var sut = CreateSubjectUnderTest();
+        sut.V = 1;
+        _ = sut.V;
+        Assert.Equal(0, sut.V);
+    }
+
+    [Fact]
     public void ResetToggler_WhenFlagVsyncIsRead()
     {
         var spy = new ByteToggleSpy();
@@ -77,5 +86,19 @@ public class StatusMust
         var sut = CreateSubjectUnderTest(spy);
         _ = sut.Read();
         Assert.True(spy.Toggled);
+    }
+
+
+    [Theory]
+    [InlineData(0x00, 0)]
+    [InlineData(0x00, 1)]
+    [InlineData(0xFF, 0)]
+    [InlineData(0xFF, 1)]
+    public void MaintainVerticalBlank_WhenWritingTo2002(byte writtenValue, byte expectedResult)
+    {
+        var sut = CreateSubjectUnderTest();
+        sut.V = expectedResult;
+        sut.Write(writtenValue);
+        Assert.Equal(expectedResult, sut.V);
     }
 }

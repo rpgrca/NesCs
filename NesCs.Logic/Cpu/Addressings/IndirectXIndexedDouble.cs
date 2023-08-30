@@ -1,7 +1,12 @@
+using System.Diagnostics;
+
 namespace NesCs.Logic.Cpu.Addressings;
 
+[DebuggerDisplay("{((IDebuggerDisplay).Display) (dbl)}")]
 public class IndirectXIndexedDouble : IAddressing
 {
+    string IDebuggerDisplay.Display => "(izx)";
+
     public byte[] PeekOperands(Cpu6502 cpu)
     {
         byte[] operands = { cpu.PeekMemory(cpu.ReadByteFromProgramCounter() + 1), cpu.PeekMemory(cpu.ReadByteFromProgramCounter() + 2) };

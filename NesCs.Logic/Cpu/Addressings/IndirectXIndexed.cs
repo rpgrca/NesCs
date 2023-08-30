@@ -1,10 +1,15 @@
+using System.Diagnostics;
+
 namespace NesCs.Logic.Cpu.Addressings;
 
+[DebuggerDisplay("{((IDebuggerDisplay)this).Display}")]
 public class IndirectXIndexed : IAddressing
 {
     private readonly Func<Cpu6502, int, byte> _reader;
 
     public IndirectXIndexed(Func<Cpu6502, int, byte> reader) => _reader = reader;
+
+    string IDebuggerDisplay.Display => "(izx)";
 
     public byte[] PeekOperands(Cpu6502 cpu)
     {

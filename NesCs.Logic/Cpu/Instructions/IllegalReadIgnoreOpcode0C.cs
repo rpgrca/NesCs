@@ -1,10 +1,15 @@
+using System.Diagnostics;
+
 namespace NesCs.Logic.Cpu.Instructions;
 
+[DebuggerDisplay("{((IDebuggerDisplay)this).Display}")]
 public class IllegalReadIgnoreOpcode0C : IInstruction
 {
     public string Name => "IGN";
 
     public byte Opcode => 0x0C;
+
+    string IDebuggerDisplay.Display => $"{Opcode:X2} {Name} (abs)";
 
     public byte[] PeekOperands(Cpu6502 cpu) => Array.Empty<byte>();
 

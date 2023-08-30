@@ -1,10 +1,15 @@
+using System.Diagnostics;
+
 namespace NesCs.Logic.Cpu.Instructions;
 
+[DebuggerDisplay("{((IDebuggerDisplay)this).Display}")]
 public class ReturnFromInterruptOpcode40 : IInstruction
 {
     public string Name => "RTI";
 
     public byte Opcode => 0x40;
+
+    string IDebuggerDisplay.Display => $"{Opcode:X2} {Name}";
 
     public byte[] PeekOperands(Cpu6502 cpu)
     {

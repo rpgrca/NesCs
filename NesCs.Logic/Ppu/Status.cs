@@ -40,7 +40,11 @@ public class Status
             return (byte)((Flags >> 5) & 1);
         }
 
-        set => Flags |= (byte)((value & 1) << 5);
+        set
+        {
+            Flags = (byte)(Flags & ~(1 << 5));
+            Flags |= (byte)((value & 1) << 5);
+        }
     }
 
     public byte S
@@ -51,7 +55,11 @@ public class Status
             return (byte)((Flags >> 6) & 1);
         }
 
-        set => Flags |= (byte)((value & 1) << 6);
+        set
+        {
+            Flags = (byte)(Flags & ~(1 << 6));
+            Flags |= (byte)((value & 1) << 6);
+        }
     }
 
     public byte V
@@ -59,16 +67,21 @@ public class Status
         get
         {
             _toggle.Reset();
-            return (byte)((Flags >> 7) & 1);
+            var result = (byte)((Flags >> 7) & 1);
+            V = 0;
+            return result;
         }
 
-        set => Flags |= (byte)((value & 1) << 7);
+        set
+        {
+            Flags = (byte)(Flags & ~(1 << 7));
+            Flags |= (byte)((value & 1) << 7);
+        }
     }
 
     public void Write(byte value)
     {
         _ioBus.Write(value);
-        Flags = value;
     }
 
     public byte Read()
