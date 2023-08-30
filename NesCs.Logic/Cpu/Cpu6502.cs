@@ -90,15 +90,17 @@ public partial class Cpu6502 : IClockHook
 
         if (! _clock.Aborted)
         {
-            var instruction = _instructions[ReadByteFromProgram()];
-
             if (_callbacks.ContainsKey(PC))
             {
-                _callbacks[PC].Invoke(this, instruction);
+                _callbacks[PC].Invoke(this, _instructions[PeekMemory(PC)]);
             }
 
-            _tracer.Display(instruction, instruction.PeekOperands(this), PC, A, X, Y, P, S, _previousCycles);
-            instruction.Execute(this);
+            if (! _clock.Aborted)
+            {
+                var instruction = _instructions[ReadByteFromProgram()];
+                _tracer.Display(instruction, instruction.PeekOperands(this), PC, A, X, Y, P, S, _previousCycles);
+                instruction.Execute(this);
+            }
         }
     }
 
