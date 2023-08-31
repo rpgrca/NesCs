@@ -39,7 +39,7 @@ public class ProcessorFileFilter
                 continue;
             }
 
-            var textWithoutComma = text.TrimEnd(',');
+            var textWithoutComma = text.TrimStart('[').TrimEnd(',').TrimEnd(']');
             var sampleCpu = JsonSerializer.Deserialize<SampleCpu>(textWithoutComma, options);
             var flagDifference = sampleCpu.Initial.P ^ sampleCpu.Final.P;
             if (! dictionary.ContainsKey(flagDifference))
