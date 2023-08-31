@@ -25,14 +25,12 @@ internal class IllegalReadIgnoreOpcode1C : IInstruction
         cpu.ReadyForNextInstruction();
         var high = cpu.ReadByteFromProgram();
 
-        int address = 0;
-
-        address = high << 8 | low + cpu.ReadByteFromRegisterX();
+        var address = high << 8 | (low + cpu.ReadByteFromRegisterX()); // TODO: Wrap 0xff
         _ = cpu.ReadByteFromMemory(address);
 
         if (low + cpu.ReadByteFromRegisterX() > 255)
         {
-            address = high << 8 | ((low + cpu.ReadByteFromRegisterX()) & 255);
+            address = (high << 8 | low) + cpu.ReadByteFromRegisterX(); // TODO: Wrap 0xffff
         }
 
         _ = cpu.ReadByteFromMemory(address);
