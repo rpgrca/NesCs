@@ -125,7 +125,8 @@ public class NopOperationsInCpuMust
 
     public static IEnumerable<object[]> Opcode7CJsonFeeder()
     {
-        /*   0  */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "7c 1", "initial": {"pc": 61623, "s": 193, "a": 227, "x": 233, "y": 229, "p": 124, "ram": [[42284, 49], [42540, 207], [61625, 165], [61624, 67], [61623, 124]]}, "final": {"pc": 61626, "s": 193, "a": 227, "x": 233, "y": 229, "p": 124, "ram": [[42284, 49], [42540, 207], [61625, 165], [61624, 67], [61623, 124]]}, "cycles": [[61623, 124, "read"],[61624, 67, "read"],[61625, 165, "read"],[42284, 49, "read"],[42540, 207, "read"]]}""") };
+        /*   0         */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "7c 1", "initial": {"pc": 61623, "s": 193, "a": 227, "x": 233, "y": 229, "p": 124, "ram": [[42284, 49], [42540, 207], [61625, 165], [61624, 67], [61623, 124]]}, "final": {"pc": 61626, "s": 193, "a": 227, "x": 233, "y": 229, "p": 124, "ram": [[42284, 49], [42540, 207], [61625, 165], [61624, 67], [61623, 124]]}, "cycles": [[61623, 124, "read"],[61624, 67, "read"],[61625, 165, "read"],[42284, 49, "read"],[42540, 207, "read"]]}""") };
+        /* 0xffff wrap */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "7c 9988", "initial": {"pc": 5390, "s": 30, "a": 139, "x": 201, "y": 136, "p": 242, "ram": [[25, 39], [65305, 48], [5392, 255], [5391, 80], [5390, 124]]}, "final": {"pc": 5393, "s": 30, "a": 139, "x": 201, "y": 136, "p": 242, "ram": [[25, 39], [65305, 48], [5392, 255], [5391, 80], [5390, 124]]}, "cycles": [[5390, 124, "read"],[5391, 80, "read"],[5392, 255, "read"],[65305, 48, "read"],[25, 39, "read"]]}""") };
     }
 
     public static IEnumerable<object[]> Opcode80JsonFeeder()
