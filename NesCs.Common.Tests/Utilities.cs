@@ -1,7 +1,7 @@
 using Xunit;
 using NesCs.Logic.Cpu;
 using NesCs.Logic.Ram;
-using NesCs.Logic;
+using NesCs.Logic.Tracing;
 
 namespace NesCs.Common.Tests;
 

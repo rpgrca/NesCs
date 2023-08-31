@@ -1,7 +1,7 @@
 using NesCs.Logic.Cpu;
 using NesCs.Logic.Cpu.Instructions;
 
-namespace NesCs.Logic;
+namespace NesCs.Logic.Tracing;
 
 public interface ITracer
 {

@@ -1,6 +1,7 @@
-using NesCs.Logic;
 using NesCs.Logic.Cpu;
 using NesCs.Logic.Cpu.Instructions;
+
+namespace NesCs.Logic.Tracing;
 
 public class Vm6502DebuggerDisplay : ITracer
 {

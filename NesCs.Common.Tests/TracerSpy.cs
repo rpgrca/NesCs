@@ -1,6 +1,6 @@
-using NesCs.Logic;
 using NesCs.Logic.Cpu;
 using NesCs.Logic.Cpu.Instructions;
+using NesCs.Logic.Tracing;
 
 public class TracerSpy : ITracer
 {

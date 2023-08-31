@@ -1,6 +1,7 @@
 using NesCs.Logic.Cpu.Clocking;
 using NesCs.Logic.Cpu.Instructions;
 using NesCs.Logic.Ram;
+using NesCs.Logic.Tracing;
 
 namespace NesCs.Logic.Cpu;
 
