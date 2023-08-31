@@ -27,19 +27,15 @@ internal class IllegalReadIgnoreOpcode1C : IInstruction
 
         int address = 0;
 
-#if NESDEV
-        // TODO: Breaks Tom's tests
         address = high << 8 | low + cpu.ReadByteFromRegisterX();
         _ = cpu.ReadByteFromMemory(address);
 
         if (low + cpu.ReadByteFromRegisterX() > 255)
         {
-#endif
             address = high << 8 | ((low + cpu.ReadByteFromRegisterX()) & 255);
-            _ = cpu.ReadByteFromMemory(address);
-#if NESDEV
         }
-#endif
+
+        _ = cpu.ReadByteFromMemory(address);
 
         cpu.ReadyForNextInstruction();
     }

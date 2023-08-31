@@ -16,16 +16,12 @@ internal class IllegalReadIgnoreOpcode0C : IInstruction
     public void Execute(Cpu6502 cpu)
     {
         cpu.ReadyForNextInstruction();
-        _ = cpu.ReadByteFromMemory(cpu.ReadByteFromProgramCounter());
+        var low = cpu.ReadByteFromMemory(cpu.ReadByteFromProgramCounter());
 
         cpu.ReadyForNextInstruction();
-        _ = cpu.ReadByteFromMemory(cpu.ReadByteFromProgramCounter());
-
-#if NESDEV
-        // TODO: Breaks Tom tests but fits golden log
-        _ = cpu.ReadByteFromMemory(cpu.ReadByteFromProgramCounter());
-#endif
+        var high = cpu.ReadByteFromMemory(cpu.ReadByteFromProgramCounter());
 
         cpu.ReadyForNextInstruction();
+        _ = cpu.ReadByteFromMemory(high << 8 | low);
     }
 }

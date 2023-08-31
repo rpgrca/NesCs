@@ -32,9 +32,4 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\1.Branch_Basics.nes" />
   </ItemGroup>
-
-  <!--<PropertyGroup>
-    <DefineConstants>NESDEV</DefineConstants>
-  </PropertyGroup>-->
-
 </Project>
