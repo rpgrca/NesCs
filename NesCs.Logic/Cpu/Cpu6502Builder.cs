@@ -325,7 +325,7 @@ public partial class Cpu6502
         {
             //_instructions[0x02] R
             _instructions[0x03] = new IllegalInstruction(0x03, "SLO", As.IndirectXIndexed.Memory, Doing.ShiftLeft.Memory, Doing.Or);
-            _instructions[0x04] = new IllegalReadIgnoreOpcode04();
+            _instructions[0x04] = new IllegalInstruction(0x04, "IGN", As.ZeroPage.Memory, Doing.Nop, Doing.Nop);
             _instructions[0x07] = new IllegalInstruction(0x07, "SLO", As.ZeroPage.Memory, Doing.ShiftLeft.Memory, Doing.Or);
             //_instructions[0x0B] R
             _instructions[0x0C] = new IllegalInstruction(0x0C, "IGN", As.Absolute.Memory, Doing.Nop, Doing.Nop);
@@ -353,7 +353,7 @@ public partial class Cpu6502
             _instructions[0x3F] = new IllegalInstruction(0x3F, "RLA", As.AbsoluteXIndexed.DoubleMemoryRead, Doing.RotateLeft.OnMemory, Doing.And.Accumulator);
             //_instructions[0x42] R
             _instructions[0x43] = new IllegalInstruction(0x43, "SRE", As.IndirectXIndexed.Memory, Doing.ShiftRight.Memory, Doing.Xor);
-            _instructions[0x44] = new IllegalReadIgnoreOpcode44();
+            _instructions[0x44] = new IllegalInstruction(0x44, "IGN", As.ZeroPage.Memory, Doing.Nop, Doing.Nop);
             _instructions[0x47] = new IllegalInstruction(0x47, "SRE", As.ZeroPage.Memory, Doing.ShiftRight.Memory, Doing.Xor);
             //_instructions[0x4B] R
             _instructions[0x4F] = new IllegalInstruction(0x4F, "SRE", As.Absolute.Memory, Doing.ShiftRight.Memory, Doing.Xor);
@@ -367,7 +367,7 @@ public partial class Cpu6502
             _instructions[0x5F] = new IllegalInstruction(0x5F, "SRE", As.AbsoluteXIndexed.DoubleMemoryRead, Doing.ShiftRight.Memory, Doing.Xor);
             //_instructions[0x62] R
             _instructions[0x63] = new IllegalInstruction(0x63, "RRA", As.IndirectXIndexed.Memory, Doing.RotateRight.OnMemory, Doing.AddWithCarry);
-            _instructions[0x64] = new IllegalReadIgnoreOpcode64();
+            _instructions[0x64] = new IllegalInstruction(0x64, "IGN", As.ZeroPage.Memory, Doing.Nop, Doing.Nop);
             _instructions[0x67] = new IllegalInstruction(0x67, "RRA", As.ZeroPage.Memory, Doing.RotateRight.OnMemory, Doing.AddWithCarry);
             //_instructions[0x6B] R
             _instructions[0x6F] = new IllegalInstruction(0x6F, "RRA", As.Absolute.Memory, Doing.RotateRight.OnMemory, Doing.AddWithCarry);
