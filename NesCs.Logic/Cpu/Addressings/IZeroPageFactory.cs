@@ -1,6 +1,6 @@
 namespace NesCs.Logic.Cpu.Addressings;
 
-public interface IZeroPageFactory
+internal interface IZeroPageFactory
 {
     IAddressing Memory { get; }
     IAddressing Y { get; }

@@ -1,6 +1,6 @@
 namespace NesCs.Logic.Cpu.Addressings;
 
-public interface IAbsoluteFactory
+internal interface IAbsoluteFactory
 {
     IAddressing Y { get; }
     IAddressing X { get; }

@@ -1,6 +1,6 @@
 namespace NesCs.Logic.Cpu.Addressings;
 
-public interface IIndirectXIndexedFactory
+internal interface IIndirectXIndexedFactory
 {
     IAddressing Accumulator { get; }
     IAddressing Memory { get; }

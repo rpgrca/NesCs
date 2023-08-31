@@ -1,6 +1,6 @@
 namespace NesCs.Logic.Cpu.Addressings;
 
-public interface IImpliedFactory
+internal interface IImpliedFactory
 {
     IAddressing X { get; }
     IAddressing Y { get; }
