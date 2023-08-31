@@ -2,6 +2,8 @@ using NesCs.Logic;
 using NesCs.Logic.Cpu;
 using NesCs.Logic.Cpu.Instructions;
 
+namespace NesCs.Common.Tests;
+
 public class DisplayTracerSpy : ITracer
 {
     public int Opcode { get; private set; } = 0;

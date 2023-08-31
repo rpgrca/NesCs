@@ -1,6 +1,6 @@
 using NesCs.Logic.Ram;
 
-namespace NesCs.Logic.Cpu;
+namespace NesCs.Common.Tests;
 
 public class DummyRamController : IRamController
 {
