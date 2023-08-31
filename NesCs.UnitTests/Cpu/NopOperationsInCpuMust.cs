@@ -36,7 +36,7 @@ public class NopOperationsInCpuMust
     public void BeExecutedCorrectly(SampleCpu sampleCpu)
     {
         var trace = new List<(int, byte, string)>();
-        var sut = Utilities.CreateSubjectUnderTestFromSample(sampleCpu.Initial, trace);
+        var sut = Utilities.CreateSubjectUnderTestForProcessorTests(sampleCpu.Initial, trace);
         sut.Step();
 
         Utilities.Equal(sampleCpu.Final, sut);
