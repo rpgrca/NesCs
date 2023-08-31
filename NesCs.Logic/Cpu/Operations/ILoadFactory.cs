@@ -1,6 +1,6 @@
 namespace NesCs.Logic.Cpu.Operations;
 
-public interface ILoadFactory
+internal interface ILoadFactory
 {
     IOperation X { get; }
     IOperation Y { get; }

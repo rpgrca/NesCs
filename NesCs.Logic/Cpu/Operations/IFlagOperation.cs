@@ -1,6 +1,6 @@
 namespace NesCs.Logic.Cpu.Operations;
 
-public interface IFlagOperation
+internal interface IFlagOperation
 {
     IFlagFactory Minus { get; }
     IFlagFactory Plus { get; }

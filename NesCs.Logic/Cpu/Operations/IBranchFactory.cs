@@ -1,6 +1,6 @@
 namespace NesCs.Logic.Cpu.Operations;
 
-public interface IBranchFactory
+internal interface IBranchFactory
 {
     IOperation WhenNegative { get; }
     IOperation WhenPositive { get; }

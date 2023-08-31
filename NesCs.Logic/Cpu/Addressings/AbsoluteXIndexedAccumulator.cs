@@ -3,7 +3,7 @@ using System.Diagnostics;
 namespace NesCs.Logic.Cpu.Addressings;
 
 [DebuggerDisplay("{((IDebuggerDisplay)this).Display}")]
-public class AbsoluteXIndexedAccumulator : IAddressing
+internal class AbsoluteXIndexedAccumulator : IAddressing
 {
     string IDebuggerDisplay.Display => "abx (acc)";
 

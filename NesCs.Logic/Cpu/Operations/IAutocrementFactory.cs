@@ -1,6 +1,6 @@
 namespace NesCs.Logic.Cpu.Operations;
 
-public interface IAutocrementFactory
+internal interface IAutocrementFactory
 {
     IOperation X { get; }
     IOperation Y { get; }
