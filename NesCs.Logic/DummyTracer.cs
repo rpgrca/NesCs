@@ -1,6 +1,7 @@
+using NesCs.Logic.Cpu;
 using NesCs.Logic.Cpu.Instructions;
 
-namespace NesCs.Logic.Cpu;
+namespace NesCs.Logic;
 
 public class DummyTracer : ITracer
 {

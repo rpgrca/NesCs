@@ -1,6 +1,6 @@
 using NesCs.Logic.Ram;
 
-namespace NesCs.Logic.Cpu;
+namespace NesCs.Logic.Cpu.Clocking;
 
 public interface IClock
 {

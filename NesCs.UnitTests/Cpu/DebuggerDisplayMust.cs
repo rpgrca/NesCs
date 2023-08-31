@@ -7,6 +7,5 @@ public class DebuggerDisplayMust
     [Fact]
     public void Test1()
     {
-
     }
 }

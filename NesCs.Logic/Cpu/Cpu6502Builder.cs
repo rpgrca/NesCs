@@ -1,3 +1,4 @@
+using NesCs.Logic.Cpu.Clocking;
 using NesCs.Logic.Cpu.Instructions;
 using NesCs.Logic.Ram;
 

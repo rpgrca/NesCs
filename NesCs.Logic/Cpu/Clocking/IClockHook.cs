@@ -1,6 +1,4 @@
-using NesCs.Logic.Cpu;
-
-namespace NesCs.Logic.Ram;
+namespace NesCs.Logic.Cpu.Clocking;
 
 public interface IClockHook
 {

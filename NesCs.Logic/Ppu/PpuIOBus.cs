@@ -1,4 +1,4 @@
-using NesCs.Logic.Cpu;
+using NesCs.Logic.Cpu.Clocking;
 
 namespace NesCs.Logic.Ppu;
 
