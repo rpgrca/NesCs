@@ -1,6 +1,6 @@
 namespace NesCs.Logic.Cpu.Operations;
 
-public class Autocrement : IOperation
+internal class Autocrement : IOperation
 {
     private readonly Func<Cpu6502, int, byte, byte> _getValue;
     private readonly Action<Cpu6502, int, byte> _setValue;

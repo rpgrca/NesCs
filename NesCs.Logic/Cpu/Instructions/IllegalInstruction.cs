@@ -3,7 +3,7 @@ using NesCs.Logic.Cpu.Operations;
 
 namespace NesCs.Logic.Cpu.Instructions;
 
-public class IllegalInstruction : IInstruction
+internal class IllegalInstruction : IInstruction
 {
     protected readonly IAddressing _addressing;
     protected readonly IOperation _first;

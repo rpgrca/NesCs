@@ -1,6 +1,6 @@
 namespace NesCs.Logic.Cpu.Operations;
 
-public class ShiftLeft : IOperation
+internal class ShiftLeft : IOperation
 {
     private readonly Action<Cpu6502, int, byte> _preemptiveWrite;
     private readonly Action<Cpu6502, int, byte> _setValue;

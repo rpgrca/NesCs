@@ -1,6 +1,6 @@
 namespace NesCs.Logic.Cpu.Addressings;
 
-public class ZeroPageXIndexedFactory : IZeroPageXIndexedFactory
+internal class ZeroPageXIndexedFactory : IZeroPageXIndexedFactory
 {
     public IAddressing Memory { get; } =
         new ZeroPageXIndexed((c, a) => c.ReadByteFromMemory(a));

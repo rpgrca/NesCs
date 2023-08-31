@@ -3,7 +3,7 @@ using System.Diagnostics;
 namespace NesCs.Logic.Cpu.Instructions;
 
 [DebuggerDisplay("{((IDebuggerDisplay)this).Display}")]
-public class PullProcessorStatusOpcode28 : IInstruction
+internal class PullProcessorStatusOpcode28 : IInstruction
 {
     public string Name => "PLP";
 

@@ -3,7 +3,7 @@ using System.Diagnostics;
 namespace NesCs.Logic.Cpu.Addressings;
 
 [DebuggerDisplay("{((IDebuggerDisplay)this).Display}")]
-public class AbsoluteXIndexed : IAddressing
+internal class AbsoluteXIndexed : IAddressing
 {
     private readonly Action<Cpu6502, int> _readWhenInSamePage;
     private readonly Func<Cpu6502, int, byte, byte> _readWhenInDifferentPage;

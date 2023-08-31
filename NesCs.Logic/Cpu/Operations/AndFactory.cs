@@ -1,6 +1,6 @@
 namespace NesCs.Logic.Cpu.Operations;
 
-public class AndFactory : IAndFactory
+internal class AndFactory : IAndFactory
 {
     public IOperation Memory =>
         new And((c, a, v) => c.WriteByteToMemory(a, v), (c, v) => { });

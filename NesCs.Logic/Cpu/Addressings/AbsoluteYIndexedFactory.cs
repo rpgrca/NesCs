@@ -1,6 +1,6 @@
 namespace NesCs.Logic.Cpu.Addressings;
 
-public class AbsoluteYIndexedFactory : IAbsoluteYIndexedFactory
+internal class AbsoluteYIndexedFactory : IAbsoluteYIndexedFactory
 {
     public IAddressing DoubleMemoryRead { get; } = new AbsoluteYIndexedDouble();
 

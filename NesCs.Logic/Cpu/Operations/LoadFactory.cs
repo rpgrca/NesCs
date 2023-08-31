@@ -1,6 +1,6 @@
 namespace NesCs.Logic.Cpu.Operations;
 
-public class LoadFactory : ILoadFactory
+internal class LoadFactory : ILoadFactory
 {
     public IOperation X => new Load((c, v) => c.SetValueToRegisterX(v));
 

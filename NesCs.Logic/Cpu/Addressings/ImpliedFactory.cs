@@ -1,6 +1,6 @@
 namespace NesCs.Logic.Cpu.Addressings;
 
-public class ImpliedFactory : IImpliedFactory
+internal class ImpliedFactory : IImpliedFactory
 {
     public IAddressing X { get; } = new Implied((c, _, _) => c.ReadByteFromRegisterX());
 

@@ -3,7 +3,7 @@ using System.Diagnostics;
 namespace NesCs.Logic.Cpu.Instructions;
 
 [DebuggerDisplay("{((IDebuggerDisplay)this).Display}")]
-public class ReturnFromSubroutineOpcode60 : IInstruction
+internal class ReturnFromSubroutineOpcode60 : IInstruction
 {
     public string Name => "RTS";
 

@@ -1,6 +1,6 @@
 namespace NesCs.Logic.Cpu.Operations;
 
-public class RotateFactory : IRotateFactory
+internal class RotateFactory : IRotateFactory
 {
     private readonly Func<Action<Cpu6502, int, byte>, Action<Cpu6502, int, byte>, IOperation> _creator;
 

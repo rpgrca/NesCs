@@ -1,6 +1,6 @@
 namespace NesCs.Logic.Cpu.Operations;
 
-public class RotateRight : IOperation
+internal class RotateRight : IOperation
 {
     private readonly Action<Cpu6502, int, byte> _extraWrite;
     private readonly Action<Cpu6502, int, byte> _setValue;

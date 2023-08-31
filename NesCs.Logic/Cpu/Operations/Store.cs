@@ -1,6 +1,6 @@
 namespace NesCs.Logic.Cpu.Operations;
 
-public class Store : IOperation
+internal class Store : IOperation
 {
     private readonly Action<Cpu6502, int, byte> _storer;
 

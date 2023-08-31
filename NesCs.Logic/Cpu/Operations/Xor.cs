@@ -1,6 +1,6 @@
 namespace NesCs.Logic.Cpu.Operations;
 
-public class Xor : IOperation
+internal class Xor : IOperation
 {
     public (int, byte) Execute(Cpu6502 cpu, byte value, int address)
     {

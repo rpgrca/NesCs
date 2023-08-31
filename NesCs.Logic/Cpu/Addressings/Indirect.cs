@@ -3,7 +3,7 @@ using System.Diagnostics;
 namespace NesCs.Logic.Cpu.Addressings;
 
 [DebuggerDisplay("{((IDebuggerDisplay)this).Display}")]
-public class Indirect : IAddressing
+internal class Indirect : IAddressing
 {
     string IDebuggerDisplay.Display => "(ind)";
 

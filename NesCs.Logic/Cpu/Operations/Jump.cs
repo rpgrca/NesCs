@@ -1,6 +1,6 @@
 namespace NesCs.Logic.Cpu.Operations;
 
-public class Jump : IOperation
+internal class Jump : IOperation
 {
     public (int, byte) Execute(Cpu6502 cpu, byte value, int address)
     {

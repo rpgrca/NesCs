@@ -5,7 +5,7 @@ using NesCs.Logic.Cpu.Operations;
 namespace NesCs.Logic.Cpu.Instructions;
 
 [DebuggerDisplay("{((IDebuggerDisplay)this).Display}")]
-public class Instruction : IInstruction
+internal class Instruction : IInstruction
 {
     protected readonly IAddressing _addressing;
     protected readonly IOperation _operation;

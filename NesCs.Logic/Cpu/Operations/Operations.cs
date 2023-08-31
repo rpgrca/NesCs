@@ -1,8 +1,6 @@
-using NesCs.Logic.Cpu.Instructions;
-
 namespace NesCs.Logic.Cpu.Operations;
 
-public class Operations
+internal class Operations
 {
     public IOperation AddWithCarry { get; }
     public IOperation BitTest { get; }

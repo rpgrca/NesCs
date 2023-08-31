@@ -1,6 +1,6 @@
 namespace NesCs.Logic.Cpu.Operations;
 
-public class Compare : IOperation
+internal class Compare : IOperation
 {
     private readonly Func<Cpu6502, byte> _reader;
 

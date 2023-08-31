@@ -1,6 +1,6 @@
 namespace NesCs.Logic.Cpu.Operations;
 
-public class FlagOperation : IFlagOperation
+internal class FlagOperation : IFlagOperation
 {
     public IFlagFactory Minus { get; }
     public IFlagFactory Plus { get; }

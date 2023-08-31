@@ -1,6 +1,6 @@
 namespace NesCs.Logic.Cpu.Addressings;
 
-public class IndirectXIndexedFactory : IIndirectXIndexedFactory
+internal class IndirectXIndexedFactory : IIndirectXIndexedFactory
 {
     public IAddressing Accumulator { get; } = new IndirectXIndexed((c, _) => c.ReadByteFromAccumulator());
 

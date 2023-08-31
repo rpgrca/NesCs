@@ -1,6 +1,6 @@
 namespace NesCs.Logic.Cpu.Operations;
 
-public class AutocrementFactory : IAutocrementFactory
+internal class AutocrementFactory : IAutocrementFactory
 {
     private readonly Func<byte, byte> _modifier;
 

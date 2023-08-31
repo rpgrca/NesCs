@@ -1,6 +1,6 @@
 namespace NesCs.Logic.Cpu.Operations;
 
-public class CompareFactory : ICompareFactory
+internal class CompareFactory : ICompareFactory
 {
     public IOperation X => new Compare(c => c.ReadByteFromRegisterX());
 

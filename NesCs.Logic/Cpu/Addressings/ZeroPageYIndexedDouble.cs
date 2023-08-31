@@ -3,7 +3,7 @@ using System.Diagnostics;
 namespace NesCs.Logic.Cpu.Addressings;
 
 [DebuggerDisplay("{((IDebuggerDisplay)this).Display}")]
-public class ZeroPageYIndexedDouble : IAddressing
+internal class ZeroPageYIndexedDouble : IAddressing
 {
     string IDebuggerDisplay.Display => "zpy";
 

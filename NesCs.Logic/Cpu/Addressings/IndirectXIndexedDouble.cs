@@ -3,7 +3,7 @@ using System.Diagnostics;
 namespace NesCs.Logic.Cpu.Addressings;
 
 [DebuggerDisplay("{((IDebuggerDisplay).Display) (dbl)}")]
-public class IndirectXIndexedDouble : IAddressing
+internal class IndirectXIndexedDouble : IAddressing
 {
     string IDebuggerDisplay.Display => "(izx)";
 

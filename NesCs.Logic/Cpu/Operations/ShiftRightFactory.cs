@@ -1,6 +1,6 @@
 namespace NesCs.Logic.Cpu.Operations;
 
-public class ShiftRightFactory : IShiftRightFactory
+internal class ShiftRightFactory : IShiftRightFactory
 {
     public IOperation Memory =>
         new ShiftRight((c, a, v) => c.WriteByteToMemory(a, v), (c, a, v) => c.WriteByteToMemory(a, v));

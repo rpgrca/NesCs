@@ -1,6 +1,6 @@
 namespace NesCs.Logic.Cpu.Instructions;
 
-public class NotImplementedInstruction : IInstruction
+internal class NotImplementedInstruction : IInstruction
 {
     private readonly int _opcode;
     private readonly string _message;

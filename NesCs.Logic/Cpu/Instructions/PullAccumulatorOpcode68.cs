@@ -3,7 +3,7 @@ using System.Diagnostics;
 namespace NesCs.Logic.Cpu.Instructions;
 
 [DebuggerDisplay("{((IDebuggerDisplay)this).Display}")]
-public class PullAccumulatorOpcode68 : IInstruction
+internal class PullAccumulatorOpcode68 : IInstruction
 {
     public string Name => "PLA";
 

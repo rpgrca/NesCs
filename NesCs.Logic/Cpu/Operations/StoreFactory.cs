@@ -1,6 +1,6 @@
 namespace NesCs.Logic.Cpu.Operations;
 
-public class StoreFactory : IStoreFactory
+internal class StoreFactory : IStoreFactory
 {
     public IOperation Memory { get; } = new Store((c, a, v) => c.WriteByteToMemory(a, v));
 

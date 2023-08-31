@@ -3,7 +3,7 @@ using System.Diagnostics;
 namespace NesCs.Logic.Cpu.Addressings;
 
 [DebuggerDisplay("{((IDebuggerDisplay)this).Display}")]
-public class Implied : IAddressing
+internal class Implied : IAddressing
 {
     private readonly Func<Cpu6502, int, byte, byte> _reader;
 

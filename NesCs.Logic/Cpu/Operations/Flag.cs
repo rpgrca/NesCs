@@ -1,6 +1,6 @@
 namespace NesCs.Logic.Cpu.Operations;
 
-public class Flag : IOperation
+internal class Flag : IOperation
 {
     private readonly Action<Cpu6502> _action;
 

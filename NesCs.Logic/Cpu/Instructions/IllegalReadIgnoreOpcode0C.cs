@@ -3,7 +3,7 @@ using System.Diagnostics;
 namespace NesCs.Logic.Cpu.Instructions;
 
 [DebuggerDisplay("{((IDebuggerDisplay)this).Display}")]
-public class IllegalReadIgnoreOpcode0C : IInstruction
+internal class IllegalReadIgnoreOpcode0C : IInstruction
 {
     public string Name => "IGN";
 

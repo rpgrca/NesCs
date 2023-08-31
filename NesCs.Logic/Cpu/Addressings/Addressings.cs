@@ -1,6 +1,6 @@
 namespace NesCs.Logic.Cpu.Addressings;
 
-public class Addressings
+internal class Addressings
 {
     public IAddressing Accumulator { get; }
     public IAbsoluteFactory Absolute { get; }

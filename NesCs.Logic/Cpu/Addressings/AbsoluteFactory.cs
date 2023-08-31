@@ -1,6 +1,6 @@
 namespace NesCs.Logic.Cpu.Addressings;
 
-public class AbsoluteFactory : IAbsoluteFactory
+internal class AbsoluteFactory : IAbsoluteFactory
 {
     public IAddressing Y { get; } = new Absolute((c, _) => c.ReadByteFromRegisterY());
 

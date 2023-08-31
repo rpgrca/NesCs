@@ -1,6 +1,6 @@
 namespace NesCs.Logic.Cpu.Operations;
 
-public class Transfer : IOperation
+internal class Transfer : IOperation
 {
     private readonly Action<Cpu6502, int, byte> _storer;
 

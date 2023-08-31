@@ -3,7 +3,7 @@ using System.Diagnostics;
 namespace NesCs.Logic.Cpu.Instructions;
 
 [DebuggerDisplay("{((IDebuggerDisplay)this).Display}")]
-public class JumpToSubroutineOpcode20 : IInstruction
+internal class JumpToSubroutineOpcode20 : IInstruction
 {
     public string Name => "JSR";
 

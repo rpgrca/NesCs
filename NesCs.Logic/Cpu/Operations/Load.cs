@@ -1,6 +1,6 @@
 namespace NesCs.Logic.Cpu.Operations;
 
-public class Load : IOperation
+internal class Load : IOperation
 {
     private readonly Action<Cpu6502, byte> _loader;
 

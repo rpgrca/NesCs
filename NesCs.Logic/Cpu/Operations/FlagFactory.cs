@@ -1,6 +1,6 @@
 namespace NesCs.Logic.Cpu.Operations;
 
-public class FlagFactory : IFlagFactory
+internal class FlagFactory : IFlagFactory
 {
     public IOperation D { get; }
     public IOperation V { get; }

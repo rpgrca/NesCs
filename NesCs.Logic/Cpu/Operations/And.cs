@@ -1,6 +1,6 @@
 namespace NesCs.Logic.Cpu.Operations;
 
-public class And : IOperation
+internal class And : IOperation
 {
     private readonly Action<Cpu6502, int, byte> _saver;
     private readonly Action<Cpu6502, byte> _flagCheck;

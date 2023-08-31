@@ -3,7 +3,7 @@ using System.Diagnostics;
 namespace NesCs.Logic.Cpu.Instructions;
 
 [DebuggerDisplay("{((IDebuggerDisplay)this).Display}")]
-public class PushAccumulatorOpcode48 : IInstruction
+internal class PushAccumulatorOpcode48 : IInstruction
 {
     public string Name => "PHA";
 

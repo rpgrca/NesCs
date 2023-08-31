@@ -3,7 +3,7 @@ using System.Diagnostics;
 namespace NesCs.Logic.Cpu.Instructions;
 
 [DebuggerDisplay("{((IDebuggerDisplay)this).Display}")]
-public class ReturnFromInterruptOpcode40 : IInstruction
+internal class ReturnFromInterruptOpcode40 : IInstruction
 {
     public string Name => "RTI";
 

@@ -1,6 +1,6 @@
 namespace NesCs.Logic.Cpu.Instructions;
 
-public class IllegalReadIgnoreOpcode64 : IllegalReadIgnoreOpcode04
+internal class IllegalReadIgnoreOpcode64 : IllegalReadIgnoreOpcode04
 {
     public override string Name => "IGN";
 

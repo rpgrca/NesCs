@@ -1,8 +1,6 @@
-using System.Dynamic;
-
 namespace NesCs.Logic.Cpu.Addressings;
 
-public class AbsoluteXIndexedFactory : IAbsoluteXIndexedFactory
+internal class AbsoluteXIndexedFactory : IAbsoluteXIndexedFactory
 {
     public IAddressing DoubleMemoryRead { get; } = new AbsoluteXIndexed((c, a, _) => c.ReadByteFromMemory(a), (c, a) => c.ReadByteFromMemory(a));
 

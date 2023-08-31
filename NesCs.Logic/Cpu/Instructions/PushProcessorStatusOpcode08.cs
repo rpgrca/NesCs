@@ -3,7 +3,7 @@ using System.Diagnostics;
 namespace NesCs.Logic.Cpu.Instructions;
 
 [DebuggerDisplay("{((IDebuggerDisplay)this).Display}")]
-public class PushProcessorStatusOpcode08 : IInstruction
+internal class PushProcessorStatusOpcode08 : IInstruction
 {
     public string Name => "PHP";
 

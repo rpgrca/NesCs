@@ -1,6 +1,6 @@
 namespace NesCs.Logic.Cpu.Operations;
 
-public class SubtractWithCarry : IOperation
+internal class SubtractWithCarry : IOperation
 {
     (int, byte) IOperation.Execute(Cpu6502 cpu, byte value, int address)
     {
