@@ -29,7 +29,7 @@ internal class IllegalReadIgnoreOpcodeDC : IInstruction
 
         if (low + cpu.ReadByteFromRegisterX() > 255)
         {
-            address = ((high << 8) | low) + cpu.ReadByteFromRegisterX();
+            address = (((high << 8) | low) + cpu.ReadByteFromRegisterX()) & 0xffff;
         }
 
         _ = cpu.ReadByteFromMemory(address);
