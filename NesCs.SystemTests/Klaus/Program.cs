@@ -1,4 +1,6 @@
-﻿public class Program
+﻿using NesCs.Logic.Tracing;
+
+public class Program
 {
     public static void Main(string[] args)
     {

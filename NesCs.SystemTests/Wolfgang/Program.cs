@@ -1,4 +1,6 @@
-﻿namespace NesCs.SystemTests.C64TestSuite;
+﻿using NesCs.Logic.Tracing;
+
+namespace NesCs.SystemTests.C64TestSuite;
 
 // http://www.softwolves.com/arkiv/cbm-hackers/7/7114.html
 public class Program
