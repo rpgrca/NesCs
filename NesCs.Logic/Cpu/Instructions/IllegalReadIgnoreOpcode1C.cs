@@ -30,7 +30,7 @@ internal class IllegalReadIgnoreOpcode1C : IInstruction
 
         if (low + cpu.ReadByteFromRegisterX() > 255)
         {
-            address = (high << 8 | low) + cpu.ReadByteFromRegisterX(); // TODO: Wrap 0xffff
+            address = ((high << 8 | low) + cpu.ReadByteFromRegisterX()) & 0xffff;
         }
 
         _ = cpu.ReadByteFromMemory(address);
