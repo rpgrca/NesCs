@@ -5,7 +5,7 @@ namespace NesCs.Logic.Cpu.Addressings;
 [DebuggerDisplay("{((IDebuggerDisplay)this).Display}")]
 public class Relative : IAddressing
 {
-    string IDebuggerDisplay.Display => "rel";
+    string IDebuggerDisplay.Display => "(rel)";
 
     public byte[] PeekOperands(Cpu6502 cpu)
     {

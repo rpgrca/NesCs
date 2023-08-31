@@ -7,7 +7,7 @@ internal class Implied : IAddressing
 {
     private readonly Func<Cpu6502, int, byte, byte> _reader;
 
-    string IDebuggerDisplay.Display => string.Empty;
+    string IDebuggerDisplay.Display => "(imp)";
 
     public byte[] PeekOperands(Cpu6502 cpu) => Array.Empty<byte>();
 

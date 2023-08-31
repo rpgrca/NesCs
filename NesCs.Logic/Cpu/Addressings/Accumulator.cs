@@ -5,7 +5,7 @@ namespace NesCs.Logic.Cpu.Addressings;
 [DebuggerDisplay("acc")]
 internal class Accumulator : IAddressing
 {
-    string IDebuggerDisplay.Display => string.Empty;
+    string IDebuggerDisplay.Display => "(imp)";
 
     public byte[] PeekOperands(Cpu6502 cpu) => Array.Empty<byte>();
 

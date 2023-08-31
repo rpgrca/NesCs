@@ -9,7 +9,7 @@ internal class JumpToSubroutineOpcode20 : IInstruction
 
     public byte Opcode => 0x20;
 
-    string IDebuggerDisplay.Display => $"{Opcode:X2} {Name} abs";
+    string IDebuggerDisplay.Display => $"{Opcode:X2} {Name} (abs)";
 
     public byte[] PeekOperands(Cpu6502 cpu)
     {

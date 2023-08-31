@@ -9,7 +9,7 @@ internal class ForceInterruptOpcode00 : IInstruction
 
     public byte Opcode => 0x00;
 
-    string IDebuggerDisplay.Display => $"{Opcode:X2} {Name}";
+    string IDebuggerDisplay.Display => $"{Opcode:X2} {Name} (imp)";
 
     public byte[] PeekOperands(Cpu6502 cpu) => Array.Empty<byte>();
 

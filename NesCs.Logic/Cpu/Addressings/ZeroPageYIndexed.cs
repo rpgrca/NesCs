@@ -7,7 +7,7 @@ internal class ZeroPageYIndexed : IAddressing
 {
     private readonly Func<Cpu6502, int, byte> _reader;
 
-    string IDebuggerDisplay.Display => "zpy";
+    string IDebuggerDisplay.Display => "(zpy)";
 
     public byte[] PeekOperands(Cpu6502 cpu)
     {
