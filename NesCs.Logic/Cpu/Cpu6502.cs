@@ -90,6 +90,7 @@ public partial class Cpu6502 : IClockHook
     {
         _previousCycles = _cycles;
 
+        if (_previousCycles == 15036) System.Diagnostics.Debugger.Break();
         if (! _clock.Aborted)
         {
             if (_callbacks.ContainsKey(PC))

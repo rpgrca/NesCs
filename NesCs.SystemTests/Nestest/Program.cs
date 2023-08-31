@@ -2,6 +2,7 @@
 using NesCs.Logic.Cpu.Clocking;
 using NesCs.Logic.Ppu;
 using NesCs.Logic.Ram;
+using NesCs.Logic.Tracing;
 
 if (args.Length < 1)
 {
@@ -50,11 +51,12 @@ if (nesFile.ProgramRomSize == 1)
 var cpu = builder
     .Running(nesFile.ProgramRom)
     .SupportingInvalidInstructions()
-    .WithProgramCounterAs(0xC000) // 0xC000 -> normal game, 0xC004 nestest batch
+    .WithProgramCounterAs(0xC000) // 0xC000 -> nesttest batch, 0xC004 normal game
     //.WithProcessorStatusAs(ProcessorStatus.X | ProcessorStatus.I) -> Not for nestest
     .WithStackPointerAt(0xFD)
     .WithClock(clock)
     .WithRamController(ramController)
+    .TracingWith(new Vm6502DebuggerDisplay())
     .WithCallback(0xC66E, (cpu, _) => {
         var h2 = cpu.PeekMemory(0x02);
         var h3 = cpu.PeekMemory(0x03);
