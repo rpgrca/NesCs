@@ -30,30 +30,6 @@ public static class Utilities
         return cpu;
     }
 
-    public static Cpu6502 CreateSubjectUnderTestForProcessorTests(SampleStatus initial, List<(int, byte, string)> trace)
-    {
-        var ramController = new RamController.Builder().WithRamSizeOf(0x10000).Build();
-        var ppu = new DummyPpu();
-        ramController.RegisterHook(ppu);
-
-        var cpu = new Cpu6502.Builder()
-            .ProgramMappedAt(initial.PC)
-            .WithRamController(ramController)
-            .WithStackPointerAt(initial.S)
-            .WithProcessorStatusAs(initial.P)
-            .WithXAs(initial.X)
-            .WithYAs(initial.Y)
-            .WithAccumulatorAs(initial.A)
-            .WithProgramCounterAs(initial.PC)
-            .RamPatchedAs(initial.RAM.Select(p => (p.Address, p.Value)).ToArray())
-            .TracingWith(new TracerSpy(trace))
-            .WithStrictCycleForProcessorTests()
-            .SupportingInvalidInstructions()
-            .Build();
-
-        return cpu;
-    }
-
     public static Cpu6502 CreateSubjectUnderTestFromSampleForOpcodes(SampleStatus initial, ITracer tracer)
     {
         var ramController = new RamController.Builder().WithRamSizeOf(0x10000).Build();
@@ -76,7 +52,6 @@ public static class Utilities
 
         return cpu;
     }
-
 
     public static void Equal(SampleStatus final, Cpu6502 sut)
     {

@@ -36,7 +36,7 @@ public class NopOperationsInCpuMust
     public void BeExecutedCorrectly(SampleCpu sampleCpu)
     {
         var trace = new List<(int, byte, string)>();
-        var sut = Utilities.CreateSubjectUnderTestForProcessorTests(sampleCpu.Initial, trace);
+        var sut = Utilities.CreateSubjectUnderTestFromSample(sampleCpu.Initial, trace);
         sut.Step();
 
         Utilities.Equal(sampleCpu.Final, sut);
@@ -65,7 +65,7 @@ public class NopOperationsInCpuMust
 
     public static IEnumerable<object[]> Opcode1CJsonFeeder()
     {
-        /* common case            */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "1c 1", "initial": {"pc": 19430, "s": 182, "a": 69, "x": 23, "y": 85, "p": 50, "ram": [[59081, 119], [19432, 230], [19431, 178], [19430, 28]]}, "final": {"pc": 19433, "s": 182, "a": 69, "x": 23, "y": 85, "p": 50, "ram": [[59081, 119], [19432, 230], [19431, 178], [19430, 28]]}, "cycles": [[19430, 28, "read"],[19431, 178, "read"],[19432, 230, "read"],[59081, 119, "read"],[59081, 119, "read"]]}""") };
+        /* common                 */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "1c 1", "initial": {"pc": 19430, "s": 182, "a": 69, "x": 23, "y": 85, "p": 50, "ram": [[59081, 119], [19432, 230], [19431, 178], [19430, 28]]}, "final": {"pc": 19433, "s": 182, "a": 69, "x": 23, "y": 85, "p": 50, "ram": [[59081, 119], [19432, 230], [19431, 178], [19430, 28]]}, "cycles": [[19430, 28, "read"],[19431, 178, "read"],[19432, 230, "read"],[59081, 119, "read"]] }""") };
         /* second address bug     */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "1c 10000", "initial": {"pc": 21044, "s": 56, "a": 75, "x": 241, "y": 33, "p": 51, "ram": [[52402, 54], [52146, 220], [21046, 203], [21045, 193], [21044, 28]]}, "final": {"pc": 21047, "s": 56, "a": 75, "x": 241, "y": 33, "p": 51, "ram": [[52402, 54], [52146, 220], [21046, 203], [21045, 193], [21044, 28]]}, "cycles": [[21044, 28, "read"],[21045, 193, "read"],[21046, 203, "read"],[52146, 220, "read"],[52402, 54, "read"]]}""") };
         /* first address 0xff bug */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "1c 9999", "initial": {"pc": 29476, "s": 62, "a": 227, "x": 241, "y": 252, "p": 50, "ram": [[64322, 178], [64066, 116], [29478, 250], [29477, 81], [29476, 28]]}, "final": {"pc": 29479, "s": 62, "a": 227, "x": 241, "y": 252, "p": 50, "ram": [[64322, 178], [64066, 116], [29478, 250], [29477, 81], [29476, 28]]}, "cycles": [[29476, 28, "read"],[29477, 81, "read"],[29478, 250, "read"],[64066, 116, "read"],[64322, 178, "read"]]}""") };
         /* second add 0xffff bug  */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "1c 9934", "initial": {"pc": 5212, "s": 63, "a": 177, "x": 243, "y": 63, "p": 57, "ram": [[170, 24], [65450, 194], [5214, 255], [5213, 183], [5212, 28]]}, "final": {"pc": 5215, "s": 63, "a": 177, "x": 243, "y": 63, "p": 57, "ram": [[170, 24], [65450, 194], [5214, 255], [5213, 183], [5212, 28]]}, "cycles": [[5212, 28, "read"],[5213, 183, "read"],[5214, 255, "read"],[65450, 194, "read"],[170, 24, "read"]]}""") };
@@ -105,7 +105,7 @@ public class NopOperationsInCpuMust
 
     public static IEnumerable<object[]> Opcode5CJsonFeeder()
     {
-        /*   0  */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "5c 1", "initial": {"pc": 47559, "s": 104, "a": 174, "x": 78, "y": 95, "p": 254, "ram": [[26038, 72], [47561, 101], [47560, 104], [47559, 92]]}, "final": {"pc": 47562, "s": 104, "a": 174, "x": 78, "y": 95, "p": 254, "ram": [[26038, 72], [47561, 101], [47560, 104], [47559, 92]]}, "cycles": [[47559, 92, "read"],[47560, 104, "read"],[47561, 101, "read"],[26038, 72, "read"],[26038, 72, "read"]]}""") };
+        /*   0  */ yield return new object[] { JsonDeserializer.Deserialize("""{ "name": "5c 1", "initial": {"pc": 47559, "s": 104, "a": 174, "x": 78, "y": 95, "p": 254, "ram": [[26038, 72], [47561, 101], [47560, 104], [47559, 92]]}, "final": {"pc": 47562, "s": 104, "a": 174, "x": 78, "y": 95, "p": 254, "ram": [[26038, 72], [47561, 101], [47560, 104], [47559, 92]]}, "cycles": [[47559, 92, "read"],[47560, 104, "read"],[47561, 101, "read"],[26038, 72, "read"]] }""") };
     }
 
     public static IEnumerable<object[]> Opcode64JsonFeeder()
