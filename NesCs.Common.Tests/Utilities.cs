@@ -55,7 +55,7 @@ public static class Utilities
 
     public static void Equal(SampleStatus final, Cpu6502 sut)
     {
-        var (p, a, pc, x, y, s) = sut.TakeSnapshot();
+        var (p, a, pc, x, y, s, _) = sut.TakeSnapshot();
         Assert.Equal(final.S, s);
         Assert.Equal(final.X, x);
         Assert.Equal(final.Y, y);

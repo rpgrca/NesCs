@@ -26,11 +26,11 @@ public class Program
         var cpu = new NesCs.Logic.Cpu.Cpu6502.Builder()
             .Running(bin[2..])
             .ProgramMappedAt(start)
+            .WithClockDivisorOf(1)
             .WithProcessorStatusAs(NesCs.Logic.Cpu.ProcessorStatus.I)
             .WithProgramCounterAs(0x0801)
             .WithStackPointerAt(0xFD)
             .SupportingInvalidInstructions()
-            .TracingWith(new Vm6502DebuggerDisplay(true))
             .RamPatchedAs(new (int, byte)[]
             {
                 (0xA003, 0x80), (0xFFFE, 0x48), (0xFFFF, 0xFF), (0x01FE, 0xFF), (0x01FF, 0x7F), // memory locations
@@ -88,7 +88,8 @@ public class Program
 
         cpu.Run();
 
-        Console.WriteLine();
+        var snapshot = cpu.TakeSnapshot();
+        Console.WriteLine($"\nTotal CPU cycles: {snapshot.CY}");
         return 0;
     }
 

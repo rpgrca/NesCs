@@ -28,7 +28,9 @@ public partial class Cpu6502 : IClockHook
     private readonly IClock _clock;
     private readonly Dictionary<int, Action<Cpu6502, IInstruction>> _callbacks;
 
-    private Cpu6502(byte[] program, int programSize, IRamController ramController, int[] memoryOffsets, int pc, byte a, byte x, byte y, byte s, ProcessorStatus p, IClock clock, (int Address, byte Value)[] ramPatches, IInstruction[] instructions, ITracer tracer, Dictionary<int, Action<Cpu6502, IInstruction>> callbacks, int resetVector, int nmiVector, int irqVector)
+    public int MasterClockDivisor { get; private set; }
+
+    private Cpu6502(byte[] program, int programSize, IRamController ramController, int[] memoryOffsets, int pc, byte a, byte x, byte y, byte s, ProcessorStatus p, IClock clock, (int Address, byte Value)[] ramPatches, IInstruction[] instructions, ITracer tracer, Dictionary<int, Action<Cpu6502, IInstruction>> callbacks, int resetVector, int nmiVector, int irqVector, int divisor)
     {
         _callbacks = callbacks;
         _ram = ramController;
@@ -53,6 +55,7 @@ public partial class Cpu6502 : IClockHook
         P = p;
         _clock = clock;
         _clock.AddCpu(this);
+        MasterClockDivisor = divisor;
         _cycles = _previousCycles = _clock.GetCycles() % MasterClockDivisor;
         _instructions = instructions;
         _tracer = tracer;
@@ -273,7 +276,7 @@ public partial class Cpu6502 : IClockHook
 
     public byte PeekMemory(int address) => _ram[address & 0xffff];
 
-    public (ProcessorStatus P, byte A, int PC, byte X, byte Y, byte S) TakeSnapshot() => (P, A, PC, X, Y, S);
+    public (ProcessorStatus P, byte A, int PC, byte X, byte Y, byte S, int CY) TakeSnapshot() => (P, A, PC, X, Y, S, _cycles);
 
     public bool Trigger(IClock clock)
     {
@@ -286,7 +289,7 @@ public partial class Cpu6502 : IClockHook
         }
         else
         {
-            if (clock.GetCycles() % 12 == 0)
+            if (clock.GetCycles() % MasterClockDivisor == 0)
             {
                 _previousCycles++;
 
@@ -305,6 +308,4 @@ public partial class Cpu6502 : IClockHook
 
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private string DebuggerDisplay => $"{PC:X4} A:{A:X2} X:{X:X2} Y:{Y:X2} P:{(byte)P:X2} S:{S:X2} CYC:{_cycles}";
-
-    public int MasterClockDivisor => 12;
 }

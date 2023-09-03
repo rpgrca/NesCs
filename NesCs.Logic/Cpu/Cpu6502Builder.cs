@@ -24,6 +24,7 @@ public partial class Cpu6502
         private readonly Addressings.Addressings As;
         private readonly Operations.Operations Doing;
         private IRamController? _ramController;
+        private int _divisor;
 
         public Builder()
         {
@@ -39,6 +40,7 @@ public partial class Cpu6502
             _program = Array.Empty<byte>();
             _patch = Array.Empty<(int, byte)>();
             _tracer = new DummyTracer();
+            _divisor = 12;
             As = new Addressings.Addressings();
             Doing = new Operations.Operations();
 
@@ -213,6 +215,12 @@ public partial class Cpu6502
             return this;
         }
 
+        public Builder WithClockDivisorOf(int divider)
+        {
+            _divisor = divider;
+            return this;
+        }
+
         public Builder SupportingInvalidInstructions()
         {
             _enableInvalid = true;
@@ -319,7 +327,7 @@ public partial class Cpu6502
 
             return new Cpu6502(_program, _programSize, _ramController, _mappedProgramAddresses.ToArray(),
                 _pc, _a, _x, _y, _s, _p, _clock, _patch, _instructions, _tracer, _callbacks,
-                _resetVector, _nmiVector, _irqVector);
+                _resetVector, _nmiVector, _irqVector, _divisor);
         }
 
         private void AddInvalidOpcodes()

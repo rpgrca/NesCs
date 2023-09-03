@@ -61,7 +61,7 @@ var cpu = builder
         var h2 = cpu.PeekMemory(0x02);
         var h3 = cpu.PeekMemory(0x03);
 
-        var (P, A, PC, X, Y, S) = cpu.TakeSnapshot();
+        var (P, A, PC, X, Y, S, CY) = cpu.TakeSnapshot();
 
         if (A == 0 && X == 0xFF && Y == 0x15 && S == 0xFD && (byte)P == 0x27 && h2 == 0 && h3 == 0)
         {
