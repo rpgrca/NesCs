@@ -7,10 +7,10 @@ using NesCs.Logic.Tracing;
 
 namespace NesCs.Roms.IntegrationTests;
 
-public class PpuReadBufferMust
+public class PpuVblNmiMust
 {
     [Theory]
-    [InlineData("ppu_read_buffer/test_ppu_read_buffer.nes", 0x1, "", Skip = "Should implement graphics, hangs after \u001b[0;37mTEST:test_ppu_read_buffer\n-----------------------------\nTesting basic PPU memory I/O.\n")]
+    [InlineData("ppu_vbl_nmi/rom_singles/01-vbl_basics.nes", 0x1, "", Skip = "cannot pass 1st test")] 
     public void BeExecutedCorrectly(string romName, int poweroffAddress, string expectedResult)
     {
         var ram = new byte[0x10000];
@@ -27,6 +27,9 @@ public class PpuReadBufferMust
         var ramController = new RamController.Builder().WithRamOf(ram).PreventRomRewriting().Build();
         var ppu = new Ppu2C02.Builder().WithRamController(ramController).WithClock(clock).Build();
         ramController.RegisterHook(ppu);
+        ramController.AddHook(0x6000, (a, v) => {
+            System.Diagnostics.Debugger.Break();
+        });
 
         var builder = new Cpu6502.Builder().ProgramMappedAt(0x8000);
         if (nesFile.ProgramRomSize == 1)
