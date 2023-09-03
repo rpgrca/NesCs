@@ -6,13 +6,20 @@ namespace NesCs.Logic.Cpu.Clocking;
 public class Clock : IClock
 {
     private int _ticks;
+    private readonly int _maximum;
     private IClockHook[] _callbacks;
 
     public bool Aborted { get; private set; }
 
     public Clock(int ticks)
+        : this(ticks, 100_000_000)
+    {
+    }
+
+    public Clock(int ticks, int maximum)
     {
         _ticks = ticks;
+        _maximum = maximum;
         _callbacks = new IClockHook[2] { null, null };
         Aborted = false;
     }
@@ -21,7 +28,7 @@ public class Clock : IClock
 
     private bool HangUp()
     {
-        if (_ticks > 100_000_000)
+        if (_ticks > _maximum)
         {
             return true;
         }
