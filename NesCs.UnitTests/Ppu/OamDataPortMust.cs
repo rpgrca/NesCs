@@ -13,8 +13,10 @@ public class OamDataPortMust
     public void NotSetBits2To4_WhenReadingValue(byte value, byte expectedResult)
     {
         var ramController = new RamControllerSpy();
-        var address = new OamAddressPort(ramController, CreatePpuBus());
-        var sut = new OamDataPort(address, CreatePpuBus());
+        var bus = CreatePpuBus();
+        var address = new OamAddressPort(ramController, bus);
+        var mask = new Mask(ramController, bus);
+        var sut = new OamDataPort(address, mask, new RasterAddress(), CreatePpuBus());
         sut.Write(value);
         Assert.Equal(expectedResult, sut.Read());
     }
@@ -28,8 +30,10 @@ public class OamDataPortMust
         ram[0x2003] = 0x12;
 
         var ramController = new RamController.Builder().WithRamOf(ram).Build();
-        var address = new OamAddressPort(ramController, CreatePpuBus());
-        var sut = new OamDataPort(address, CreatePpuBus());
+        var bus = CreatePpuBus();
+        var address = new OamAddressPort(ramController, bus);
+        var mask = new Mask(ramController, bus);
+        var sut = new OamDataPort(address, mask, new RasterAddress(), CreatePpuBus());
         sut.Write(0xff);
         Assert.Equal(0x13, ram[0x2003]);
     }
@@ -41,8 +45,10 @@ public class OamDataPortMust
         ram[0x2003] = 0x12;
 
         var ramController = new RamController.Builder().WithRamOf(ram).Build();
+        var bus = CreatePpuBus();
         var address = new OamAddressPort(ramController, CreatePpuBus());
-        var sut = new OamDataPort(address, CreatePpuBus());
+        var mask = new Mask(ramController, bus);
+        var sut = new OamDataPort(address, mask, new RasterAddress(), CreatePpuBus());
         _ = sut.Read();
         Assert.Equal(0x12, ram[0x2003]);
     }

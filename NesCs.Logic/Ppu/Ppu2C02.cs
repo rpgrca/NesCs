@@ -52,9 +52,10 @@ public class Ppu2C02 : IPpu
     private readonly OamSprite[] _secondaryOam;
     private readonly IByteToggle _toggle;
     private readonly IPpuIOBus _ioBus;
-    private int _rasterX, _rasterY;
     private int _currentCycle;
-    
+
+    private RasterAddress Raster { get; }
+
     public ControlRegister PpuCtrl { get; }                 /* 0x2000 W  */
     public Mask PpuMask { get; }                            /* 0x2001 W  */
     public Status PpuStatus { get; }                        /* 0x2002  R */
@@ -74,14 +75,14 @@ public class Ppu2C02 : IPpu
         _ioBus = new PpuIOBus(clock);
         clock.AddPpu(this);
         _currentCycle = 0;
-        _rasterX = _rasterY = 0;
 
+        Raster = new RasterAddress();
         PpuCtrl = new ControlRegister(ram, _ioBus);
         PpuMask = new Mask(ram, _ioBus);
         PpuStatus = new Status(ram, _toggle, _ioBus);
         OamAddr = new OamAddressPort(ram, _ioBus);
-        OamData = new OamDataPort(OamAddr, _ioBus);
         PpuScroll = new ScrollingPositionRegister(ram, _toggle, _ioBus);
+        OamData = new OamDataPort(OamAddr, PpuMask, Raster, _ioBus);
         PpuAddr = new AddressRegister(ram, _toggle, _ioBus);
         PpuData = new DataPort(this, _ioBus);
         OamDma = new OamDmaRegister();
@@ -139,35 +140,59 @@ public class Ppu2C02 : IPpu
     {
         if (clock.GetCycles() % 4 == 0)
         {
-            _rasterX += 1;
+            Raster.IncrementX();
 
-            if (_rasterX >= _cyclesPerLine[_currentCycle])
+            if (Raster.X >= _cyclesPerLine[_currentCycle])
             {
-                _rasterX = 0;
-                _rasterY += 1;
-
-                // On an NTSC machine, the VBL flag is cleared 6820 ppu cycles or exactly 20 scanlines after it is set.
-                if (_rasterY == 20 && _rasterX == 0)
+                Raster.ResetX();
+                Raster.IncrementY();
+            }
+            else
+            {
+                if (Raster.X == 1)
                 {
-                    PpuStatus.V = 0;
-                }
-                else
-                /* V set at 240?
-                if (_rasterY == 240)
-                {
-                    // CPU should be at around 29658
-                    //PpuStatus.V = 1;
-                }
-                else*/
-                {
-                    if (_rasterY >= LinesPerSync)
+                    if (Raster.Y == 241)
                     {
                         PpuStatus.V = 1;
-                        _rasterY = 0;
-                        _currentCycle = (_currentCycle + 1) % 2;
+                    }
+                    else
+                    {
+                        if (Raster.Y == 261)
+                        {
+                            PpuStatus.V = 0;
+                        }
                     }
                 }
             }
+
+            if (Raster.Y >= LinesPerSync)
+            {
+                Raster.ResetY();
+                _currentCycle = (_currentCycle + 1) % 2;
+            }
+
+//                // On an NTSC machine, the VBL flag is cleared 6820 ppu cycles or exactly 20 scanlines after it is set.
+//                if (Raster.Y == 20 && Raster.X == 0)
+//                {
+//                    PpuStatus.V = 0;
+//                }
+//                else
+//                /* V set at 240?
+//                if (_rasterY == 240)
+//                {
+//                    // CPU should be at around 29658
+//                    //PpuStatus.V = 1;
+//                }
+//                else*/
+//                {
+//                    if (Raster.Y >= LinesPerSync)
+//                    {
+//                        PpuStatus.V = 1;
+//                        Raster.ResetY();
+//                        _currentCycle = (_currentCycle + 1) % 2;
+//                    }
+//                }
+            //}
 
             return true;
         }
@@ -182,5 +207,5 @@ public class Ppu2C02 : IPpu
     public int MasterClockDivisor => 4;
 
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-    private string DebuggerDisplay => $"PPU: {_rasterY,3},{_rasterX,3}";
+    private string DebuggerDisplay => $"PPU: {Raster.Y,3},{Raster.X,3}";
 }

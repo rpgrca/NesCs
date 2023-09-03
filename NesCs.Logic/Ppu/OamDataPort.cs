@@ -3,12 +3,16 @@ namespace NesCs.Logic.Ppu;
 public class OamDataPort
 {
     private readonly OamAddressPort _address;
+    private readonly Mask _mask;
+    private readonly RasterAddress _raster;
     private readonly IPpuIOBus _ioBus;
     private byte _data;
 
-    public OamDataPort(OamAddressPort address, IPpuIOBus ioBus)
+    public OamDataPort(OamAddressPort address, Mask mask, RasterAddress raster, IPpuIOBus ioBus)
     {
         _address = address;
+        _mask = mask;
+        _raster = raster;
         _ioBus = ioBus;
     }
 
