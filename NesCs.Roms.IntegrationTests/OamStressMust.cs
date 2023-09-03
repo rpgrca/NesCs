@@ -11,7 +11,7 @@ public class OamStressMust
 {
     [Theory]
     [InlineData("oam_stress/oam_stress.nes", 0xE755, "----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n\noam_read\n\nPassed\n", Skip = "wip")]
-    [InlineData("instr_timing/rom_singles/1-instr_timing.nes", 0x1, "", Skip = "wip")]
+    [InlineData("instr_timing/rom_singles/1-instr_timing.nes", 0x1, "", Skip = "does nothing after Instruction timing test\n\nTakes about 25 seconds. Doesn't time the 8 branches and 12 illegal instructions.\n\n")]
     [InlineData("branch_timing_tests/1.Branch_Basics.nes", 0x1, "", Skip = "wip")]
     public void BeExecutedCorrectly(string romName, int poweroffAddress, string expectedResult)
     {

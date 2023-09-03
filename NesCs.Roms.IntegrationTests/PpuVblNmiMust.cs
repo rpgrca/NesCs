@@ -10,7 +10,7 @@ namespace NesCs.Roms.IntegrationTests;
 public class PpuVblNmiMust
 {
     [Theory]
-    [InlineData("ppu_vbl_nmi/rom_singles/01-vbl_basics.nes", 0x1, "", Skip = "cannot pass 1st test")] 
+    [InlineData("ppu_vbl_nmi/rom_singles/01-vbl_basics.nes", 0x1, "", Skip = "error 4, can't pass")] 
     public void BeExecutedCorrectly(string romName, int poweroffAddress, string expectedResult)
     {
         var ram = new byte[0x10000];
