@@ -9,4 +9,4 @@ To run the program execute _dotnet run_ with the path to the nestest.nes ROM. It
 ![image](https://github.com/rpgrca/NesCs/assets/15602473/e2c47300-659e-42a8-a217-01dd87ac60cf)
 
 ### Current status ###
-Since I'm looking for a perfect emulation I'm increasing one cycle per memory read and write. Following this procedure I get perfect values for the first 14606 cycles (5014 instructions) but the counter needs to start with 7 (as I don't have the setup done still).
+As of this time the CPU emulation matches the _golden log_ perfectly, including cycle count and PPU timing (still without graphics). The initial status of the flags does not match (which is not necessary because NES starts with P in 0x34 differing in the irrelevant X and D flags). Initial setup is still not done but run is delayed by 7 cycles to match initialization code.
