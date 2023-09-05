@@ -50,6 +50,8 @@ public class Ppu2C02 : IPpu
     private readonly IByteToggle _toggle;
     private readonly IPpuIOBus _ioBus;
     private bool _odd;
+    private byte _nametableLatch;
+    private byte _attributeLatch;
 
     private RasterAddress Raster { get; }
     public ControlRegister PpuCtrl { get; }                 /* 0x2000 W  */
@@ -66,11 +68,16 @@ public class Ppu2C02 : IPpu
     {
         _vram = vram;
         _oam = new OamSprite[64];
+        for (var index = 0; index < 64; index++)
+        {
+            _oam[index] = new OamSprite();
+        }
+
         _secondaryOam = new OamSprite[8];
         _toggle = new ByteToggle();
         _ioBus = new PpuIOBus(clock);
         clock.AddPpu(this);
-        _odd = true;
+        _odd = false;
 
         Raster = new RasterAddress();
         PpuCtrl = new ControlRegister(ram, _ioBus);
@@ -134,142 +141,254 @@ public class Ppu2C02 : IPpu
 
     private int _cycle;
 //    private StringBuilder _line = new StringBuilder();
-/*
-    private List<IPpuLineStep>[] _odd = new List<IPpuLineStep>
+
+    private IPpuLineStep[] _timing = new IPpuLineStep[]
     {
-        new Skip(),
         new LoadNametableByteCycle1(),
         new LoadNametableByteCycle2(),
         new LoadAttributeByteCycle1(),
         new LoadAttributeByteCycle2(),
-        new LoadLowBackgroundTileByte(),
-        new LoadHighBackgroundTileByteAndIncrementHorizontal()
-    }
-
-    private List<IPpuLineStep>[] _even = new()
-    {
-
-    }
-*/
+        new LoadLowBackgroundTileByteCycle1(),
+        new LoadLowBackgroundTileByteCycle2(),
+        new LoadHighBackgroundTileByteCycle1(),
+        new LoadHighBackgroundTileByteCycle2()
+    };
+/*
     public bool Trigger(IClock clock)
     {
-//        string value;
-        if (clock.GetCycles() % 4 == 0)
+        if (clock.GetCycles() % MasterClockDivisor == 0)
         {
-            switch (Raster.X)
+            if (Raster.X == 0)
             {
-                case 0:
-//                    value = " idl |";
+                if (_odd)
+                {
+                    _timing[1].Work(this);
+                }
+                else
+                {
+                    // idle
+                }
 
-                    if (Raster.Y == 0)
-                    {
-                        _odd = !_odd;
-
-                        if (!_odd)
-                        {
-//                            value = " skp |";
-                        }
-                    }
-
-                    //_line.Append(value);
-                    Raster.IncrementX();
-                    break;
-
-                case 1:
-//                    value = "     |";
-                    if (Raster.Y == 241)
-                    {
-                        PpuStatus.V = 1;
-                        _cycle = clock.GetCycles();
-//                        value = " +vb |";
-                    }
-                    else
-                    {
-                        if (Raster.Y == 261)
-                        {
-                            PpuStatus.V = 0;
-                            PpuStatus.S = 0;
-                            PpuStatus.O = 0;
-                            _cycle = clock.GetCycles() - _cycle;
-//                            value = " -vb |";
-                        }
-                    }
-
-//                    _line.Append(value);
-                    Raster.IncrementX();
-                    break;
-
-                case 339:
-//                    _line.Append("     |");
-
-                    if (Raster.Y == 261 && _odd)
-                    {
-                        Raster.ResetX();
-                        Raster.ResetY();
-//                        _line.Append("\n\n\n");
-//                        System.IO.File.AppendAllText("/home/roberto/src/NesCs/ppu.log", _line.ToString());
-//                        _line.Clear();
-                    }
-                    else
-                    {
-                        Raster.IncrementX();
-                    }
-                    break;
-
-                case 340:
-//                    _line.Append("     |\n");
-
-                    Raster.ResetX();
-                    Raster.IncrementY();
-                    if (Raster.Y >= LinesPerSync)
-                    {
-                        Raster.ResetY();
-//                        _line.Append("\n\n\n");
-                    }
-
-//                    System.IO.File.AppendAllText("/home/roberto/src/NesCs/ppu.log", _line.ToString());
-//                    _line.Clear();
-                    break;
-
-                default:
-//                    _line.Append("     |");
-                    Raster.IncrementX();
-                    break;
+                ClearCurrentOamByte();
+                Raster.IncrementX();
+                return true;
             }
+            else if (Raster.X == 1)
+            {
+                if (Raster.Y == 241)
+                {
+                    PpuStatus.V = 1;
+                    _cycle = clock.GetCycles();
+                }
+                else if (Raster.Y == 261)
+                {
+                    PpuStatus.V = 0;
+                    PpuStatus.S = 0;
+                    PpuStatus.O = 0;
+                    _cycle = clock.GetCycles() - _cycle;
+                }
 
-            return true;
+                ClearCurrentOamByte();
+                _timing[0].Work(this);
+                Raster.IncrementX();
+                return true;
+            }
+            else if (Raster.X >= 2 && Raster.X <= 256)
+            {
+                var timing = _timing[(Raster.X - 1) % 6];
+                timing.Work(this);
+                Raster.IncrementX();
 
-
-//                // On an NTSC machine, the VBL flag is cleared 6820 ppu cycles or exactly 20 scanlines after it is set.
-//                if (Raster.Y == 20 && Raster.X == 0)
-//                {
-//                    PpuStatus.V = 0;
-//                }
-//                else
-//                /* V set at 240?
-//                if (_rasterY == 240)
-//                {
-//                    // CPU should be at around 29658
-//                    //PpuStatus.V = 1;
-//                }
-//                else*/
-//                {
-//                    if (Raster.Y >= LinesPerSync)
-//                    {
-//                        PpuStatus.V = 1;
-//                        Raster.ResetY();
-//                        _currentCycle = (_currentCycle + 1) % 2;
-//                    }
-//                }
-            //}
-
-            return true;
+                if (Raster.X < 63)
+                {
+                    ClearCurrentOamByte();
+                }
+                return true;
+            }
+            else if (Raster.X == 257)
+            {
+                Raster.IncrementX();
+                return true;
+            }
+            else if (Raster.X >= 258 && Raster.X <= 320)
+            {
+                // idle
+                Raster.IncrementX();
+                return true;
+            }
+            else if (Raster.X >= 321 && Raster.X <= 338)
+            {
+                var timing = _timing[(Raster.X - 1) % 6];
+                timing.Work(this);
+                Raster.IncrementX();
+                return true;
+            }
+            else if (Raster.X == 339)
+            {
+                if (_odd)
+                {
+                    Raster.BackToOrigin();
+                    _odd = false;
+                    return true;
+                }
+                else
+                {
+                    var timing = _timing[0];
+                    timing.Work(this);
+                    Raster.IncrementX();
+                    return true;
+                }
+            }
+            else if (Raster.X == 340)
+            {
+                var timing = _timing[1];
+                timing.Work(this);
+                _odd = true;
+                Raster.IncrementX();
+                return true;
+            }
         }
 
         return false;
     }
+*/
+    private void ClearCurrentOamByte() => _oam[Raster.X].Clear();
+
+        public bool Trigger(IClock clock)
+        {
+    //        string value;
+            if (clock.GetCycles() % 4 == 0)
+            {
+                switch (Raster.X)
+                {
+                    case 0:
+    //                    value = " idl |";
+    
+                        if (Raster.Y == 0)
+                        {
+                            _odd = !_odd;
+    
+                            if (!_odd)
+                            {
+    //                            value = " skp |";
+                            }
+                        }
+    
+                        //_line.Append(value);
+                        Raster.IncrementX();
+                        break;
+    
+                    case 1:
+    //                    value = "     |";
+                        if (Raster.Y == 241)
+                        {
+                            PpuStatus.V = 1;
+                            _cycle = clock.GetCycles();
+    //                        value = " +vb |";
+                        }
+                        else
+                        {
+                            if (Raster.Y == 261)
+                            {
+                                PpuStatus.V = 0;
+                                PpuStatus.S = 0;
+                                PpuStatus.O = 0;
+                                _cycle = clock.GetCycles() - _cycle;
+    //                            value = " -vb |";
+                            }
+                        }
+    
+    //                    _line.Append(value);
+                        Raster.IncrementX();
+                        break;
+    
+                    case 339:
+    //                    _line.Append("     |");
+    
+                        if (Raster.Y == 261 && _odd)
+                        {
+                            Raster.ResetX();
+                            Raster.ResetY();
+    //                        _line.Append("\n\n\n");
+    //                        System.IO.File.AppendAllText("/home/roberto/src/NesCs/ppu.log", _line.ToString());
+    //                        _line.Clear();
+                        }
+                        else
+                        {
+                            Raster.IncrementX();
+                        }
+                        break;
+    
+                    case 340:
+    //                    _line.Append("     |\n");
+    
+                        Raster.ResetX();
+                        Raster.IncrementY();
+                        if (Raster.Y >= LinesPerSync)
+                        {
+                            Raster.ResetY();
+    //                        _line.Append("\n\n\n");
+                        }
+    
+    //                    System.IO.File.AppendAllText("/home/roberto/src/NesCs/ppu.log", _line.ToString());
+    //                    _line.Clear();
+                        break;
+    
+                    default:
+    //                    _line.Append("     |");
+                        Raster.IncrementX();
+                        break;
+                }
+    
+                return true;
+    
+    
+    //                // On an NTSC machine, the VBL flag is cleared 6820 ppu cycles or exactly 20 scanlines after it is set.
+    //                if (Raster.Y == 20 && Raster.X == 0)
+    //                {
+    //                    PpuStatus.V = 0;
+    //                }
+    //                else
+    //                /* V set at 240?
+    //                if (_rasterY == 240)
+    //                {
+    //                    // CPU should be at around 29658
+    //                    //PpuStatus.V = 1;
+    //                }
+    //                else*/
+    //                {
+    //                    if (Raster.Y >= LinesPerSync)
+    //                    {
+    //                        PpuStatus.V = 1;
+    //                        Raster.ResetY();
+    //                        _currentCycle = (_currentCycle + 1) % 2;
+    //                    }
+    //                }
+                //}
+    
+                return true;
+            }
+    
+            return false;
+        }
 
     public string GetStatus() => DebuggerDisplay;
+
+    void IPpuTiming.LoadNametableByte()
+    {
+    }
+
+    void IPpuTiming.LoadHighBackgroundTileByte()
+    {
+    }
+
+    void IPpuTiming.LoadLowBackgroundTileByte()
+    {
+    }
+
+    void IPpuTiming.LoadAttributeByte()
+    {
+    }
 
     public int CurrentAddress => PpuAddr.CurrentAddress;
 
@@ -281,71 +400,73 @@ public class Ppu2C02 : IPpu
 
 public interface IPpuLineStep
 {
-    void Work(Ppu2C02 ppu);
+    void Work(IPpuTiming ppu);
 }
 
 public class Idle : IPpuLineStep
 {
-    public void Work(Ppu2C02 ppu)
+    public void Work(IPpuTiming ppu)
     {
+        // Nothing
     }
 }
 
 public class Skip : IPpuLineStep
 {
-    public void Work(Ppu2C02 ppu)
-    {
-    }
+    public void Work(IPpuTiming ppu) => ppu.LoadNametableByte();
 }
 
 public class LoadNametableByteCycle1 : IPpuLineStep
 {
-    public void Work(Ppu2C02 ppu)
+    public void Work(IPpuTiming ppu)
     {
     }
 }
 
 public class LoadNametableByteCycle2 : IPpuLineStep
 {
-    public void Work(Ppu2C02 ppu)
-    {
-    }
+    public void Work(IPpuTiming ppu) => ppu.LoadNametableByte();
 }
 
 public class LoadAttributeByteCycle1 : IPpuLineStep
 {
-    public void Work(Ppu2C02 ppu)
+    public void Work(IPpuTiming ppu)
     {
     }
 }
 
 public class LoadAttributeByteCycle2 : IPpuLineStep
 {
-    public void Work(Ppu2C02 ppu)
+    public void Work(IPpuTiming ppu) => ppu.LoadAttributeByte();
+}
+
+public class LoadLowBackgroundTileByteCycle1 : IPpuLineStep
+{
+    public void Work(IPpuTiming ppu)
     {
     }
 }
 
-public class LoadLowBackgroundTileByte : IPpuLineStep
+public class LoadLowBackgroundTileByteCycle2 : IPpuLineStep
 {
-    public void Work(Ppu2C02 ppu)
+    public void Work(IPpuTiming ppu) => ppu.LoadLowBackgroundTileByte();
+}
+
+public class LoadHighBackgroundTileByteCycle1 : IPpuLineStep
+{
+    public void Work(IPpuTiming ppu)
     {
-        throw new NotImplementedException();
     }
 }
 
-public class LoadHighBackgroundTileByteAndIncrementHorizontal : IPpuLineStep
+public class LoadHighBackgroundTileByteCycle2 : IPpuLineStep
 {
-    public void Work(Ppu2C02 ppu)
-    {
-        throw new NotImplementedException();
-    }
+    public void Work(IPpuTiming ppu) => ppu.LoadHighBackgroundTileByte();
 }
 
 public class IncrementHorizontal : IPpuLineStep
 {
-    public void Work(Ppu2C02 ppu)
+    public void Work(IPpuTiming ppu)
     {
-        throw new NotImplementedException();
     }
 }

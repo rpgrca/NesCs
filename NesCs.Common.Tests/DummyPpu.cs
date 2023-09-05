@@ -41,11 +41,15 @@ public class DummyPpu : IPpu
 
     void Logic.Ram.IRamHook.Write(int index, byte value) => throw new NotImplementedException();
 
-    public int GetIndex() => throw new NotImplementedException();
+    string IClockHook.GetStatus() => throw new NotImplementedException();
 
-    public void Trigger(int tick) => throw new NotImplementedException();
+    bool IClockHook.Trigger(IClock clock) => throw new NotImplementedException();
 
-    public string GetStatus() => throw new NotImplementedException();
+    void IPpuTiming.LoadNametableByte() => throw new NotImplementedException();
 
-    public bool Trigger(IClock clock) => throw new NotImplementedException();
+    void IPpuTiming.LoadHighBackgroundTileByte() => throw new NotImplementedException();
+
+    void IPpuTiming.LoadLowBackgroundTileByte() => throw new NotImplementedException();
+
+    void IPpuTiming.LoadAttributeByte() => throw new NotImplementedException();
 }

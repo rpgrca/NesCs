@@ -3,7 +3,7 @@ using NesCs.Logic.Ram;
 
 namespace NesCs.Logic.Ppu;
 
-public interface IPpu : IRamHook, IPpuVram, IClockHook
+public interface IPpu : IRamHook, IPpuVram, IPpuTiming, IClockHook
 {
     ControlRegister PpuCtrl { get; }                /* 0x2000 W  */
     Mask PpuMask { get; }                           /* 0x2001 W  */
