@@ -10,7 +10,7 @@ namespace NesCs.Roms.IntegrationTests;
 public class PpuOpenBusMust
 {
     [Theory]
-    [InlineData("ppu_open_bus/ppu_open_bus.nes", 0xE755, "\nppu_open_bus\n\nPassed\n")] // ticks 86793085
+    [InlineData("ppu_open_bus/ppu_open_bus.nes", 0xE755, "\nppu_open_bus\n\nPassed\n")] // ticks 89315269
     public void BeExecutedCorrectly(string romName, int poweroffAddress, string expectedResult)
     {
         var ram = new byte[0x10000];
@@ -37,6 +37,7 @@ public class PpuOpenBusMust
         var cpu = builder
             .Running(nesFile.ProgramRom)
             .WithClock(clock)
+            .WithClockDivisorOf(1)
             .SupportingInvalidInstructions()
             .WithRamController(ramController)
             .WithCallback(poweroffAddress, (cpu, _) => cpu.Stop())
