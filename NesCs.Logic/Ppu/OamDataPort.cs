@@ -32,11 +32,9 @@ public class OamDataPort
 
     public byte Read()
     {
-        return _ioBus.Read();
-        /*
-        var index = Math.DivRem(_pointer, 4, out var remainder);
+        var index = Math.DivRem(_address.Read(), 4, out var remainder);
         var result = _data[index].Read(remainder);
         _ioBus.Write(result);
-        return result;*/
+        return (byte)(result & 0b11100011);
     }
 }
