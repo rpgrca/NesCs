@@ -8,7 +8,7 @@ public class OamAddressPort
     private readonly IRamController _ram;
     private readonly IPpuIOBus _ioBus;
 
-    private byte Address
+    internal byte Address
     {
         get => _ram.DirectReadFrom(OamAddressIndex);
         set => _ram.DirectWriteTo(OamAddressIndex, value);
@@ -20,7 +20,7 @@ public class OamAddressPort
         _ioBus = ioBus;
     }
 
-    internal void IncrementAddress() => Address++;
+    internal void IncrementAddress() => Address = (byte)((Address + 1) & 0xff);
 
     public void Write(byte value)
     {
