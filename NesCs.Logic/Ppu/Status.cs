@@ -14,8 +14,7 @@ public class Status
         get
         {
             var value = _ramController.DirectReadFrom(StatusIndex);
-            var openBus = _ioBus.Read();
-            return (byte)((value & 0b11100000) | (openBus & 0b11111));
+            return (byte)((value & 0b11100000) | OpenBus);
         }
         set => _ramController.DirectWriteTo(StatusIndex, value);
     }
