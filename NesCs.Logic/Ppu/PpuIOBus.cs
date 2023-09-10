@@ -23,6 +23,8 @@ public class PpuIOBus : IPpuIOBus
         return _bus;
     }
 
+    public void Refresh() => _cycle = _clock.GetCycles();
+
     public void Write(byte value)
     {
         _cycle = _clock.GetCycles();
