@@ -19,15 +19,26 @@ public class OamDataPort
 
     public void Write(byte value)
     {
-        _ioBus.Write(value);
-        _data[_address.Address] = value;
+        if (_raster.Y <= 239 && (_mask.Lb + _mask.Ls > 0))
+        {
+        }
+        else
+        {
+            _data[_address.Address] = value;
+            _ioBus.Write(value);
+        }
         _address.IncrementAddress();
     }
 
     public byte Read()
     {
-        var result = (byte)(_data[_address.Address] & 0b11100011);
+        var result = _data[_address.Address];
+        if (_address.Address % 4 == 2)
+        {
+            result &= 0b11100011;
+        }
+
         _ioBus.Write(result);
-        return (byte)(result & 0b11100011);
+        return result;
     }
 }

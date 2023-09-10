@@ -10,14 +10,17 @@ public class OamDataPortMust
     [InlineData(0, 0)]
     [InlineData(1, 1)]
     [InlineData(0xff, 0b11100011 )]
-    public void NotSetBits2To4_WhenReadingValue(byte value, byte expectedResult)
+    public void NotSetBits2To4_WhenReadingAttributeValue(byte value, byte expectedResult)
     {
-        var ramController = new RamControllerSpy();
+        var ramController = new RamController.Builder().Build();
         var bus = CreatePpuBus();
         var address = new OamAddressPort(ramController, bus);
         var mask = new Mask(ramController, bus);
         var sut = new OamDataPort(address, mask, new RasterAddress(), CreatePpuBus());
+        sut.Write(0x0);
+        sut.Write(0x0);
         sut.Write(value);
+        address.Write(0x2);
         Assert.Equal(expectedResult, sut.Read());
     }
 
