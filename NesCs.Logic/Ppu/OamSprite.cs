@@ -1,5 +1,8 @@
+using System.Diagnostics;
+
 namespace NesCs.Logic.Ppu;
 
+[DebuggerDisplay("Y:{_sprite[0],X2}, index:{_sprite[1],X2}, X:{_sprite[2],X2}")]
 public class OamSprite
 {
     private readonly byte[] _sprite = { 0, 0, 0, 0 };
