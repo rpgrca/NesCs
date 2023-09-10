@@ -35,4 +35,8 @@ public class OamSprite
     {
         _sprite[0] = _sprite[1] = _sprite[2] = _sprite[3] = 0xFF;
     }
+
+    internal void Write(int remainder, byte value) => _sprite[remainder] = value;
+
+    internal byte Read(int remainder) => _sprite[remainder];
 }

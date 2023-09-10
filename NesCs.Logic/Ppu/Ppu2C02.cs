@@ -45,7 +45,6 @@ public class Ppu2C02 : IPpu
     }
 
     private readonly byte[] _vram;
-    private readonly OamSprite[] _oam;
     private readonly OamSprite[] _secondaryOam;
     private readonly IByteToggle _toggle;
     private readonly IPpuIOBus _ioBus;
@@ -67,11 +66,6 @@ public class Ppu2C02 : IPpu
     private Ppu2C02(IRamController ram, byte[] vram, IClock clock)
     {
         _vram = vram;
-        _oam = new OamSprite[64];
-        for (var index = 0; index < 64; index++)
-        {
-            _oam[index] = new OamSprite();
-        }
 
         _secondaryOam = new OamSprite[8];
         _toggle = new ByteToggle();
@@ -252,7 +246,6 @@ public class Ppu2C02 : IPpu
         return false;
     }
 */
-    private void ClearCurrentOamByte() => _oam[Raster.X].Clear();
 
         public bool Trigger(IClock clock)
         {
