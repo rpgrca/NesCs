@@ -87,7 +87,7 @@ public class Ppu2C02 : IPpu
 
     void IRamHook.Write(int index, byte value)
     {
-        switch (index)
+        switch (0x2000 + (index % 8))
         {
             case 0x2000: PpuCtrl.Write(value); break;
             case 0x2001: PpuMask.Write(value); break;
@@ -102,7 +102,7 @@ public class Ppu2C02 : IPpu
 
     byte IRamHook.Read(int index)
     {
-        return index switch
+        return (0x2000 + (index % 8)) switch
         {
             0x2000 => PpuCtrl.Read(),
             0x2001 => PpuMask.Read(),
@@ -115,7 +115,11 @@ public class Ppu2C02 : IPpu
         };
     }
 
-    public bool CanHandle(int index) => index >= 0x2000 && index <= 0x2007;
+    public bool CanHandle(int index)
+    {
+        if (index == 0x3ffa) System.Diagnostics.Debugger.Break();
+        return index >= 0x2000 && index <= 0x3FFF;
+    }
 
     public void IncrementAddress()
     {
@@ -129,9 +133,9 @@ public class Ppu2C02 : IPpu
         }
     }
 
-    void IPpuVram.Write(byte value) => _vram[CurrentAddress] = value;
+    void IPpuVram.Write(byte value) => _vram[CurrentAddress % 0x4000] = value;
 
-    byte IPpuVram.Read() => _vram[CurrentAddress];
+    byte IPpuVram.Read() => _vram[CurrentAddress % 0x4000];
 
     private int _cycle;
 //    private StringBuilder _line = new StringBuilder();
