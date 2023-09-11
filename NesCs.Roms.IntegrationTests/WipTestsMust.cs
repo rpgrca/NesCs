@@ -7,11 +7,12 @@ using NesCs.Logic.Tracing;
 
 namespace NesCs.Roms.IntegrationTests;
 
-public class OamStressMust
+public class WipTestsMust
 {
     [Theory]
-    [InlineData("oam_stress/oam_stress.nes", 0xE755, "----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n\noam_stress\n\nPassed\n")]
-    public void BeExecutedCorrectly(string romName, int poweroffAddress, string expectedResult)
+    [InlineData("instr_timing/rom_singles/1-instr_timing.nes", 0x1, 2, "", Skip = "does nothing after Instruction timing test\n\nTakes about 25 seconds. Doesn't time the 8 branches and 12 illegal instructions.\n\n")]
+    [InlineData("branch_timing_tests/1.Branch_Basics.nes", 0x1, 1, "", Skip = "no output at all")]
+    public void BeExecutedCorrectly(string romName, int poweroffAddress, int expectedRomSize, string expectedResult)
     {
         var ram = new byte[0x10000];
         var fsp = new FileSystemProxy.Builder().Loading(new NesFileOptions
@@ -29,10 +30,13 @@ public class OamStressMust
         ramController.RegisterHook(ppu);
 
         var builder = new Cpu6502.Builder().ProgramMappedAt(0x8000);
+        if (nesFile.ProgramRomSize == 1)
+        {
+            builder.ProgramMappedAt(0xC000);
+        }
         var cpu = builder
             .Running(nesFile.ProgramRom)
             .WithClock(clock)
-            .WithClockDivisorOf(1)
             .SupportingInvalidInstructions()
             .WithRamController(ramController)
             .WithCallback(poweroffAddress, (cpu, _) => cpu.Stop())
@@ -43,7 +47,7 @@ public class OamStressMust
         cpu.Run();
 
         var result = GetString(ram);
-        Assert.Equal(2, nesFile.ProgramRomSize);
+        Assert.Equal(expectedRomSize, nesFile.ProgramRomSize);
         Assert.Equal(0, ram[0x6000]);
         Assert.Equal(expectedResult, result);
     }
