@@ -29,11 +29,6 @@ public class CpuDummyWritesMust
         ramController.RegisterHook(ppu);
 
         var builder = new Cpu6502.Builder().ProgramMappedAt(0x8000);
-        if (nesFile.ProgramRomSize == 1)
-        {
-            builder.ProgramMappedAt(0xC000); // NROM-128
-        }
-
         var cpu = builder
             .Running(nesFile.ProgramRom)
             .WithClock(clock)
