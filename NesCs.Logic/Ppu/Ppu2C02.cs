@@ -117,7 +117,6 @@ public class Ppu2C02 : IPpu
 
     public bool CanHandle(int index)
     {
-        if (index == 0x3ffa) System.Diagnostics.Debugger.Break();
         return index >= 0x2000 && index <= 0x3FFF;
     }
 

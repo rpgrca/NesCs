@@ -32,11 +32,6 @@ public class PpuVblNmiMust
         });
 
         var builder = new Cpu6502.Builder().ProgramMappedAt(0x8000);
-        if (nesFile.ProgramRomSize == 1)
-        {
-            builder.ProgramMappedAt(0xC000);
-        }
-
         var cpu = builder
             .Running(nesFile.ProgramRom)
             .WithClock(clock)
