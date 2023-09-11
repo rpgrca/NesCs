@@ -10,7 +10,7 @@ namespace NesCs.Roms.IntegrationTests;
 public class OamStressMust
 {
     [Theory]
-    [InlineData("oam_stress/oam_stress.nes", 0xE755, "----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n\noam_read\n\nPassed\n", Skip = "wip")]
+    [InlineData("oam_stress/oam_stress.nes", 0xE755, "----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n\noam_stress\n\nPassed\n")]
     [InlineData("instr_timing/rom_singles/1-instr_timing.nes", 0x1, "", Skip = "does nothing after Instruction timing test\n\nTakes about 25 seconds. Doesn't time the 8 branches and 12 illegal instructions.\n\n")]
     [InlineData("branch_timing_tests/1.Branch_Basics.nes", 0x1, "", Skip = "wip")]
     public void BeExecutedCorrectly(string romName, int poweroffAddress, string expectedResult)
@@ -34,6 +34,7 @@ public class OamStressMust
         var cpu = builder
             .Running(nesFile.ProgramRom)
             .WithClock(clock)
+            .WithClockDivisorOf(1)
             .SupportingInvalidInstructions()
             .WithRamController(ramController)
             .WithCallback(poweroffAddress, (cpu, _) => cpu.Stop())
@@ -44,6 +45,7 @@ public class OamStressMust
         cpu.Run();
 
         var result = GetString(ram);
+        Assert.Equal(2, nesFile.ProgramRomSize);
         Assert.Equal(0, ram[0x6000]);
         Assert.Equal(expectedResult, result);
     }

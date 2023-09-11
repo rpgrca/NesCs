@@ -43,6 +43,7 @@ public class OamReadMust
         cpu.Run();
 
         var result = GetString(ram);
+        Assert.Equal(2, nesFile.ProgramRomSize);
         Assert.Equal(0, ram[0x6000]);
         Assert.Equal(expectedResult, result);
     }
