@@ -46,6 +46,7 @@ public class InstrTestv3Must
             .SupportingInvalidInstructions()
             .WithRamController(ramController)
             .WithClock(clock)
+            .WithClockDivisorOf(1)
             .WithCallback(poweroffAddress, (cpu, _) => cpu.Stop())
             .Build();
 
@@ -53,6 +54,7 @@ public class InstrTestv3Must
         cpu.Run();
 
         var result = GetString(ram);
+        Assert.Equal(2, nesFile.ProgramRomSize);
         Assert.Equal(0, ram[0x6000]);
         Assert.Equal(expectedResult, result);
     }

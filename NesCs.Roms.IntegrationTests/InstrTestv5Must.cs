@@ -2,6 +2,7 @@ using NesCs.Logic.Cpu;
 using NesCs.Logic.Ppu;
 using NesCs.Logic.Ram;
 using NesCs.Logic.File;
+using NesCs.Logic.Cpu.Clocking;
 
 namespace NesCs.Roms.IntegrationTests;
 
@@ -26,6 +27,7 @@ public class InstrTestv5Must
     [InlineData("instr_test-v5/rom_singles/16-special.nes", 0xE7D5, "\n16-special\n\nPassed\n")] // ticks 14077777
     public void ReturnPassed(string romName, int poweroffAddress, string expectedResult)
     {
+        var clock = new Clock(0);
         var ram = new byte[0x10000];
         var fsp = new FileSystemProxy.Builder().Loading(new NesFileOptions
         {
@@ -37,12 +39,14 @@ public class InstrTestv5Must
 
         var nesFile = fsp.Load("../../../../../nes-test-roms/" + romName);
         var ramController = new RamController.Builder().WithRamOf(ram).Build();
-        var ppu = new Ppu2C02.Builder().WithRamController(ramController).Build();
+        var ppu = new Ppu2C02.Builder().WithRamController(ramController).WithClock(clock).Build();
 
         var builder = new Cpu6502.Builder().ProgramMappedAt(0x8000);
         var cpu = builder
             .Running(nesFile.ProgramRom)
             .SupportingInvalidInstructions()
+            .WithClock(clock)
+            .WithClockDivisorOf(1)
             .WithRamController(ramController)
             .WithCallback(poweroffAddress, (cpu, _) => cpu.Stop())
             .Build();
@@ -51,6 +55,7 @@ public class InstrTestv5Must
         cpu.Run();
 
         var result = GetString(ram);
+        Assert.Equal(2, nesFile.ProgramRomSize);
         Assert.Equal(0, ram[0x6000]);
         Assert.Equal(expectedResult, result);
     }
