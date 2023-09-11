@@ -11,7 +11,14 @@ public class WipTestsMust
 {
     [Theory]
     [InlineData("instr_timing/rom_singles/1-instr_timing.nes", 0x1, 2, "", Skip = "does nothing after Instruction timing test\n\nTakes about 25 seconds. Doesn't time the 8 branches and 12 illegal instructions.\n\n")]
-    [InlineData("branch_timing_tests/1.Branch_Basics.nes", 0x1, 1, "", Skip = "no output at all")]
+    [InlineData("branch_timing_tests/1.Branch_Basics.nes", 0xE4F0, 1, "", Skip = "no output at all")]
+    [InlineData("branch_timing_tests/2.Backward_Branch.nes", 0x1, 1, "", Skip = "no output at all")]
+    [InlineData("branch_timing_tests/3.Forward_Branch.nes", 0x1, 1, "", Skip = "no output at all")]
+    [InlineData("dmc_dma_during_read4/dma_2007_write.nes", 0x1, 2, "", Skip = "freezes at bit 0x10 / bne")]
+    [InlineData("dmc_dma_during_read4/dma_2007_read.nes", 0x1, 2, "", Skip = "freezes at bit 0x10 / bne")]
+    [InlineData("dmc_dma_during_read4/double_2007_read.nes", 0x1, 2, "", Skip = "freezes at sta 0, lda 0, jmp?")]
+    [InlineData("sprdma_and_dmc_dma/sprdma_and_dmc_dma.nes", 0x1, 2, "", Skip = "must implement dma, shows only first line")]
+    [InlineData("vbl_nmi_timing/1.frame_basics.nes", 0x1, 1, "", Skip = "no output at all")]
     public void BeExecutedCorrectly(string romName, int poweroffAddress, int expectedRomSize, string expectedResult)
     {
         var ram = new byte[0x10000];
