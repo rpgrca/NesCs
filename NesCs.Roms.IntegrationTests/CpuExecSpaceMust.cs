@@ -32,6 +32,7 @@ public class CpuExecSpaceMust
         var cpu = builder
             .Running(nesFile.ProgramRom)
             .WithClock(clock)
+            .WithClockDivisorOf(1)
             .SupportingInvalidInstructions()
             .WithRamController(ramController)
             .WithCallback(poweroffAddress, (cpu, _) => cpu.Stop())
