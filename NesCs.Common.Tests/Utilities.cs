@@ -9,7 +9,7 @@ public static class Utilities
 {
     public static Cpu6502 CreateSubjectUnderTestFromSample(SampleStatus initial, List<(int, byte, string)> trace)
     {
-        var ramController = new RamController.Builder().WithRamSizeOf(0x10000).Build();
+        var ramController = new RamController.Builder().WithoutMirroring().Build();
         var ppu = new DummyPpu();
         ramController.RegisterHook(ppu);
 
@@ -32,7 +32,7 @@ public static class Utilities
 
     public static Cpu6502 CreateSubjectUnderTestFromSampleForOpcodes(SampleStatus initial, ITracer tracer)
     {
-        var ramController = new RamController.Builder().WithRamSizeOf(0x10000).Build();
+        var ramController = new RamController.Builder().WithoutMirroring().Build();
         var ppu = new DummyPpu();
         ramController.RegisterHook(ppu);
 

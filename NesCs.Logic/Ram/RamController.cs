@@ -8,12 +8,24 @@ public class RamController : IRamController
         private byte[] _ram;
         private bool _makeRomReadWrite;
         private Dictionary<int, Action<int, byte>> _callbacks;
+        private Action<byte[], int, byte> _mirroring;
 
         public Builder()
         {
             _callbacks = new();
             _ram = Array.Empty<byte>();
             _makeRomReadWrite = true;
+            _mirroring = (r, i, v) =>
+            {
+                var offset = i & 0x07FF;
+                r[0x000 + offset] = r[0x0800 + offset] = r[0x1000 + offset] = r[0x1800 + offset] = v;
+            };
+        }
+
+        public Builder WithoutMirroring()
+        {
+            _mirroring = (r, i, v) => r[i] = v;
+            return this;
         }
 
         public Builder WithRamSizeOf(int size)
@@ -38,20 +50,22 @@ public class RamController : IRamController
         {
             _ramSize = _ramSize > 0? _ramSize : 0x10000;
             _ram = _ram.Length > 0? _ram : new byte[_ramSize];
-            return new RamController(_ram, _makeRomReadWrite, _callbacks);
+            return new RamController(_ram, _makeRomReadWrite, _callbacks, _mirroring);
         }
     }
 
     private readonly byte[] _ram;
     private readonly bool _makeRomReadWrite;
     private readonly Dictionary<int, Action<int, byte>> _callbacks;
+    private readonly Action<byte[], int, byte> _mirroring;
     private IRamHook? _ppuHook;
 
-    public RamController(byte[] ram, bool makeRomReadWrite, Dictionary<int, Action<int, byte>> callbacks)
+    public RamController(byte[] ram, bool makeRomReadWrite, Dictionary<int, Action<int, byte>> callbacks, Action<byte[], int, byte> mirroring)
     {
         _ram = ram;
         _makeRomReadWrite = makeRomReadWrite;
         _callbacks = callbacks;
+        _mirroring = mirroring;
     }
 
     public void RegisterHook(IRamHook hook) => _ppuHook = hook;
@@ -70,7 +84,14 @@ public class RamController : IRamController
 
             if (_makeRomReadWrite || index < 0x8000)
             {
-                _ram[index] = value;
+                if (index <= 0x1FFF)
+                {
+                    _mirroring(_ram, index, value);
+                }
+                else
+                {
+                    _ram[index] = value;
+                }
             }
 
             if (_ppuHook?.CanHandle(index) ?? false)
