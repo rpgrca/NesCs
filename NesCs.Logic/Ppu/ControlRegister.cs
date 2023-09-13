@@ -1,4 +1,4 @@
-using NesCs.Logic.Cpu;
+using NesCs.Logic.Nmi;
 using NesCs.Logic.Ram;
 
 namespace NesCs.Logic.Ppu;

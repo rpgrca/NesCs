@@ -1,5 +1,5 @@
 using System.Diagnostics;
-using NesCs.Logic.Cpu;
+using NesCs.Logic.Nmi;
 using NesCs.Logic.Cpu.Clocking;
 using NesCs.Logic.Ram;
 

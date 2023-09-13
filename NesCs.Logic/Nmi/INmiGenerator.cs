@@ -1,4 +1,4 @@
-namespace NesCs.Logic.Cpu;
+namespace NesCs.Logic.Nmi;
 
 public interface INmiGenerator
 {
