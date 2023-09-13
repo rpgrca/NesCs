@@ -49,6 +49,7 @@ public partial class Cpu6502 : IClockHook
         _resetVector = resetVector;
         _nmiVector = nmiVector;
         _irqVector = irqVector;
+        _nmiFlipFlop = -1;
         PC = _initialPC = pc;
         A = a;
         X = x;
