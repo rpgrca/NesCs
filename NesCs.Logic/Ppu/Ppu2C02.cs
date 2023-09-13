@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using NesCs.Logic.Cpu;
 using NesCs.Logic.Cpu.Clocking;
 using NesCs.Logic.Ram;
 
@@ -15,6 +16,7 @@ public class Ppu2C02 : IPpu
         private byte[]? _vram;
         private IRamController? _ramController;
         private IClock? _clock;
+        private INmiGenerator? _nmiGenerator;
 
         public Builder WithVram(byte[] vram)
         {
@@ -28,6 +30,12 @@ public class Ppu2C02 : IPpu
             return this;
         }
 
+        public Builder WithNmiGenerator(INmiGenerator nmiGenerator)
+        {
+            _nmiGenerator = nmiGenerator;
+            return this;
+        }
+
         public Builder WithRamController(IRamController ramController)
         {
             _ramController = ramController;
@@ -38,9 +46,10 @@ public class Ppu2C02 : IPpu
         {
             _vram ??= new byte[0x4000];
             _clock ??= new Clock(0);
+            _nmiGenerator ??= new DummyNmiGenerator();
             _ramController ??= new RamController.Builder().Build();
 
-            return new Ppu2C02(_ramController, _vram, _clock);
+            return new Ppu2C02(_ramController, _vram, _clock, _nmiGenerator);
         }
     }
 
@@ -51,6 +60,7 @@ public class Ppu2C02 : IPpu
     private bool _odd;
     private byte _nametableLatch;
     private byte _attributeLatch;
+    private readonly INmiGenerator _nmiGenerator;
 
     private RasterAddress Raster { get; }
     public ControlRegister PpuCtrl { get; }                 /* 0x2000 W  */
@@ -63,7 +73,7 @@ public class Ppu2C02 : IPpu
     public DataPort PpuData { get; }                        /* 0x2007 WR */
     public OamDmaRegister OamDma { get; }                   /* 0x4014 W  */
 
-    private Ppu2C02(IRamController ram, byte[] vram, IClock clock)
+    private Ppu2C02(IRamController ram, byte[] vram, IClock clock, INmiGenerator nmiGenerator)
     {
         _vram = vram;
 
@@ -72,11 +82,12 @@ public class Ppu2C02 : IPpu
         _ioBus = new PpuIOBus(clock);
         clock.AddPpu(this);
         _odd = false;
+        _nmiGenerator = nmiGenerator;
 
         Raster = new RasterAddress();
-        PpuCtrl = new ControlRegister(ram, _ioBus);
+        PpuCtrl = new ControlRegister(ram, _ioBus, _nmiGenerator);
         PpuMask = new Mask(ram, _ioBus);
-        PpuStatus = new Status(ram, _toggle, _ioBus);
+        PpuStatus = new Status(ram, _toggle, _ioBus, _nmiGenerator);
         OamAddr = new OamAddressPort(ram, _ioBus);
         PpuScroll = new ScrollingPositionRegister(ram, _toggle, _ioBus);
         OamData = new OamDataPort(OamAddr, PpuMask, Raster, _ioBus);

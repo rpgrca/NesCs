@@ -1,3 +1,4 @@
+using NesCs.Logic.Cpu;
 using NesCs.Logic.Cpu.Clocking;
 using NesCs.Logic.Ppu;
 using NesCs.Logic.Ram;
@@ -7,7 +8,7 @@ namespace NesCs.UnitTests.Ppu;
 public class StatusMust
 {
     private static Status CreateSubjectUnderTest() =>
-        new(new RamController.Builder().WithRamOf(new byte[0x2100]).Build(), new ByteToggle(), new PpuIOBus(new Clock(0)));
+        new(new RamController.Builder().WithRamOf(new byte[0x2100]).Build(), new ByteToggle(), new PpuIOBus(new Clock(0)), new DummyNmiGenerator());
 
     [Theory]
     [InlineData(0)]
@@ -59,7 +60,7 @@ public class StatusMust
     }
 
     private static Status CreateSubjectUnderTest(IByteToggle spy) =>
-        new(new RamController.Builder().WithRamOf(new byte[0x2100]).Build(), spy, new PpuIOBus(new Clock(0)));
+        new(new RamController.Builder().WithRamOf(new byte[0x2100]).Build(), spy, new PpuIOBus(new Clock(0)), new DummyNmiGenerator());
 
     [Fact]
     public void ResetToggler_WhenOpenBusIsRead()

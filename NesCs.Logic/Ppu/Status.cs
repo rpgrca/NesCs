@@ -1,3 +1,4 @@
+using NesCs.Logic.Cpu;
 using NesCs.Logic.Ram;
 
 namespace NesCs.Logic.Ppu;
@@ -8,6 +9,7 @@ public class Status
     private readonly IRamController _ramController;
     private readonly IByteToggle _toggle;
     private readonly IPpuIOBus _ioBus;
+    private readonly INmiGenerator _nmiGenerator;
 
     private byte Flags
     {
@@ -19,11 +21,12 @@ public class Status
         set => _ramController.DirectWriteTo(StatusIndex, value);
     }
 
-    public Status(IRamController ramController, IByteToggle toggle, IPpuIOBus ioBus)
+    public Status(IRamController ramController, IByteToggle toggle, IPpuIOBus ioBus, INmiGenerator nmiGenerator)
     {
         _ramController = ramController;
         _toggle = toggle;
         _ioBus = ioBus;
+        _nmiGenerator = nmiGenerator;
     }
 
     public byte OpenBus
@@ -73,8 +76,8 @@ public class Status
 
         set
         {
-            Flags = (byte)(Flags & ~(1 << 7));
-            Flags |= (byte)((value & 1) << 7);
+            Flags = (byte)((Flags & ~(1 << 7)) | ((value & 1) << 7));
+            _nmiGenerator.SetStatus(value);
         }
     }
 
