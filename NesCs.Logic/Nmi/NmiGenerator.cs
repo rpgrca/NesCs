@@ -10,8 +10,12 @@ public class NmiGenerator : INmiGenerator
 
     public void SetControl(byte value)
     {
-        _controlSet = value;
-        CheckForNmi();
+        // Shouldn't occur again if writing $80 when already enabled
+        if (_controlSet != value)
+        {
+            _controlSet = value;
+            CheckForNmi();
+        }
     }
 
     public void SetStatus(byte value)
