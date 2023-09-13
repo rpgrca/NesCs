@@ -40,6 +40,7 @@ public class OamReadMust
             .Build();
 
         cpu.PowerOn();
+        cpu.Reset();
         cpu.Run();
 
         var result = GetString(ram);

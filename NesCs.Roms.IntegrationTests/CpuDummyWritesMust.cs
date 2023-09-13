@@ -40,6 +40,7 @@ public class CpuDummyWritesMust
             .Build();
 
         cpu.PowerOn();
+        cpu.Reset();
         cpu.Run();
 
         var result = GetString(ram);

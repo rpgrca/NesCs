@@ -52,6 +52,7 @@ public class InstrTestv5Must
             .Build();
 
         cpu.PowerOn();
+        cpu.Reset();
         cpu.Run();
 
         var result = GetString(ram);

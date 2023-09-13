@@ -51,6 +51,7 @@ public class InstrTestv3Must
             .Build();
 
         cpu.PowerOn();
+        cpu.Reset();
         cpu.Run();
 
         var result = GetString(ram);
