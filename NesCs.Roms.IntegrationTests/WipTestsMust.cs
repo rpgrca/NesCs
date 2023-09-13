@@ -21,6 +21,10 @@ public class WipTestsMust
     [InlineData("sprdma_and_dmc_dma/sprdma_and_dmc_dma.nes", 0x1, 2, "", Skip = "must implement dma, shows only first line T+ Clocks (decimal)\n00 ")]
     [InlineData("vbl_nmi_timing/1.frame_basics.nes", 0x1, 1, "", Skip = "no output at all")]
     [InlineData("vbl_nmi_timing/2.vbl_timing.nes", 0x1, 1, "", Skip = "no output at all")]
+    [InlineData("cpu_interrupts_v2/rom_singles/1-cli_latency.nes", 0x1, 2, "", Skip = "\nAPU should generate IRQ when $4017 = $00\n\n1-cli_latency\n\nFailed #3\n")]
+    [InlineData("cpu_interrupts_v2/rom_singles/2-nmi_and_brk.nes", 0x1, 2, "", Skip = "NMI BRK 00\n27  36  00 \n27  36  00 \n26  36  00 \n26  36  00 \n26  36  00 \n26  36  00 \n26  36  00 \n27  36  00 \n27  36  00 \n27  36  00 \n\n78689450\n2-nmi_and_brk\n\nFailed\n")]
+    [InlineData("cpu_interrupts_v2/rom_singles/3-nmi_and_irq.nes", 0x1, 2, "", Skip = "NMI BRK\n23  00 \n23  00 \n21  00 \n21  00 \n20  00 \n20  00 \n20  00 \n20  00 \n00  00 \n00  00 \n00  00 \n00  00 \n\nF4561CE0\n3-nmi_and_irq\n\nFailed\n")]
+    [InlineData("cpu_interrupts_v2/rom_singles/4-irq_and_dma.nes", 0x1, 2, "", Skip = "53 +0\n53 +1\n53 +2\n53 +3\n53 +4\n53 +5\n53 +6\n53 +7\n53 +8\n53 +9\n53 +10\n53 +11\n53 +12\n53 +13\n...\n53 +524\n53 +525\n53 +526\n53 +527\n\nD927EAD0\n4-irq_and_dma\n\nFailed\n")]
     public void BeExecutedCorrectly(string romName, int poweroffAddress, int expectedRomSize, string expectedResult)
     {
         var ram = new byte[0x10000];
@@ -130,4 +134,54 @@ public class WipTestsMust
 
         return vram;
     }
+
+/*
+    [Theory]
+    [InlineData("cpu_flag_concurrency/test_cpu_flag_concurrency.nes", 0x1, 2, "", Skip = "hangs after some information")]
+    public void BeExecutedCorrectly1(string romName, int poweroffAddress, int expectedRomSize, string expectedResult)
+    {
+        var ram = new byte[0x10000];
+        var fsp = new FileSystemProxy.Builder().Loading(new NesFileOptions
+        {
+            LoadHeader = true,
+            LoadTrainer = true,
+            LoadProgramRom = true,
+            LoadCharacterRom = true
+        }).Build();
+
+        var nesFile = fsp.Load("../../../extra/" + romName);
+        var clock = new Clock(0, 300_000_000);
+        var ramController = new RamController.Builder().WithRamOf(ram).PreventRomRewriting().Build();
+        var nmiGenerator = new NmiGenerator();
+        var ppu = new Ppu2C02.Builder().WithRamController(ramController).WithClock(clock).WithNmiGenerator(nmiGenerator).Build();
+        ramController.RegisterHook(ppu);
+        ramController.AddHook(0xF0, (_, value) =>
+        {
+            System.Diagnostics.Debugger.Break();
+        });
+
+        var builder = new Cpu6502.Builder().ProgramMappedAt(0x8000);
+        if (nesFile.ProgramRomSize == 1)
+        {
+            builder.ProgramMappedAt(0xC000);
+        }
+        var cpu = builder
+            .Running(nesFile.ProgramRom)
+            .WithClock(clock)
+            .SupportingInvalidInstructions()
+            .WithRamController(ramController)
+            .WithCallback(poweroffAddress, (cpu, _) => cpu.Stop())
+            .TracingWith(new Vm6502DebuggerDisplay())
+            .Build();
+
+        nmiGenerator.AttachTo(cpu);
+        cpu.PowerOn();
+        cpu.Reset();
+        cpu.Run();
+
+        Assert.Equal(expectedRomSize, nesFile.ProgramRomSize);
+        var result = GetString(ram);
+        Assert.Equal(0, ram[0x6000]);
+        Assert.Equal(expectedResult, result);
+    }*/
 }
