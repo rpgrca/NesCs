@@ -6,7 +6,7 @@ public class RamController : IRamController
     {
         private int _ramSize;
         private byte[] _ram;
-        private bool _makeRomReadWrite;
+        private bool _makeRomWritable;
         private Dictionary<int, Action<int, byte>> _callbacks;
         private Action<byte[], int, byte> _mirroring;
 
@@ -14,7 +14,7 @@ public class RamController : IRamController
         {
             _callbacks = new();
             _ram = Array.Empty<byte>();
-            _makeRomReadWrite = true;
+            _makeRomWritable = true;
             _mirroring = (r, i, v) =>
             {
                 var offset = i & 0x07FF;
@@ -42,7 +42,7 @@ public class RamController : IRamController
 
         public Builder PreventRomRewriting()
         {
-            _makeRomReadWrite = false;
+            _makeRomWritable = false;
             return this;
         }
 
@@ -50,20 +50,20 @@ public class RamController : IRamController
         {
             _ramSize = _ramSize > 0? _ramSize : 0x10000;
             _ram = _ram.Length > 0? _ram : new byte[_ramSize];
-            return new RamController(_ram, _makeRomReadWrite, _callbacks, _mirroring);
+            return new RamController(_ram, _makeRomWritable, _callbacks, _mirroring);
         }
     }
 
     private readonly byte[] _ram;
-    private readonly bool _makeRomReadWrite;
+    private readonly bool _makeRomWritable;
     private readonly Dictionary<int, Action<int, byte>> _callbacks;
     private readonly Action<byte[], int, byte> _mirroring;
     private IRamHook? _ppuHook;
 
-    public RamController(byte[] ram, bool makeRomReadWrite, Dictionary<int, Action<int, byte>> callbacks, Action<byte[], int, byte> mirroring)
+    public RamController(byte[] ram, bool makeRomWritable, Dictionary<int, Action<int, byte>> callbacks, Action<byte[], int, byte> mirroring)
     {
         _ram = ram;
-        _makeRomReadWrite = makeRomReadWrite;
+        _makeRomWritable = makeRomWritable;
         _callbacks = callbacks;
         _mirroring = mirroring;
     }
@@ -82,21 +82,36 @@ public class RamController : IRamController
                 _callbacks[index](index, value);
             }
 
-            if (_makeRomReadWrite || index < 0x8000)
+            if (index <= 0x3FFF)
             {
                 if (index <= 0x1FFF)
                 {
                     _mirroring(_ram, index, value);
+                    return;
                 }
                 else
                 {
-                    _ram[index] = value;
+                    if (_ppuHook?.CanHandle(index) ?? false)
+                    {
+                        _ppuHook.Write(index, value);
+                        return;
+                    }
                 }
+
+                _ram[index] = value;
             }
 
-            if (_ppuHook?.CanHandle(index) ?? false)
+            if (index >= 0x8000)
             {
-                _ppuHook.Write(index, value);
+                if (_makeRomWritable)
+                {
+                    _ram[index] = value;
+                    return;
+                }
+            }
+            else
+            {
+                _ram[index] = value;
             }
         }
     }
