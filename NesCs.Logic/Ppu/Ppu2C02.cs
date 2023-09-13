@@ -143,7 +143,24 @@ public class Ppu2C02 : IPpu
         }
     }
 
-    void IPpuVram.Write(byte value) => _vram[CurrentAddress % 0x4000] = value;
+    void IPpuVram.Write(byte value)
+    {
+        if (CurrentAddress >= 0x3F00)
+        {
+            // TODO: Optimize with single palette
+            var offset = (CurrentAddress - 0x3F00) & 0x0F;
+            _vram[0x3F00 + offset] = _vram[0x3F10 + offset] = _vram[0x3F20 + offset] =
+            _vram[0x3F30 + offset] = _vram[0x3F40 + offset] = _vram[0x3F50 + offset] =
+            _vram[0x3F60 + offset] = _vram[0x3F70 + offset] = _vram[0x3F80 + offset] =
+            _vram[0x3F90 + offset] = _vram[0x3FA0 + offset] = _vram[0x3FB0 + offset] =
+            _vram[0x3FC0 + offset] = _vram[0x3FD0 + offset] = _vram[0x3FE0 + offset] =
+            _vram[0x3FF0 + offset] = value;
+        }
+        else
+        {
+            _vram[CurrentAddress] = value;
+        }
+    }
 
     byte IPpuVram.Read() => _vram[CurrentAddress % 0x4000];
 
