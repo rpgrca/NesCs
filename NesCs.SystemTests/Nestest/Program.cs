@@ -53,7 +53,6 @@ var cpu = builder
     .SupportingInvalidInstructions()
     .WithProgramCounterAs(0xC000) // 0xC000 -> nesttest batch, 0xC004 normal game
     //.WithProcessorStatusAs(ProcessorStatus.X | ProcessorStatus.I) -> Not for nestest
-    .WithStackPointerAt(0xFD)
     .WithClock(clock)
     .WithRamController(ramController)
     .TracingWith(new Vm6502DebuggerDisplay())
@@ -101,6 +100,7 @@ ramController.AddHook(0x2006, (a, v) => {
 });
 
 cpu.PowerOn();
+cpu.Reset();
 clock.Run();
 
 return 0;
