@@ -20,7 +20,7 @@ public class WipTestsMust
     [InlineData("dmc_dma_during_read4/double_2007_read.nes", 0x1, 2, "", Skip = "freezes at sta 0, lda 0, jmp?")]
     [InlineData("sprdma_and_dmc_dma/sprdma_and_dmc_dma.nes", 0x1, 2, "", Skip = "must implement dma, shows only first line T+ Clocks (decimal)\n00 ")]
     [InlineData("vbl_nmi_timing/1.frame_basics.nes", 0x1, 1, "", Skip = "no output at all")]
-    [InlineData("vbl_nmi_timing/2.vbl_timing.nes", 0x1, 1, "", Skip = "no output at all")]
+    [InlineData("vbl_nmi_timing/2.vbl_timing.nes", 0x1, 1, ""/*, Skip = "no output at all"*/)]
     public void BeExecutedCorrectly(string romName, int poweroffAddress, int expectedRomSize, string expectedResult)
     {
         var ram = new byte[0x10000];
