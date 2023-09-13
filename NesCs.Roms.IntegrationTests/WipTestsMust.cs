@@ -17,8 +17,9 @@ public class WipTestsMust
     [InlineData("dmc_dma_during_read4/dma_2007_write.nes", 0x1, 2, "", Skip = "freezes at bit 0x10 / bne")]
     [InlineData("dmc_dma_during_read4/dma_2007_read.nes", 0x1, 2, "", Skip = "freezes at bit 0x10 / bne")]
     [InlineData("dmc_dma_during_read4/double_2007_read.nes", 0x1, 2, "", Skip = "freezes at sta 0, lda 0, jmp?")]
-    [InlineData("sprdma_and_dmc_dma/sprdma_and_dmc_dma.nes", 0x1, 2, "", Skip = "must implement dma, shows only first line")]
+    [InlineData("sprdma_and_dmc_dma/sprdma_and_dmc_dma.nes", 0x1, 2, "", Skip = "must implement dma, shows only first line T+ Clocks (decimal)\n00 ")]
     [InlineData("vbl_nmi_timing/1.frame_basics.nes", 0x1, 1, "", Skip = "no output at all")]
+    [InlineData("vbl_nmi_timing/2.vbl_timing.nes", 0x1, 1, "", Skip = "no output at all")]
     public void BeExecutedCorrectly(string romName, int poweroffAddress, int expectedRomSize, string expectedResult)
     {
         var ram = new byte[0x10000];
@@ -33,8 +34,13 @@ public class WipTestsMust
         var nesFile = fsp.Load("../../../../../nes-test-roms/" + romName);
         var clock = new Clock(0);
         var ramController = new RamController.Builder().WithRamOf(ram).PreventRomRewriting().Build();
-        var ppu = new Ppu2C02.Builder().WithRamController(ramController).WithClock(clock).Build();
+        var nmiGenerator = new NmiGenerator();
+        var ppu = new Ppu2C02.Builder().WithRamController(ramController).WithClock(clock).WithNmiGenerator(nmiGenerator).Build();
         ramController.RegisterHook(ppu);
+        ramController.AddHook(0xF0, (_, value) =>
+        {
+            System.Diagnostics.Debugger.Break();
+        });
 
         var builder = new Cpu6502.Builder().ProgramMappedAt(0x8000);
         if (nesFile.ProgramRomSize == 1)
@@ -50,13 +56,15 @@ public class WipTestsMust
             .TracingWith(new Vm6502DebuggerDisplay())
             .Build();
 
+        nmiGenerator.AttachTo(cpu);
         cpu.PowerOn();
+        cpu.Reset();
         cpu.Run();
 
-        var result = GetString(ram);
         Assert.Equal(expectedRomSize, nesFile.ProgramRomSize);
-        Assert.Equal(0, ram[0x6000]);
+        var result = GetString(ram);
         Assert.Equal(expectedResult, result);
+        Assert.Equal(1, ram[0xF0]);
     }
 
     private static string GetString(byte[] ram) =>
