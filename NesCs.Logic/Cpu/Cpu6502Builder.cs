@@ -1,5 +1,5 @@
-using NesCs.Logic.Cpu.Clocking;
 using NesCs.Logic.Cpu.Instructions;
+using NesCs.Logic.Clocking;
 using NesCs.Logic.Ram;
 using NesCs.Logic.Tracing;
 

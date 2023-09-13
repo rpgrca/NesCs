@@ -3,7 +3,7 @@ using NesCs.Logic.Ppu;
 using NesCs.Logic.Nmi;
 using NesCs.Logic.Ram;
 using NesCs.Logic.File;
-using NesCs.Logic.Cpu.Clocking;
+using NesCs.Logic.Clocking;
 using NesCs.Logic.Tracing;
 
 namespace NesCs.Roms.IntegrationTests;

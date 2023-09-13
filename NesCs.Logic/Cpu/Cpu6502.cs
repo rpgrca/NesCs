@@ -1,6 +1,5 @@
 using System.Diagnostics;
-using System.Linq.Expressions;
-using NesCs.Logic.Cpu.Clocking;
+using NesCs.Logic.Clocking;
 using NesCs.Logic.Cpu.Instructions;
 using NesCs.Logic.Ram;
 using NesCs.Logic.Tracing;

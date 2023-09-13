@@ -1,6 +1,6 @@
 using System.Diagnostics;
 using NesCs.Logic.Nmi;
-using NesCs.Logic.Cpu.Clocking;
+using NesCs.Logic.Clocking;
 using NesCs.Logic.Ram;
 
 namespace NesCs.Logic.Ppu;

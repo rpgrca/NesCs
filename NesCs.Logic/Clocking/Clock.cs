@@ -1,6 +1,6 @@
 using System.Diagnostics;
 
-namespace NesCs.Logic.Cpu.Clocking;
+namespace NesCs.Logic.Clocking;
 
 [DebuggerDisplay("{_ticks}")]
 public class Clock : IClock
