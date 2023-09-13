@@ -19,7 +19,7 @@ public partial class Cpu6502 : IClockHook
     private int _previousCycles;
     private int _cycles;
     private bool _initialized;
-    private bool _nmiFlipFlop;
+    private int _nmiFlipFlop;
     private int _initialPC;
     private readonly int _resetVector;
     private readonly int _nmiVector;
@@ -105,9 +105,14 @@ public partial class Cpu6502 : IClockHook
                 _tracer.Display(instruction, instruction.PeekOperands(this), PC, A, X, Y, P, S, _previousCycles);
                 instruction.Execute(this);
 
-                if (_nmiFlipFlop)
+                if (_nmiFlipFlop == 0)
                 {
                     GenerateNmi();
+                    _nmiFlipFlop--;
+                }
+                else if (_nmiFlipFlop > 0)
+                {
+                    _nmiFlipFlop--;
                 }
             }
         }
@@ -164,7 +169,7 @@ public partial class Cpu6502 : IClockHook
         var high = ReadByteFromMemory(_nmiVector + 1);
         var address = high << 8 | low;
 
-        _nmiFlipFlop = false;
+        _nmiFlipFlop = -1;
         SetValueToProgramCounter(address);
     }
 
@@ -346,7 +351,7 @@ public partial class Cpu6502 : IClockHook
 
     public string GetStatus() => DebuggerDisplay;
 
-    internal void SetNmiFlipFlop() => _nmiFlipFlop = true;
+    internal void SetNmiFlipFlop() => _nmiFlipFlop = 1;
 
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private string DebuggerDisplay => $"{PC:X4} A:{A:X2} X:{X:X2} Y:{Y:X2} P:{(byte)P:X2} S:{S:X2} CYC:{_cycles}";
