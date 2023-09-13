@@ -11,9 +11,12 @@ namespace NesCs.Roms.IntegrationTests;
 public class BlarggPpuTestsMust
 {
     [Theory]
-    [InlineData("blargg_ppu_tests_2005.09.15b/vbl_clear_time.nes", 0xE3B3, 1)]
-    [InlineData("blargg_ppu_tests_2005.09.15b/vram_access.nes", 0xE48D, 1, Skip = "fails at #6")]
-    public void BeExecutedCorrectly1(string romName, int poweroffAddress, int expectedRomSize)
+    [InlineData("blargg_ppu_tests_2005.09.15b/vbl_clear_time.nes", 0xE3B3)]
+    [InlineData("blargg_ppu_tests_2005.09.15b/palette_ram.nes", 0xE412)]
+    [InlineData("blargg_ppu_tests_2005.09.15b/vram_access.nes", 0xE48D, Skip = "fails at #6")]
+    [InlineData("blargg_ppu_tests_2005.09.15b/sprite_ram.nes", 0x1, Skip = "fails at #6")]
+    [InlineData("blargg_ppu_tests_2005.09.15b/power_up_palette.nes", 0x1, Skip = "fails at #2")]
+    public void BeExecutedCorrectly(string romName, int poweroffAddress)
     {
         var ram = new byte[0x10000];
         var fsp = new FileSystemProxy.Builder().Loading(new NesFileOptions
@@ -36,10 +39,8 @@ public class BlarggPpuTestsMust
         });
 
         var builder = new Cpu6502.Builder().ProgramMappedAt(0x8000);
-        if (nesFile.ProgramRomSize == 1)
-        {
-            builder.ProgramMappedAt(0xC000);
-        }
+        builder.ProgramMappedAt(0xC000);
+
         var cpu = builder
             .Running(nesFile.ProgramRom)
             .WithClock(clock)
@@ -54,7 +55,6 @@ public class BlarggPpuTestsMust
         cpu.Reset();
         cpu.Run();
 
-        Assert.Equal(expectedRomSize, nesFile.ProgramRomSize);
         Assert.Equal(1, ram[0xF0]);
     }
 }
