@@ -29,9 +29,10 @@ public class BlarggPpuTestsMust
 
         var nesFile = fsp.Load("../../../../../nes-test-roms/" + romName);
         var clock = new Clock(0);
+        var rasterAddress = new RasterAddress();
         var ramController = new RamController.Builder().WithRamOf(ram).PreventRomRewriting().Build();
-        var nmiGenerator = new NmiGenerator();
-        var ppu = new Ppu2C02.Builder().WithRamController(ramController).WithClock(clock).WithNmiGenerator(nmiGenerator).Build();
+        var nmiGenerator = new NmiGenerator(clock, rasterAddress);
+        var ppu = new Ppu2C02.Builder().WithRamController(ramController).WithClock(clock).WithRaster(rasterAddress).WithNmiGenerator(nmiGenerator).Build();
         ramController.RegisterHook(ppu);
         ramController.AddHook(0xF0, (_, value) =>
         {
@@ -44,7 +45,6 @@ public class BlarggPpuTestsMust
         var cpu = builder
             .Running(nesFile.ProgramRom)
             .WithClock(clock)
-            .SupportingInvalidInstructions()
             .WithRamController(ramController)
             .WithCallback(poweroffAddress, (cpu, _) => cpu.Stop())
             .TracingWith(new Vm6502DebuggerDisplay())

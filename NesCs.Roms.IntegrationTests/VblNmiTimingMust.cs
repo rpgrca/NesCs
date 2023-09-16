@@ -8,13 +8,17 @@ using NesCs.Logic.Tracing;
 
 namespace NesCs.Roms.IntegrationTests;
 
-public class BranchTimingTestsMust
+public class VblNmiTimingMust
 {
     [Theory]
-    [InlineData("branch_timing_tests/1.Branch_Basics.nes", 0xE1B9, "BRANCH TIMING BASICSPASSED")]
-    [InlineData("branch_timing_tests/2.Backward_Branch.nes", 0xE17A, "BACKWARD BRANCH TIMINGPASSED")]
-    [InlineData("branch_timing_tests/3.Forward_Branch.nes", 0xE17C, "FORWARD BRANCH TIMINGPASSED")]
-    public void BeExecutedCorrectly(string romName, int printAddress, string expectedResult)
+    [InlineData("vbl_nmi_timing/1.frame_basics.nes", 0xE589, 0xE217, "", Skip = "PPU FRAME BASICSFAILED: #\06")]
+    [InlineData("vbl_nmi_timing/2.vbl_timing.nes", 0xE54F, 0xE208, "", Skip = "VBL TIMINGFAILED #8")]
+    [InlineData("vbl_nmi_timing/3.even_odd_frames.nes", 0xE59F, 0xE258, "", Skip = "EVEN ODD FRAMESFAILED #2")]
+    [InlineData("vbl_nmi_timing/4.vbl_clear_timing.nes", 0xE535, 0xE1D7, "", Skip = "VBL CLEAR TIMINGFAILED #3")]
+    [InlineData("vbl_nmi_timing/5.nmi_suppression.nes", 0xE54C, 0xE200, "", Skip = "NMI SUPPRESSIONFAILED #3")]
+    [InlineData("vbl_nmi_timing/6.nmi_disable.nes", 0xE535, 0xE1DA, "", Skip = "NMI DISABLEFAILED #2")]
+    [InlineData("vbl_nmi_timing/7.nmi_timing.nes", 0xE58E, 0xE247, "", Skip = "NMI TIMINGFAILED #5")]
+    public void BeExecutedCorrectly(string romName, int poweroffAddress, int printAddress, string expectedResult)
     {
         var ram = new byte[0x10000];
         var fsp = new FileSystemProxy.Builder().Loading(new NesFileOptions
@@ -32,6 +36,9 @@ public class BranchTimingTestsMust
         var nmiGenerator = new NmiGenerator(clock, rasterAddress);
         var ppu = new Ppu2C02.Builder().WithRamController(ramController).WithClock(clock).WithNmiGenerator(nmiGenerator).WithRaster(rasterAddress).Build();
         ramController.RegisterHook(ppu);
+        ramController.AddHook(0xF8, (i, b) => {
+            //System.Diagnostics.Debugger.Break();
+        });
 
         var builder = new Cpu6502.Builder().ProgramMappedAt(0x8000);
         builder.ProgramMappedAt(0xC000);
@@ -42,7 +49,7 @@ public class BranchTimingTestsMust
             .WithClock(clock)
             .SupportingInvalidInstructions()
             .WithRamController(ramController)
-            .WithCallback(0xE4F0, (cpu, _) => cpu.Stop())
+            .WithCallback(poweroffAddress, (cpu, _) => cpu.Stop())
             .WithCallback(printAddress, (cpu, _) =>
             {
                 message += (char)cpu.ReadByteFromAccumulator();

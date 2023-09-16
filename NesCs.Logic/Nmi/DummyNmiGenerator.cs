@@ -8,6 +8,10 @@ public class DummyNmiGenerator : INmiGenerator
     {
     }
 
+    public void IgnoreVblankThisFrame()
+    {
+    }
+
     public void Set()
     {
     }

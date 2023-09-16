@@ -25,12 +25,13 @@ public class PpuReadBufferMust
 
         var nesFile = fsp.Load("../../../../../nes-test-roms/" + romName);
         var clock = new Clock(0);
-        var nmiGenerator = new NmiGenerator();
+        var rasterAddress = new RasterAddress();
+        var nmiGenerator = new NmiGenerator(clock, rasterAddress);
         var ramController = new RamController.Builder()
             .WithRamOf(ram)
             .PreventRomRewriting()
             .Build();
-        var ppu = new Ppu2C02.Builder().WithRamController(ramController).WithClock(clock).WithNmiGenerator(nmiGenerator).Build();
+        var ppu = new Ppu2C02.Builder().WithRamController(ramController).WithClock(clock).WithNmiGenerator(nmiGenerator).WithRaster(rasterAddress).Build();
         ramController.RegisterHook(ppu);
         ramController.AddHook(0x6000, (i, b) => {
             System.Diagnostics.Debugger.Break();

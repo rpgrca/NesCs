@@ -16,8 +16,6 @@ public class WipTestsMust
     [InlineData("dmc_dma_during_read4/dma_2007_read.nes", 0x1, 2, "", Skip = "freezes at bit 0x10 / bne")]
     [InlineData("dmc_dma_during_read4/double_2007_read.nes", 0x1, 2, "", Skip = "freezes at sta 0, lda 0, jmp?")]
     [InlineData("sprdma_and_dmc_dma/sprdma_and_dmc_dma.nes", 0x1, 2, "", Skip = "must implement dma, shows only first line T+ Clocks (decimal)\n00 ")]
-    [InlineData("vbl_nmi_timing/1.frame_basics.nes", 0x1, 1, "", Skip = "no output at all")]
-    [InlineData("vbl_nmi_timing/2.vbl_timing.nes", 0x1, 1, "", Skip = "no output at all")]
     [InlineData("cpu_interrupts_v2/rom_singles/1-cli_latency.nes", 0x1, 2, "", Skip = "\nAPU should generate IRQ when $4017 = $00\n\n1-cli_latency\n\nFailed #3\n")]
     [InlineData("cpu_interrupts_v2/rom_singles/2-nmi_and_brk.nes", 0x1, 2, "", Skip = "NMI BRK 00\n27  36  00 \n27  36  00 \n26  36  00 \n26  36  00 \n26  36  00 \n26  36  00 \n26  36  00 \n27  36  00 \n27  36  00 \n27  36  00 \n\n78689450\n2-nmi_and_brk\n\nFailed\n")]
     [InlineData("cpu_interrupts_v2/rom_singles/3-nmi_and_irq.nes", 0x1, 2, "", Skip = "NMI BRK\n23  00 \n23  00 \n21  00 \n21  00 \n20  00 \n20  00 \n20  00 \n20  00 \n00  00 \n00  00 \n00  00 \n00  00 \n\nF4561CE0\n3-nmi_and_irq\n\nFailed\n")]
@@ -36,8 +34,9 @@ public class WipTestsMust
         var nesFile = fsp.Load("../../../../../nes-test-roms/" + romName);
         var clock = new Clock(0);
         var ramController = new RamController.Builder().WithRamOf(ram).PreventRomRewriting().Build();
-        var nmiGenerator = new NmiGenerator();
-        var ppu = new Ppu2C02.Builder().WithRamController(ramController).WithClock(clock).WithNmiGenerator(nmiGenerator).Build();
+        var rasterAddress = new RasterAddress();
+        var nmiGenerator = new NmiGenerator(clock, rasterAddress);
+        var ppu = new Ppu2C02.Builder().WithRamController(ramController).WithClock(clock).WithNmiGenerator(nmiGenerator).WithRaster(rasterAddress).Build();
         ramController.RegisterHook(ppu);
         ramController.AddHook(0xF0, (_, value) =>
         {
@@ -49,12 +48,18 @@ public class WipTestsMust
         {
             builder.ProgramMappedAt(0xC000);
         }
+
+        var message = string.Empty;
         var cpu = builder
             .Running(nesFile.ProgramRom)
             .WithClock(clock)
             .SupportingInvalidInstructions()
             .WithRamController(ramController)
             .WithCallback(poweroffAddress, (cpu, _) => cpu.Stop())
+            .WithCallback(0xE208, (cpu, _) =>
+            {
+                message += (char)cpu.ReadByteFromAccumulator();
+            })
             .TracingWith(new Vm6502DebuggerDisplay())
             .Build();
 
