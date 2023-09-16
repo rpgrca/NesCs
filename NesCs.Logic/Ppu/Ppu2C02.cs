@@ -2,7 +2,6 @@ using System.Diagnostics;
 using NesCs.Logic.Nmi;
 using NesCs.Logic.Clocking;
 using NesCs.Logic.Ram;
-using System.Security.Cryptography.X509Certificates;
 
 namespace NesCs.Logic.Ppu;
 
@@ -173,9 +172,6 @@ public class Ppu2C02 : IPpu
 
     byte IPpuVram.Read() => _vram[CurrentAddress % 0x4000];
 
-    private int _cycle;
-//    private StringBuilder _line = new StringBuilder();
-
     private IPpuLineStep[] _timing = new IPpuLineStep[]
     {
         new LoadNametableByteCycle1(),
@@ -187,229 +183,77 @@ public class Ppu2C02 : IPpu
         new LoadHighBackgroundTileByteCycle1(),
         new LoadHighBackgroundTileByteCycle2()
     };
-/*
+
     public bool Trigger(IClock clock)
     {
         if (clock.GetCycles() % MasterClockDivisor == 0)
         {
-            if (Raster.X == 0)
+            switch (Raster.X)
             {
-                if (_odd)
-                {
-                    _timing[1].Work(this);
-                }
-                else
-                {
-                    // idle
-                }
+                case 0:
+                    if (Raster.Y == 0)
+                    {
+                        _odd = !_odd;
+                    }
 
-                ClearCurrentOamByte();
-                Raster.IncrementX();
-                return true;
-            }
-            else if (Raster.X == 1)
-            {
-                if (Raster.Y == 241)
-                {
-                    PpuStatus.V = 1;
-                    _cycle = clock.GetCycles();
-                }
-                else if (Raster.Y == 261)
-                {
-                    PpuStatus.V = 0;
-                    PpuStatus.S = 0;
-                    PpuStatus.O = 0;
-                    _cycle = clock.GetCycles() - _cycle;
-                }
-
-                ClearCurrentOamByte();
-                _timing[0].Work(this);
-                Raster.IncrementX();
-                return true;
-            }
-            else if (Raster.X >= 2 && Raster.X <= 256)
-            {
-                var timing = _timing[(Raster.X - 1) % 6];
-                timing.Work(this);
-                Raster.IncrementX();
-
-                if (Raster.X < 63)
-                {
-                    ClearCurrentOamByte();
-                }
-                return true;
-            }
-            else if (Raster.X == 257)
-            {
-                Raster.IncrementX();
-                return true;
-            }
-            else if (Raster.X >= 258 && Raster.X <= 320)
-            {
-                // idle
-                Raster.IncrementX();
-                return true;
-            }
-            else if (Raster.X >= 321 && Raster.X <= 338)
-            {
-                var timing = _timing[(Raster.X - 1) % 6];
-                timing.Work(this);
-                Raster.IncrementX();
-                return true;
-            }
-            else if (Raster.X == 339)
-            {
-                if (_odd)
-                {
-                    Raster.BackToOrigin();
-                    _odd = false;
-                    return true;
-                }
-                else
-                {
-                    var timing = _timing[0];
-                    timing.Work(this);
                     Raster.IncrementX();
-                    return true;
-                }
-            }
-            else if (Raster.X == 340)
-            {
-                var timing = _timing[1];
-                timing.Work(this);
-                _odd = true;
-                Raster.IncrementX();
-                return true;
-            }
-        }
-
-        return false;
-    }
-*/
-
-        public bool Trigger(IClock clock)
-        {
-    //        string value;
-            if (clock.GetCycles() % 4 == 3)
-            {
-                switch (Raster.X)
-                {
-                    case 0:
-    //                    value = " idl |";
+                    break;
     
-                        if (Raster.Y == 0)
-                        {
-                            _odd = !_odd;
-    
-                            if (!_odd)
-                            {
-    //                            value = " skp |";
-                            }
-                        }
-    
-                        //_line.Append(value);
-                        Raster.IncrementX();
-                        break;
-    
-                    case 1:
-    //                    value = "     |";
-                        if (Raster.Y == 241)
-                        {
-                            PpuStatus.V = 1;
-                            _cycle = clock.GetCycles();
-    //                        value = " +vb |";
-                        }
-                        else
-                        {
-                            if (Raster.Y == 261)
-                            {
-                                PpuStatus.V = 0;
-                                PpuStatus.S = 0;
-                                PpuStatus.O = 0;
-                                _cycle = clock.GetCycles() - _cycle;
-    //                            value = " -vb |";
-                            }
-                        }
-    
-    //                    _line.Append(value);
-                        Raster.IncrementX();
-                        break;
-    
-                    case 339:
-    //                    _line.Append("     |");
-    
+                case 1:
+                    if (Raster.Y == 241)
+                    {
+                        PpuStatus.V = 1;
+                    }
+                    else
+                    {
                         if (Raster.Y == 261)
                         {
-                            if (_odd && (PpuMask.Lb == 1 || PpuMask.Ls == 1))
-                            {
-                                Raster.BackToOrigin();
-    //                        _line.Append("\n\n\n");
-    //                        System.IO.File.AppendAllText("/home/roberto/src/NesCs/ppu.log", _line.ToString());
-    //                        _line.Clear();
-                            }
-                            else
-                            {
-                                Raster.IncrementX();
-                            }
+                            PpuStatus.V = 0;
+                            PpuStatus.S = 0;
+                            PpuStatus.O = 0;
+                        }
+                    }
+    
+                    Raster.IncrementX();
+                    break;
+    
+                case 339:
+                    if (Raster.Y == 261)
+                    {
+                        if (_odd && (PpuMask.Lb + PpuMask.Ls > 0))
+                        {
+                            Raster.BackToOrigin();
                         }
                         else
                         {
                             Raster.IncrementX();
                         }
-                        break;
-    
-                    case 340:
-    //                    _line.Append("     |\n");
-    
-                        Raster.ResetX();
-                        Raster.IncrementY();
-                        if (Raster.Y >= LinesPerSync)
-                        {
-                            Raster.BackToOrigin();
-    //                        _line.Append("\n\n\n");
-                        }
-    
-    //                    System.IO.File.AppendAllText("/home/roberto/src/NesCs/ppu.log", _line.ToString());
-    //                    _line.Clear();
-                        break;
-    
-                    default:
-    //                    _line.Append("     |");
+                    }
+                    else
+                    {
                         Raster.IncrementX();
-                        break;
-                }
+                    }
+                    break;
     
-                return true;
+                case 340:
+                    Raster.ResetX();
+                    Raster.IncrementY();
+                    if (Raster.Y >= LinesPerSync)
+                    {
+                        Raster.BackToOrigin();
+                    }
+                    break;
     
-    
-    //                // On an NTSC machine, the VBL flag is cleared 6820 ppu cycles or exactly 20 scanlines after it is set.
-    //                if (Raster.Y == 20 && Raster.X == 0)
-    //                {
-    //                    PpuStatus.V = 0;
-    //                }
-    //                else
-    //                /* V set at 240?
-    //                if (_rasterY == 240)
-    //                {
-    //                    // CPU should be at around 29658
-    //                    //PpuStatus.V = 1;
-    //                }
-    //                else*/
-    //                {
-    //                    if (Raster.Y >= LinesPerSync)
-    //                    {
-    //                        PpuStatus.V = 1;
-    //                        Raster.ResetY();
-    //                        _currentCycle = (_currentCycle + 1) % 2;
-    //                    }
-    //                }
-                //}
-    
-                return true;
+                default:
+                    Raster.IncrementX();
+                    break;
             }
     
-            return false;
+            return true;
         }
+    
+        return false;
+    }
 
     public string GetStatus() => DebuggerDisplay;
 
