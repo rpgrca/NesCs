@@ -2,6 +2,7 @@ using System.Diagnostics;
 using NesCs.Logic.Nmi;
 using NesCs.Logic.Clocking;
 using NesCs.Logic.Ram;
+using System.Security.Cryptography.X509Certificates;
 
 namespace NesCs.Logic.Ppu;
 
@@ -17,6 +18,7 @@ public class Ppu2C02 : IPpu
         private IRamController? _ramController;
         private IClock? _clock;
         private INmiGenerator? _nmiGenerator;
+        private RasterAddress? _rasterAddress;
 
         public Builder WithVram(byte[] vram)
         {
@@ -27,6 +29,12 @@ public class Ppu2C02 : IPpu
         public Builder WithClock(IClock clock)
         {
             _clock = clock;
+            return this;
+        }
+
+        public Builder WithRaster(RasterAddress rasterAddress)
+        {
+            _rasterAddress = rasterAddress;
             return this;
         }
 
@@ -46,10 +54,11 @@ public class Ppu2C02 : IPpu
         {
             _vram ??= new byte[0x4000];
             _clock ??= new Clock(0);
+            _rasterAddress ??= new RasterAddress();
             _nmiGenerator ??= new DummyNmiGenerator();
             _ramController ??= new RamController.Builder().Build();
 
-            return new Ppu2C02(_ramController, _vram, _clock, _nmiGenerator);
+            return new Ppu2C02(_ramController, _vram, _clock, _nmiGenerator, _rasterAddress);
         }
     }
 
@@ -73,7 +82,7 @@ public class Ppu2C02 : IPpu
     public DataPort PpuData { get; }                        /* 0x2007 WR */
     public OamDmaRegister OamDma { get; }                   /* 0x4014 W  */
 
-    private Ppu2C02(IRamController ram, byte[] vram, IClock clock, INmiGenerator nmiGenerator)
+    private Ppu2C02(IRamController ram, byte[] vram, IClock clock, INmiGenerator nmiGenerator, RasterAddress rasterAddress)
     {
         _vram = vram;
 
@@ -84,10 +93,10 @@ public class Ppu2C02 : IPpu
         _odd = false;
         _nmiGenerator = nmiGenerator;
 
-        Raster = new RasterAddress();
+        Raster = rasterAddress;
         PpuCtrl = new ControlRegister(ram, _ioBus, _nmiGenerator);
         PpuMask = new Mask(ram, _ioBus);
-        PpuStatus = new Status(ram, _toggle, _ioBus, _nmiGenerator);
+        PpuStatus = new Status(ram, _toggle, _ioBus, _nmiGenerator, Raster);
         OamAddr = new OamAddressPort(ram, _ioBus);
         PpuScroll = new ScrollingPositionRegister(ram, _toggle, _ioBus);
         OamData = new OamDataPort(OamAddr, PpuMask, Raster, _ioBus);
@@ -281,7 +290,7 @@ public class Ppu2C02 : IPpu
         public bool Trigger(IClock clock)
         {
     //        string value;
-            if (clock.GetCycles() % 4 == 0)
+            if (clock.GetCycles() % 4 == 3)
             {
                 switch (Raster.X)
                 {
@@ -329,13 +338,19 @@ public class Ppu2C02 : IPpu
                     case 339:
     //                    _line.Append("     |");
     
-                        if (Raster.Y == 261 && _odd)
+                        if (Raster.Y == 261)
                         {
-                            Raster.ResetX();
-                            Raster.ResetY();
+                            if (_odd && (PpuMask.Lb == 1 || PpuMask.Ls == 1))
+                            {
+                                Raster.BackToOrigin();
     //                        _line.Append("\n\n\n");
     //                        System.IO.File.AppendAllText("/home/roberto/src/NesCs/ppu.log", _line.ToString());
     //                        _line.Clear();
+                            }
+                            else
+                            {
+                                Raster.IncrementX();
+                            }
                         }
                         else
                         {
@@ -350,7 +365,7 @@ public class Ppu2C02 : IPpu
                         Raster.IncrementY();
                         if (Raster.Y >= LinesPerSync)
                         {
-                            Raster.ResetY();
+                            Raster.BackToOrigin();
     //                        _line.Append("\n\n\n");
                         }
     
