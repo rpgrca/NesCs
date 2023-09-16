@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using NesCs.Logic.Nmi;
 using NesCs.Logic.Ram;
 
@@ -10,6 +11,7 @@ public class Status
     private readonly IByteToggle _toggle;
     private readonly IPpuIOBus _ioBus;
     private readonly INmiGenerator _nmiGenerator;
+    private readonly RasterAddress _raster;
 
     private byte Flags
     {
@@ -21,12 +23,13 @@ public class Status
         set => _ramController.DirectWriteTo(StatusIndex, value);
     }
 
-    public Status(IRamController ramController, IByteToggle toggle, IPpuIOBus ioBus, INmiGenerator nmiGenerator)
+    public Status(IRamController ramController, IByteToggle toggle, IPpuIOBus ioBus, INmiGenerator nmiGenerator, RasterAddress raster)
     {
         _ramController = ramController;
         _toggle = toggle;
         _ioBus = ioBus;
         _nmiGenerator = nmiGenerator;
+        _raster = raster;
     }
 
     public byte OpenBus
@@ -73,7 +76,6 @@ public class Status
             V = 0;
             return result;
         }
-
         set
         {
             Flags = (byte)((Flags & ~(1 << 7)) | ((value & 1) << 7));
@@ -91,6 +93,22 @@ public class Status
         _toggle.Reset();
         var result = Flags;
         V = 0;
+
+        if (_raster.IsVblSetNextCycle())
+        {
+            Debug.Print("> Reading $2002 1 cycle before ");
+            result = (byte)(result & ~(1 << 7));
+            _nmiGenerator.SetStatus(0);
+            _nmiGenerator.IgnoreVblankThisFrame();
+        }
+        else if (_raster.IsVblJustSet())
+        {
+            Debug.Print("> Reading $2002 in same cycle or the cycle immediately after");
+            result = (byte)(result | (1 << 7));
+            _nmiGenerator.SetStatus(0);
+            _nmiGenerator.IgnoreVblankThisFrame();
+        }
+
         return result;
     }
 }
