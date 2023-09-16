@@ -96,14 +96,12 @@ public class Status
 
         if (_raster.IsVblSetNextCycle())
         {
-            Debug.Print("> Reading $2002 1 cycle before ");
             result = (byte)(result & ~(1 << 7));
             _nmiGenerator.SetStatus(0);
             _nmiGenerator.IgnoreVblankThisFrame();
         }
         else if (_raster.IsVblJustSet())
         {
-            Debug.Print("> Reading $2002 in same cycle or the cycle immediately after");
             result = (byte)(result | (1 << 7));
             _nmiGenerator.SetStatus(0);
             _nmiGenerator.IgnoreVblankThisFrame();
