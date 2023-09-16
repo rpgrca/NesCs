@@ -105,7 +105,7 @@ public partial class Cpu6502 : IClockHook
                 var instruction = _instructions[ReadByteFromProgram()];
                 _tracer.Display(instruction, instruction.PeekOperands(this), PC, A, X, Y, P, S, _previousCycles);
                 instruction.Execute(this);
-
+                
                 if (_nmiFlipFlop == 0)
                 {
                     GenerateNmi();
@@ -169,6 +169,8 @@ public partial class Cpu6502 : IClockHook
 
         var high = ReadByteFromMemory(_nmiVector + 1);
         var address = high << 8 | low;
+
+        _ = ReadByteFromMemory(address);
 
         _nmiFlipFlop = -1;
         SetValueToProgramCounter(address);
