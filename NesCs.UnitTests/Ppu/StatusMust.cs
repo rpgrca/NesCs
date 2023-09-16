@@ -8,7 +8,7 @@ namespace NesCs.UnitTests.Ppu;
 public class StatusMust
 {
     private static Status CreateSubjectUnderTest() =>
-        new(new RamController.Builder().WithRamOf(new byte[0x2100]).Build(), new ByteToggle(), new PpuIOBus(new Clock(0)), new DummyNmiGenerator());
+        new(new RamController.Builder().WithRamOf(new byte[0x2100]).Build(), new ByteToggle(), new PpuIOBus(new Clock(0)), new DummyNmiGenerator(), new RasterAddress());
 
     [Theory]
     [InlineData(0)]
@@ -60,7 +60,7 @@ public class StatusMust
     }
 
     private static Status CreateSubjectUnderTest(IByteToggle spy) =>
-        new(new RamController.Builder().WithRamOf(new byte[0x2100]).Build(), spy, new PpuIOBus(new Clock(0)), new DummyNmiGenerator());
+        new(new RamController.Builder().WithRamOf(new byte[0x2100]).Build(), spy, new PpuIOBus(new Clock(0)), new DummyNmiGenerator(), new RasterAddress());
 
     [Fact]
     public void ResetToggler_WhenOpenBusIsRead()
