@@ -195,13 +195,21 @@ public class Ppu2C02 : IPpu
                     {
                         _odd = !_odd;
                     }
+                    else
+                    {
+                        if (Raster.Y == 241)
+                        {
+                            PpuStatus.ForNextVblank(1);
+                        }
+                    }
 
                     Raster.IncrementX();
                     break;
-    
+
                 case 1:
                     if (Raster.Y == 241)
                     {
+                        PpuStatus.ForNextVblank(0);
                         PpuStatus.V = 1;
                     }
                     else
@@ -217,6 +225,14 @@ public class Ppu2C02 : IPpu
                     Raster.IncrementX();
                     break;
     
+                case 2:
+                    if (Raster.Y == 241)
+                    {
+                        PpuStatus.ForNextVblank(-1);
+                    }
+                    Raster.IncrementX();
+                    break;
+
                 case 339:
                     if (Raster.Y == 261)
                     {

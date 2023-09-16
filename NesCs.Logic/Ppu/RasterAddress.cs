@@ -24,9 +24,5 @@ public class RasterAddress
 
     internal void IncrementY() => Y++;
 
-    internal bool IsVblSetNextCycle() => Y == 241 && X == 0;
-
-    internal bool IsVblJustSet() => Y == 241 && (X == 1 || X == 2);
-
     internal void IgnoreVblankThisFrame() => IgnoringVblank = true;
 }

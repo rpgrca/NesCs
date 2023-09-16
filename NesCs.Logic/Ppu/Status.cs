@@ -12,6 +12,7 @@ public class Status
     private readonly IPpuIOBus _ioBus;
     private readonly INmiGenerator _nmiGenerator;
     private readonly RasterAddress _raster;
+    private int _forNextVblank;
 
     private byte Flags
     {
@@ -30,6 +31,7 @@ public class Status
         _ioBus = ioBus;
         _nmiGenerator = nmiGenerator;
         _raster = raster;
+        _forNextVblank = 100;
     }
 
     public byte OpenBus
@@ -94,19 +96,30 @@ public class Status
         var result = Flags;
         V = 0;
 
-        if (_raster.IsVblSetNextCycle())
+        if (_forNextVblank == 1)
         {
             result = (byte)(result & ~(1 << 7));
             _nmiGenerator.SetStatus(0);
             _nmiGenerator.IgnoreVblankThisFrame();
         }
-        else if (_raster.IsVblJustSet())
+        else if (_forNextVblank == 0)
         {
-            result = (byte)(result | (1 << 7));
+            result = (byte)(result & ~(1 << 7));
+            _nmiGenerator.SetStatus(0);
+            _nmiGenerator.IgnoreVblankThisFrame();
+        }
+        else if (_forNextVblank == -1)
+        {
             _nmiGenerator.SetStatus(0);
             _nmiGenerator.IgnoreVblankThisFrame();
         }
 
+        _forNextVblank = 100;
         return result;
+    }
+
+    internal void ForNextVblank(int v)
+    {
+        _forNextVblank = v;
     }
 }
