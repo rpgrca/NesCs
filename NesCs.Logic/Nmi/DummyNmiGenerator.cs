@@ -2,17 +2,11 @@ namespace NesCs.Logic.Nmi;
 
 public class DummyNmiGenerator : INmiGenerator
 {
-    public bool Generated => false;
-
-    public void Clear()
+    public void CancelInterrupt()
     {
     }
 
     public void IgnoreVblankThisFrame()
-    {
-    }
-
-    public void Set()
     {
     }
 

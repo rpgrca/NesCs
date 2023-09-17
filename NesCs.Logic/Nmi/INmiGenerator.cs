@@ -5,4 +5,5 @@ public interface INmiGenerator
     void IgnoreVblankThisFrame();
     void SetControl(byte value);
     void SetStatus(byte value);
+    void CancelInterrupt();
 }

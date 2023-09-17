@@ -50,6 +50,8 @@ public class NmiGenerator : INmiGenerator
         }
     }
 
+    public void CancelInterrupt() => _cpu?.CancelNmiFlipFlop();
+
     public void AttachTo(Cpu6502 cpu) => _cpu = cpu;
 
     public void IgnoreVblankThisFrame() => _rasterAddress.IgnoreVblankThisFrame();
