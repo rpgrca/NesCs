@@ -8,7 +8,6 @@ namespace NesCs.Logic.Ppu;
 [DebuggerDisplay("{DebuggerDisplay,nq}")]
 public class Ppu2C02 : IPpu
 {
-    // TODO: Should only skip, not change cycle amount
     private const int LinesPerSync = 262;
 
     public class Builder
@@ -188,12 +187,14 @@ public class Ppu2C02 : IPpu
     {
         if (clock.GetCycles() % MasterClockDivisor == 0)
         {
+            PpuStatus.ForNextVblank(100);
             switch (Raster.X)
             {
                 case 0:
                     if (Raster.Y == 0)
                     {
                         _odd = !_odd;
+                        PpuStatus.ResetIgnoreV();
                     }
                     else
                     {
@@ -252,11 +253,14 @@ public class Ppu2C02 : IPpu
                     break;
     
                 case 340:
-                    Raster.ResetX();
-                    Raster.IncrementY();
-                    if (Raster.Y >= LinesPerSync)
+                    if (Raster.Y >= 261)
                     {
                         Raster.BackToOrigin();
+                    }
+                    else
+                    {
+                        Raster.IncrementY();
+                        Raster.ResetX();
                     }
                     break;
     
