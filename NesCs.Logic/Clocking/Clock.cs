@@ -42,8 +42,8 @@ public class Clock : IClock
         var cpuText = _callbacks[0].GetStatus();
         var ppuText = _callbacks[1]?.GetStatus();
 
-        var canRefresh = _callbacks[0].Trigger(this);
         _callbacks[1]?.Trigger(this);
+        var canRefresh = _callbacks[0].Trigger(this);
 
         /*if (canRefresh)
         {
