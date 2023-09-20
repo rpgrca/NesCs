@@ -187,7 +187,7 @@ public class Ppu2C02 : IPpu
     {
         if (clock.GetCycles() % MasterClockDivisor == 0)
         {
-            PpuStatus.ForNextVblank(100);
+            PpuStatus.DecrementTimerForNextVblank();
             switch (Raster.X)
             {
                 case 0:
@@ -195,13 +195,7 @@ public class Ppu2C02 : IPpu
                     {
                         _odd = !_odd;
                         PpuStatus.ResetIgnoreV();
-                    }
-                    else
-                    {
-                        if (Raster.Y == 241)
-                        {
-                            PpuStatus.ForNextVblank(1);
-                        }
+                        PpuStatus.ResetTimerForNextVblank();
                     }
 
                     Raster.IncrementX();
@@ -210,7 +204,6 @@ public class Ppu2C02 : IPpu
                 case 1:
                     if (Raster.Y == 241)
                     {
-                        PpuStatus.ForNextVblank(0);
                         PpuStatus.V = 1;
                     }
                     else
@@ -226,14 +219,6 @@ public class Ppu2C02 : IPpu
                     Raster.IncrementX();
                     break;
     
-                case 2:
-                    if (Raster.Y == 241)
-                    {
-                        PpuStatus.ForNextVblank(-1);
-                    }
-                    Raster.IncrementX();
-                    break;
-
                 case 339:
                     if (Raster.Y == 261)
                     {
@@ -268,7 +253,6 @@ public class Ppu2C02 : IPpu
                     Raster.IncrementX();
                     break;
             }
-    
             return true;
         }
     

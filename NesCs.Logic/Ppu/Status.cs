@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using NesCs.Logic.Nmi;
 using NesCs.Logic.Ram;
 
@@ -13,6 +12,7 @@ public class Status
     private readonly INmiGenerator _nmiGenerator;
     private readonly RasterAddress _raster;
     private int _forNextVblank;
+    private bool _ignoreV;
 
     private byte Flags
     {
@@ -75,13 +75,18 @@ public class Status
         {
             _toggle.Reset();
             var result = (byte)((Flags >> 7) & 1);
-            V = 0;
+            Flags = (byte)(Flags & ~(1 << 7));
+            _nmiGenerator.SetStatus(0);
             return result;
         }
         set
         {
-            Flags = (byte)((Flags & ~(1 << 7)) | ((value & 1) << 7));
-            _nmiGenerator.SetStatus(value);
+            if (! _ignoreV)
+            {
+                Flags = (byte)(Flags & ~(1 << 7));
+                Flags |= (byte)((value & 1) << 7);
+                _nmiGenerator.SetStatus(value);
+            }
         }
     }
 
@@ -94,32 +99,46 @@ public class Status
     {
         _toggle.Reset();
         var result = Flags;
-        V = 0;
 
-        if (_forNextVblank == 1)
+        if (_forNextVblank == 3)
         {
             result = (byte)(result & ~(1 << 7));
             _nmiGenerator.SetStatus(0);
             _nmiGenerator.IgnoreVblankThisFrame();
+            _ignoreV = true;
         }
-        else if (_forNextVblank == 0)
+        else if (_forNextVblank == 2)
         {
-            result = (byte)(result & ~(1 << 7));
+            result = (byte)(result | (1 << 7));
             _nmiGenerator.SetStatus(0);
-            _nmiGenerator.IgnoreVblankThisFrame();
+            _nmiGenerator.CancelInterrupt();
         }
-        else if (_forNextVblank == -1)
+        else if (_forNextVblank == 1)
         {
+            result = (byte)(result | (1 << 7));
             _nmiGenerator.SetStatus(0);
-            _nmiGenerator.IgnoreVblankThisFrame();
+            _nmiGenerator.CancelInterrupt();
+        }
+        else
+        {
+            V = 0;
         }
 
-        _forNextVblank = 100;
         return result;
     }
 
-    internal void ForNextVblank(int v)
+    internal void ResetIgnoreV()
     {
-        _forNextVblank = v;
+        _ignoreV = false;
+    }
+
+    internal void ResetTimerForNextVblank()
+    {
+        _forNextVblank = (241 * 341) + 1;
+    }
+
+    internal void DecrementTimerForNextVblank()
+    {
+        _forNextVblank--;
     }
 }

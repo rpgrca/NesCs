@@ -49,7 +49,6 @@ public partial class Cpu6502 : IClockHook
         _resetVector = resetVector;
         _nmiVector = nmiVector;
         _irqVector = irqVector;
-        _nmiFlipFlop = -1;
         PC = _initialPC = pc;
         A = a;
         X = x;
@@ -62,6 +61,7 @@ public partial class Cpu6502 : IClockHook
         _cycles = _previousCycles = _clock.GetCycles() % MasterClockDivisor;
         _instructions = instructions;
         _tracer = tracer;
+        _nmiFlipFlop = -1;
     }
 
     public void PowerOn()
@@ -102,19 +102,39 @@ public partial class Cpu6502 : IClockHook
 
             if (! _clock.Aborted)
             {
-                var instruction = _instructions[ReadByteFromProgram()];
-                _tracer.Display(instruction, instruction.PeekOperands(this), PC, A, X, Y, P, S, _previousCycles);
-                instruction.Execute(this);
-                
                 if (_nmiFlipFlop == 0)
                 {
                     GenerateNmi();
-                    _nmiFlipFlop--;
                 }
                 else if (_nmiFlipFlop > 0)
                 {
                     _nmiFlipFlop--;
                 }
+
+
+                var instruction = _instructions[ReadByteFromProgram()];
+                _tracer.Display(instruction, instruction.PeekOperands(this), PC, A, X, Y, P, S, _previousCycles);
+                instruction.Execute(this);
+
+
+
+/*
+                if (NmiFlipFlop == 0)
+                {
+                    GenerateNmi();
+                }
+                else
+                {
+                    var instruction = _instructions[ReadByteFromProgram()];
+                    _tracer.Display(instruction, instruction.PeekOperands(this), PC, A, X, Y, P, S, _previousCycles);
+                    instruction.Execute(this);
+
+                    if (NmiFlipFlop > 0)
+                    {
+                        NmiFlipFlop--;
+                    }
+                }*/
+
             }
         }
     }
@@ -354,7 +374,18 @@ public partial class Cpu6502 : IClockHook
 
     public string GetStatus() => DebuggerDisplay;
 
-    internal void SetNmiFlipFlop() => _nmiFlipFlop = 1;
+    internal void SetNmiFlipFlop()
+    {
+        _nmiFlipFlop = 1;
+    }
+
+    internal void CancelNmiFlipFlop()
+    {
+        if (_nmiFlipFlop != -1)
+        {
+            _nmiFlipFlop = -1;
+        }
+    }
 
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private string DebuggerDisplay => $"{PC:X4} A:{A:X2} X:{X:X2} Y:{Y:X2} P:{(byte)P:X2} S:{S:X2} CYC:{_cycles}";
