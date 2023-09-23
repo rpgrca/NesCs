@@ -31,6 +31,12 @@ public static class Utilities
             .WithRamOf(ram)
             .Build();
 
+    private static IRamController CreateRomController(byte[] ram) =>
+        new RamController.Builder()
+            .WithRamOf(ram)
+            .PreventRomRewriting()
+            .Build();
+
     private static IPpu CreatePpu(IClock clock, IRamController ramController, INmiGenerator nmiGenerator)
     {
         var ppu = new Ppu2C02.Builder()
@@ -126,4 +132,19 @@ public static class Utilities
         return clock;
     }
 
+    public static IClock CreateSetupWithRom(byte[] ram, string romName, int powerOffAddress)
+    {
+        var clock = new Clock(0);
+        var nesFile = LoadNesFile(romName);
+        var ramController = CreateRomController(ram);
+        var rasterAddress = new RasterAddress();
+        var nmiGenerator = new NmiGenerator(clock, rasterAddress);
+        var ppu = CreatePpu(clock, ramController, nmiGenerator);
+        var cpu = CreateCpuWith(clock, nesFile, ramController, powerOffAddress);
+        nmiGenerator.AttachTo(cpu);
+
+        cpu.PowerOn();
+        cpu.Reset();
+        return clock;
+    }
 }
