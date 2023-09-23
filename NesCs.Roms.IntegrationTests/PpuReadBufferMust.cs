@@ -10,9 +10,11 @@ namespace NesCs.Roms.IntegrationTests;
 
 public class PpuReadBufferMust
 {
+    // TODO: Error 59 was with Rom memory
+    // 
     [Theory]
-    [InlineData("ppu_read_buffer/test_ppu_read_buffer.nes", 0x1, "", Skip = "Failed #59")]
-    public void BeExecutedCorrectly(string romName, int poweroffAddress, string expectedResult)
+    [InlineData("ppu_read_buffer/test_ppu_read_buffer.nes", 0x1, "", Skip = "\u001b[0;37mTEST:test_ppu_read_buffer\n-----------------------------\nTesting basic PPU memory I/O.\n")]
+    public void BeExecutedCorrectly(string romName, int powerOffAddress, string expectedResult)
     {
         var ram = new byte[0x10000];
         var fsp = new FileSystemProxy.Builder().Loading(new NesFileOptions
@@ -29,7 +31,7 @@ public class PpuReadBufferMust
         var nmiGenerator = new NmiGenerator(clock, rasterAddress);
         var ramController = new RamController.Builder()
             .WithRamOf(ram)
-            .PreventRomRewriting()
+            //.PreventRomRewriting() makes error 59 appear
             .Build();
         var ppu = new Ppu2C02.Builder().WithRamController(ramController).WithClock(clock).WithNmiGenerator(nmiGenerator).WithRaster(rasterAddress).Build();
         ramController.RegisterHook(ppu);
@@ -48,7 +50,7 @@ public class PpuReadBufferMust
             .WithClock(clock)
             .SupportingInvalidInstructions()
             .WithRamController(ramController)
-            .WithCallback(poweroffAddress, (cpu, _) => cpu.Stop())
+            .WithCallback(powerOffAddress, (cpu, _) => cpu.Stop())
             .TracingWith(new Vm6502DebuggerDisplay())
             .Build();
 

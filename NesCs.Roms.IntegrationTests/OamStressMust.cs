@@ -13,6 +13,7 @@ public class OamStressMust
     [InlineData("oam_stress/oam_stress.nes", 0xE755, "----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n----------------\n\noam_stress\n\nPassed\n")]
     public void BeExecutedCorrectly(string romName, int poweroffAddress, string expectedResult)
     {
+        // TODO: Using common setup makes test take 58 seconds instead of 37
         var ram = new byte[0x10000];
         var fsp = new FileSystemProxy.Builder().Loading(new NesFileOptions
         {
