@@ -32,7 +32,14 @@ public class BlarggPpuTestsMust
         var rasterAddress = new RasterAddress();
         var ramController = new RamController.Builder().WithRamOf(ram).PreventRomRewriting().Build();
         var nmiGenerator = new NmiGenerator(clock, rasterAddress);
-        var ppu = new Ppu2C02.Builder().WithRamController(ramController).WithClock(clock).WithRaster(rasterAddress).WithNmiGenerator(nmiGenerator).Build();
+        var ppu = new Ppu2C02.Builder()
+            .WithRamController(ramController)
+            .WithClock(clock)
+            .WithRaster(rasterAddress)
+            .WithNmiGenerator(nmiGenerator)
+            .WithClockDivisorOf(1)
+            .Build();
+
         ramController.RegisterHook(ppu);
         ramController.AddHook(0xF0, (_, value) =>
         {
@@ -47,6 +54,7 @@ public class BlarggPpuTestsMust
             .WithClock(clock)
             .WithRamController(ramController)
             .WithCallback(poweroffAddress, (cpu, _) => cpu.Stop())
+            .WithClockDivisorOf(3)
             .TracingWith(new Vm6502DebuggerDisplay())
             .Build();
 
