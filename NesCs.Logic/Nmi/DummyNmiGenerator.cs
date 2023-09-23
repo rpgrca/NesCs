@@ -1,7 +1,13 @@
+using NesCs.Logic.Cpu;
+
 namespace NesCs.Logic.Nmi;
 
 public class DummyNmiGenerator : INmiGenerator
 {
+    public void AttachTo(Cpu6502 cpu)
+    {
+    }
+
     public void CancelInterrupt()
     {
     }
