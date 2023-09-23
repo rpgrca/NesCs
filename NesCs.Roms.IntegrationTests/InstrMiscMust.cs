@@ -1,8 +1,4 @@
-using NesCs.Logic.Cpu;
-using NesCs.Logic.Ppu;
-using NesCs.Logic.Ram;
-using NesCs.Logic.File;
-using NesCs.Logic.Clocking;
+using static NesCs.Roms.IntegrationTests.Utilities;
 
 namespace NesCs.Roms.IntegrationTests;
 
@@ -15,38 +11,9 @@ public class InstrMiscMust
     [InlineData("instr_misc/rom_singles/04-dummy_reads_apu.nes", 0x1, "", Skip = "1D 19 11 3D 39 31 5D 59 51 7D 79 71 9D 99 91 BD B9 B1 DD D9 D1 FD F9 F1 1E 3E 5E 7E DE FE BC BE \nOfficial opcodes failed\n\n04-dummy_reads_apu\n\nFailed #2\n")]
     public void ReturnPassed(string romName, int poweroffAddress, string expectedResult)
     {
-        var clock = new Clock(0);
         var ram = new byte[0x10000];
-        var fsp = new FileSystemProxy.Builder().Loading(new NesFileOptions
-        {
-            LoadHeader = true,
-            LoadTrainer = true,
-            LoadProgramRom = true,
-            LoadCharacterRom = true
-        }).Build();
-
-        var nesFile = fsp.Load("../../../../../nes-test-roms/" + romName);
-        var ramController = new RamController.Builder().WithRamOf(ram).Build();
-        var ppu = new Ppu2C02.Builder()
-            .WithRamController(ramController)
-            .WithClock(clock)
-            .WithClockDivisorOf(1)
-            .Build();
-        ramController.RegisterHook(ppu);
-
-        var builder = new Cpu6502.Builder().ProgramMappedAt(0x8000);
-        var cpu = builder
-            .Running(nesFile.ProgramRom)
-            .SupportingInvalidInstructions()
-            .WithRamController(ramController)
-            .WithClock(clock)
-            .WithClockDivisorOf(3)
-            .WithCallback(poweroffAddress, (cpu, _) => cpu.Stop())
-            .Build();
-
-        cpu.PowerOn();
-        cpu.Reset();
-        cpu.Run();
+        var clock = CreateSetup(ram, romName, poweroffAddress);
+        clock.Run();
 
         var result = GetString(ram);
         Assert.Equal(0, ram[0x6000]);
