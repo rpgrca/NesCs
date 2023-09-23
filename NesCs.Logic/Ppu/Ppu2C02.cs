@@ -17,6 +17,9 @@ public class Ppu2C02 : IPpu
         private IClock? _clock;
         private INmiGenerator? _nmiGenerator;
         private RasterAddress? _rasterAddress;
+        private int _divisor;
+
+        public Builder() => _divisor = 4;
 
         public Builder WithVram(byte[] vram)
         {
@@ -33,6 +36,12 @@ public class Ppu2C02 : IPpu
         public Builder WithRaster(RasterAddress rasterAddress)
         {
             _rasterAddress = rasterAddress;
+            return this;
+        }
+
+        public Builder WithClockDivisorOf(int divisor)
+        {
+            _divisor = divisor;
             return this;
         }
 
@@ -56,7 +65,7 @@ public class Ppu2C02 : IPpu
             _nmiGenerator ??= new DummyNmiGenerator();
             _ramController ??= new RamController.Builder().Build();
 
-            return new Ppu2C02(_ramController, _vram, _clock, _nmiGenerator, _rasterAddress);
+            return new Ppu2C02(_ramController, _vram, _clock, _nmiGenerator, _rasterAddress, _divisor);
         }
     }
 
@@ -80,7 +89,7 @@ public class Ppu2C02 : IPpu
     public DataPort PpuData { get; }                        /* 0x2007 WR */
     public OamDmaRegister OamDma { get; }                   /* 0x4014 W  */
 
-    private Ppu2C02(IRamController ram, byte[] vram, IClock clock, INmiGenerator nmiGenerator, RasterAddress rasterAddress)
+    private Ppu2C02(IRamController ram, byte[] vram, IClock clock, INmiGenerator nmiGenerator, RasterAddress rasterAddress, int divisor)
     {
         _vram = vram;
 
@@ -90,6 +99,7 @@ public class Ppu2C02 : IPpu
         clock.AddPpu(this);
         _odd = false;
         _nmiGenerator = nmiGenerator;
+        MasterClockDivisor = divisor;
 
         Raster = rasterAddress;
         PpuCtrl = new ControlRegister(ram, _ioBus, _nmiGenerator);
@@ -279,7 +289,7 @@ public class Ppu2C02 : IPpu
 
     public int CurrentAddress => PpuAddr.CurrentAddress;
 
-    public int MasterClockDivisor => 4;
+    public int MasterClockDivisor { get; private set; }
 
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private string DebuggerDisplay => $"PPU: {Raster.Y,3},{Raster.X,3}";
