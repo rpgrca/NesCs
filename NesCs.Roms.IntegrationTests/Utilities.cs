@@ -1,6 +1,7 @@
 using NesCs.Logic.Clocking;
 using NesCs.Logic.Cpu;
 using NesCs.Logic.File;
+using NesCs.Logic.Nmi;
 using NesCs.Logic.Ppu;
 using NesCs.Logic.Ram;
 
@@ -29,12 +30,13 @@ public static class Utilities
             .WithRamOf(ram)
             .Build();
 
-    private static IPpu CreatePpu(IClock clock, IRamController ramController)
+    private static IPpu CreatePpu(IClock clock, IRamController ramController, INmiGenerator nmiGenerator)
     {
         var ppu = new Ppu2C02.Builder()
             .WithRamController(ramController)
             .WithClock(clock)
             .WithClockDivisorOf(PpuDivisor)
+            .WithNmiGenerator(nmiGenerator)
             .Build();
 
         ramController.RegisterHook(ppu);
@@ -73,8 +75,11 @@ public static class Utilities
         var clock = new Clock(0);
         var nesFile = LoadNesFile(romName);
         var ramController = CreateRamController(ram);
-        var ppu = CreatePpu(clock, ramController);
+        var rasterAddress = new RasterAddress();
+        var nmiGenerator = new NmiGenerator(clock, rasterAddress);
+        var ppu = CreatePpu(clock, ramController, nmiGenerator);
         var cpu = CreateCpuWith(clock, nesFile, ramController, powerOffAddress);
+        nmiGenerator.AttachTo(cpu);
 
         cpu.PowerOn();
         cpu.Reset();
@@ -86,8 +91,11 @@ public static class Utilities
         var clock = new Clock(0);
         var nesFile = LoadNesFile(romName);
         var ramController = CreateRamController(ram);
-        var ppu = CreatePpu(clock, ramController);
+        var rasterAddress = new RasterAddress();
+        var nmiGenerator = new NmiGenerator(clock, rasterAddress);
+        var ppu = CreatePpu(clock, ramController, nmiGenerator);
         var cpu = CreateCpuWith(clock, nesFile, ramController, powerOffAddress, resetAddress);
+        nmiGenerator.AttachTo(cpu);
 
         cpu.PowerOn();
         cpu.Reset();
