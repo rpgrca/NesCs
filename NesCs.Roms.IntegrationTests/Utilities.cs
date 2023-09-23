@@ -1,5 +1,6 @@
 using NesCs.Logic.Clocking;
 using NesCs.Logic.Cpu;
+using NesCs.Logic.Cpu.Instructions;
 using NesCs.Logic.File;
 using NesCs.Logic.Nmi;
 using NesCs.Logic.Ppu;
@@ -70,6 +71,13 @@ public static class Utilities
             .WithCallback(resetAddress, (cpu, _) => cpu.Reset())
             .Build();
 
+    private static Cpu6502 CreateCpuWith(IClock clock, INesFile nesFile, IRamController ramController, int powerOffAddress, int printAddress,
+        Action<Cpu6502, IInstruction> printCallback) =>
+        CreateCpu(clock, nesFile, ramController)
+            .WithCallback(powerOffAddress, (cpu, _) => cpu.Stop())
+            .WithCallback(printAddress, (cpu, instruction) => printCallback(cpu, instruction))
+            .Build();
+
     public static IClock CreateSetup(byte[] ram, string romName, int powerOffAddress)
     {
         var clock = new Clock(0);
@@ -101,4 +109,21 @@ public static class Utilities
         cpu.Reset();
         return clock;
     }
+
+    public static IClock CreateSetup(byte[] ram, string romName, int powerOffAddress, int printAddress, Action<Cpu6502, IInstruction> printCallback)
+    {
+        var clock = new Clock(0);
+        var nesFile = LoadNesFile(romName);
+        var ramController = CreateRamController(ram);
+        var rasterAddress = new RasterAddress();
+        var nmiGenerator = new NmiGenerator(clock, rasterAddress);
+        var ppu = CreatePpu(clock, ramController, nmiGenerator);
+        var cpu = CreateCpuWith(clock, nesFile, ramController, powerOffAddress, printAddress, printCallback);
+        nmiGenerator.AttachTo(cpu);
+
+        cpu.PowerOn();
+        cpu.Reset();
+        return clock;
+    }
+
 }
