@@ -7,4 +7,5 @@ public interface IRamController
     void Copy(byte[] program, int startIndex, int memoryOffset, int programSize);
     byte DirectReadFrom(int index);
     void DirectWriteTo(int index, byte value);
+    void RegisterHook(IRamHook hook);
 }

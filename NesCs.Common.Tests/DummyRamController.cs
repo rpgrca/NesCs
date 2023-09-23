@@ -15,4 +15,8 @@ public class DummyRamController : IRamController
     public void DirectWriteTo(int index, byte value)
     {
     }
+
+    public void RegisterHook(IRamHook hook)
+    {
+    }
 }
