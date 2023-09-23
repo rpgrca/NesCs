@@ -1,10 +1,4 @@
-using NesCs.Logic.Cpu;
-using NesCs.Logic.Nmi;
-using NesCs.Logic.Ppu;
-using NesCs.Logic.Ram;
-using NesCs.Logic.File;
-using NesCs.Logic.Clocking;
-using NesCs.Logic.Tracing;
+using static NesCs.Roms.IntegrationTests.Utilities;
 
 namespace NesCs.Roms.IntegrationTests;
 
@@ -16,45 +10,14 @@ public class BranchTimingTestsMust
     [InlineData("branch_timing_tests/3.Forward_Branch.nes", 0xE17C, "FORWARD BRANCH TIMINGPASSED")]
     public void BeExecutedCorrectly(string romName, int printAddress, string expectedResult)
     {
-        var ram = new byte[0x10000];
-        var fsp = new FileSystemProxy.Builder().Loading(new NesFileOptions
-        {
-            LoadHeader = true,
-            LoadTrainer = true,
-            LoadProgramRom = true,
-            LoadCharacterRom = true
-        }).Build();
-
-        var nesFile = fsp.Load("../../../../../nes-test-roms/" + romName);
-        var clock = new Clock(0);
-        var ramController = new RamController.Builder().WithRamOf(ram).PreventRomRewriting().Build();
-        var rasterAddress = new RasterAddress();
-        var nmiGenerator = new NmiGenerator(clock, rasterAddress);
-        var ppu = new Ppu2C02.Builder().WithRamController(ramController).WithClock(clock).WithNmiGenerator(nmiGenerator).WithRaster(rasterAddress).Build();
-        ramController.RegisterHook(ppu);
-
-        var builder = new Cpu6502.Builder().ProgramMappedAt(0x8000);
-        builder.ProgramMappedAt(0xC000);
-
         var message = string.Empty;
-        var cpu = builder
-            .Running(nesFile.ProgramRom)
-            .WithClock(clock)
-            .SupportingInvalidInstructions()
-            .WithRamController(ramController)
-            .WithCallback(0xE4F0, (cpu, _) => cpu.Stop())
-            .WithCallback(printAddress, (cpu, _) =>
-            {
-                message += (char)cpu.ReadByteFromAccumulator();
-            })
-            .TracingWith(new Vm6502DebuggerDisplay())
-            .Build();
+        var ram = new byte[0x10000];
+        var clock = CreateSetup(ram, romName, 0xE4F0, printAddress, (cpu, _) =>
+        {
+            message += (char)cpu.ReadByteFromAccumulator();
+        });
 
-        nmiGenerator.AttachTo(cpu);
-        cpu.PowerOn();
-        cpu.Reset();
-        cpu.Run();
-
+        clock.Run();
         Assert.Equal(expectedResult, message);
     }
 }
