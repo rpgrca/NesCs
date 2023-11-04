@@ -100,8 +100,22 @@ public class RamController : IRamController
 
                 _ram[index] = value;
             }
-
-            if (index >= 0x8000)
+            else if (index == 0x4014)
+            {
+                if (_makeRomWritable)
+                {
+                    _ram[index] = value;
+                    return;
+                }
+                else 
+                {
+                    for (var subIndex = 0; subIndex < 256; subIndex++)
+                    {
+                        _ppuHook?.WriteDma(_ram[subIndex]);
+                    }
+                }
+            }
+            else  if (index >= 0x8000)
             {
                 if (_makeRomWritable)
                 {

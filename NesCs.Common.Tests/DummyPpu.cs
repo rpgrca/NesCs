@@ -52,4 +52,6 @@ public class DummyPpu : IPpu
     void IPpuTiming.LoadLowBackgroundTileByte() => throw new NotImplementedException();
 
     void IPpuTiming.LoadAttributeByte() => throw new NotImplementedException();
+
+    public void WriteDma(byte value) => throw new NotImplementedException();
 }

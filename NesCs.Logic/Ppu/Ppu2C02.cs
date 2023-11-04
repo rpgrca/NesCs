@@ -287,6 +287,11 @@ public class Ppu2C02 : IPpu
     {
     }
 
+    public void WriteDma(byte value)
+    {
+        this.OamData.Write(value);
+    }
+
     public int CurrentAddress => PpuAddr.CurrentAddress;
 
     public int MasterClockDivisor { get; private set; }
