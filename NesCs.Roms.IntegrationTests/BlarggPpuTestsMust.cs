@@ -49,12 +49,14 @@ public class BlarggPpuTestsMust
         var builder = new Cpu6502.Builder().ProgramMappedAt(0x8000);
         builder.ProgramMappedAt(0xC000);
 
+        var dmaCopier = new DmaCopier(ramController, ppu);
         var cpu = builder
             .Running(nesFile.ProgramRom)
             .WithClock(clock)
             .WithRamController(ramController)
             .WithCallback(poweroffAddress, (cpu, _) => cpu.Stop())
             .WithClockDivisorOf(3)
+            .WithDmaCopier(dmaCopier)
             .TracingWith(new Vm6502DebuggerDisplay())
             .Build();
 
