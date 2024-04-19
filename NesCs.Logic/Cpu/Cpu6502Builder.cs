@@ -24,6 +24,7 @@ public partial class Cpu6502
         private readonly Operations.Operations Doing;
         private IRamController? _ramController;
         private int _divisor;
+        private IDmaCopier _dmaCopier;
 
         public Builder()
         {
@@ -40,6 +41,7 @@ public partial class Cpu6502
             _patch = Array.Empty<(int, byte)>();
             _tracer = new DummyTracer();
             _divisor = 12;
+            _dmaCopier = new DummyDmaCopier();
             As = new Addressings.Addressings();
             Doing = new Operations.Operations();
 
@@ -310,6 +312,12 @@ public partial class Cpu6502
             return this;
         }
 
+        public Builder WithDmaCopier(IDmaCopier dmaCopier)
+        {
+            _dmaCopier = dmaCopier;
+            return this;
+        }
+
         public Builder WithCallback(int address, Action<Cpu6502, IInstruction> callback)
         {
             _callbacks.Add(address, callback);
@@ -323,10 +331,11 @@ public partial class Cpu6502
             if (_enableInvalid) AddInvalidOpcodes();
             _clock ??= new Clock(_cycles);
             _ramController ??= new RamController.Builder().Build();
+            _dmaCopier ??= new DummyDmaCopier();
 
             return new Cpu6502(_program, _programSize, _ramController, _mappedProgramAddresses.ToArray(),
                 _pc, _a, _x, _y, _s, _p, _clock, _patch, _instructions, _tracer, _callbacks,
-                _resetVector, _nmiVector, _irqVector, _divisor);
+                _resetVector, _nmiVector, _irqVector, _divisor, _dmaCopier);
         }
 
         private void AddInvalidOpcodes()

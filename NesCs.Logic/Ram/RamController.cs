@@ -113,6 +113,8 @@ public class RamController : IRamController
                     {
                         _ppuHook?.WriteDma(_ram[subIndex]);
                     }
+
+                    // TODO: cycle count + 513/514
                 }
             }
             else  if (index >= 0x8000)

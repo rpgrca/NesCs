@@ -21,6 +21,7 @@ public partial class Cpu6502 : IClockHook
     private bool _initialized;
     private int _nmiFlipFlop;
     private int _initialPC;
+    private bool _suspended;
     private readonly int _resetVector;
     private readonly int _nmiVector;
     private readonly int _irqVector;
@@ -29,10 +30,11 @@ public partial class Cpu6502 : IClockHook
     private readonly ITracer _tracer;
     private readonly IClock _clock;
     private readonly Dictionary<int, Action<Cpu6502, IInstruction>> _callbacks;
+    private readonly IDmaCopier _dmaCopier;
 
     public int MasterClockDivisor { get; private set; }
 
-    private Cpu6502(byte[] program, int programSize, IRamController ramController, int[] memoryOffsets, int pc, byte a, byte x, byte y, byte s, ProcessorStatus p, IClock clock, (int Address, byte Value)[] ramPatches, IInstruction[] instructions, ITracer tracer, Dictionary<int, Action<Cpu6502, IInstruction>> callbacks, int resetVector, int nmiVector, int irqVector, int divisor)
+    private Cpu6502(byte[] program, int programSize, IRamController ramController, int[] memoryOffsets, int pc, byte a, byte x, byte y, byte s, ProcessorStatus p, IClock clock, (int Address, byte Value)[] ramPatches, IInstruction[] instructions, ITracer tracer, Dictionary<int, Action<Cpu6502, IInstruction>> callbacks, int resetVector, int nmiVector, int irqVector, int divisor, IDmaCopier dmaCopier)
     {
         _callbacks = callbacks;
         _ram = ramController;
@@ -49,6 +51,7 @@ public partial class Cpu6502 : IClockHook
         _resetVector = resetVector;
         _nmiVector = nmiVector;
         _irqVector = irqVector;
+        _dmaCopier = dmaCopier;
         PC = _initialPC = pc;
         A = a;
         X = x;
@@ -154,6 +157,16 @@ public partial class Cpu6502 : IClockHook
         CalculateProgramCounter();
     }
 
+    public void Suspend()
+    {
+        _suspended = true;
+    }
+
+    public void Unsuspend()
+    {
+        _suspended = false;
+    }
+
     private void CalculateProgramCounter()
     {
         if (_initialPC != 0)
@@ -234,9 +247,16 @@ public partial class Cpu6502 : IClockHook
 
     public void WriteByteToMemory(int address, byte value)
     {
-        _ram[address] = value;
-        _tracer.Write(address, value);
-        _cycles++;
+        /*if (address == 0x4014)
+        {
+            _dmaCopier.Execute(value);
+        }
+        else
+        {*/
+            _ram[address] = value;
+            _tracer.Write(address, value);
+            _cycles++;
+        //}
     }
 
     // TODO: Deberia aumentar el puntero automaticamente
@@ -357,14 +377,17 @@ public partial class Cpu6502 : IClockHook
         }
         else
         {
-            if (clock.GetCycles() % MasterClockDivisor == 0)
+            if (! _suspended)
             {
-                _previousCycles++;
-
-                if (_previousCycles == _cycles)
+                if (clock.GetCycles() % MasterClockDivisor == 0)
                 {
-                    Step();
-                    return true;
+                    _previousCycles++;
+
+                    if (_previousCycles == _cycles)
+                    {
+                        Step();
+                        return true;
+                    }
                 }
             }
         }
