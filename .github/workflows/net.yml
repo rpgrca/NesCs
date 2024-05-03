@@ -59,7 +59,6 @@ jobs:
            coverlet NesCs.Roms.IntegrationTests/bin/Debug/net7.0/NesCs.Roms.IntegrationTests.dll --target "dotnet" --targetargs "test NesCs.Roms.IntegrationTests/NesCs.Roms.IntegrationTests.csproj --no-build --verbosity quiet" --format OpenCover --output nescs.roms.coverage.xml
 
     - name: Upload coverage to CodeCov
-      working-directory: NesCs
       uses: codecov/codecov-action@v4
       env:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
