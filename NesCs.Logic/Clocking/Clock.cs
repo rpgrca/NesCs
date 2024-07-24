@@ -20,7 +20,7 @@ public class Clock : IClock
     {
         _ticks = ticks;
         _maximum = maximum;
-        _callbacks = new IClockHook[2] { null, null };
+        _callbacks = new IClockHook[2] { new NullClockHook(), new NullClockHook() };
         Aborted = false;
     }
 
@@ -40,7 +40,7 @@ public class Clock : IClock
     private void Tick()
     {
         var cpuText = _callbacks[0].GetStatus();
-        var ppuText = _callbacks[1]?.GetStatus();
+        var ppuText = _callbacks[1].GetStatus();
 
         _callbacks[1]?.Trigger(this);
         var canRefresh = _callbacks[0].Trigger(this);

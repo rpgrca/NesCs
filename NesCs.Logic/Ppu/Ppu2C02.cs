@@ -74,8 +74,8 @@ public class Ppu2C02 : IPpu
     private readonly IByteToggle _toggle;
     private readonly IPpuIOBus _ioBus;
     private bool _odd;
-    private byte _nametableLatch;
-    private byte _attributeLatch;
+    //private byte _nametableLatch;
+    //private byte _attributeLatch;
     private readonly INmiGenerator _nmiGenerator;
 
     private RasterAddress Raster { get; }

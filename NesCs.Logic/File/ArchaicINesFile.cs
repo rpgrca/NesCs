@@ -33,6 +33,7 @@ internal class ArchaicINesFile : INesFile
     internal ArchaicINesFile(string filename, byte[] contents, NesFileOptions options)
     {
         Filename = filename;
+        Flags7 = new Flags7(0);
         _contents = contents.ToArray();
         _options = options;
         _trainer = Array.Empty<byte>();

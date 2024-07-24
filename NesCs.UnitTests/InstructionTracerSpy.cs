@@ -6,7 +6,7 @@ namespace NesCs.UnitTests.Cpu;
 
 public class InstructionTracerSpy : ITracer
 {
-    public IInstruction Instruction { get; private set; }
+    public IInstruction? Instruction { get; private set; }
 
     public void Display(IInstruction instruction, byte[] operands, int pc, byte a, byte x, byte y, ProcessorStatus p, byte s, int cycles) =>
         Instruction = instruction;
