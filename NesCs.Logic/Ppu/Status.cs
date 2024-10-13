@@ -73,9 +73,11 @@ public class Status
     {
         get
         {
+            // https://www.nesdev.org/wiki/PPU_registers#PPUSTATUS
+            // Reading PPUSTATUS will return the current state of this flag and then clear it.
             _toggle.Reset();
-            var result = (byte)((Flags >> 7) & 1);
-            Flags = (byte)(Flags & ~(1 << 7));
+            var result = ObtainVFromFlags();
+            ClearVFromFlags();
             _nmiGenerator.SetStatus(0);
             return result;
         }
@@ -83,17 +85,20 @@ public class Status
         {
             if (! _ignoreV)
             {
-                Flags = (byte)(Flags & ~(1 << 7));
-                Flags |= (byte)((value & 1) << 7);
+                ClearVFromFlags();
+                SetValueToVFlag(value);
                 _nmiGenerator.SetStatus(value);
             }
         }
     }
 
-    public void Write(byte value)
-    {
-        _ioBus.Write(value);
-    }
+    private byte ObtainVFromFlags() => (byte)((Flags >> 7) & 1);
+
+    private void ClearVFromFlags() => Flags = ClearVFrom(Flags);
+
+    private void SetValueToVFlag(byte value) => Flags |= (byte)((value & 1) << 7);
+
+    public void Write(byte value) => _ioBus.Write(value);
 
     public byte Read()
     {
@@ -102,20 +107,14 @@ public class Status
 
         if (_forNextVblank == 3)
         {
-            result = (byte)(result & ~(1 << 7));
+            result = ClearVFrom(result);
             _nmiGenerator.SetStatus(0);
             _nmiGenerator.IgnoreVblankThisFrame();
             _ignoreV = true;
         }
-        else if (_forNextVblank == 2)
+        else if (_forNextVblank == 2 || _forNextVblank == 1)
         {
-            result = (byte)(result | (1 << 7));
-            _nmiGenerator.SetStatus(0);
-            _nmiGenerator.CancelInterrupt();
-        }
-        else if (_forNextVblank == 1)
-        {
-            result = (byte)(result | (1 << 7));
+            result = ObtainFlagsWithVSetFrom(result);
             _nmiGenerator.SetStatus(0);
             _nmiGenerator.CancelInterrupt();
         }
@@ -127,18 +126,13 @@ public class Status
         return result;
     }
 
-    internal void ResetIgnoreV()
-    {
-        _ignoreV = false;
-    }
+    private byte ClearVFrom(byte flags) => (byte)(flags & ~(1 << 7));
 
-    internal void ResetTimerForNextVblank()
-    {
-        _forNextVblank = (241 * 341) + 1;
-    }
+    private byte ObtainFlagsWithVSetFrom(byte flags) => (byte)(flags | (1 << 7));
 
-    internal void DecrementTimerForNextVblank()
-    {
-        _forNextVblank--;
-    }
+    internal void ResetIgnoreV() => _ignoreV = false;
+
+    internal void ResetTimerForNextVblank() => _forNextVblank = (241 * 341) + 1;
+
+    internal void DecrementTimerForNextVblank() => _forNextVblank--;
 }
