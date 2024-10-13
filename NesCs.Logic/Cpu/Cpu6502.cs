@@ -9,6 +9,7 @@ namespace NesCs.Logic.Cpu;
 [DebuggerDisplay("{DebuggerDisplay,nq}")]
 public partial class Cpu6502 : IClockHook
 {
+    private const int InitialNmiValue = -1;
     private const int StackMemoryBase = 0x0100;
     private ProcessorStatus P { get; set; }
     private byte A { get; set; }
@@ -64,7 +65,7 @@ public partial class Cpu6502 : IClockHook
         _cycles = _previousCycles = _clock.GetCycles() % MasterClockDivisor;
         _instructions = instructions;
         _tracer = tracer;
-        _nmiFlipFlop = -1;
+        _nmiFlipFlop = InitialNmiValue;
     }
 
     public void PowerOn()
@@ -109,17 +110,14 @@ public partial class Cpu6502 : IClockHook
                 {
                     GenerateNmi();
                 }
-                else if (_nmiFlipFlop > 0)
+                else
                 {
                     _nmiFlipFlop--;
+
+                    var instruction = _instructions[ReadByteFromProgram()];
+                    _tracer.Display(instruction, instruction.PeekOperands(this), PC, A, X, Y, P, S, _previousCycles);
+                    instruction.Execute(this);
                 }
-
-
-                var instruction = _instructions[ReadByteFromProgram()];
-                _tracer.Display(instruction, instruction.PeekOperands(this), PC, A, X, Y, P, S, _previousCycles);
-                instruction.Execute(this);
-
-
 
 /*
                 if (NmiFlipFlop == 0)
@@ -205,7 +203,7 @@ public partial class Cpu6502 : IClockHook
 
         _ = ReadByteFromMemory(address);
 
-        _nmiFlipFlop = -1;
+        _nmiFlipFlop = InitialNmiValue;
         SetValueToProgramCounter(address);
     }
 
@@ -397,18 +395,9 @@ public partial class Cpu6502 : IClockHook
 
     public string GetStatus() => DebuggerDisplay;
 
-    internal void SetNmiFlipFlop()
-    {
-        _nmiFlipFlop = 1;
-    }
+    internal void SetNmiFlipFlop() => _nmiFlipFlop = 1;
 
-    internal void CancelNmiFlipFlop()
-    {
-        if (_nmiFlipFlop != -1)
-        {
-            _nmiFlipFlop = -1;
-        }
-    }
+    internal void CancelNmiFlipFlop() => _nmiFlipFlop = InitialNmiValue;
 
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     private string DebuggerDisplay => $"{PC:X4} A:{A:X2} X:{X:X2} Y:{Y:X2} P:{(byte)P:X2} S:{S:X2} CYC:{_cycles}";
