@@ -26,7 +26,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 7.0.x
+        dotnet-version: 9.x
 
     - name: Restore packages
       working-directory: NesCs
@@ -51,12 +51,12 @@ jobs:
     - name: Unit testing
       working-directory: NesCs
       run: |
-           coverlet NesCs.UnitTests/bin/Debug/net7.0/NesCs.UnitTests.dll --target "dotnet" --targetargs "test NesCs.UnitTests/NesCs.UnitTests.csproj --no-build --verbosity quiet" --format OpenCover --output nescs.coverage.xml
+           coverlet NesCs.UnitTests/bin/Debug/net9/NesCs.UnitTests.dll --target "dotnet" --targetargs "test NesCs.UnitTests/NesCs.UnitTests.csproj --no-build --verbosity quiet" --format OpenCover --output nescs.coverage.xml
 
     - name: Integration testing
       working-directory: NesCs
       run: |
-           coverlet NesCs.Roms.IntegrationTests/bin/Debug/net7.0/NesCs.Roms.IntegrationTests.dll --target "dotnet" --targetargs "test NesCs.Roms.IntegrationTests/NesCs.Roms.IntegrationTests.csproj --no-build --verbosity quiet" --format OpenCover --output nescs.roms.coverage.xml
+           coverlet NesCs.Roms.IntegrationTests/bin/Debug/net9/NesCs.Roms.IntegrationTests.dll --target "dotnet" --targetargs "test NesCs.Roms.IntegrationTests/NesCs.Roms.IntegrationTests.csproj --no-build --verbosity quiet" --format OpenCover --output nescs.roms.coverage.xml
 
     - name: Upload coverage to CodeCov
       uses: codecov/codecov-action@v5
