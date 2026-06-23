@@ -13,12 +13,12 @@ jobs:
 
     steps:
     - name: Checkout NesCs
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
       with:
         path: NesCs
 
     - name: Checkout nes-test-roms
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
       with:
         repository: christopherpow/nes-test-roms
         path: nes-test-roms
